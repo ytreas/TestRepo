@@ -1,0 +1,5 @@
+<templates xml:space="preserve">
+    <t t-name="owl.ChartRenderer2" owl="1">
+        <canvas t-ref="chart"/>
+    </t>
+</templates>

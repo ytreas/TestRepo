@@ -1,0 +1,2 @@
+"id","source_warehouse_id","source_company_id","destination_warehouse_id","destination_company_id","crm_team_id","pricelist_id","group_id","auto_workflow_id","inter_company_transfer_id","src_company_id","dst_company_id","create_uid","write_uid","name","state","type","message","processed_date","create_date","write_date","remarks"
+36,Maurav :Lakur,Maurav :Lakur,,My Company (San Francisco),Sales,EUR (EUR),,Aaditya,,Maurav :Lakur,My Company (San Francisco),2,2,ICT0004,draft,ict,,,2024-02-04 06:51:23.302,2024-02-04 06:51:23.302,"This is the remarks of Maurav Lakur Product"

@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_due_details_search" model="ir.ui.view">
+        <field name="name">due.details.search</field>
+        <field name="model">vehicle.due.details</field>
+        <field name="arch" type="xml">
+            <search string="Search Due Details">
+                <filter string="Due" name="filter_due_status_due" domain="[('due_status', '=', 'due')]"/>
+                <filter string="Overdue" name="filter_due_status_overdue" domain="[('due_status', '=', 'overdue')]"/>
+                <filter string="Upcoming" name="filter_due_status_upcoming" domain="[('due_status', '=', 'upcoming')]"/>
+                <filter string="Completed" name="filter_due_status_completed" domain="[('due_status', '=', 'completed')]"/>
+
+                <filter name="filter_bluebook" string="Bluebook" domain="[('due_details_name', '=', 'bluebook')]"/>
+                <filter name="filter_pollution" string="Pollution" domain="[('due_details_name', '=', 'pollution')]"/>
+                <filter name="filter_insurance" string="Insurance" domain="[('due_details_name', '=', 'insurance')]"/>
+                <filter name="filter_permit" string="Permit" domain="[('due_details_name', '=', 'permit')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_vehicle_due_details_tree" model="ir.ui.view">
+        <field name="name">due.details.tree</field>
+        <field name="model">vehicle.due.details</field>
+        <field name="arch" type="xml">
+            <tree default_order="create_date desc">
+                <field name="vehicle_number"/>
+                <field name="expiry_date_bs"/>
+                <field name="renewal_date_bs"/>
+                <field name="renewal_cost"/>
+                <field name="due_status"/>
+                <field name="due_details_name" />
+                <!-- <field name="notification_settings"/> -->
+            </tree>
+        </field>
+    </record>
+    <record id="view_vehicle_due_details_tree_form" model="ir.ui.view">
+        <field name="name">due.details.form</field>
+        <field name="model">vehicle.due.details</field>
+        <field name="arch" type="xml">
+            <form string="Due Details">
+                <header>
+                    <field name="due_status" widget="statusbar" string="Due Status"
+                        statusbar_visible="due,overdue,upcoming,completed"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="vehicle_number"/>
+                        <field name="due_details_name" />
+                        <field name="expiry_date" options="{'corresponding_field' : 'expiry_date_bs'}"/>
+                        <field name="renewal_date" options="{'corresponding_field' : 'renewal_date_bs'}"/>
+                        <field name="renewal_cost"/>
+                        <field name="payment_status"/>
+                        <field name="notification_settings"/>
+                        <field name="remarks" />
+                    </group>
+                 
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+<!--Custom fine Penalty-->
+    <record id="action_change_penalty_filter" model="ir.cron">
+        <field name="name">Action For Fine Penalty</field>
+        <field name="model_id" ref="model_custom_fine_penalty"/>
+        <field name="state">code</field>
+        <field name="code">model._change_filter_value()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active">True</field>
+        <!-- <field name="numbercall">-1</field> -->
+    </record>
+    <record id="view_fine_penalty_search" model="ir.ui.view">
+        <field name="name">fine.penalty.search</field>
+        <field name="model">custom.fine.penalty</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="vehicle_number"/>
+                <field name="driver_id"/>
+                <field name="vehicle_company_id"/>
+                <field name="fine_date"/>
+                <field name="fine_name"/>
+                <filter string="Today" name="is_today" domain="[('is_today', '=', True)]"/>
+                <filter string="This Week" name="this_week" domain="[('this_week', '=', True)]"/>
+                <filter string="This Month" name="this_month" domain="[('this_month', '=', True)]"/>
+                <filter name="group_by_vehicle_number" string="Group By Vehicle" domain="[('vehicle_number', '=', 'vehicle_number')]" context="{'group_by': 'vehicle_number'}" />
+            </search>
+        </field>
+    </record>
+    <record id="view_vehicle_fine_tree" model="ir.ui.view">
+        <field name="name">fine.penalty.tree</field>
+        <field name="model">custom.fine.penalty</field>
+        <field name="arch" type="xml">
+            <tree default_order="create_date desc">
+                <field name="vehicle_number"/>
+                <field name="driver_id"/>
+                <field name="vehicle_company_id"/>
+                <field name="fine_date_bs"/>
+                <field name="fine_name" />
+            </tree>
+        </field>
+    </record>
+    <record id="view_vehicle_fine_form" model="ir.ui.view">
+         <field name="name">fine.penalty.form</field>
+        <field name="model">custom.fine.penalty</field>
+        <field name="arch" type="xml">
+            <form string="Fine Details">
+                <sheet>
+                    <group>
+                        <field name="vehicle_number"/>
+                        <field name="driver_id"/>
+                        <field name="vehicle_company_id"/>
+                        <field name="fine_date" options="{'corresponding_field' : 'fine_date_bs'}"/>
+                        <field name="fine_name" />
+                    </group>
+                    <notebook>
+                        <page name="fine_details" string="Fine Details">
+                            <field name="details_id">
+                                <tree>
+                                    <field name="fine_type" string="Fine Type"/>
+                                    <field name="issued_by" string="Issued By"/>
+                                    <field name="fine_amount" string="Fine Amount"/>
+                                    <field name="fine_status" string="Payment Status"/>
+                                    <field name="payment_due_date_bs" string="Payment Due Date"/>
+                                    <field name="remarks" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                      <group>
+                        <label for="total_fine" class="oe_form_label" style="font-weight: bold;"/>
+                        <div class="oe_form_field">
+                            <field name="total_fine" readonly="1" class="oe_right"/>
+                        </div>
+                    </group>  
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_fine_details_tree" model="ir.ui.view">
+        <field name="name">fine.details.tree</field>
+        <field name="model">fine.details</field>
+        <field name="arch" type="xml">
+            <tree create='false' default_order="create_date desc">
+                <field name="fine_type" string="Fine Type"/>
+                <field name="issued_by" string="Issued By"/>
+                <field name="fine_amount" string="Fine Amount"/>
+                <field name="fine_status" string="Payment Status"/>
+                <field name="payment_due_date_bs" string="Payment Due Date"/>
+                <field name="remarks" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_fine_details_form" model="ir.ui.view">
+        <field name="name">fine.details.form</field>
+        <field name="model">fine.details</field>
+        <field name="arch" type="xml">
+            <form string="Fine Details Form">
+                
+                <sheet>
+                <group>
+                    <field name="fine_type" string="Fine Type"/>
+                    <field name="fine_amount" string="Fine Amount"/>
+                    <field name="fine_reason" string="Fine Reason"/>
+                    <field name="fine_status" string="Payment Status"/>
+                    <field name="notification_settings" string="Notification Settings"/>
+                    <field name="payment_due_date" string="Payment Due Date" options="{'corresponding_field' : 'payment_due_date_bs'}"/>
+                    <field name="issued_by" string="Issued By"/>
+                    <field name="remarks" />
+                </group>
+                    <notebook>
+                        <page string="Fine Documents">
+                            <field name="fine_document_ids" widget="one2many_list">
+                                <tree editable="top">
+                                    <field name="type_id" string="Document Type"/>
+                                    <field name="documents" widget="binary" filename="file_name"/>
+                                    <field name="file_name"/>
+                                    <field name="preview" widget="html"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+
+    <record id="action_vehicle_due_details" model="ir.actions.act_window">
+        <field name="name">Due Details</field>
+        <field name="res_model">vehicle.due.details</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="action_vehicle_fine" model="ir.actions.act_window">
+        <field name="name">Fine Penalty</field>
+        <field name="res_model">custom.fine.penalty</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_fine_details" model="ir.actions.act_window">
+        <field name="name">Fine Details</field>
+        <field name="res_model">fine.details</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+     <!-- Action for Movement Details Wizard -->
+    <record id="action_movement_details" model="ir.actions.act_window">
+        <field name="name">Movement Details</field>
+        <field name="res_model">movement.details.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- Action for Fuel Consumption Wizard -->
+    <record id="action_fuel_consumption" model="ir.actions.act_window">
+        <field name="name">Fuel Consumption </field>
+        <field name="res_model">fuel.details.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- Action for Vehicle Report -->
+    <record id="action_vehicle_report" model="ir.actions.act_window">
+        <field name="name">Vehicle Report </field>
+        <field name="res_model">vehicle.number.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="due_details_menu" name="Due Details" parent="menu_vehicle" sequence="6"/>
+
+    <menuitem id="menu_due_details" name="Due Details" parent="due_details_menu" action="action_vehicle_due_details" sequence="1"/>
+    <menuitem id="menu_vehicle_fine" name="Fine And Penalty" parent="due_details_menu" action="action_vehicle_fine" sequence="2"/>
+    <menuitem id="menu_fine_details" name="Fine Details" parent="due_details_menu" action="action_fine_details" sequence="3"/>
+
+    <menuitem id="report_menu" name="Reports" parent="menu_vehicle" sequence="7"/>
+    <menuitem id="menu_movement_details_report" name="Movement Details" parent="report_menu" action="action_movement_details" sequence="1"/>
+    <menuitem id="menu_fuel_consumption_report" name="Fuel Consumption Record" parent="report_menu" action="action_fuel_consumption" sequence="2"/>
+    <menuitem id="menu_vehicle_report" name="Vehicle Report" parent="report_menu" action="action_vehicle_report" sequence="3"/>
+
+</odoo>

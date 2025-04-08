@@ -1,0 +1,262 @@
+<odoo>
+    <!--Add Form view for job position-->
+    <record id="view_hr_job_form_inherit" model="ir.ui.view">
+        <field name="name">hr.job.form.inherit</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="hr.view_hr_job_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='contract_type_id']" position="after">
+                <field name="position_category_name" />
+            </xpath>
+            <xpath expr="//field[@name='position_category_name']" position="after">
+                <field name="allowance_ids">
+                </field>
+            </xpath>
+
+
+        </field>
+    </record>
+    <!--Add
+    Tree view for job position-->
+    <record id="view_hr_job_tree_inherit" model="ir.ui.view">
+        <field name="name">hr.job.tree.inherit</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="hr.view_hr_job_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='department_id']" position="after">
+                <field name="position_category_name" />
+            </xpath>
+        </field>
+    </record>
+    <odoo>
+        <data>
+            <!-- hr.department form view -->
+            <record id="view_hr_department_form_inherit" model="ir.ui.view">
+                <field name="name">hr.department.form.inherit</field>
+                <field name="model">hr.department</field>
+                <field name="inherit_id" ref="hr.view_department_form" />
+                <field name="arch" type="xml">
+                    <xpath expr="//field[@name='name']" position="before">
+                        <field name="code" />
+                    </xpath>
+                    <xpath expr="//field[@name='name']" position="after">
+                        <field name="name_np" />
+                    </xpath>
+                    <xpath expr="//field[@name='color']" position="after">
+                        <field name="status" />
+                    </xpath>
+                </field>
+            </record>
+        </data>
+    </odoo>
+
+    <!-- Adding Pan number and employee status in Employee -->
+    <record id="view_employee_details_inherit" model="ir.ui.view">
+        <field name="name">employee.details.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='bank_account_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='mobile_phone']" position="before">
+                <field name="used_yearly_service" />
+            </xpath>
+            <xpath expr="//field[@name='identification_id']" position="after">
+                <field name="pan_number" />
+                <!-- <field name="used_yearly_service" /> -->
+            </xpath>
+            <xpath expr="//field[@name='private_phone']" position="after">
+                <field name="issuer_bank_name" options="{'no_create':True,'no_create_edit':True}" />
+            </xpath>
+            <xpath expr="//field[@name='issuer_bank_name']" position="after">
+                <field name="branch_bank_name" domain="[('bank_name','=',issuer_bank_name)]"
+                    options="{'no_create':True,'no_create_edit':True}" />
+            </xpath>
+            <xpath expr="//field[@name='branch_bank_name']" position="after">
+                <field name="account_number" />
+            </xpath>
+            <xpath expr="//field[@name='marital']" position="after">
+                <field name="gender" />
+            </xpath>
+            <xpath expr="//field[@name='job_title']" position="before">
+                <field name="employee_name_np" placeholder="Employee Name (Nepali)" />
+            </xpath>
+            <xpath expr="//field[@name='private_email']" position="before">
+                <field name="date_of_birth_en" options="{'corresponding_field': 'date_of_birth_np'}" />
+            </xpath>
+            <xpath expr="//field[@name='department_id']" position="after">
+                <field name="position_name" options="{'no_create':True,'no_create_edit':True}" />
+                <field name="employee_post" domain="[('categoty_level','=',position_name)]"
+                    options="{'no_create':True,'no_create_edit':True}" />
+            </xpath>
+            <xpath expr="//field[@name='job_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='children']" position="after">
+                <field name="father_name_en" />
+                <field name="father_name_np" />
+                <field name="mother_name_en" />
+                <field name="mother_name_np" />
+                <field name="spouse_name_en" />
+                <field name="spouse_name_np" />
+                <field name="wished_person_name_en" />
+                <field name="wished_person_name_np" />
+            </xpath>
+            <xpath expr="//field[@name='ssnid']" position="after">
+                <field name="insurance_company_id" />
+                <field name="insurance_policy_number" />
+                <field name="pf_number" />
+                <field name="cit_number" />
+                <field name="pis_number" />
+                <field name="seat_roll_number" />
+                <field name="personal_identification_number" />
+                <!-- <field name="barcode"/> -->
+            </xpath>
+        </field>
+    </record>
+    <!--Adding
+    Gender and Disability type in Employee Tax Config-->
+    <record id="view_employee_tax_config_inherit" model="ir.ui.view">
+        <field name="name">employee.tax.config.inherit</field>
+        <field name="model">employee.tax.config</field>
+        <field name="inherit_id" ref="hr_payroll_community.view_employee_tax_config_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='marital_status']" position="after">
+                <field name="gender" />
+                <field name="disability_type" />
+            </xpath>
+        </field>
+    </record>
+    <!-- Disability types form views -->
+    <record id="disability_type_form_view" model="ir.ui.view">
+        <field name="name">disability.type.form</field>
+        <field name="model">disability.type</field>
+        <field name="arch" type="xml">
+            <form string="Disability Type">
+                <sheet>
+                    <group>
+                        <field name="code" />
+                        <field name="name_en" />
+                        <field name="name_np" />
+                        <field name="description" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- Disability types tree views -->
+    <record id="disability_type_tree_view" model="ir.ui.view">
+        <field name="name">disability.type.tree</field>
+        <field name="model">disability.type</field>
+        <field name="arch" type="xml">
+            <tree string="Disability Type">
+                <field name="code" />
+                <field name="name_en" />
+                <field name="name_np" />
+                <field name="description" />
+            </tree>
+        </field>
+    </record>
+    <!--Action-->
+    <record id="disability_action_window" model="ir.actions.act_window">
+        <field name="name">Disability Type</field>
+        <field name="res_model">disability.type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- Tree View for EmployeePostDesignation -->
+    <record id="view_employee_post_designation_tree" model="ir.ui.view">
+        <field name="name">employee.post.designation.tree</field>
+        <field name="model">employee.post.designation</field>
+        <field name="arch" type="xml">
+            <tree string="Employee Post Designation">
+                <field name="code" />
+                <field name="position_category_name_en" />
+                <field name="position_category_name_np" />
+                <field name="position_category_level" />
+                <field name="position_short_name_en" />
+                <field name="position_short_name_np" />
+                <field name="salary_scale" />
+                <field name="grade_rate" />
+                <field name="initial_grade_number" />
+                <field name="max_grade_number" />
+                <field name="position_type" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View for EmployeePostDesignation-->
+    <record id="view_employee_post_designation_form" model="ir.ui.view">
+        <field name="name">employee.post.designation.form</field>
+        <field name="model">employee.post.designation</field>
+        <field name="arch" type="xml">
+            <form string="Employee Post Designation">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="code" />
+                            <field name="position_category_name_en" />
+                            <field name="position_category_name_np" />
+                            <field name="position_category_level" />
+
+                            <field name="position_short_name_en" />
+                            <field name="position_short_name_np" />
+                        </group>
+                        <group>
+                            <field name="salary_scale" />
+                            <field name="position_type" />
+                            <field name="grade_rate" />
+                            <field name="initial_grade_number" />
+                            <field name="max_grade_number" />
+                            <field name="max_grade_amount" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- Action to open the Employee Post Designation -->
+    <record id="action_employee_post_designation" model="ir.actions.act_window">
+        <field name="name">Employee Post Designation</field>
+        <field name="res_model">employee.post.designation</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_employee_post_designation_tree" />
+        <field name="target">current</field>
+    </record>
+
+    <!-- App Client Setting View -->
+    <record id='app_client_setting_form_view' model='ir.ui.view'>
+        <field name='name'>app.client.setting.form.view</field>
+        <field name='model'>app.client.setting</field>
+        <field name='arch' type='xml'>
+            <form>
+                <sheet>
+                    <group>
+                        <field name='discount_rate' />
+                        <field name='payroll_round' />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- App Client Setting action -->
+    <record id='action_app_client_setting' model='ir.actions.act_window'>
+        <field name='name'>App Client Setting</field>
+        <field name='res_model'>app.client.setting</field>
+        <field name='view_mode'>form</field>
+        <field name='view_id' ref='app_client_setting_form_view' />
+    </record>
+
+
+    <!--Menu
+    items-->
+    <menuitem id="disability_type_menu" name="Disability Type"
+        parent="menu_hr_payroll_community_configuration" action="disability_action_window" />
+    <menuitem id="menu_employee_post_designation" name="Employee Post Designation"
+        parent="hr.menu_config_recruitment" action="action_employee_post_designation" />
+    <menuitem id="menu_employee_post" name="Employee Post"
+        parent="hr.menu_config_recruitment" action="action_employee_post" />
+    <menuitem id="menu_app_client_setting" name="App Client Setting"
+        parent="menu_hr_payroll_community_configuration" action="action_app_client_setting" />
+</odoo>

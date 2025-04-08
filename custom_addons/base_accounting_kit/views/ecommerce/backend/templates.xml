@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+<record id="ecommerce_api_access_view_form" model="ir.ui.view">
+    <field name="name">API Access Token</field>
+    <field name="model">ecommerce.api.access.token</field>
+    <field name="arch" type="xml">
+        <form string="">
+            <sheet>
+                <group>
+                    <field name="name" />
+                    <field name="token" readonly="1"/>
+                    <field name="active" />
+                </group>
+                <button name="generate_token" string="Generate Token" type="object" class="oe_highlight" icon="fa-refresh">
+                </button>
+            </sheet>
+        </form>
+    </field>
+</record>
+ 
+    <record id="ecommerce_api_access_token_action" model="ir.actions.act_window">
+        <field name="name">Action Name</field>
+        <field name="res_model">ecommerce.api.access.token</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem name="API"
+        id="overall_api_settings"
+        parent="base.menu_custom"
+        sequence="1" />
+
+    <menuitem
+        id="api_access_token_menu"
+        name="API Access Token"
+        action="ecommerce_api_access_token_action"
+        parent="overall_api_settings"
+        sequence="10" />
+</odoo>

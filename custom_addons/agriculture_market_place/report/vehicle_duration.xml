@@ -1,0 +1,161 @@
+<odoo>
+    <!-- QWeb report -->
+    <report
+        id="report_vehicle_duration_template"
+        model="amp.daily.arrival.entry"
+        string="Daily Arrival Report"
+        report_type="qweb-pdf"
+        name="agriculture_market_place.daily_arrival_template"
+        file="agriculture_market_place.daily_arrival_template"
+    />
+
+    <!-- QWeb template -->
+    <template id="vehicle_duration_template">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page">
+                    <div style="font-size: 12px; line-height: 1.6; background-color: #f9f9f9; padding: 20px;">
+                        <t t-set="current_company" t-value="env.user.company_id"/>
+                        <t t-if="current_company.parent_id">
+                            <t t-set="display_company" t-value="current_company.parent_id"/>
+                        </t>
+                        <t t-else="">
+                            <t t-set="display_company" t-value="current_company"/>
+                        </t>
+
+                        <img style="float: right; height: 90px; width: 90px;" src="agriculture_market_place/static/src/img/kalimati logo.png" alt="Kalimati Logo"/>
+                        <img style="float: left; height: 80px; width: 90px;" src="agriculture_market_place/static/src/img/logo.png" alt="Company Logo"/>
+
+                        <!-- Centered content -->
+                        <div style="overflow: hidden; text-align: center; margin: 30px 0;">
+                            <strong><span style="font-weight: 900; font-size: 20px; color: #333;">नेपाल सरकार</span></strong><br/>
+                            <strong><span style="font-weight: 900; font-size: 20px; color: #333;">कृषि तथा पशुपन्छी विकास मन्त्रालय</span></strong><br/>
+                            <strong><span style="font-weight: 900; font-size: 28px; color: #008000;">
+                                कालीमाटी फलफूल तथा तरकारी बजार विकास समिति
+                            </span></strong><br/><br/>
+                        </div>
+
+                        <!-- <div style="text-align: center; margin: 20px 0; font-size: 16px;">
+                            <strong>Arrival Date: <t t-esc="context.get('arrival_date', 'N/A')"/></strong>
+                        </div> -->
+                    </div>
+
+                    <style>
+                        @font-face {
+                            font-family: 'kalimatiregular';
+                            src: url('agriculture_market_place/static/src/font/kalimati regular/Kalimati Regular.otf');
+                        }
+
+                        body {
+                            font-family: 'kalimatiregular', sans-serif;
+                        }
+
+                        #dataTable {
+                            border-collapse: collapse;
+                            width: 100%;
+                            margin: 20px 0;
+                            background-color: #fff;
+                            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        }
+
+                        #dataTable th, #dataTable td {
+                            border: 1px solid #ddd;
+                            padding: 10px;
+                            text-align: center;
+                        }
+
+                        #dataTable th {
+                            background-color: #008000;
+                            color: white;
+                            font-weight: bold;
+                        }
+
+                        #dataTable tr:hover {
+                            background-color: #f1f1f1;
+                        }
+
+                        #dataTable .active {
+                            background-color: #28a745;
+                            color: white;
+                        }
+
+                        #box-1 {
+                            width: 900px;
+                            border: 1px solid black;
+                            padding: 10px;
+                            margin: 20px 0;
+                        }
+                    </style>
+
+                    <!-- Table structure -->
+                    <t t-if="context.get('date_from')">
+                        Start Date: <t t-esc="context.get('date_from')"/>
+                        End Date: <t t-esc="context.get('date_to')"/>
+                    </t>
+                    <t t-if="context.get('report_type')">
+                        प्रतिवेदनको प्रकार: 
+                        <t t-esc="
+                            {
+                                'daily': 'आज',
+                                'weekly': 'यो हप्ता',
+                                'monthly': 'यो महिना',
+                                'custom': 'अनुकूल'
+                            }.get(context.get('report_type'), 'अज्ञात')
+                        "/>
+                    </t>
+ 
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>क्र.सं</th>
+                                <th>आगमन मिति</th>
+                                <th>गाडीको नम्बर</th>
+                                <th>चेकइन मिति</th>
+                                <th>चेकआउट मिति</th>
+                                <th>अवधि (घन्टा)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="serial_number" t-value="0"/>
+                            <t t-foreach="context['data']" t-as="record">
+                                <tr>
+                                    <td>
+                                        <t t-set="serial_number" t-value="serial_number + 1"/>
+                                        <t t-esc="serial_number"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="record['arrival_date_bs']"/>
+                                    </td>
+                                     <td>
+                                        <t t-esc="record['final_number']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="record['check_in_date_bs']"/>
+                                    </td>
+                                     <td>
+                                        <t t-esc="record['check_out_date_bs']"/>
+                                    </td>
+                                     <td>
+                                        <t t-esc="('%.2f' % record['duration'])"/>
+                                    </td>
+                                    
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+
+    <!-- Action for the report -->
+    <record id="action_amp_vehicle_duratoin" model="ir.actions.report">
+        <field name="name">Vehicle Duration Report</field>
+        <field name="model">amp.daily.arrival.entry</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">agriculture_market_place.vehicle_duration_template</field>
+        <field name="binding_model_id" ref="agriculture_market_place.model_amp_daily_arrival_entry"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

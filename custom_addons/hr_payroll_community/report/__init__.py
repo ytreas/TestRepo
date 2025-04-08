@@ -1,0 +1,4 @@
+
+
+from . import report_hr_payroll_community_report_payslip_details
+from . import report_hr_payroll_community_report_contribution_register

@@ -1,0 +1,218 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <template id="base_accounting_kit.my_cart" name="my_cart">
+        <t t-call="website.layout">
+            <link rel="stylesheet"
+                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+                integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+                crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+            <xpath expr="//head/*[1]" position="before">
+                <t t-set="title">
+                    <t translation="True">My Cart</t>
+                </t>
+            </xpath>
+            <t t-call="base_accounting_kit.color_palette">
+                <t t-set="color_palette_company" t-value="request.env.user.company_id" />
+            </t>
+            <t t-call-assets="base_accounting_kit.ecommerce_assets" />
+
+
+            <div class="website-wrapper my-cart-page">
+                <t t-if="my_cart">
+                    <t t-call="base_accounting_kit.cart0_products1" />
+                </t>
+                <t t-else="">
+                    <div class="empty-cart0">
+                        <div class="warning">
+                            <t t-translation="True">Your Cart is Empty</t>
+                        </div>
+                        <div class="empty-cart-illustration">
+                            <img src="/base_accounting_kit/static/images/ecommerce/empty-cart.webp"
+                                alt="Empty cart" />
+                        </div>
+                        <a href="/products" class="btn btn-theme">
+                            <t t-translation="True">Shop More</t>
+                        </a>
+                    </div>
+                </t>
+            </div>
+        </t>
+    </template>
+
+
+    <template id="base_accounting_kit.cart0_products1" name="template_name">
+        <div class="cart0-products1 js_render_target_wrapper">
+            <t t-call="base_accounting_kit.my_cart_main" />
+        </div>
+        <div class="let-wrapper order-summary0 sticky-top">
+            <t t-translation="True">My Order Summary</t>
+            <div class="order-details-container">
+                <div class="odc1">
+                    <span><t t-translation="True">Subtotal</t>(<span id="odc_item_count">0</span>
+                        item(s))</span>
+                    <span>
+                        <t t-translation="True">Rs.</t>
+                        <span id="odc_item_price">0.00</span>
+                    </span>
+                </div>
+                <div class="odc2">
+                    <span>
+                        <t t-translation="True">Shipping Fee</t>
+                    </span>
+                    <span>
+                        <t t-translation="True">Rs.</t>
+                        <span id="odc_shipping_price">0.00</span>
+                    </span>
+                </div>
+                <div class="odc-3">
+                    <input type="text" class="voucher" id="my_voucher"
+                        placeholder="Enter Voucher Code Here..." />
+                    <button class="btn btn-primary">
+                        <t t-translation="True">Apply</t>
+                    </button>
+                </div>
+                <div class="odc4">
+                    <span>
+                        <t t-translation="True">Total</t>
+                    </span>
+                    <span>
+                        <t t-translation="True">Rs.</t>
+                        <span id="odc_total_price">0.00</span>
+                    </span>
+                </div>
+                <div class="odc5 row">
+                    <form action="/proceed-to-checkout" method="POST"
+                        class="row proceed_to_payment_form">
+                        <input type="hidden" name="csrf_token"
+                            t-attf-value="#{request.csrf_token()}" />
+                        <input type="hidden" name="voucher" id="voucher" />
+                        <input type="hidden" name="t_amt" id="t_amt" />
+                        <input type="hidden" name="type" value="cart" />
+                        <input type="hidden" name="my_orders[]" id="my_orders" />
+                        <button class="btn proceed_btn"><t t-translation="True">Proceed To Checkout(</t><span
+                                id="checkout_qty">0</span>)</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="base_accounting_kit.my_cart_main" name="My Cart Main">
+        <div class="let-wrapper cart0-products1-item item-header0">
+            <div class="count-left">
+                <input type="checkbox" class="form-check-input transition-3s" id="select_all0" />
+                <label for="select_all0">Select everything (<t t-esc="len(my_cart)" /> item(s))</label>
+
+            </div>
+            <div class="action-right action-delete">
+                <i class="fa-solid fa-trash me-1"></i>
+                <t t-translation="true">Delete</t>
+            </div>
+        </div>
+        <t t-foreach="related_companies" t-as="rc">
+            <div class="let-wrapper cart0-products1-item cpi2">
+                <div class="c-vendor0">
+                    <div class="select g-center">
+                        <input type="checkbox"
+                            class="form-check-input transition-3s select-company" />
+                    </div>
+                    <div>
+                        <a t-attf-href="/products?vendor=#{slug(rc)}"
+                            class="c-vendor-v">
+                            <div t-field="rc.logo"
+                                class="logo-sm-container"
+                                t-options='{"widget": "image","alt-field": "name", "zoom": "True"}' />
+                            <div t-field="rc.name">Softdrax Pvt.
+                                Ltd.</div>
+                        </a>
+                    </div>
+
+                </div>
+                <div class="company-wise-products">
+                    <t t-foreach="my_cart" t-as="cart">
+                        <t t-set="is_out_of_stock" t-value="not cart.product_id.saleable_qty>0" />
+                        <t t-if="rc.id==cart.product_id.company_id.id">
+                            <div class="cart0prd">
+                                <div t-if="not is_out_of_stock" class="cpi0-ch1 select g-center">
+                                    <input type="checkbox"
+                                        class="form-check-input transition-3s select-an-item"
+                                        t-attf-data-item-count="#{cart.quantity}"
+                                        t-attf-data-per-unit-price="#{cart.price_unit}"
+                                        t-attf-data-cart-id="#{cart.id}"
+                                    />
+                                </div>
+
+
+                                <a
+                                    t-attf-href="/products/#{slug(cart.product_id.product_id)}/#{slug(cart.product_id.company_id)}"
+                                    class="cpi0-ch1 thumbnail position-relative">
+                                    <div t-if="is_out_of_stock"
+                                        class="out-of-stock-sm">
+                                        <t t-translation="True">OUT OF STOCK!</t>
+                                    </div>
+                                    <div t-field="cart.product_id.product_featured_image"
+                                        class="d-flex align-items-start justify-content-center oe_unmovable g-center"
+                                        t-options='{"widget": "image", "class": "oe_unmovable product_featured_image", "alt-field": "name", "zoom": "True"}' />
+                                </a>
+
+                                <div class="cpi0-ch2 title">
+                                    <a
+                                        t-attf-href="/products/#{slug(cart.product_id.product_id)}/#{slug(cart.product_id.company_id)}">
+                                        <div t-field="cart.product_id.product_id.name" />
+                                    </a>
+
+                                    <span>
+                                        <t t-foreach="cart.cart_attribute_ids" t-as="cca">
+                                            <span t-field="cca.value_id"
+                                                t-attf-data-attr-id="#{cca.attribute_id.id}" />, </t>
+                                    </span>
+                                </div>
+
+                                <div class="cpi0-ch3 price-action mx-3">
+                                    <div class="price">
+                                        <t t-translation="True">Rs.</t>
+                                        <span t-field="cart.price_unit"></span>
+                                    </div>
+                                    <div class="action">
+                                        <div t-if="not is_out_of_stock" class="wishlist">
+                                            <i class="fa-regular fa-heart add-to-wishlist"
+                                                data-toggle="tooltip"
+                                                data-placement="top"
+                                                t-attf-data-wishlist-id='#{cart.id}'
+                                                title="Add to wishlist"></i>
+                                        </div>
+                                        <div class="delete js_btn_rm_cart"
+                                            t-attf-data-cart-rm-id='#{cart.id}'
+                                            t-attf-data-item-title="#{cart.product_id.product_id.name}"
+                                            title='Remove'>
+                                            <i class="fa-solid fa-trash me-1"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div t-if="not is_out_of_stock"
+                                    class="js_product_quantity cpi0-ch4 quantity">
+                                    <div class="input-group">
+                                        <div class="btn-dec btn" t-attf-data-cart="#{cart.id}">
+                                            <i class="fa-solid fa-minus"></i>
+                                        </div>
+                                        <div class="quantity qtty">
+                                            <input type="text" t-attf-value="#{cart.quantity}"
+                                                class="form-control input-quantity"
+                                                t-attf-data-cart-id="#{cart.id}"
+                                            />
+                                        </div>
+                                        <div class="btn-inc btn" t-attf-data-cart="#{cart.id}">
+                                            <i class="fa-solid fa-plus"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+                </div>
+            </div>
+
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="owl.OwlReportingDashboard" owl="1">
+        <t t-javascript="https://nepalidatepicker.sajanmaharjan.com.np/nepali.datepicker/js/nepali.datepicker.v4.0.5.min.js" />
+        <t t-link="https://nepalidatepicker.sajanmaharjan.com.np/nepali.datepicker/css/nepali.datepicker.v4.0.5.min.css" />
+        
+        <div class="vh-100 overflow-auto bg-muted">
+            <div class="row m-3">
+                <div class="col-lg-12">
+                    <header>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="w-100 text-center">
+                                <h2 style=" 
+                                    text-decoration: underline;
+                                    color: #7eed9c;
+                                    text-shadow: 0px 0px 5px rgb(236, 245, 237), 0px 0px 10px rgb(223, 241, 224), 0px 0px 15px rgb(224, 245, 230), 0px 0px 20px #49f276;">
+                                    Arrival Report
+                                </h2>
+                            </div>
+                            <button class="btn btn-success custom-btn" t-on-click="onPrint">
+                                Print Chart
+                            </button>
+                        </div>
+                    </header>
+
+                    <!-- Date Range Inputs for the First Chart -->
+                    <div class="row mb-4">
+                        <div class="col-4">
+                            <label for="arrival_date_from" class="form-label">Arrival Date From:</label>
+                            <input type="text" id="arrival_date_from" class="form-control nepali-datepicker" t-model="state.startDate" />
+                        </div>
+                        <div class="col-4">
+                            <label for="arrival_date_to" class="form-label">Arrival Date To:</label>
+                            <input type="text" id="arrival_date_to" class="form-control nepali-datepicker" t-model="state.endDate"/>
+                        </div>
+                        <div class="col-4">
+                            <label for="commodity_name" class="form-label">Select Name:</label>
+                            <select id="commodity_name" class="form-select" t-model="state.selectedCommodity" t-on-change="onCommodityChange">
+                                <option value="">Select a Name</option>
+                                <t t-foreach="state.names" t-as="name" t-key="name.id">
+                                    <option t-att-value="name.id" t-esc="name.name"/>
+                                </t>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chart for Arrival Report -->
+                <div class="col-lg-12 printable-chart" id="printable-section">
+                    <div class="row">
+                        <div class="col m-0 p-0">
+                            <div class="shadow-sm border m-2 p-4 bg-white">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <h3 class="text-primary fw-bold">Arrivals</h3>
+                                    <div class="px-3 py-1 bg-primary cursor-pointer">
+                                        <span class="fa fa-arrow-right text-white"/>
+                                    </div>
+                                </div>
+                                <ChartRenderer type="'line'" title="'Arrival Report'" 
+                                    config="state.fetchData"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            
+                <!-- <t t-if="state.treeListData">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Commodity Name</th>
+                                    <th>Arrival Date</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="state.treeListData" t-as="commodityGroup" t-key="commodityGroup.name">
+                                    
+                                    <tr>
+                                        <td colspan="3" class="bg-light">
+                                            <strong t-esc="commodityGroup.name" />
+                                        </td>
+                                    </tr>
+                                   
+                                    <t t-foreach="commodityGroup.children" t-as="arrival" t-key="arrival.arrival_date_bs">
+                                        <tr>
+                                            <td></td>
+                                            <td t-esc="arrival.arrival_date_bs" />
+                                            <td t-esc="arrival.total" />
+                                        </tr>
+                                    </t>
+                                </t>
+                            </tbody>
+                        </table>
+                    </t>
+                    <t t-else="">
+                        <p>No tree list data found.</p>
+                    </t> -->
+
+
+            </div>
+        </div>
+    </t>
+</templates>
+

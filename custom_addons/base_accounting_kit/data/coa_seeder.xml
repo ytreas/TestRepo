@@ -1,0 +1,2739 @@
+<odoo>
+    <data>
+        <record id="account_1" model="account.account">
+            <field name="code">30000</field>
+            <field name="name">Assets</field>
+            <field name="account_type">asset_fixed</field>
+            <field name="account_nepali">सम्पत्ति</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_2" model="account.account">
+            <field name="code">31000</field>
+            <field name="name">Fixed Assets</field>
+            <field name="account_type">asset_fixed</field>
+            <field name="account_nepali">स्थिर सम्पत्ति</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_3" model="account.account">
+            <field name="code">31112</field>
+            <field name="name">Building</field>
+            <field name="account_type">asset_fixed</field>
+            <field name="account_nepali">भवन</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_4" model="account.account">
+            <field name="code">31113</field>
+            <field name="name">Office Equipments</field>
+            <field name="account_type">asset_fixed</field>
+            <field name="account_nepali">कार्यालय उपकरण</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_5" model="account.account">
+            <field name="code">31114</field>
+            <field name="name">Land</field>
+            <field name="account_type">asset_fixed</field>
+            <field name="account_nepali">जग्गा</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_6" model="account.account">
+            <field name="code">31115</field>
+            <field name="name">Furniture &amp; Fixtures</field>
+            <field name="account_type">asset_fixed</field>
+            <field name="account_nepali">फर्निचर तथा फिक्चर्स</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_7" model="account.account">
+            <field name="code">31121</field>
+            <field name="name">Vehicles</field>
+            <field name="account_type">asset_fixed</field>
+            <field name="account_nepali">सवारी साधन</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_8" model="account.account">
+            <field name="code">31122</field>
+            <field name="name">Plant &amp; Machinery</field>
+            <field name="account_type">asset_fixed</field>
+            <field name="account_nepali">मेसिनरी उपकरण</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_9" model="account.account">
+            <field name="code">31123</field>
+            <field name="name">Long Term Investments</field>
+            <field name="account_type">asset_fixed</field>
+            <field name="account_nepali">दीर्घकालीन लगानी</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_10" model="account.account">
+            <field name="code">31124</field>
+            <field name="name">Intangible Assets</field>
+            <field name="account_type">asset_fixed</field>
+            <field name="account_nepali">अमूर्त सम्पत्ति</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_11" model="account.account">
+            <field name="code">32000</field>
+            <field name="name">Current Assets</field>
+            <field name="account_type">asset_current</field>
+            <field name="account_nepali">चालु सम्पत्ति</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_12" model="account.account">
+            <field name="code">32121</field>
+            <field name="name">Cash on Hand</field>
+            <field name="account_type">asset_cash</field>
+            <field name="account_nepali">नगद मौज्दात</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_13" model="account.account">
+            <field name="code">32122</field>
+            <field name="name">Cash in Bank</field>
+            <field name="account_type">asset_cash</field>
+            <field name="account_nepali">बैंक मौज्दात</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_14" model="account.account">
+            <field name="code">32123</field>
+            <field name="name">Office Supplies</field>
+            <field name="account_type">asset_current</field>
+            <field name="account_nepali">पाठ्यपुस्तक सामाग्री मौज्दात</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_15" model="account.account">
+            <field name="code">32124</field>
+            <field name="name">Inventory</field>
+            <field name="account_type">asset_current</field>
+            <field name="account_nepali">मौज्दात</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_16" model="account.account">
+            <field name="code">32125</field>
+            <field name="name">Accounts Receivable</field>
+            <field name="account_type">asset_receivable</field>
+            <field name="account_nepali">लिनुपर्ने बाँकी</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_17" model="account.account">
+            <field name="code">32126</field>
+            <field name="name">Advances &amp; Deposits</field>
+            <field name="account_type">asset_prepayments</field>
+            <field name="account_nepali">पेश्की बाँकी</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_18" model="account.account">
+            <field name="code">32127</field>
+            <field name="name">Short Term Investments</field>
+            <field name="account_type">asset_current</field>
+            <field name="account_nepali">अल्पकालीन लगानी</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_19" model="account.account">
+            <field name="code">32128</field>
+            <field name="name">Cheque on Transit</field>
+            <field name="account_type">asset_current</field>
+            <field name="account_nepali">जम्मा हुन बाँकी चेक</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_20" model="account.account">
+            <field name="code">32129</field>
+            <field name="name">Goods on Transit</field>
+            <field name="account_type">asset_current</field>
+            <field name="account_nepali">दाखिला हुन बाँकी सामाग्री</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_21" model="account.account">
+            <field name="code">40000</field>
+            <field name="name">Equity</field>
+            <field name="account_type">equity</field>
+            <field name="account_nepali">पुँजी</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_22" model="account.account">
+            <field name="code">40100</field>
+            <field name="name">Capital Fund</field>
+            <field name="account_type">equity</field>
+            <field name="account_nepali">पुँजी कोष</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_23" model="account.account">
+            <field name="code">40200</field>
+            <field name="name">Other Funds</field>
+            <field name="account_type">equity</field>
+            <field name="account_nepali">अन्य कोषहरु</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_24" model="account.account">
+            <field name="code">50000</field>
+            <field name="name">Liabilities</field>
+            <field name="account_type">liability_non_current</field>
+            <field name="account_nepali">दायित्व</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_25" model="account.account">
+            <field name="code">51000</field>
+            <field name="name">Non-Current Liabilities</field>
+            <field name="account_type">liability_non_current</field>
+            <field name="account_nepali">पुँजीगत दायित्व</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_26" model="account.account">
+            <field name="code">51100</field>
+            <field name="name">Loans</field>
+            <field name="account_type">liability_long_term</field>
+            <field name="account_nepali">कर्जा</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_27" model="account.account">
+            <field name="code">52000</field>
+            <field name="name">Current Liabilities</field>
+            <field name="account_type">liability_current</field>
+            <field name="account_nepali">चालु दायित्व</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_28" model="account.account">
+            <field name="code">52100</field>
+            <field name="name">Accounts Payable</field>
+            <field name="account_type">liability_payable</field>
+            <field name="account_nepali">दिनुपर्ने बाँकी</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_29" model="account.account">
+            <field name="code">52200</field>
+            <field name="name">Accrued Expenses</field>
+            <field name="account_type">liability_current</field>
+            <field name="account_nepali">अर्जित खर्च</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_30" model="account.account">
+            <field name="code">52300</field>
+            <field name="name">Security Deposits</field>
+            <field name="account_type">liability_current</field>
+            <field name="account_nepali">धरौटी</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_31" model="account.account">
+            <field name="code">60000</field>
+            <field name="name">Suspense A/c</field>
+            <field name="account_type">off_balance</field>
+            <field name="account_nepali">पार्किङ खाता</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_32" model="account.account">
+            <field name="code">60100</field>
+            <field name="name">Suspense A/c</field>
+            <field name="account_type">off_balance</field>
+            <field name="account_nepali">पार्किङ खाता</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_33" model="account.account">
+            <field name="code">0000000001</field>
+            <field name="name">Revenue</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">आम्दानी</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_34" model="account.account">
+            <field name="code">10000</field>
+            <field name="name">Academic Institutions</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">शैक्षिक संस्थाहरु</field>
+            <field name="business_type" ref="business_type_17"></field>
+        </record>
+
+        <record id="account_35" model="account.account">
+            <field name="code">13311</field>
+            <field name="name">Equalization Grant</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">समानिकरण अनुदान</field>
+            <field name="business_type" ref="business_type_17"></field>
+        </record>
+
+        <record id="account_36" model="account.account">
+            <field name="code">13312</field>
+            <field name="name">Conditional Current Grant</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">सशर्त चालु अनुदान</field>
+            <field name="business_type" ref="business_type_17"></field>
+        </record>
+
+        <record id="account_37" model="account.account">
+            <field name="code">13313</field>
+            <field name="name">Conditional Capital Grant</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">सशर्त पुँजीगत अनुदान</field>
+            <field name="business_type" ref="business_type_17"></field>
+        </record>
+
+        <record id="account_38" model="account.account">
+            <field name="code">14119</field>
+            <field name="name">Interest Received From Other Entities</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">अन्य निकायबाट प्राप्त ब्याज</field>
+            <field name="business_type" ref="business_type_17"></field>
+        </record>
+
+        <record id="account_39" model="account.account">
+            <field name="code">14121</field>
+            <field name="name">Dividends Received From Financing Bodies</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">वित्तीय निकायबाट प्राप्त लाभांश</field>
+            <field name="business_type" ref="business_type_17"></field>
+        </record>
+
+        <record id="account_40" model="account.account">
+            <field name="code">14151</field>
+            <field name="name">Income Received From Restitution Of Government Property</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">सरकारी सम्पत्तिको वहालबाट प्राप्त आय</field>
+            <field name="business_type" ref="business_type_17"></field>
+        </record>
+
+        <record id="account_41" model="account.account">
+            <field name="code">14211</field>
+            <field name="name">Amount Received From Sale Of Agricultural Produce</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">कृषि उत्पादनको बिक्रीबाट प्राप्त रकम</field>
+            <field name="business_type" ref="business_type_17"></field>
+        </record>
+
+        <record id="account_42" model="account.account">
+            <field name="code">14212</field>
+            <field name="name">Amount Received From Sale Of Government Property</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">सरकारी सम्पत्तिको बिक्रीबाट प्राप्त रकम</field>
+            <field name="business_type" ref="business_type_17"></field>
+        </record>
+
+        <record id="account_43" model="account.account">
+            <field name="code">14213</field>
+            <field name="name">Amount Received From Other sales</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">अन्य बिक्रीबाट प्राप्त रकम</field>
+            <field name="business_type" ref="business_type_17"></field>
+        </record>
+
+        <record id="account_44" model="account.account">
+            <field name="code">14223</field>
+            <field name="name">Education Sector Income</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">शिक्षा क्षेत्रको आम्दानी</field>
+            <field name="business_type" ref="business_type_17"></field>
+        </record>
+
+        <record id="account_45" model="account.account">
+            <field name="code">14224</field>
+            <field name="name">Exam Fee</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">परिक्षा शुल्क</field>
+            <field name="business_type" ref="business_type_17"></field>
+        </record>
+
+        <record id="account_46" model="account.account">
+            <field name="code">14225</field>
+            <field name="name">Transportation Fee</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">यातायात शुल्क</field>
+            <field name="business_type" ref="business_type_17"></field>
+        </record>
+
+        <record id="account_47" model="account.account">
+            <field name="code">14229</field>
+            <field name="name">Other Administrative Service Charges</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">अन्य प्रशासनिक सेवा शुल्क</field>
+            <field name="business_type" ref="business_type_17"></field>
+        </record>
+
+        <record id="account_48" model="account.account">
+            <field name="code">14230</field>
+            <field name="name">Library and Lab Fee</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">पुस्तकालय तथा प्रयोगशाला शुल्क</field>
+            <field name="business_type" ref="business_type_17"></field>
+        </record>
+
+        <record id="account_49" model="account.account">
+            <field name="code">14231</field>
+            <field name="name">Tuition Fee</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">टिउसन शुल्क</field>
+            <field name="business_type" ref="business_type_17"></field>
+        </record>
+
+        <record id="account_50" model="account.account">
+            <field name="code">14312</field>
+            <field name="name">Administrative Penalties, Fines And Forfeitures</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">प्रशासनिक दण्ड, जरिवाना र जफत</field>
+            <field name="business_type" ref="business_type_17"></field>
+        </record>
+
+        <record id="account_51" model="account.account">
+            <field name="code">14411</field>
+            <field name="name">Current Transfer</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">चालु हस्तान्तरण</field>
+            <field name="business_type" ref="business_type_17"></field>
+        </record>
+
+        <record id="account_52" model="account.account">
+            <field name="code">14421</field>
+            <field name="name">Capital Transfer</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">पुँजीगत हस्तान्तरण</field>
+            <field name="business_type" ref="business_type_17"></field>
+        </record>
+
+        <record id="account_53" model="account.account">
+            <field name="code">15111</field>
+            <field name="name">Beruju</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">बेरुजु</field>
+            <field name="business_type" ref="business_type_17"></field>
+        </record>
+
+        <record id="account_54" model="account.account">
+            <field name="code">15112</field>
+            <field name="name">Withdrawal Return</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">निकासा फिर्ता</field>
+            <field name="business_type" ref="business_type_17"></field>
+        </record>
+
+        <record id="account_55" model="account.account">
+            <field name="code">15113</field>
+            <field name="name">Advance Return</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">पेश्की फिर्ता</field>
+            <field name="business_type" ref="business_type_17"></field>
+        </record>
+
+        <record id="account_56" model="account.account">
+            <field name="code">100100000</field>
+            <field name="name">Groceries</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">किराना तथा खाद्यान्न</field>
+            <field name="business_type" ref="business_type_1"></field>
+        </record>
+
+        <record id="account_57" model="account.account">
+            <field name="code">100100100</field>
+            <field name="name">Rice-Basmati</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">बासमती चामल</field>
+            <field name="business_type" ref="business_type_1"></field>
+        </record>
+
+        <record id="account_58" model="account.account">
+            <field name="code">100100200</field>
+            <field name="name">Rice-Brown</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">खैरो चामल</field>
+            <field name="business_type" ref="business_type_1"></field>
+        </record>
+
+        <record id="account_59" model="account.account">
+            <field name="code">100100300</field>
+            <field name="name">Rice-Local Produced</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">स्थानीय उत्पादित चामल</field>
+            <field name="business_type" ref="business_type_1"></field>
+        </record>
+
+        <record id="account_60" model="account.account">
+            <field name="code">100100400</field>
+            <field name="name">Rice-Long Grain</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">लामो दाना चामल</field>
+            <field name="business_type" ref="business_type_1"></field>
+        </record>
+
+        <record id="account_61" model="account.account">
+            <field name="code">100100500</field>
+            <field name="name">Rice-Jeera Masino</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">जीरा मसिनो चामल</field>
+            <field name="business_type" ref="business_type_1"></field>
+        </record>
+
+        <record id="account_62" model="account.account">
+            <field name="code">100100600</field>
+            <field name="name">Pasta-Spagetti</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">पास्ता-स्पागेटी</field>
+            <field name="business_type" ref="business_type_1"></field>
+        </record>
+
+        <record id="account_63" model="account.account">
+            <field name="code">100100700</field>
+            <field name="name">Pasta-Penne</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">पास्ता-पेनी</field>
+            <field name="business_type" ref="business_type_1"></field>
+        </record>
+
+        <record id="account_64" model="account.account">
+            <field name="code">100100800</field>
+            <field name="name">Canned Beans</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">क्यान्ड गेडागुडी</field>
+            <field name="business_type" ref="business_type_1"></field>
+        </record>
+
+        <record id="account_65" model="account.account">
+            <field name="code">100100900</field>
+            <field name="name">Canned Vegetables</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">क्यान्ड सब्जीहरू</field>
+            <field name="business_type" ref="business_type_1"></field>
+        </record>
+
+        <record id="account_66" model="account.account">
+            <field name="code">100101000</field>
+            <field name="name">Canned Soups</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">क्यान्ड सूपहरू</field>
+            <field name="business_type" ref="business_type_1"></field>
+        </record>
+
+        <record id="account_67" model="account.account">
+            <field name="code">100101100</field>
+            <field name="name">Olive Oil</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">जैतून को तेल</field>
+            <field name="business_type" ref="business_type_1"></field>
+        </record>
+
+        <record id="account_68" model="account.account">
+            <field name="code">100101200</field>
+            <field name="name">Sunflower Oil</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">सुर्यमुखीको तेल</field>
+            <field name="business_type" ref="business_type_1"></field>
+        </record>
+
+        <record id="account_69" model="account.account">
+            <field name="code">100101300</field>
+            <field name="name">Peanut Oil</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">बदामको तेल</field>
+            <field name="business_type" ref="business_type_1"></field>
+        </record>
+
+        <record id="account_70" model="account.account">
+            <field name="code">100101400</field>
+            <field name="name">Vegetable Oil</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">भटमासको तेल</field>
+            <field name="business_type" ref="business_type_1"></field>
+        </record>
+
+        <record id="account_71" model="account.account">
+            <field name="code">100101500</field>
+            <field name="name">Salt</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">नुन</field>
+            <field name="business_type" ref="business_type_1"></field>
+        </record>
+
+        <record id="account_72" model="account.account">
+            <field name="code">100101600</field>
+            <field name="name">Sugar</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">चिनी</field>
+            <field name="business_type" ref="business_type_1"></field>
+        </record>
+
+        <record id="account_73" model="account.account">
+            <field name="code">100101700</field>
+            <field name="name">Pepper Powder</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">मरिच पाउडर</field>
+            <field name="business_type" ref="business_type_1"></field>
+        </record>
+
+        <record id="account_74" model="account.account">
+            <field name="code">100101800</field>
+            <field name="name">Pepper Seeds</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">मरिच गेडा</field>
+            <field name="business_type" ref="business_type_1"></field>
+        </record>
+
+        <record id="account_75" model="account.account">
+            <field name="code">100101900</field>
+            <field name="name">All Purpose Flour</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">सधै प्रयोग हुने आटा</field>
+            <field name="business_type" ref="business_type_1"></field>
+        </record>
+
+        <record id="account_76" model="account.account">
+            <field name="code">100102000</field>
+            <field name="name">Millet Flour</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">कोदोको आटा</field>
+            <field name="business_type" ref="business_type_1"></field>
+        </record>
+
+        <record id="account_77" model="account.account">
+            <field name="code">100102100</field>
+            <field name="name">Corn Flour</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">मकैको आटा</field>
+            <field name="business_type" ref="business_type_1"></field>
+        </record>
+
+        <record id="account_78" model="account.account">
+            <field name="code">100102200</field>
+            <field name="name">Wheat Flour</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">गहुँको आटा</field>
+            <field name="business_type" ref="business_type_1"></field>
+        </record>
+
+        <record id="account_79" model="account.account">
+            <field name="code">100102300</field>
+            <field name="name">Tea</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">चिया</field>
+            <field name="business_type" ref="business_type_1"></field>
+        </record>
+
+        <record id="account_80" model="account.account">
+            <field name="code">100102400</field>
+            <field name="name">Coffee</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">कफी</field>
+            <field name="business_type" ref="business_type_1"></field>
+        </record>
+
+        <!-- Beverage Service -->
+        <record id="account_81" model="account.account">
+            <field name="code">100200000</field>
+            <field name="name">Beverage Service</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">पेय पदार्थ</field>
+            <field name="business_type" ref="business_type_2"></field>
+        </record>
+
+        <record id="account_82" model="account.account">
+            <field name="code">100200100</field>
+            <field name="name">Water</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">पानी</field>
+            <field name="business_type" ref="business_type_2"></field>
+        </record>
+
+        <record id="account_83" model="account.account">
+            <field name="code">100200200</field>
+            <field name="name">Soft Drinks</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">सफ्ट ड्रिक्स</field>
+            <field name="business_type" ref="business_type_2"></field>
+        </record>
+
+        <record id="account_84" model="account.account">
+            <field name="code">100200300</field>
+            <field name="name">Juice</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">जुस</field>
+            <field name="business_type" ref="business_type_2"></field>
+        </record>
+
+        <record id="account_85" model="account.account">
+            <field name="code">100200400</field>
+            <field name="name">Tea</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">चिया</field>
+            <field name="business_type" ref="business_type_2"></field>
+        </record>
+
+        <record id="account_86" model="account.account">
+            <field name="code">100200500</field>
+            <field name="name">Coffee</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">कफी</field>
+            <field name="business_type" ref="business_type_2"></field>
+        </record>
+
+        <record id="account_87" model="account.account">
+            <field name="code">100200600</field>
+            <field name="name">Hard Drinks</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">मधिरा</field>
+            <field name="business_type" ref="business_type_2"></field>
+        </record>
+
+        <record id="account_88" model="account.account">
+            <field name="code">100200700</field>
+            <field name="name">Wine</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">वाइन</field>
+            <field name="business_type" ref="business_type_2"></field>
+        </record>
+
+
+        Hotel, Restaurant &amp; Catering Service
+        <record id="account_89" model="account.account">
+            <field name="code">100300000</field>
+            <field name="name">Hotel, Restaurant &amp; Catering Service</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">होटेल, रेस्टुरेन्ट र केटरिङ सेवा</field>
+            <field name="business_type" ref="business_type_3"></field>
+        </record>
+
+        <record id="account_90" model="account.account">
+            <field name="code">100300100</field>
+            <field name="name">Breakfast</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">खाजा</field>
+            <field name="business_type" ref="business_type_3"></field>
+        </record>
+
+        <record id="account_91" model="account.account">
+            <field name="code">100300200</field>
+            <field name="name">Lunch</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">दिवा खाना</field>
+            <field name="business_type" ref="business_type_3"></field>
+        </record>
+
+        <record id="account_92" model="account.account">
+            <field name="code">100300300</field>
+            <field name="name">Dinner</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">बेलुकाको खाना</field>
+            <field name="business_type" ref="business_type_3"></field>
+        </record>
+
+        <record id="account_93" model="account.account">
+            <field name="code">100300400</field>
+            <field name="name">Snacks</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">स्न्याक</field>
+            <field name="business_type" ref="business_type_3"></field>
+        </record>
+
+        <record id="account_94" model="account.account">
+            <field name="code">100300500</field>
+            <field name="name">Water</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">पानी</field>
+            <field name="business_type" ref="business_type_3"></field>
+        </record>
+
+        <record id="account_95" model="account.account">
+            <field name="code">100300600</field>
+            <field name="name">Soft Drinks</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">सफ्ट ड्रिक्स</field>
+            <field name="business_type" ref="business_type_3"></field>
+        </record>
+
+        <record id="account_96" model="account.account">
+            <field name="code">100300700</field>
+            <field name="name">Juice</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">जुस</field>
+            <field name="business_type" ref="business_type_3"></field>
+        </record>
+
+        <record id="account_97" model="account.account">
+            <field name="code">100300800</field>
+            <field name="name">Tea</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">चिया</field>
+            <field name="business_type" ref="business_type_3"></field>
+        </record>
+
+        <record id="account_98" model="account.account">
+            <field name="code">100300900</field>
+            <field name="name">Coffee</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">कफी</field>
+            <field name="business_type" ref="business_type_3"></field>
+        </record>
+
+        <record id="account_99" model="account.account">
+            <field name="code">100301000</field>
+            <field name="name">Hard Drinks</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">मधिरा</field>
+            <field name="business_type" ref="business_type_3"></field>
+        </record>
+
+        <record id="account_100" model="account.account">
+            <field name="code">100301100</field>
+            <field name="name">Wine</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">वाइन</field>
+            <field name="business_type" ref="business_type_3"></field>
+        </record>
+
+        <record id="account_101" model="account.account">
+            <field name="code">100301200</field>
+            <field name="name">Single Room</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">एकल कोठा</field>
+            <field name="business_type" ref="business_type_3"></field>
+        </record>
+
+        <record id="account_102" model="account.account">
+            <field name="code">100301300</field>
+            <field name="name">Family Room</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">पारिवारिक कोठा</field>
+            <field name="business_type" ref="business_type_3"></field>
+        </record>
+
+        <record id="account_103" model="account.account">
+            <field name="code">100301400</field>
+            <field name="name">Deluxe Single Room</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">डिलक्स एकल कोठा</field>
+            <field name="business_type" ref="business_type_3"></field>
+        </record>
+
+        <record id="account_104" model="account.account">
+            <field name="code">100301500</field>
+            <field name="name">Deluxe Family Room</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">डिलक्स पारिवारिक कोठा</field>
+            <field name="business_type" ref="business_type_3"></field>
+        </record>
+
+        Electrical Supplies Service
+        <record id="account_100400000" model="account.account">
+            <field name="code">100400000</field>
+            <field name="name">Electrical Supplies Service</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">विद्युतीय सामाग्री तथा उपकरण सेवा</field>
+            <field name="business_type" ref="business_type_4"></field>
+        </record>
+
+        <record id="account_100400100" model="account.account">
+            <field name="code">100400100</field>
+            <field name="name">Computer &amp;amp; Laptops</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">कम्प्युटर र ल्यापटपहरू</field>
+            <field name="business_type" ref="business_type_4"></field>
+        </record>
+
+        <record id="account_100400200" model="account.account">
+            <field name="code">100400200</field>
+            <field name="name">Television</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">टेलिभिजन</field>
+            <field name="business_type" ref="business_type_4"></field>
+        </record>
+
+        <record id="account_100400300" model="account.account">
+            <field name="code">100400300</field>
+            <field name="name">Radio</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">रेडियो</field>
+            <field name="business_type" ref="business_type_4"></field>
+        </record>
+
+        <record id="account_100400400" model="account.account">
+            <field name="code">100400400</field>
+            <field name="name">Mobile</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">मोबाइल</field>
+            <field name="business_type" ref="business_type_4"></field>
+        </record>
+
+        <record id="account_100400500" model="account.account">
+            <field name="code">100400500</field>
+            <field name="name">Printer &amp;amp; Scanner</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">प्रिन्टर र स्क्यानर</field>
+            <field name="business_type" ref="business_type_4"></field>
+        </record>
+
+        <record id="account_100400600" model="account.account">
+            <field name="code">100400600</field>
+            <field name="name">Electric Heater</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">इलेक्ट्रिक हिटर</field>
+            <field name="business_type" ref="business_type_4"></field>
+        </record>
+
+        <record id="account_100400700" model="account.account">
+            <field name="code">100400700</field>
+            <field name="name">Air Conditioner</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">एयर कन्डिशनर</field>
+            <field name="business_type" ref="business_type_4"></field>
+        </record>
+
+        <record id="account_100400800" model="account.account">
+            <field name="code">100400800</field>
+            <field name="name">Charger</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">चार्जर</field>
+            <field name="business_type" ref="business_type_4"></field>
+        </record>
+
+        <record id="account_100400900" model="account.account">
+            <field name="code">100400900</field>
+            <field name="name">Multiplug</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">मल्टीप्लग</field>
+            <field name="business_type" ref="business_type_4"></field>
+        </record>
+
+        <record id="account_100401000" model="account.account">
+            <field name="code">100401000</field>
+            <field name="name">Multimedia</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">मल्टिमिडिया</field>
+            <field name="business_type" ref="business_type_4"></field>
+        </record>
+
+        <record id="account_100401100" model="account.account">
+            <field name="code">100401100</field>
+            <field name="name">Projector</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">प्रोजेक्टर</field>
+            <field name="business_type" ref="business_type_4"></field>
+        </record>
+
+        <record id="account_100401200" model="account.account">
+            <field name="code">100401200</field>
+            <field name="name">Wires &amp;amp; Cables</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">तार र केबलहरू</field>
+            <field name="business_type" ref="business_type_4"></field>
+        </record>
+
+        <record id="account_100401300" model="account.account">
+            <field name="code">100401300</field>
+            <field name="name">Remote Controller</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">रिमोट कन्ट्रोल</field>
+            <field name="business_type" ref="business_type_4"></field>
+        </record>
+
+        <record id="account_100401400" model="account.account">
+            <field name="code">100401400</field>
+            <field name="name">Switch Board</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">स्विच बोर्ड</field>
+            <field name="business_type" ref="business_type_4"></field>
+        </record>
+
+        <record id="account_100401500" model="account.account">
+            <field name="code">100401500</field>
+            <field name="name">Fan</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">पंखा</field>
+            <field name="business_type" ref="business_type_4"></field>
+        </record>
+
+        <record id="account_100401600" model="account.account">
+            <field name="code">100401600</field>
+            <field name="name">Mixture</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">मिक्सचर</field>
+            <field name="business_type" ref="business_type_4"></field>
+        </record>
+
+        <record id="account_100401700" model="account.account">
+            <field name="code">100401700</field>
+            <field name="name">Iron</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">स्त्री</field>
+            <field name="business_type" ref="business_type_4"></field>
+        </record>
+
+        <!-- Hardware Service -->
+        <record id="account_100500000" model="account.account">
+            <field name="code">100500000</field>
+            <field name="name">Hardware Service</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">हार्डवेयर सेवा</field>
+            <field name="business_type" ref="business_type_5"></field>
+        </record>
+
+        <record id="account_100500100" model="account.account">
+            <field name="code">100500100</field>
+            <field name="name">Nuts &amp;amp; Bolts</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">बोल्ट र नट्स</field>
+            <field name="business_type" ref="business_type_5"></field>
+        </record>
+
+        <record id="account_100500200" model="account.account">
+            <field name="code">100500200</field>
+            <field name="name">Pipe &amp;amp; Fittings</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">पाइप र फिटिङ्स</field>
+            <field name="business_type" ref="business_type_5"></field>
+        </record>
+
+        <record id="account_100500300" model="account.account">
+            <field name="code">100500300</field>
+            <field name="name">Drills</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">ड्रिल्स</field>
+            <field name="business_type" ref="business_type_5"></field>
+        </record>
+
+        <record id="account_100500400" model="account.account">
+            <field name="code">100500400</field>
+            <field name="name">Saws</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">बेल्चा</field>
+            <field name="business_type" ref="business_type_5"></field>
+        </record>
+
+        <record id="account_100500500" model="account.account">
+            <field name="code">100500500</field>
+            <field name="name">Tool Box</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">टुल बक्स</field>
+            <field name="business_type" ref="business_type_5"></field>
+        </record>
+
+        <record id="account_100500600" model="account.account">
+            <field name="code">100500600</field>
+            <field name="name">Tool Bag</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">टुल ब्याग</field>
+            <field name="business_type" ref="business_type_5"></field>
+        </record>
+
+        <record id="account_100500700" model="account.account">
+            <field name="code">100500700</field>
+            <field name="name">Screw Driver</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">स्क्रू ड्राइभर</field>
+            <field name="business_type" ref="business_type_5"></field>
+        </record>
+
+        <record id="account_100500800" model="account.account">
+            <field name="code">100500800</field>
+            <field name="name">Bathroom Fixtures</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">बाथरूम फिक्चर्स</field>
+            <field name="business_type" ref="business_type_5"></field>
+        </record>
+
+        <record id="account_100500900" model="account.account">
+            <field name="code">100500900</field>
+            <field name="name">Kitchen Faucets</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">किचन नल</field>
+            <field name="business_type" ref="business_type_5"></field>
+        </record>
+
+        <record id="account_100501000" model="account.account">
+            <field name="code">100501000</field>
+            <field name="name">Mirror</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">ऐना</field>
+            <field name="business_type" ref="business_type_5"></field>
+        </record>
+
+        <record id="account_100501100" model="account.account">
+            <field name="code">100501100</field>
+            <field name="name">Cement &amp;amp; Supplies</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">सिमेन्ट र सप्लाइज</field>
+            <field name="business_type" ref="business_type_5"></field>
+        </record>
+
+        <record id="account_100501200" model="account.account">
+            <field name="code">100501200</field>
+            <field name="name">Paint</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">पेन्ट</field>
+            <field name="business_type" ref="business_type_5"></field>
+        </record>
+
+        <record id="account_100501300" model="account.account">
+            <field name="code">100501300</field>
+            <field name="name">Bricks</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">इट्टा</field>
+            <field name="business_type" ref="business_type_5"></field>
+        </record>
+
+        <record id="account_100501400" model="account.account">
+            <field name="code">100501400</field>
+            <field name="name">Tiles</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">टाइल्स</field>
+            <field name="business_type" ref="business_type_5"></field>
+        </record>
+
+        <record id="account_100501500" model="account.account">
+            <field name="code">100501500</field>
+            <field name="name">Marbles</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">मार्बल्स</field>
+            <field name="business_type" ref="business_type_5"></field>
+        </record>
+
+        <record id="account_100501600" model="account.account">
+            <field name="code">100501600</field>
+            <field name="name">Granite</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">ग्रेनाइट</field>
+            <field name="business_type" ref="business_type_5"></field>
+        </record>
+
+        <record id="account_100501700" model="account.account">
+            <field name="code">100501700</field>
+            <field name="name">Tap</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">धारा</field>
+            <field name="business_type" ref="business_type_5"></field>
+        </record>
+
+        <record id="account_100501800" model="account.account">
+            <field name="code">100501800</field>
+            <field name="name">Copper Pipes</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">तामाको पाइप</field>
+            <field name="business_type" ref="business_type_5"></field>
+        </record>
+
+        <record id="account_100501900" model="account.account">
+            <field name="code">100501900</field>
+            <field name="name">Grinders</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">ग्राइन्डर</field>
+            <field name="business_type" ref="business_type_5"></field>
+        </record>
+
+        <record id="account_100502000" model="account.account">
+            <field name="code">100502000</field>
+            <field name="name">Iron Wire</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">फलामको तार</field>
+            <field name="business_type" ref="business_type_5"></field>
+        </record>
+
+        <record id="account_100502100" model="account.account">
+            <field name="code">100502100</field>
+            <field name="name">Commode</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">कमोड</field>
+            <field name="business_type" ref="business_type_5"></field>
+        </record>
+
+        <record id="account_100502200" model="account.account">
+            <field name="code">100502200</field>
+            <field name="name">Plain Toilet Seat</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">साधा टयाइलेट</field>
+            <field name="business_type" ref="business_type_5"></field>
+        </record>
+
+        <record id="account_100502300" model="account.account">
+            <field name="code">100502300</field>
+            <field name="name">Door</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">ढोका</field>
+            <field name="business_type" ref="business_type_5"></field>
+        </record>
+
+        <record id="account_100502400" model="account.account">
+            <field name="code">100502400</field>
+            <field name="name">Door Locks</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">ढोकाको चुकुल</field>
+            <field name="business_type" ref="business_type_5"></field>
+        </record>
+
+        <!-- Fresh Vegetables and Fruits Supplies Service -->
+        <record id="account_100600000" model="account.account">
+            <field name="code">100600000</field>
+            <field name="name">Fresh Vegetables and Fruits Supplies Service</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">तरकारी तथा फलफुल सेवा</field>
+            <field name="business_type" ref="business_type_6"></field>
+        </record>
+
+        <record id="account_100600100" model="account.account">
+            <field name="code">100600100</field>
+            <field name="name">Fruits</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">फलफुल</field>
+            <field name="business_type" ref="business_type_6"></field>
+        </record>
+
+        <record id="account_100600200" model="account.account">
+            <field name="code">100600200</field>
+            <field name="name">Vegetables</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">तरकारी</field>
+            <field name="business_type" ref="business_type_6"></field>
+        </record>
+
+        <record id="account_100600300" model="account.account">
+            <field name="code">100600300</field>
+            <field name="name">Herbs</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">जडी-बूटी तथा मसला</field>
+            <field name="business_type" ref="business_type_6"></field>
+        </record>
+
+        <!-- Personal Care Supplies -->
+        <record id="account_100700000" model="account.account">
+            <field name="code">100700000</field>
+            <field name="name">Personal Care Supplies</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">व्यक्तिगत सामग्रीहरू</field>
+            <field name="business_type" ref="business_type_7"></field> 
+        </record>
+
+        <record id="account_100700100" model="account.account">
+            <field name="code">100700100</field>
+            <field name="name">Lipsticks</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">लिपस्टिक</field>
+            <field name="business_type" ref="business_type_7"></field> 
+        </record>
+
+        <record id="account_100700200" model="account.account">
+            <field name="code">100700200</field>
+            <field name="name">Powder</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">पाउडर</field>
+            <field name="business_type" ref="business_type_7"></field> 
+        </record>
+
+        <record id="account_100700300" model="account.account">
+            <field name="code">100700300</field>
+            <field name="name">Cream</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">क्रिम</field>
+            <field name="business_type" ref="business_type_7"></field> 
+        </record>
+
+        <record id="account_100700400" model="account.account">
+            <field name="code">100700400</field>
+            <field name="name">Eyeliner</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">आइलाइनर</field>
+            <field name="business_type" ref="business_type_7"></field> 
+        </record>
+
+        <record id="account_100700500" model="account.account">
+            <field name="code">100700500</field>
+            <field name="name">Soap</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">साबुन</field>
+            <field name="business_type" ref="business_type_7"></field> 
+        </record>
+
+        <record id="account_100700600" model="account.account">
+            <field name="code">100700600</field>
+            <field name="name">Shampoo</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">श्याम्फू</field>
+            <field name="business_type" ref="business_type_7"></field> 
+        </record>
+
+        <record id="account_100700700" model="account.account">
+            <field name="code">100700700</field>
+            <field name="name">Mascara</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">मास्कारा</field>
+            <field name="business_type" ref="business_type_7"></field> 
+        </record>
+
+        <record id="account_100700800" model="account.account">
+            <field name="code">100700800</field>
+            <field name="name">Conditioner</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">कन्डिशनर</field>
+            <field name="business_type" ref="business_type_7"></field> 
+        </record>
+
+        <record id="account_100700900" model="account.account">
+            <field name="code">100700900</field>
+            <field name="name">Face Wash</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">फेस वास</field>
+            <field name="business_type" ref="business_type_7"></field> 
+        </record>
+
+        <record id="account_100701000" model="account.account">
+            <field name="code">100701000</field>
+            <field name="name">Nail Clipper</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">नङकट</field>
+            <field name="business_type" ref="business_type_7"></field> 
+        </record>
+
+        <record id="account_100701100" model="account.account">
+            <field name="code">100701100</field>
+            <field name="name">Lip Balm</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">लिप बाम</field>
+            <field name="business_type" ref="business_type_7"></field> 
+        </record>
+
+        <record id="account_100701200" model="account.account">
+            <field name="code">100701200</field>
+            <field name="name">Clips &amp; Rubber</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">क्लिप र रबर</field>
+            <field name="business_type" ref="business_type_7"></field>
+        </record>
+
+        <record id="account_100701300" model="account.account">
+            <field name="code">100701300</field>
+            <field name="name">Hair Color</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">कपाल रङ्गाउने रङ</field>
+            <field name="business_type" ref="business_type_7"></field> 
+        </record>
+
+        <record id="account_100701400" model="account.account">
+            <field name="code">100701400</field>
+            <field name="name">Vaseline</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">भ्यासलिन</field>
+            <field name="business_type" ref="business_type_7"></field> 
+        </record>
+
+        <record id="account_100701500" model="account.account">
+            <field name="code">100701500</field>
+            <field name="name">Hair Oil</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">कपालमा लगाउने तेल</field>
+            <field name="business_type" ref="business_type_7"></field> 
+        </record>
+
+        <record id="account_100701600" model="account.account">
+            <field name="code">100701600</field>
+            <field name="name">Nail Polish</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">नेल पालिस</field>
+            <field name="business_type" ref="business_type_7"></field> 
+        </record>
+
+        <record id="account_100701700" model="account.account">
+            <field name="code">100701700</field>
+            <field name="name">Bangles</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">चुरा</field>
+            <field name="business_type" ref="business_type_7"></field> 
+        </record>
+
+        <record id="account_100701800" model="account.account">
+            <field name="code">100701800</field>
+            <field name="name">Hair Clipper</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">काँटा</field>
+            <field name="business_type" ref="business_type_7"></field> 
+        </record>
+
+        <record id="account_100701900" model="account.account">
+            <field name="code">100701900</field>
+            <field name="name">Hair Brush</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">काइयो</field>
+            <field name="business_type" ref="business_type_7"></field> 
+        </record>
+
+        <record id="account_100702000" model="account.account">
+            <field name="code">100702000</field>
+            <field name="name">Hair Dryer</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">कपाल सुकाउने साधन</field>
+            <field name="business_type" ref="business_type_7"></field> 
+        </record>
+
+        <record id="account_100702100" model="account.account">
+            <field name="code">100702100</field>
+            <field name="name">Hair Styling Tools</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">कपालको लागि सामान</field>
+            <field name="business_type" ref="business_type_7"></field> 
+        </record>
+
+        <record id="account_100702200" model="account.account">
+            <field name="code">100702200</field>
+            <field name="name">Perfume</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">परफ्युम</field>
+            <field name="business_type" ref="business_type_7"></field> 
+        </record>
+
+        <record id="account_100702300" model="account.account">
+            <field name="code">100702300</field>
+            <field name="name">Essential Oil</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">आवश्यक तेल</field>
+            <field name="business_type" ref="business_type_7"></field> 
+        </record>
+
+        <record id="account_100702400" model="account.account">
+            <field name="code">100702400</field>
+            <field name="name">Body Lotion</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">शरीरको लोशन</field>
+            <field name="business_type" ref="business_type_7"></field> 
+        </record>
+
+        <record id="account_100702500" model="account.account">
+            <field name="code">100702500</field>
+            <field name="name">Face Pack</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">फेस प्याक</field>
+            <field name="business_type" ref="business_type_7"></field> 
+        </record>
+
+        <record id="account_100702600" model="account.account">
+            <field name="code">100702600</field>
+            <field name="name">Body Wash</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">शरीर धुने साबुन</field>
+            <field name="business_type" ref="business_type_7"></field> 
+        </record>
+
+        <record id="account_100702700" model="account.account">
+            <field name="code">100702700</field>
+            <field name="name">Deodorant</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">डियोडोरन्ट</field>
+            <field name="business_type" ref="business_type_7"></field> 
+        </record>
+
+        <record id="account_100702800" model="account.account">
+            <field name="code">100702800</field>
+            <field name="name">Footwear Care</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">पाउँका लागि चालनको रचना</field>
+            <field name="business_type" ref="business_type_7"></field> 
+        </record>
+
+
+        <!-- Dairy Supplies -->
+        <record id="account_100800000" model="account.account">
+            <field name="code">100800000</field>
+            <field name="name">Dairy Supplies</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">डेरी सप्लाइज</field>
+            <field name="business_type" ref="business_type_8"></field>
+        </record>
+
+        <record id="account_100800100" model="account.account">
+            <field name="code">100800100</field>
+            <field name="name">Yogurt</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">दही</field>
+            <field name="business_type" ref="business_type_8"></field>
+        </record>
+
+        <record id="account_100800200" model="account.account">
+            <field name="code">100800200</field>
+            <field name="name">Milk</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">दूध</field>
+            <field name="business_type" ref="business_type_8"></field>
+        </record>
+
+        <record id="account_100800300" model="account.account">
+            <field name="code">100800300</field>
+            <field name="name">Ghee</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">घीउ</field>
+            <field name="business_type" ref="business_type_8"></field>
+        </record>
+
+        <record id="account_100800400" model="account.account">
+            <field name="code">100800400</field>
+            <field name="name">Butter</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">नैनी घीउ</field>
+            <field name="business_type" ref="business_type_8"></field>
+        </record>
+
+        <record id="account_100800500" model="account.account">
+            <field name="code">100800500</field>
+            <field name="name">Cheese</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">चिज</field>
+            <field name="business_type" ref="business_type_8"></field>
+        </record>
+
+        <record id="account_100800600" model="account.account">
+            <field name="code">100800600</field>
+            <field name="name">Eggs</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">अण्डा</field>
+            <field name="business_type" ref="business_type_8"></field>
+        </record>
+
+
+        <!-- Meat and Seafood Supplies -->
+        <record id="account_100900000" model="account.account">
+            <field name="code">100900000</field>
+            <field name="name">Meat and Seafood Supplies</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">मासु र समुद्री खाद्य सप्लाइज</field>
+            <field name="business_type" ref="business_type_9"></field>
+        </record>
+
+        <record id="account_100900100" model="account.account">
+            <field name="code">100900100</field>
+            <field name="name">Chicken-Local</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">कुखुरा-स्थानीय</field>
+            <field name="business_type" ref="business_type_9"></field>
+        </record>
+
+        <record id="account_100900200" model="account.account">
+            <field name="code">100900200</field>
+            <field name="name">Chicken-Broiler</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">कुखुरा-ब्रोइलर</field>
+            <field name="business_type" ref="business_type_9"></field>
+        </record>
+
+        <record id="account_100900300" model="account.account">
+            <field name="code">100900300</field>
+            <field name="name">Goat Meat</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">खसीको मासु</field>
+            <field name="business_type" ref="business_type_9"></field>
+        </record>
+
+        <record id="account_100900400" model="account.account">
+            <field name="code">100900400</field>
+            <field name="name">Buff</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">भैसीको मासु</field>
+            <field name="business_type" ref="business_type_9"></field>
+        </record>
+
+        <record id="account_100900500" model="account.account">
+            <field name="code">100900500</field>
+            <field name="name">Pork</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">सुंगुरको मासु</field>
+            <field name="business_type" ref="business_type_9"></field>
+        </record>
+
+        <record id="account_100900600" model="account.account">
+            <field name="code">100900600</field>
+            <field name="name">Fish</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">माछा</field>
+            <field name="business_type" ref="business_type_9"></field>
+        </record>
+
+        <record id="account_100900700" model="account.account">
+            <field name="code">100900700</field>
+            <field name="name">Crabs</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">गंगटा</field>
+            <field name="business_type" ref="business_type_9"></field>
+        </record>
+
+        <record id="account_100900800" model="account.account">
+            <field name="code">100900800</field>
+            <field name="name">Prawns</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">झिङ्गे माछा</field>
+            <field name="business_type" ref="business_type_9"></field>
+        </record>
+
+        <record id="account_100900900" model="account.account">
+            <field name="code">100900900</field>
+            <field name="name">Kalij</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">कालिज</field>
+            <field name="business_type" ref="business_type_9"></field>
+        </record>
+
+        <record id="account_100901000" model="account.account">
+            <field name="code">100901000</field>
+            <field name="name">Lobster</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">लब्स्टर</field>
+            <field name="business_type" ref="business_type_9"></field>
+        </record>
+
+        <record id="account_100901100" model="account.account">
+            <field name="code">100901100</field>
+            <field name="name">Rabbit</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">खरायो</field>
+            <field name="business_type" ref="business_type_9"></field>
+        </record>
+
+        <record id="account_100901200" model="account.account">
+            <field name="code">100901200</field>
+            <field name="name">Pigeon</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">परेवा</field>
+            <field name="business_type" ref="business_type_9"></field>
+        </record>
+
+        <record id="account_100901300" model="account.account">
+            <field name="code">100901300</field>
+            <field name="name">Quail (Battai)</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">बट्टाई</field>
+            <field name="business_type" ref="business_type_9"></field>
+        </record>
+
+        <record id="account_100901400" model="account.account">
+            <field name="code">100901400</field>
+            <field name="name">Duck</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">हाँस</field>
+            <field name="business_type" ref="business_type_9"></field>
+        </record>
+
+
+        Bakery Supplies
+        <record id="account_101000000" model="account.account">
+            <field name="code">101000000</field>
+            <field name="name">Bakery Supplies</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">बेकरी सप्लाइज</field>
+            <field name="business_type" ref="business_type_10"></field>
+        </record>
+
+        <record id="account_101000100" model="account.account">
+            <field name="code">101000100</field>
+            <field name="name">Bread</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">पाउरोटी</field>
+            <field name="business_type" ref="business_type_10"></field>
+        </record>
+
+        <record id="account_101000200" model="account.account">
+            <field name="code">101000200</field>
+            <field name="name">Puff</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">पफ</field>
+            <field name="business_type" ref="business_type_10"></field>
+        </record>
+
+        <record id="account_101000300" model="account.account">
+            <field name="code">101000300</field>
+            <field name="name">Pastry</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">पेस्ट्री</field>
+            <field name="business_type" ref="business_type_10"></field>
+        </record>
+
+        <record id="account_101000400" model="account.account">
+            <field name="code">101000400</field>
+            <field name="name">Cake</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">केक</field>
+            <field name="business_type" ref="business_type_10"></field>
+        </record>
+
+        <record id="account_101000500" model="account.account">
+            <field name="code">101000500</field>
+            <field name="name">Cookies</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">कुकीज</field>
+            <field name="business_type" ref="business_type_10"></field>
+        </record>
+
+        <record id="account_101000600" model="account.account">
+            <field name="code">101000600</field>
+            <field name="name">Patties</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">पैटिज</field>
+            <field name="business_type" ref="business_type_10"></field>
+        </record>
+
+        <record id="account_101000700" model="account.account">
+            <field name="code">101000700</field>
+            <field name="name">Muffins/Cup Cake</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">मफिन्स/कप केक</field>
+            <field name="business_type" ref="business_type_10"></field>
+        </record>
+
+        <record id="account_101000800" model="account.account">
+            <field name="code">101000800</field>
+            <field name="name">Doughnuts</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">दुनोट</field>
+            <field name="business_type" ref="business_type_10"></field>
+        </record>
+
+        <record id="account_101000900" model="account.account">
+            <field name="code">101000900</field>
+            <field name="name">Nimkin</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">निम्किन</field>
+            <field name="business_type" ref="business_type_10"></field>
+        </record>
+
+
+        <!-- Stationery Service -->
+        <record id="account_101100000" model="account.account">
+            <field name="code">101100000</field>
+            <field name="name">Stationery Service</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">स्टेशनरी सेवा</field>
+            <field name="business_type" ref="business_type_11"></field>
+        </record>
+
+        <record id="account_101100100" model="account.account">
+            <field name="code">101100100</field>
+            <field name="name">Paper</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">कागज</field>
+            <field name="business_type" ref="business_type_11"></field>
+        </record>
+
+        <record id="account_101100200" model="account.account">
+            <field name="code">101100200</field>
+            <field name="name">Copy</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">कपी</field>
+            <field name="business_type" ref="business_type_11"></field>
+        </record>
+
+        <record id="account_101100300" model="account.account">
+            <field name="code">101100300</field>
+            <field name="name">Pen</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">कलम</field>
+            <field name="business_type" ref="business_type_11"></field>
+        </record>
+
+        <record id="account_101100400" model="account.account">
+            <field name="code">101100400</field>
+            <field name="name">Pencil</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">पेन्सिल</field>
+            <field name="business_type" ref="business_type_11"></field>
+        </record>
+
+        <record id="account_101100500" model="account.account">
+            <field name="code">101100500</field>
+            <field name="name">Notebook</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">नोटबुक</field>
+            <field name="business_type" ref="business_type_11"></field>
+        </record>
+
+        <record id="account_101100600" model="account.account">
+            <field name="code">101100600</field>
+            <field name="name">Folder</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">फोल्डर</field>
+            <field name="business_type" ref="business_type_11"></field>
+        </record>
+
+        <record id="account_101100700" model="account.account">
+            <field name="code">101100700</field>
+            <field name="name">Stapler</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">स्टेपलर</field>
+            <field name="business_type" ref="business_type_11"></field>
+        </record>
+
+        <record id="account_101100800" model="account.account">
+            <field name="code">101100800</field>
+            <field name="name">Tape</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">टेप</field>
+            <field name="business_type" ref="business_type_11"></field>
+        </record>
+
+        <record id="account_101100900" model="account.account">
+            <field name="code">101100900</field>
+            <field name="name">Scissors</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">कैंची</field>
+            <field name="business_type" ref="business_type_11"></field>
+        </record>
+
+
+        <!-- Pet Animals Supplies -->
+        <record id="account_101200000" model="account.account">
+            <field name="code">101200000</field>
+            <field name="name">Pet Animals Supplies</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">घर पालुवा जनावरको खाद्यन्न</field>
+            <field name="business_type" ref="business_type_12"></field>
+        </record>
+
+        <record id="account_101200100" model="account.account">
+            <field name="code">101200100</field>
+            <field name="name">Food</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">खाना</field>
+            <field name="business_type" ref="business_type_12"></field>
+        </record>
+
+        <record id="account_101200200" model="account.account">
+            <field name="code">101200200</field>
+            <field name="name">Treats</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">दाना</field>
+            <field name="business_type" ref="business_type_12"></field>
+        </record>
+
+        <record id="account_101200300" model="account.account">
+            <field name="code">101200300</field>
+            <field name="name">Pet Soap</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">साबुन</field>
+            <field name="business_type" ref="business_type_12"></field>
+        </record>
+
+        <record id="account_101200400" model="account.account">
+            <field name="code">101200400</field>
+            <field name="name">Pet Shampoo</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">श्याम्पू</field>
+            <field name="business_type" ref="business_type_12"></field>
+        </record>
+
+        <record id="account_101300000" model="account.account">
+            <field name="code">101300000</field>
+            <field name="name">Medical and Sanitation Supplies</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">औषधी तथा सरसफाई सामग्रीहरू</field>
+            <field name="business_type" ref="business_type_13"></field>
+        </record>
+
+        <record id="account_101300100" model="account.account">
+            <field name="code">101300100</field>
+            <field name="name">Medicine</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">औषधि</field>
+            <field name="business_type" ref="business_type_13"></field>
+        </record>
+
+        <record id="account_101300200" model="account.account">
+            <field name="code">101300200</field>
+            <field name="name">Medical Equipment</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">चिकित्सा उपकरणहरू</field>
+            <field name="business_type" ref="business_type_13"></field>
+        </record>
+
+        <record id="account_101300300" model="account.account">
+            <field name="code">101300300</field>
+            <field name="name">Sanitary Pads</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">स्यानिटरी प्याड</field>
+            <field name="business_type" ref="business_type_13"></field>
+        </record>
+
+        <record id="account_101300400" model="account.account">
+            <field name="code">101300400</field>
+            <field name="name">Bandages</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">बैन्डेज</field>
+            <field name="business_type" ref="business_type_13"></field>
+        </record>
+
+        <record id="account_101300500" model="account.account">
+            <field name="code">101300500</field>
+            <field name="name">Dettol</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">डेटोल</field>
+            <field name="business_type" ref="business_type_13"></field>
+        </record>
+        <record id="account_101400000" model="account.account">
+            <field name="code">101400000</field>
+            <field name="name">Furniture Service</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">फर्नीचर सेवा</field>
+            <field name="business_type" ref="business_type_14"></field>
+        </record>
+
+        <record id="account_101400100" model="account.account">
+            <field name="code">101400100</field>
+            <field name="name">Table</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">टेवल</field>
+            <field name="business_type" ref="business_type_14"></field>
+        </record>
+
+        <record id="account_101400200" model="account.account">
+            <field name="code">101400200</field>
+            <field name="name">Chair</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">कुर्सी</field>
+            <field name="business_type" ref="business_type_14"></field>
+        </record>
+
+        <record id="account_101400300" model="account.account">
+            <field name="code">101400300</field>
+            <field name="name">Sofa</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">सोफा</field>
+            <field name="business_type" ref="business_type_14"></field>
+        </record>
+
+        <record id="account_101400400" model="account.account">
+            <field name="code">101400400</field>
+            <field name="name">Bedroom Furniture</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">बेडरूम फर्नीचर</field>
+            <field name="business_type" ref="business_type_14"></field>
+        </record>
+
+        <record id="account_101400500" model="account.account">
+            <field name="code">101400500</field>
+            <field name="name">Book Shelves</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">किताब राख्ने दराज</field>
+            <field name="business_type" ref="business_type_14"></field>
+        </record>
+
+        <record id="account_101400600" model="account.account">
+            <field name="code">101400600</field>
+            <field name="name">Shelf</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">दराज</field>
+            <field name="business_type" ref="business_type_14"></field>
+        </record>
+
+        <record id="account_101400700" model="account.account">
+            <field name="code">101400700</field>
+            <field name="name">Shoe Racks</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">जुत्ताको र्याक</field>
+            <field name="business_type" ref="business_type_14"></field>
+        </record>
+
+        <record id="account_101400800" model="account.account">
+            <field name="code">101400800</field>
+            <field name="name">Hanger</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">ह्याङ्गर</field>
+            <field name="business_type" ref="business_type_14"></field>
+        </record>
+
+        <record id="account_101400900" model="account.account">
+            <field name="code">101400900</field>
+            <field name="name">Desk</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">डेस्क</field>
+            <field name="business_type" ref="business_type_14"></field>
+        </record>
+
+        <record id="account_101401000" model="account.account">
+            <field name="code">101401000</field>
+            <field name="name">Bench</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">बेञ्च</field>
+            <field name="business_type" ref="business_type_14"></field>
+        </record>
+
+        <record id="account_101401100" model="account.account">
+            <field name="code">101401100</field>
+            <field name="name">TV Stands</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">टेलिभिजन स्ट्यान्ड</field>
+            <field name="business_type" ref="business_type_14"></field>
+        </record>
+
+        <record id="account_101401200" model="account.account">
+            <field name="code">101401200</field>
+            <field name="name">Cushions &amp; Pillows</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">कुशन र सिरानी</field>
+            <field name="business_type" ref="business_type_14"></field>
+        </record>
+
+        <record id="account_101401300" model="account.account">
+            <field name="code">101401300</field>
+            <field name="name">Lamps</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">बत्ती</field>
+            <field name="business_type" ref="business_type_14"></field>
+        </record>
+
+        <record id="account_101600000" model="account.account">
+            <field name="code">101600000</field>
+            <field name="name">Garments &amp; Clothes Sales</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">गार्मेण्ट तथा कपडा पसल</field>
+            <field name="business_type" ref="business_type_15"></field>
+        </record>
+
+        <record id="account_101600100" model="account.account">
+            <field name="code">101600100</field>
+            <field name="name">Garments</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">वस्त्र</field>
+            <field name="business_type" ref="business_type_15"></field>
+        </record>
+
+        <record id="account_101600200" model="account.account">
+            <field name="code">101600200</field>
+            <field name="name">Men's Apparel</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">पुरुषहरूको पोषाक</field>
+            <field name="business_type" ref="business_type_15"></field>
+        </record>
+
+        <record id="account_101600300" model="account.account">
+            <field name="code">101600300</field>
+            <field name="name">Women's Apparel</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">महिलाहरूको पोषाक</field>
+            <field name="business_type" ref="business_type_15"></field>
+        </record>
+
+        <record id="account_101600400" model="account.account">
+            <field name="code">101600400</field>
+            <field name="name">Children's Apparel</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">बालबालिकाहरूको पोषाक</field>
+            <field name="business_type" ref="business_type_15"></field>
+        </record>
+
+        <record id="account_101600500" model="account.account">
+            <field name="code">101600500</field>
+            <field name="name">Men's Footwear</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">पुरुषहरूको चप्पल तथा जुत्ताहरु</field>
+            <field name="business_type" ref="business_type_15"></field>
+        </record>
+
+        <record id="account_101600600" model="account.account">
+            <field name="code">101600600</field>
+            <field name="name">Women's Footwear</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">महिलाहरूको चप्पल तथा जुत्ताहरु</field>
+            <field name="business_type" ref="business_type_15"></field>
+        </record>
+
+        <record id="account_101600700" model="account.account">
+            <field name="code">101600700</field>
+            <field name="name">Children's Footwear</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">बालबालिकाहरूको चप्पल तथा जुत्ताहरु</field>
+            <field name="business_type" ref="business_type_15"></field>
+        </record>
+
+        <record id="account_101600800" model="account.account">
+            <field name="code">101600800</field>
+            <field name="name">Hats and Caps</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">टोपी र क्याप</field>
+            <field name="business_type" ref="business_type_15"></field>
+        </record>
+
+        <record id="account_101600900" model="account.account">
+            <field name="code">101600900</field>
+            <field name="name">Scarves and Shawls</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">गल्बन्दी र पछ्यौरी</field>
+            <field name="business_type" ref="business_type_15"></field>
+        </record>
+
+        <record id="account_101601000" model="account.account">
+            <field name="code">101601000</field>
+            <field name="name">Gloves</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">पन्जा</field>
+            <field name="business_type" ref="business_type_15"></field>
+        </record>
+
+        <record id="account_101601100" model="account.account">
+            <field name="code">101601100</field>
+            <field name="name">Men's Underwear</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">पुरुषहरूको अन्डरवियर</field>
+            <field name="business_type" ref="business_type_15"></field>
+        </record>
+
+        <record id="account_101601200" model="account.account">
+            <field name="code">101601200</field>
+            <field name="name">Women's Underwear</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">महिलाहरूको अन्डरवियर</field>
+            <field name="business_type" ref="business_type_15"></field>
+        </record>
+
+        <record id="account_101601300" model="account.account">
+            <field name="code">101601300</field>
+            <field name="name">Children's Underwear</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">बालबालिकाहरूको अन्डरवियर</field>
+            <field name="business_type" ref="business_type_15"></field>
+        </record>
+
+        <record id="account_101601400" model="account.account">
+            <field name="code">101601400</field>
+            <field name="name">Uniform</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">ड्रेस</field>
+            <field name="business_type" ref="business_type_15"></field>
+        </record>
+
+        <record id="account_101601500" model="account.account">
+            <field name="code">101601500</field>
+            <field name="name">Men's Fabric</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">पुरुषहरूको कपडा</field>
+            <field name="business_type" ref="business_type_15"></field>
+        </record>
+
+        <record id="account_101601600" model="account.account">
+            <field name="code">101601600</field>
+            <field name="name">Women's Fabric</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">महिलाहरूको कपडा</field>
+            <field name="business_type" ref="business_type_15"></field>
+        </record>
+
+        <record id="account_101601700" model="account.account">
+            <field name="code">101601700</field>
+            <field name="name">Children's Fabric</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">बालबालिकाहरूको कपडा</field>
+            <field name="business_type" ref="business_type_15"></field>
+        </record>
+
+        <record id="account_101700000" model="account.account">
+            <field name="code">101700000</field>
+            <field name="name">Arts &amp; Handicrafts</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">कला र हस्तशिप</field>
+            <field name="business_type" ref="business_type_16"></field>
+        </record>
+
+        <record id="account_101700100" model="account.account">
+            <field name="code">101700100</field>
+            <field name="name">Paintings</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">चित्रकला</field>
+            <field name="business_type" ref="business_type_16"></field>
+        </record>
+
+        <record id="account_101700200" model="account.account">
+            <field name="code">101700200</field>
+            <field name="name">Sculptures</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">मूर्तिकला</field>
+            <field name="business_type" ref="business_type_16"></field>
+        </record>
+
+        <record id="account_101700300" model="account.account">
+            <field name="code">101700300</field>
+            <field name="name">Drawings</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">आकृति</field>
+            <field name="business_type" ref="business_type_16"></field>
+        </record>
+
+        <record id="account_101700400" model="account.account">
+            <field name="code">101700400</field>
+            <field name="name">Digital Art</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">डिजिटल कला</field>
+            <field name="business_type" ref="business_type_16"></field>
+        </record>
+
+        <record id="account_101700500" model="account.account">
+            <field name="code">101700500</field>
+            <field name="name">Mixed Media Art</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">मिक्स्ड मिडिया कला</field>
+            <field name="business_type" ref="business_type_16"></field>
+        </record>
+
+        <record id="account_101700600" model="account.account">
+            <field name="code">101700600</field>
+            <field name="name">Handmade Jewellery</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">हस्त गहनाकलन</field>
+            <field name="business_type" ref="business_type_16"></field>
+        </record>
+
+        <record id="account_101700700" model="account.account">
+            <field name="code">101700700</field>
+            <field name="name">Pottery</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">माटोको आकृतीहरु</field>
+            <field name="business_type" ref="business_type_16"></field>
+        </record>
+
+        <record id="account_101700800" model="account.account">
+            <field name="code">101700800</field>
+            <field name="name">Wood Carvings</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">काठ कला</field>
+            <field name="business_type" ref="business_type_16"></field>
+        </record>
+
+        <record id="account_101700900" model="account.account">
+            <field name="code">101700900</field>
+            <field name="name">Textile Crafts</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">वस्त्र शिल्प</field>
+            <field name="business_type" ref="business_type_16"></field>
+        </record>
+
+        <record id="account_101701000" model="account.account">
+            <field name="code">101701000</field>
+            <field name="name">Metalwork</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">धातुको कला</field>
+            <field name="business_type" ref="business_type_16"></field>
+        </record>
+
+        <record id="account_101701100" model="account.account">
+            <field name="code">101701100</field>
+            <field name="name">Custom Art Commissions</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">विशेष आकृती वापतको कमिसन</field>
+            <field name="business_type" ref="business_type_16"></field>
+        </record>
+
+        <record id="account_101701200" model="account.account">
+            <field name="code">101701200</field>
+            <field name="name">Personalized Handicrafts Orders</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">व्यक्तिगत हस्तशिप वापतको कमिसन</field>
+            <field name="business_type" ref="business_type_16"></field>
+        </record>
+
+        <record id="account_101701300" model="account.account">
+            <field name="code">101701300</field>
+            <field name="name">Art Workshops</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">कला कार्यशाला</field>
+            <field name="business_type" ref="business_type_16"></field>
+        </record>
+
+        <record id="account_101701400" model="account.account">
+            <field name="code">101701400</field>
+            <field name="name">Craft Classes</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">कला कक्षहरू</field>
+            <field name="business_type" ref="business_type_16"></field>
+        </record>
+
+        <record id="account_101701500" model="account.account">
+            <field name="code">101701500</field>
+            <field name="name">DIY Kits</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">आत्म-निर्मित किटहरू</field>
+            <field name="business_type" ref="business_type_16"></field>
+        </record>
+
+        <record id="account_101701600" model="account.account">
+            <field name="code">101701600</field>
+            <field name="name">Licensing Fees</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">आकृति संरचना शुल्कहरू</field>
+            <field name="business_type" ref="business_type_16"></field>
+        </record>
+
+        <record id="account_101701700" model="account.account">
+            <field name="code">101701700</field>
+            <field name="name">Art Consultation Fees</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">कला परामर्श शुल्कहरू</field>
+            <field name="business_type" ref="business_type_16"></field>
+        </record>
+
+        <record id="account_101701800" model="account.account">
+            <field name="code">101701800</field>
+            <field name="name">Art Event Participation Fees</field>
+            <field name="account_type">sales</field>
+            <field name="account_nepali">कला कार्यक्रम सहभागी शुल्कहरू</field>
+            <field name="business_type" ref="business_type_16"></field>
+        </record>
+
+        <record id="account_101800000" model="account.account">
+            <field name="code">101800000</field>
+            <field name="name">Parking Services- Two Wheeler</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">पार्किङ सेवा- दुई पाङ्ग्रे सवारी</field>
+            <field name="business_type" ref="business_type_18"></field>
+        </record>
+
+        <record id="account_101800100" model="account.account">
+            <field name="code">101800100</field>
+            <field name="name">Hourly Parking Fees</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">घण्टागत पार्किङ शुल्क</field>
+            <field name="business_type" ref="business_type_18"></field>
+        </record>
+
+        <record id="account_101800200" model="account.account">
+            <field name="code">101800200</field>
+            <field name="name">Monthly/Annual Parking Subscriptions</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">मासिक/वार्षिक पार्किङ आवद्धता</field>
+            <field name="business_type" ref="business_type_18"></field>
+        </record>
+
+        <record id="account_101800300" model="account.account">
+            <field name="code">101800300</field>
+            <field name="name">Event Parking</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">सभा समारोह पार्किङ</field>
+            <field name="business_type" ref="business_type_18"></field>
+        </record>
+
+        <record id="account_101800400" model="account.account">
+            <field name="code">101800400</field>
+            <field name="name">Late Fees and Penalties</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">ढिला शुल्क तथा जरिवाना</field>
+            <field name="business_type" ref="business_type_18"></field>
+        </record>
+
+        <record id="account_101900000" model="account.account">
+            <field name="code">101900000</field>
+            <field name="name">Parking Services- Four Wheeler (Car, Jeep, VAN)</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">पार्किङ सेवा- चार पाङ्ग्रे (हल्का सवारी)</field>
+            <field name="business_type" ref="business_type_19"></field>
+        </record>
+
+        <record id="account_101900100" model="account.account">
+            <field name="code">101900100</field>
+            <field name="name">Hourly Parking Fees</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">घण्टागत पार्किङ शुल्क</field>
+            <field name="business_type" ref="business_type_19"></field>
+        </record>
+
+        <record id="account_101900200" model="account.account">
+            <field name="code">101900200</field>
+            <field name="name">Monthly/Annual Parking Subscriptions</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">मासिक/वार्षिक पार्किङ आवद्धता</field>
+            <field name="business_type" ref="business_type_19"></field>
+        </record>
+
+        <record id="account_101900300" model="account.account">
+            <field name="code">101900300</field>
+            <field name="name">Event Parking</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">सभा समारोह पार्किङ</field>
+            <field name="business_type" ref="business_type_19"></field>
+        </record>
+
+        <record id="account_101900400" model="account.account">
+            <field name="code">101900400</field>
+            <field name="name">Late Fees and Penalties</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">ढिला शुल्क तथा जरिवाना</field>
+            <field name="business_type" ref="business_type_19"></field>
+        </record>
+
+        <record id="account_102000000" model="account.account">
+            <field name="code">102000000</field>
+            <field name="name">Parking Services- Heavy Vehicles</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">पार्किङ सेवा- भारी सवारी</field>
+            <field name="business_type" ref="business_type_20"></field>
+        </record>
+
+        <record id="account_102000100" model="account.account">
+            <field name="code">102000100</field>
+            <field name="name">Hourly Parking Fees</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">घण्टागत पार्किङ शुल्क</field>
+            <field name="business_type" ref="business_type_20"></field>
+        </record>
+
+        <record id="account_102000200" model="account.account">
+            <field name="code">102000200</field>
+            <field name="name">Monthly/Annual Parking Subscriptions</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">मासिक/वार्षिक पार्किङ आवद्धता</field>
+            <field name="business_type" ref="business_type_20"></field>
+        </record>
+
+        <record id="account_102000300" model="account.account">
+            <field name="code">102000300</field>
+            <field name="name">Event Parking</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">सभा समारोह पार्किङ</field>
+            <field name="business_type" ref="business_type_20"></field>
+        </record>
+
+        <record id="account_102000400" model="account.account">
+            <field name="code">102000400</field>
+            <field name="name">Late Fees and Penalties</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">ढिला शुल्क तथा जरिवाना</field>
+            <field name="business_type" ref="business_type_20"></field>
+        </record>
+
+        <record id="account_102000500" model="account.account">
+            <field name="code">102000500</field>
+            <field name="name">Other Revenue</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">अन्य आय</field>
+            <field name="business_type" ref="business_type_20"></field>
+        </record>
+
+        <record id="account_102000600" model="account.account">
+            <field name="code">102000600</field>
+            <field name="name">Advertising Revenue (parking spaces)</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">विज्ञापन आम्दानी (पार्किङ स्थल)</field>
+            <field name="business_type" ref="business_type_20"></field>
+        </record>
+
+        <record id="account_102000700" model="account.account">
+            <field name="code">102000700</field>
+            <field name="name">Leasing Income</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">बहाल आम्दानी</field>
+            <field name="business_type" ref="business_type_20"></field>
+        </record>
+
+        <record id="account_102000800" model="account.account">
+            <field name="code">102000800</field>
+            <field name="name">Other Miscellaneous Income</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">अन्य विविध आम्दानी</field>
+            <field name="business_type" ref="business_type_20"></field>
+        </record>
+
+        <record id="account_102100000" model="account.account">
+            <field name="code">102100000</field>
+            <field name="name">Ride Sharing</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">राईड सेयरिङ्ग</field>
+            <field name="business_type" ref="business_type_21"></field>
+        </record>
+
+        <record id="account_102100100" model="account.account">
+            <field name="code">102100100</field>
+            <field name="name">Income from Ride Sharing</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">राईड सेयरिङ्ग वापतको आम्दानी</field>
+            <field name="business_type" ref="business_type_21"></field>
+        </record>
+
+        <record id="account_102100200" model="account.account">
+            <field name="code">102100200</field>
+            <field name="name">Commission Income</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">कमिसन आम्दानी</field>
+            <field name="business_type" ref="business_type_21"></field>
+        </record>
+
+        <record id="account_102200000" model="account.account">
+            <field name="code">102200000</field>
+            <field name="name">Delivery- Two Wheeler Vehicle</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">ढुवानी- दुई पाङ्ग्रे सवारी</field>
+            <field name="business_type" ref="business_type_22"></field>
+        </record>
+
+        <record id="account_102200100" model="account.account">
+            <field name="code">102200100</field>
+            <field name="name">Delivery Fee</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">डेलिभरी शुल्क</field>
+            <field name="business_type" ref="business_type_22"></field>
+        </record>
+
+        <record id="account_102200200" model="account.account">
+            <field name="code">102200200</field>
+            <field name="name">Subscription Fee</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">आवद्धता शुल्क</field>
+            <field name="business_type" ref="business_type_22"></field>
+        </record>
+
+        <record id="account_102200300" model="account.account">
+            <field name="code">102200300</field>
+            <field name="name">Weekend/Holiday/Offtime Fees</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">सार्वजनिक विदा शुल्क</field>
+            <field name="business_type" ref="business_type_22"></field>
+        </record>
+
+        <record id="account_102200400" model="account.account">
+            <field name="code">102200400</field>
+            <field name="name">Waiting Time Fees</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">प्रतिक्षा समय शुल्क</field>
+            <field name="business_type" ref="business_type_22"></field>
+        </record>
+
+        <record id="account_102300000" model="account.account">
+            <field name="code">102300000</field>
+            <field name="name">Delivery- Four Wheeler Vehicle</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">ढुवानी- चार पाङ्ग्रे सवारी</field>
+            <field name="business_type" ref="business_type_23"></field>
+        </record>
+
+        <record id="account_102300100" model="account.account">
+            <field name="code">102300100</field>
+            <field name="name">Delivery Fee</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">डेलिभरी शुल्क</field>
+            <field name="business_type" ref="business_type_23"></field>
+        </record>
+
+        <record id="account_102300200" model="account.account">
+            <field name="code">102300200</field>
+            <field name="name">Subscription Fee</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">आवद्धता शुल्क</field>
+            <field name="business_type" ref="business_type_23"></field>
+        </record>
+
+        <record id="account_102300300" model="account.account">
+            <field name="code">102300300</field>
+            <field name="name">Weekend/Holiday/Offtime Fees</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">सार्वजनिक विदा शुल्क</field>
+            <field name="business_type" ref="business_type_23"></field>
+        </record>
+
+        <record id="account_102300400" model="account.account">
+            <field name="code">102300400</field>
+            <field name="name">Waiting Time Fees</field>
+            <field name="account_type">income</field>
+            <field name="account_nepali">प्रतिक्षा समय शुल्क</field>
+            <field name="business_type" ref="business_type_23"></field>
+        </record>
+
+        <record id="account_70000" model="account.account">
+            <field name="code">70000</field>
+            <field name="name">Other Incomes</field>
+            <field name="account_type">income_other</field>
+            <field name="account_nepali">अन्य आय</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_70100" model="account.account">
+            <field name="code">70100</field>
+            <field name="name">Discounts Allowed</field>
+            <field name="account_type">income_other</field>
+            <field name="account_nepali">छुट</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_70200" model="account.account">
+            <field name="code">70200</field>
+            <field name="name">Refunds Issued</field>
+            <field name="account_type">income_other</field>
+            <field name="account_nepali">फिर्ता</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_70300" model="account.account">
+            <field name="code">70300</field>
+            <field name="name">Interest Income</field>
+            <field name="account_type">income_other</field>
+            <field name="account_nepali">व्याज आम्दानी</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_20000" model="account.account">
+            <field name="code">20000</field>
+            <field name="name">Purchase</field>
+            <field name="account_type">cogs</field>
+            <field name="account_nepali">खरिद</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_20100" model="account.account">
+            <field name="code">20100</field>
+            <field name="name">Purchase Cost</field>
+            <field name="account_type">cogs</field>
+            <field name="account_nepali">खरिद लागत</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_20200" model="account.account">
+            <field name="code">20200</field>
+            <field name="name">Direct Expenses</field>
+            <field name="account_type">cogs</field>
+            <field name="account_nepali">प्रत्यक्ष खर्च</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_21000" model="account.account">
+            <field name="code">21000</field>
+            <field name="name">Expenses</field>
+            <field name="account_type">expense</field>
+            <field name="account_nepali">खर्च</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_21111" model="account.account">
+            <field name="code">21111</field>
+            <field name="name">Salary For Teaching Staff</field>
+            <field name="account_type">expense</field>
+            <field name="account_nepali">पारिश्रमिक शिक्षक कर्मचारी</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_21121" model="account.account">
+            <field name="code">21121</field>
+            <field name="name">Uniform Expense</field>
+            <field name="account_type">expense</field>
+            <field name="account_nepali">पोशाक</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_21123" model="account.account">
+            <field name="code">21123</field>
+            <field name="name">Medical Treatment Expense</field>
+            <field name="account_type">expense</field>
+            <field name="account_nepali">औषधी उपचार खर्च</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_21131" model="account.account">
+            <field name="code">21131</field>
+            <field name="name">Local Allowance</field>
+            <field name="account_type">expense</field>
+            <field name="account_nepali">स्थानीय भत्ता</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_21132" model="account.account">
+            <field name="code">21132</field>
+            <field name="name">Dearness Allowance</field>
+            <field name="account_type">expense</field>
+            <field name="account_nepali">महँगी भत्ता</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_21134" model="account.account">
+            <field name="code">21134</field>
+            <field name="name">Meeting Allowance</field>
+            <field name="account_type">expense</field>
+            <field name="account_nepali">बैठक भत्ता</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_21135" model="account.account">
+            <field name="code">21135</field>
+            <field name="name">Teacher/Staff Incentive Award</field>
+            <field name="account_type">expense</field>
+            <field name="account_nepali">शिक्षक/कर्मचारी प्रोत्साहन पुरस्कार</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_21139" model="account.account">
+            <field name="code">21139</field>
+            <field name="name">Other Allowances</field>
+            <field name="account_type">expense</field>
+            <field name="account_nepali">अन्य भत्ता</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_21211" model="account.account">
+            <field name="code">21211</field>
+            <field name="name">Employee Social Security Fund Expense</field>
+            <field name="account_type">expense</field>
+            <field name="account_nepali">कर्मचारीको सामाजिक सुरक्षा कोष खर्च</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_21212" model="account.account">
+            <field name="code">21212</field>
+            <field name="name">Contribution-Based Retirement And Contribution Fund Expenses</field>
+            <field name="account_type">expense</field>
+            <field name="account_nepali">कर्मचारीको योगदानमा आधिरत निवृत्तभरण तथा उपदान कोष खर्च</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_21213" model="account.account">
+            <field name="code">21213</field>
+            <field name="name">Contribution-Based Insurance Fund Expense</field>
+            <field name="account_type">expense</field>
+            <field name="account_nepali">कर्मचारीको योगदानमा आधिरत बीमाकोष खर्च</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_21214" model="account.account">
+            <field name="code">21214</field>
+            <field name="name">Employee Welfare Fund</field>
+            <field name="account_type">expense</field>
+            <field name="account_nepali">कर्मचारी कल्याण खर्च</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_22111" model="account.account">
+            <field name="code">22111</field>
+            <field name="name">Water And Electricity</field>
+            <field name="account_type">expense</field>
+            <field name="account_nepali">पानी तथा बिजुली</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_22112" model="account.account">
+            <field name="code">22112</field>
+            <field name="name">Communication Expenses</field>
+            <field name="account_type">expense</field>
+            <field name="account_nepali">सञ्चार महसुल</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_22212" model="account.account">
+            <field name="code">22212</field>
+            <field name="name">Fuel For Office Purpose</field>
+            <field name="account_type">expense</field>
+            <field name="account_nepali">इन्धन कायार्लय प्रयोजन</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+
+        <record id="account_22222" model="account.account">
+            <field name="code">22222</field>
+            <field name="name">Rental Expense</field>
+            <field name="account_type">expense</field>
+            <field name="account_nepali">भाडा</field>
+            <field name="business_type" ref="business_type_24"></field>
+        </record>
+    </data>
+</odoo>

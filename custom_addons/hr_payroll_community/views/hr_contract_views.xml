@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Root Menus -->
+    <menuitem id="menu_hr_payroll_community_root" name="Payroll" sequence="45"
+        web_icon="hr_payroll_community,static/description/icon.png" />
+    <menuitem id="menu_hr_payroll_community_configuration" name="Configuration"
+        parent="menu_hr_payroll_community_root"
+        sequence="100"
+        groups="hr_payroll_community.group_hr_payroll_community_manager" />
+    <!-- Contract View -->
+    <record id="hr_contract_view_form" model="ir.ui.view">
+        <field name="name">hr.contract.view.form.inherit</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_form" />
+        <field name="arch" type="xml">
+            <!-- <xpath expr="//field[@name='job_id']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath> -->
+            <xpath expr="//field[@name='date_start']" position="attributes">
+                <attribute name="options">{'corresponding_field': 'date_start_bs'}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='date_end']" position="attributes">
+                <attribute name="options">{'corresponding_field': 'date_end_bs'}</attribute>
+            </xpath>
+           
+            <xpath expr="//field[@name='notes']" position="before">
+                <!-- <group> -->
+                <group string="Insurance Details">
+                    <field name="insurance_service" />
+                    <field name="government_added_insurance_amount" />
+                    <field name="employee_deducted_insurance_amount" />
+                </group>
+                <group string="Leave and Payment">
+                    <field name="leave_deduction" />
+                    <field name="payment_medium" />
+                    <field name="bank_name" />
+                    <field name="account_number" />
+                </group>
+                <group string="Grade and Exemptions">
+                    <field name="grade_upgrade_month" />
+                    <field name="cit_service"/>
+                    <field name="cit_certificate_no" />
+                    <field name="cit_percentage" />
+                    <field name="cit_amount" />
+                </group>
+                <group string="Festivities and Welfare">
+                    <field name="festivities_month" />
+                    <field name="interest_fund_deduction_amount" />
+                    <field name="welfare_fund_cut_amount" />
+                </group>
+                <group string="Additional Benefits">
+                    <field name="dress_allowance" />
+                    <field name="get_social_security_tax" />
+                    <!-- </group> -->
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='date_end']" position="after">
+                <field name="current_position_date"
+                    options="{'corresponding_field' : 'current_position_date_bs'}" />
+            </xpath>
+            <xpath expr="//field[@name='job_id']" position="after">
+                <field name="struct_id" required="1" />
+            </xpath>
+            <xpath expr="//field[@name='struct_id']" position="after">
+                <field name="position_category_name" />
+                <field name="employee_post" />
+            </xpath>
+            <xpath expr="//field[@name='job_id']" position="before">
+                <field name="company_id" groups="base.group_multi_company" />
+                <field name="currency_id" invisible="1" />
+            </xpath>
+            <xpath expr="//group[@name='salary']/div" position="after">
+                <div>
+                    <label for="initial_grade_number">Grade Number</label>
+                    <field name="initial_grade_number" />
+                </div>
+                <div>
+                    <label for="grade_rate">Grade Rate</label>
+                    <field name="grade_rate" />
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='resource_calendar_id']"
+                position="after">
+                <field name="schedule_pay" />
+            </xpath>
+            <xpath expr="//group[@name='salary']" position="after">
+                <div>
+                    <label for="allowance_ids" />
+                    <field name="allowance_ids" />
+                </div>
+                <div>
+                    <label for="other_allowance" />
+                    <field name="other_allowance" />
+                    <label for="total_yearly" />
+                    <field name="total_yearly" />
+                </div>
+                <!-- <group string="Monthly Advantages in Cash" name="allowances">
+                    <label for="hra"/>
+                    <div class="o_row">
+                        <field name="hra" nolabel="1"/>
+                        <span>/ month</span>
+                    </div>
+                    <label for="da"/>
+                    <div class="o_row">
+                        <field name="da" nolabel="1"/>
+                        <span>/ month</span>
+                    </div>
+                    <label for="travel_allowance"/>
+                    <div class="o_row">
+                        <field name="travel_allowance" nolabel="1"/>
+                        <span>/ month</span>
+                    </div>
+                    <label for="meal_allowance"/>
+                    <div class="o_row">
+                        <field name="meal_allowance" nolabel="1"/>
+                        <span>/ month</span>
+                    </div>
+                    <label for="medical_allowance"/>
+                    <div class="o_row">
+                        <field name="medical_allowance" nolabel="1"/>
+                        <span>/ month</span>
+                    </div>
+                    <label for="grade_amount"/>
+                    <div class="o_row">
+                        <field name="grade_amount" nolabel="1" readonly="True"/>
+                        <span>/ month</span>
+                    </div>
+                    <label for="other_allowance"/>
+                    <div class="o_row">
+                        <field name="other_allowance" nolabel="1"/>
+                        <span>/ month</span>
+                    </div>
+                </group>
+                <group string="Monthly Deduction" name="deductions">
+                    <label for="remuneration_tax"/>
+                    <div class="o_row">
+                        <field name="remuneration_tax" nolabel="1"/>
+                        <span>percentage/month</span>
+                    </div>
+                    <label for="social_security_tax"/>
+                    <div class="o_row">
+                        <field name="social_security_tax" nolabel="1"/>
+                        <span>percentage/month</span>
+                    </div>
+                    <label for="employers_contribution"/>
+                    <div class="o_row">
+                        <field name="employers_contribution" nolabel="1"/>
+                        <span>percentage/month</span>
+                    </div>
+                    <label for="employees_contribution"/>
+                    <div class="o_row">
+                        <field name="employees_contribution" nolabel="1"/>
+                        <span>percentage/month</span>
+                    </div> -->
+                <!-- </group> -->
+                <!-- Uncomment and modify this section if needed in the future
+                <label for="da"/>
+                <div class="o_row">
+                    <field name="da" nolabel="1"/>
+                    <span>/ month</span>
+                </div>
+                -->
+
+            </xpath>
+        </field>
+    </record>
+
+    <record id="ir_cron_increment_grade_rate" model="ir.cron">
+        <field name="name">Increment Grade Rate</field>
+        <field name="model_id" ref="model_hr_contract" />
+        <field name="state">code</field>
+        <field name="code">model.cron_increment_grade_rate()</field>
+        <field name="user_id" ref="base.user_admin" />
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="nextcall">2024-12-09 00:00:00</field>
+    </record>
+
+    <!-- <record id="hr_payslip_generate_cron" model="ir.cron">
+        <field name="name">Generate Payslips from Contracts</field>
+        <field name="model_id" ref="hr_payroll_community.model_hr_payslip"/>
+        <field name="state">code</field>
+        <field name="code">model.generate_payslips_from_contracts()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="nextcall">2024-12-09 00:00:00</field>
+    </record> -->
+
+</odoo>

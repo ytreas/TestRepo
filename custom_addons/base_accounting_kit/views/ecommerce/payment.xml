@@ -1,0 +1,275 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <template id="base_accounting_kit.select_payment_method" name="select_payment_method">
+        <t t-call="website.layout">
+            <link rel="stylesheet"
+                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+                integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+                crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+            <xpath expr="//head/*[1]" position="before">
+                <t t-set="title">
+                    <t translation="True">Select Payment Method</t>
+                </t>
+            </xpath>
+            <t t-call="base_accounting_kit.color_palette">
+                <t t-set="color_palette_company" t-value="request.env.user.company_id" />
+            </t>
+            <t t-call="base_accounting_kit.web_loader" />
+            <t t-call-assets="base_accounting_kit.ecommerce_assets" />
+            <t t-set="allowed_payment_methods"
+                t-value="request.env['ecommerce.payment.methods'].sudo().get_allowed_methods()" />
+            <div class="website-wrapper  my-cart-page js_payment">
+                <div class="cart0-products1">
+                    <p>
+                        <t t-translation="True">Select a payment option</t>
+                    </p>
+                    <div class="box-card-container payment-card">
+                        <div t-if="'khalti' in allowed_payment_methods" class="card">
+                            <input type="radio" class="payment_option" name="payment_option"
+                                value="khalti" />
+                            <img src="/base_accounting_kit/static/images/ecommerce/khalti.png"
+                                class="img-responsive avatar" alt="Khalti" />
+                            <t t-translation="True">
+                                <span>Khalti</span>
+                            </t>
+                        </div>
+                        <div t-if="'imepay' in allowed_payment_methods" class="card">
+                            <input type="radio" class="payment_option" name="payment_option"
+                                value="imepay" />
+                            <img src="/base_accounting_kit/static/images/ecommerce/imepay.png"
+                                class="img-responsive avatar" alt="Imepay" />
+                            <t t-translation="True">
+                                <span>Imepay</span>
+                            </t>
+                        </div>
+                        <div t-if="'esewa' in allowed_payment_methods" class="card">
+                            <input type="radio" class="payment_option" name="payment_option"
+                                value="esewa" />
+                            <img src="/base_accounting_kit/static/images/ecommerce/esewa.png"
+                                class="img-responsive avatar" alt="Esewa" />
+                            <t t-translation="True">
+                                <span>Esewa</span>
+                            </t>
+                        </div>
+                        <div t-if="'cod' in allowed_payment_methods" class="card">
+                            <input type="radio" class="payment_option" name="payment_option"
+                                value="cod" />
+                            <img src="/base_accounting_kit/static/images/ecommerce/cod.png"
+                                class="img-responsive avatar" alt="Cash On Delivery" />
+                            <t t-translation="True">
+                                <span>Cash On Delivery</span>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+                <div class="let-wrapper order-summary0 sticky-top js_checkout">
+                    <t t-translation="True">My Order Summary</t>
+                    <div class="order-details-container">
+                        <div class="odc2">
+                            <span>
+                                <t t-translation="True">Subtotal</t>
+                            </span>
+                            <span>
+                                <t t-translation="True">Rs.</t>
+                                <span t-out="checkout_order[0].price_total">
+                                    0.00</span>
+                            </span>
+                        </div>
+                        <div class="extra_charge_container">
+
+                        </div>
+                        <div class="odc4">
+                            <span>
+                                <t t-translation="True">Total</t>
+                            </span>
+                            <span>
+                                <t t-translation="True">Rs.</t>
+                                <span id="odc_total_price"
+                                    t-attf-data-initial-charge="#{checkout_order[0].price_total}"
+                                    t-out="checkout_order[0].price_total">
+                                    0.00</span>
+                            </span>
+                        </div>
+                        <div class="odc5 row">
+                            <form
+                                class="row proceed_to_payment_form">
+                                <input type="hidden" name="csrf_token"
+                                    t-attf-value="#{request.csrf_token()}" />
+                                <input type="hidden" name="order_id" id="order_id"
+                                    t-attf-value="#{checkout_order[0].checkout_order_token}" />
+                                <input type="hidden" name="t_amt"
+                                    t-attf-value="#{checkout_order[0].price_total}" id="t_amt" />
+                                <button class="btn js_btn_pay d-none">
+                                    <t t-translation="True">Pay Now</t>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-none js_payment_form_container">
+
+                </div>
+            </div>
+
+        </t>
+    </template>
+
+
+    <template id="base_accounting_kit.payment_extra_fees" name="payment_modal">
+
+        <t t-set="extra_fees" t-value="0" />
+        <t t-foreach="extra_charge" t-as="ec">
+            <input type="hidden" class="extra_charge_price" t-attf-value="#{ec.title} - #{ec.fee}" />
+            <div class="odc2">
+                <t t-set="extra_fees" t-value="extra_fees+ec.fee" />
+
+                <span>
+                    <t t-translation="True">
+                        <t t-esc="ec.title" />
+                    </t>
+                </span>
+                <span>
+                    <t t-translation="True">Rs.</t>
+                    <span t-out="ec.fee">
+                        0.00</span>
+                </span>
+            </div>
+        </t>
+        <input type="hidden" id="total_extra_amt"
+            t-attf-value="#{extra_fees if extra_fees &gt; 0 else 0 }" />
+    </template>
+
+
+    <!-- Order success page -->
+    <template id="base_accounting_kit.order_placed_successfully" name="order_placed_successfully">
+        <t t-call="website.layout">
+            <link rel="stylesheet"
+                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+                integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+                crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+            <xpath expr="//head/*[1]" position="before">
+                <t t-set="title">
+                    <t translation="True">Order Placed Successfully</t>
+                </t>
+            </xpath>
+            <t t-call="base_accounting_kit.color_palette">
+                <t t-set="color_palette_company" t-value="request.env.user.company_id" />
+            </t>
+            <t t-call-assets="base_accounting_kit.ecommerce_assets" />
+            <div class="website-wrapper">
+                <div class="let-wrapper special-page-layout p-4">
+                    <div class="img-wrapper">
+                        <img width="150" height="110"
+                            src="/base_accounting_kit/static/images/ecommerce/order_placed.png"
+                            alt="Order placed successfully" />
+                    </div>
+                    <div class="content-wrapper">
+                        <p class="content-title">
+                            <t t-translation="True">Thank you for your purchase! Your order has been
+                                successfully placed and is now being processed.</t>
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="let-wrapper p-4">
+                    <p class="list-header text-center">
+                        <t t-translation="True">Other details of this order</t>
+                    </p>
+                    <t t-set="index" t-value="0" />
+                    <t t-foreach="my_orders" t-as="my_order" t-key="activity_index">
+                        <t t-set="index" t-value="index+1" />
+                        <section
+                            class="card center-list">
+                            <p class="text-center pt-2">
+                                <span class="text-muted fw-600">Package#<span t-out="index" /></span>
+                                <br />
+                                <t t-translation="True">Tracking Number</t>
+                                <br />
+                                <span class="text-highlight fw-600">
+                                    <t t-out="my_order.name" />
+                                </span>
+                            </p>
+                            <p t-if="my_order.payment_method=='cod'" class="text-center">
+                                <t t-translation="True">Amount to pay</t>
+                                <br />
+                                <span class="text-highlight fw-600">
+                                    <t t-translation="True">Rs.</t>
+                                    <t t-out="my_order.total_amount" />
+                                </span>
+                            </p>
+
+                            <p class="text-center">
+                                <t t-translation="True">Estimated delivery date</t>
+                                <br />
+                                <span class="text-highlight fw-600">
+                                    <t t-out="'29 Dec-01 Jan'" />
+                                </span>
+                            </p>
+                        </section>
+
+                    </t>
+
+                    <div class="card my-4">
+                        <p class="text-center">
+                            <t t-translation="True">We've sent you a confirmation email to <span
+                                    class="fw-600" t-out="address.email" /> with the details of your
+                                order. Enable push notifications of your LekhaPlus App to receive
+                                real-time updates of your order.</t>
+                            <br />
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </t>
+
+    </template>
+
+
+    <template id="base_accounting_kit.esewa_payment_form" name="esewa_payment">
+        <div class="container" style="padding-top:3em;">
+            <center>
+                <h2>Redirecting to Payment Gateway...</h2>
+            </center>
+            <!-- https://uat.esewa.com.np/epay/main -->
+            <!-- https://rc-epay.esewa.com.np/api/epay/main/v2/form -->
+            <form id="paymentForm"
+                action="https://epay.esewa.com.np/api/epay/main/v2/form"
+                method="POST">
+
+                <input type="hidden" id="amount" name="amount"
+                    t-attf-value="{{payment_details['tAmt']}}" required="required" />
+                <input type="hidden" id="tax_amount" name="tax_amount" t-attf-value="0"
+                    required="required" />
+                <input type="hidden" id="total_amount" name="total_amount"
+                    t-attf-value="{{payment_details['tAmt']}}" required="required" />
+                <input type="hidden" id="transaction_uuid" name="transaction_uuid"
+                    t-attf-value="{{payment_details['pid']}}" required="required" />
+                <input type="hidden" id="product_code" name="product_code"
+                    t-attf-value="{{payment_details['scd']}}" required="required" />
+                <input type="hidden" id="product_service_charge"
+                    name="product_service_charge"
+                    value="0" required="required" />
+                <input type="hidden" id="product_delivery_charge"
+                    name="product_delivery_charge"
+                    t-attf-value="0" required="required" />
+                <input type="hidden" id="success_url" name="success_url"
+                    t-attf-value="{{payment_details['su']}}" required="required" />
+                <input type="hidden" id="failure_url" name="failure_url"
+                    t-attf-value="{{payment_details['fu']}}" required="required" />
+                <input type="hidden" id="signed_field_names" name="signed_field_names"
+                    value="total_amount,transaction_uuid,product_code"
+                    required="required" />
+                <input type="hidden" id="signature" name="signature"
+                    t-attf-value="{{payment_details['hash_in_base64']}}" required="required" />
+                <input type="submit" value="Submit" style="display:none;" />
+            </form>
+
+            <!-- document.getElementById('paymentForm').submit(); -->
+        </div>
+    </template>
+</odoo>

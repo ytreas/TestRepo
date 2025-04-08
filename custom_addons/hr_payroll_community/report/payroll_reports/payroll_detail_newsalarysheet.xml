@@ -1,0 +1,243 @@
+<!--Nikasa Pratiwedan कर्मचारीको तलब हिसाब गर्ने-->
+<odoo>
+    <report
+        id="payroll_detail_newsalarysheet"
+        model="hr.payslip"
+        string="Payroll Detail New Salary Sheet"
+        report_type="qweb-pdf"
+        name="hr_payroll_community.payroll_detail_newsalarysheet"
+        file="hr_payroll_community.payroll_detail_newsalarysheet"
+    />
+    <template id="payroll_detail_newsalarysheet_id">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <style>
+                    .header{
+                    font-size: 28px;
+                    font-weight: 600;
+                    }
+                    #subject{
+                    text-align: center; / Center align the content /
+                    margin-top:0%;
+                    }
+                    h1 {
+                    text-align: center;
+                    font-weight: 600 !important;
+                    font-size: 18px !important;
+                    }
+                    h3 {
+                    text-align: center; / Center align the content /
+                    margin-top:0%;
+                    }
+                    h4{
+                    text-align: center; / Center align the content /
+                    margin-top:0%;
+                    }
+                    #item5{
+                    display:flex;
+                    flex: 33%;
+                    margin-left:0%;
+                    }
+                    #item6{
+                    display:flex;
+                    flex: 33%;
+                    margin-left:25%;
+                    }
+                    #item7{
+                    display:flex;
+                    flex: 33%;
+                    margin-left:25%;
+                    }
+                    #sub1{
+                    display:flex;
+                    flex: 25%;
+                    }
+                    #sub2{
+                    display:flex;
+                    flex: 33%;
+                    margin-left:70%;
+                    }
+                    @font-face {
+                    font-family: 'Kalimati';
+                    src: url('/bank_form/static/src/font/kalimati_regular/Kalimati.ttf')
+                    }
+                    body{
+                    font-family: 'Kalimati', sans-serif;
+                    }
+                    #dataTable {
+                    border-collapse: collapse;
+                    width: 100%;
+                    margin-bottom: 0px;
+                    font-size: 20px;
+                    }
+
+                    #dataTable th, #dataTable td {
+                    border: 1px solid #ddd;
+                    padding: 8px;
+                    text-align: center; /* Centers text horizontally */
+                    vertical-align: middle; /* Centers text vertically */
+                    }
+
+                    #dataTable th {
+                    background-color: whitesmoke;
+                    color: black;
+                    }
+                </style>
+                <div>
+                    <div>
+                        <div style="overflow: hidden; text-align: center;">
+                            <strong>
+                                <span class="header"
+                                    t-field="env.user.company_id" />
+                            </strong>
+                            <br />
+                            <strong>
+                                <span class="header">
+                                    नगर कार्यपालिकाको कार्यालय
+                                </span>
+                            </strong>
+                            <br />
+                            <strong>
+                                <span class="header" t-field="env.user.company_id.street_np" />
+                            </strong>
+                            <br />
+                            <br></br>
+                            <br></br>
+                        </div>
+                    </div>
+                </div>
+                <br></br>
+                <h3>महिनाको तलवी भरपाई</h3>
+                <br></br>
+                <br></br>
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr class="active">
+                            <th>क्र.सं.</th>
+                            <th>कर्मचारीको नाम</th>
+                            <th>पद</th>
+                            <th>तह</th>
+                            <th>तलब</th>
+                            <th>छुट तलव</th>
+                            <th>चाडपर्व खर्च</th>
+                            <th>जम्मा तलव</th>
+                            <th>महंगी भत्ता</th>
+                            <th>पोशाक भत्ता</th>
+                            <th>जम्मा भत्ता</th>
+                            <th>कुल तलव भत्ता</th>
+                            <th>ना.ल कोष कट्टी</th>
+                            <th>कोरोना सहयोग कट्टी</th>
+                            <th>जम्मा कट्टी</th>
+                            <th>जम्मा पाउने</th>
+                            <th>1% सा.सु कर कट्टी</th>
+                            <th>खुद पाउने</th>
+                            <th>कैफियत</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="sn" t-value="1" />
+                        <t t-foreach="docs" t-as="o">
+                        <t t-set="calculate_salary_batches" t-value="o.get_report_value(o.batches_id.id,o.employee_id.id)"/>
+                            <tr>
+                                <td>
+                                    <t t-esc="sn" />
+                                    <t t-set="sn" t-value="sn+1" />
+                                </td>
+                                <td>
+                                    <t t-esc="o.employee_id.name" />
+                                </td>
+                                <td>
+                                    <t t-esc="o.employee_id.employee_post.name_np" />
+                                </td>
+                                <td>
+                                    <t t-esc="o.employee_id.position_name.position_category_name_np" />
+                                </td>
+                                <td>
+                                    <t t-esc="calculate_salary_batches.starting_salary" />
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                     <t t-esc="calculate_salary_batches.dearness_allowance" />
+                                </td>
+                                <td>
+                                     <t t-esc="calculate_salary_batches.dress_allowance" />
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                     <t t-esc="calculate_salary_batches.cit_cut" />
+                                </td>
+                                <td>0</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                    <tr>
+                        <td colspan="4">जम्मा</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>0</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="19">Amount in words</td>
+                    </tr>
+                </table>
+                <br></br>
+                <br></br>
+                <div class="d-flex flex-row mb-3">
+                    <div class="p-2" id="item5">
+                        <p class="d-flex justify-content-center"> तयार गर्नेको पुरा सही:</p>
+                        <p class="d-flex justify-content-center"> दर्जा:</p>
+                        <p class="d-flex justify-content-center"> मिति:
+                        </p>
+                    </div>
+                    <div class="p-2" id="item6">
+
+                        <p class="d-flex justify-content-center">पेश गर्नेको पुरा सही:
+                        </p>
+                        <p class="d-flex justify-content-center">दर्जा:
+                        </p>
+                        <p class="d-flex justify-content-center">मिति:
+                        </p>
+                    </div>
+                    <div class="p-2" id="item7">
+
+                        <p class="d-flex justify-content-center">स्वीकृत गर्नेको पुरा सही:
+                        </p>
+                        <p class="d-flex justify-content-center">दर्जा:
+                        </p>
+                        <p class="d-flex justify-content-center">मिति:
+                        </p>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+    <record id="action_payroll_detail_newsalarysheet" model="ir.actions.report">
+        <field name="name">Payroll Detail New Salary Sheet</field>
+        <field name="model">hr.payslip</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hr_payroll_community.payroll_detail_newsalarysheet_id</field>
+        <field name="binding_model_id" ref="model_hr_payslip" />
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

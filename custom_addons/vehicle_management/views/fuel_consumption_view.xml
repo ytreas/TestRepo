@@ -1,0 +1,634 @@
+<odoo>
+    <!-- ************************** Fuel Entry & Tracking ************************** -->
+    <record id="view_fuel_entry_tree" model="ir.ui.view">
+        <field name="name">fuel.entry.tree</field>
+        <field name="model">fuel.entry</field>
+        <field name="arch" type="xml">
+            <tree string="Fuel Entries" default_order="create_date desc">
+                <field name="date_bs"/>
+                <field name="vehicle_id"/>
+                <field name="driver_id"/>
+                <field name="fuel_station_province"/>
+                <field name="fuel_type_id"/>
+                <field name="quantity"/>
+                <field name="total_cost"/>
+                <field name="payment_mode_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_fuel_entry_form" model="ir.ui.view">
+        <field name="name">fuel.entry.form</field>
+        <field name="model">fuel.entry</field>
+        <field name="arch" type="xml">
+            <form string="Fuel Entry">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="date" options="{'corresponding_field': 'date_bs'}"/>
+                            <field name="time" widget='easy_timepicker'/>
+                            <field name="vehicle_id"/>
+                            <field name="driver_id"/>
+                            <field name="current_odometer"/>
+                            <field name="remarks"/>
+                        </group>
+                    </group>
+                    <group string="Fuel Station Details">
+                        <group>
+                            <field name="fuel_station_province"/>
+                            <field name="fuel_station_district"/>
+                            <field name="fuel_station_municipality"/>
+                            <field name="fuel_station_ward"/>
+                        </group> 
+                    </group>
+                    <group string="Fuel Details">
+                            <group>
+                                <field name="fuel_type_id"/>
+                                <field name="is_electric" invisible="1"/>
+                                <field name="cost_rate" readonly="1" invisible="is_electric == True"/>
+                                <field name="quantity" invisible="is_electric == True"/>
+                                <field name="hours_consumed" invisible="is_electric == False"/>
+                                <field name="rate_per_hour" invisible="is_electric == False" readonly="1"/>
+                                <field name="kwh_consumed" invisible="is_electric == False" readonly="1"/>
+                                <field name="total_cost" readonly="1"/>
+                                <field name="mileage" readonly="1"/>
+                                <field name="payment_mode_id"/>
+                            </group>
+                        </group>
+                    <group string="Receipt">
+                        <group cols="2">
+                            <field name="receipt_upload" widget="image" filename="receipt_upload_filename" options="{'size': [64,64]}"/>
+                            <field name="receipt_upload_preview" widget="html" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_fuel_entry_search" model="ir.ui.view">
+        <field name="name">fuel.entry.search</field>
+        <field name="model">fuel.entry</field>
+        <field name="arch" type="xml">
+            <search string="Fuel entry">
+                <!-- Basic Search Fields -->
+                <field name="vehicle_id"/>
+                <field name="driver_id"/>
+                <field name="fuel_station_province"/>
+                <field name="fuel_type_id"/>
+
+                <!-- Filter Groups -->
+                <filter string="Today" 
+                    name="today" 
+                    domain="[('is_today', '=', True)]"/>
+                <filter string="This Week" 
+                    name="this_week" 
+                    domain="[('is_this_week', '=', True)]"/>
+                <filter string="This Month" 
+                    name="this_month" 
+                    domain="[('is_this_month', '=', True)]"/>
+
+                <!-- Vehicle Grouping -->
+                <filter string="Vehicle" 
+                    name="group_by_vehicle" 
+                    context="{'group_by': 'vehicle_id'}"/>
+                <filter string="Fuel Type" 
+                    name="group_by_fuel_type" 
+                    context="{'group_by': 'fuel_type_id'}"/>
+                <filter string="Fuel Station" 
+                    name="group_by_fuel_station" 
+                    context="{'group_by': 'fuel_station_province'}"/>
+
+                <!-- Advanced Date Filters -->
+                <filter string="Date" 
+                    name="filter_date" 
+                    date="date"/>
+
+                <!-- Separator and Filter Groups -->
+                <separator/>
+                <filter string="Electric Vehicles" 
+                    name="electric_vehicles" 
+                    domain="[('is_electric', '=', True)]"/>
+                <filter string="Non-Electric Vehicles" 
+                    name="non_electric_vehicles" 
+                    domain="[('is_electric', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Scheduled action to recompute Fuel Entry date filters daily -->
+    <record id="ir_cron_recompute_fuel_entry" model="ir.cron">
+        <field name="name">Recompute Fuel Entry Date Filters</field>
+        <field name="model_id" ref="model_fuel_entry"/>
+        <field name="state">code</field>
+        <field name="code">model.recompute_date_filters()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+    </record>
+
+    <!-- ************************** Mileage Calculation & Efficiency Reports ************************** -->
+    <record id="view_mileage_report_tree" model="ir.ui.view">
+        <field name="name">mileage.report.tree</field>
+        <field name="model">mileage.report</field>
+        <field name="arch" type="xml">
+            <tree string="Mileage Reports" default_order="create_date desc">
+                <field name="date_bs"/>
+                <field name="vehicle_id"/>
+                <field name="last_odometer"/>
+                <field name="current_odometer"/>
+                <field name="distance_travelled"/>
+                <field name="average_efficiency_monthly"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_mileage_report_form" model="ir.ui.view">
+        <field name="name">mileage.report.form</field>
+        <field name="model">mileage.report</field>
+        <field name="arch" type="xml">
+            <form string="Mileage Report">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="date" options="{'corresponding_field': 'date_bs'}"/>
+                            <field name="vehicle_id"/>
+                            <field name="last_odometer"/>
+                            <field name="current_odometer"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Fuel/Energy Consumption">
+                            <field name="fuel_consumed_display"/>
+                        </group>
+                        <group string="Distance">
+                            <field name="distance_travelled"/>
+                        </group>
+                        <group string="Efficiency">
+                            <field name="efficiency_display" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ************************** Fuel Budgeting & Cost Control ************************** -->
+    <record id="view_fuel_budget_tree" model="ir.ui.view">
+        <field name="name">fuel.budget.tree</field>
+        <field name="model">fuel.budget</field>
+        <field name="arch" type="xml">
+            <tree string="Fuel Budgets" default_order="create_date desc">
+                <field name="date_bs"/>
+                <field name="vehicle_id"/>
+                <field name="monthly_fuel_budget"/>
+                <field name="actual_fuel_expenses"/>
+                <field name="budget_deviation"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_fuel_budget_form" model="ir.ui.view">
+        <field name="name">fuel.budget.form</field>
+        <field name="model">fuel.budget</field>
+        <field name="arch" type="xml">
+            <form string="Fuel Budget">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="date" options="{'corresponding_field': 'date_bs'}"/>
+                            <field name="vehicle_id"/>
+                            <field name="monthly_fuel_budget"/>
+                            <field name="actual_fuel_expenses"/>
+                        </group>
+                    </group>
+                    <group string="Deviation and Anomalies">
+                        <group>
+                            <field name="budget_deviation"/>
+                            <field name="budget_deviation_report"/>
+                            <field name="anomaly_flag" invisible="1"/>
+                            <field name="anomalies_fraud_detection"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_fuel_budget_search" model="ir.ui.view">
+        <field name="name">fuel.budget.search</field>
+        <field name="model">fuel.budget</field>
+        <field name="arch" type="xml">
+            <search string="Fuel Budgets">
+                <filter string="Within Budget" 
+                    name="within_budget" 
+                    domain="[('anomaly_flag', '=', False)]"/>
+                <filter string="Exceeding Budget" 
+                    name="exceeding_budget" 
+                    domain="[('anomaly_flag', '=', True)]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Fuel Types Form View -->
+    <record id="view_fuel_types_form" model="ir.ui.view">
+        <field name="name">fuel.types.form</field>
+        <field name="model">fuel.types</field>
+        <field name="arch" type="xml">
+            <form string="Fuel Type">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="is_electric"/>
+                        <field name="charger_power" invisible="is_electric == False"/>
+                    </group>
+                    <notebook>
+                        <page string="Province Prices">
+                            <field name="province_cost_ids" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="province_id"/>
+                                    <field name="cost_per_liter" 
+                                        invisible="is_electric == True"/>
+                                    <field name="cost_per_hour" 
+                                        invisible="is_electric == False"/>
+                                    <field name="is_electric" optional="hide"/>
+                                </tree>
+                                <form string="Province Price">
+                                    <group>
+                                        <field name="province_id"/>
+                                        <field name="cost_per_liter" 
+                                            invisible="is_electric == True"/>
+                                        <field name="cost_per_hour" 
+                                            invisible="is_electric == False"/>
+                                        <field name="is_electric" invisible="1"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Fuel Types Tree View -->
+    <record id="view_fuel_types_tree" model="ir.ui.view">
+        <field name="name">fuel.types.tree</field>
+        <field name="model">fuel.types</field>
+        <field name="arch" type="xml">
+            <tree string="Fuel Types">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- FuelTypeProvinceCost Notebook Form View -->
+    <record id="view_fuel_province_cost_form" model="ir.ui.view">
+        <field name="name">fuel.province.cost.form</field>
+        <field name="model">fuel.type.province.cost</field>
+        <field name="arch" type="xml">
+            <form string="Fuel Province Cost">
+                <sheet>
+                    <group>
+                        <field name="fuel_type_id"/>
+                        <field name="is_electric" invisible="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Non Electric Price" invisible="is_electric == True">
+                            <group>
+                                <field name="province_id"/>
+                                <field name="cost_per_liter"/>
+                            </group>
+                        </page>
+                        <page string="Electric Price" invisible="is_electric == False">
+                            <group>
+                                <field name="province_id"/>
+                                <field name="cost_per_hour"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <!-- FuelTypeProvinceCost Tree View (unchanged) -->
+    <record id="view_fuel_province_cost_tree" model="ir.ui.view">
+        <field name="name">fuel.province.cost.tree</field>
+        <field name="model">fuel.type.province.cost</field>
+        <field name="arch" type="xml">
+            <tree string="Fuel Province Costs">
+                <field name="fuel_type_id"/>
+                <field name="province_id"/>
+                <field name="cost_per_liter"/>
+                <field name="cost_per_hour"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ************************** Payment Mode ************************** -->
+    <record id="view_payment_mode_tree" model="ir.ui.view">
+        <field name="name">payment.mode.tree</field>
+        <field name="model">payment.mode</field>
+        <field name="arch" type="xml">
+            <tree string="Payment Modes">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_payment_mode_form" model="ir.ui.view">
+        <field name="name">payment.mode.form</field>
+        <field name="model">payment.mode</field>
+        <field name="arch" type="xml">
+            <form string="Payment Mode">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Fuel history -->
+    <record id="view_fuel_history_tree" model="ir.ui.view">
+        <field name="name">fuel.history.tree</field>
+        <field name="model">fuel.history</field>
+        <field name="arch" type="xml">
+            <tree create="False">
+                <field name="date"/>
+                <field name="time"/>
+                <field name="vehicle_id"/>
+                <field name="driver_id"/>
+                <field name="fuel_station"/>
+                <field name="fuel_type_id"/>
+                <!-- <field name="quantity" invisible="is_electric"/> -->
+                <!-- <field name="hours_consumed" invisible="not is_electric"/> -->
+                <field name="total_cost"/>
+                <field name="payment_mode_id"/>
+                <!-- <field name="is_electric" invisible="1"/> -->
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_fuel_history_form" model="ir.ui.view">
+        <field name="name">fuel.history.form</field>
+        <field name="model">fuel.history</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="vehicle_id" readonly="1"/>
+                        <field name="driver_id" readonly="1"/>
+                        <field name="fuel_station" readonly="1"/>
+                        <field name="fuel_type_id" readonly="1"/>
+                        <field name="is_electric" invisible="1"/>
+                    </group>
+                    <group>
+                        <field name="date" options="{'corresponding_field': 'date_bs'}" readonly="1"/>
+                        <field name="time" readonly="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Fuel Details" invisible="is_electric">
+                            <group>
+                                <field name="cost_rate" readonly="1"/>
+                                <field name="quantity" readonly="1"/>
+                            </group>
+                        </page>
+                        <page string="Electric Vehicle Details" invisible="not is_electric">
+                            <group>
+                                <field name="hours_consumed" readonly="1"/>
+                                <field name="rate_per_hour" readonly="1"/>
+                            </group>
+                        </page>
+                        <page string="Cost and Payment">
+                            <group>
+                                <field name="total_cost" readonly="1"/>
+                                <field name="payment_mode_id" readonly="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_fuel_history_search" model="ir.ui.view">
+        <field name="name">fuel.history.search</field>
+        <field name="model">fuel.history</field>
+        <field name="arch" type="xml">
+            <search string="Fuel History">
+                <!-- Basic Search Fields -->
+                <field name="vehicle_id"/>
+                <field name="driver_id"/>
+                <field name="fuel_station"/>
+                <field name="fuel_type_id"/>
+
+                <!-- Filter Groups -->
+                <filter string="Today" 
+                    name="today" 
+                    domain="[('is_today', '=', True)]"/>
+                <filter string="This Week" 
+                    name="this_week" 
+                    domain="[('is_this_week', '=', True)]"/>
+                <filter string="This Month" 
+                    name="this_month" 
+                    domain="[('is_this_month', '=', True)]"/>
+
+                <!-- Vehicle Grouping -->
+                <filter string="Vehicle" 
+                    name="group_by_vehicle" 
+                    context="{'group_by': 'vehicle_id'}"/>
+                <filter string="Fuel Type" 
+                    name="group_by_fuel_type" 
+                    context="{'group_by': 'fuel_type_id'}"/>
+                <filter string="Fuel Station" 
+                    name="group_by_fuel_station" 
+                    context="{'group_by': 'fuel_station'}"/>
+
+                <!-- Advanced Date Filters -->
+                <filter string="Date" 
+                    name="filter_date" 
+                    date="date"/>
+
+                <!-- Separator and Filter Groups -->
+                <separator/>
+                <filter string="Electric Vehicles" 
+                    name="electric_vehicles" 
+                    domain="[('is_electric', '=', True)]"/>
+                <filter string="Non-Electric Vehicles" 
+                    name="non_electric_vehicles" 
+                    domain="[('is_electric', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Scheduled action to recompute FuelHistory date filters daily -->
+    <record id="ir_cron_recompute_fuel_history" model="ir.cron">
+        <field name="name">Recompute Fuel History Date Filters</field>
+        <field name="model_id" ref="model_fuel_history"/>
+        <field name="state">code</field>
+        <field name="code">model.recompute_date_filters()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+    </record>
+
+    <!-- Fuel Dashboard Form View -->
+    <record id="view_fuel_entry_dashboard_form" model="ir.ui.view">
+        <field name="name">fuel.entry.dashboard.form</field>
+        <field name="model">fuel.entry.dashboard</field>
+        <field name="arch" type="xml">
+            <form string="Fuel Entry Dashboard">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="fuel_entry_id"/>
+                            <field name="date"/>
+                            <field name="date_bs"/>
+                            <field name="time"/>
+                            <field name="vehicle_id"/>
+                            <field name="driver_id"/>
+                        </group>
+                        <group>
+                            <field name="fuel_station"/>
+                            <field name="fuel_type_id"/>
+                            <field name="is_electric"/>
+                            <field name="cost_rate"/>
+                            <field name="quantity"/>
+                        </group>
+                        <group>
+                            <field name="hours_consumed"/>
+                            <field name="rate_per_hour"/>
+                            <field name="total_cost"/>
+                            <field name="payment_mode_id"/>
+                            <field name="current_odometer"/>
+                            <field name="mileage"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="company_id" invisible="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--Fuel Dashboard Tree View -->
+    <record id="view_fuel_entry_dashboard_tree" model="ir.ui.view">
+        <field name="name">fuel.entry.dashboard.tree</field>
+        <field name="model">fuel.entry.dashboard</field>
+        <field name="arch" type="xml">
+            <tree string="Fuel Entry Dashboard">
+                <field name="fuel_entry_id"/>
+                <field name="date"/>
+                <field name="date_bs"/>
+                <field name="time"/>
+                <field name="vehicle_id"/>
+                <field name="driver_id"/>
+                <field name="fuel_station"/>
+                <field name="fuel_type_id"/>
+                <field name="is_electric"/>
+                <field name="cost_rate"/>
+                <field name="quantity"/>
+                <field name="total_cost"/>
+                <field name="payment_mode_id"/>
+                <field name="current_odometer"/>
+                <field name="mileage"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ************************** Menu Items ************************** -->
+    <menuitem id="menu_fuel_consumption_management" name="Fuel Consumption Management" parent="menu_vehicle" sequence="5"/>
+
+    <record id="action_fuel_entry" model="ir.actions.act_window">
+        <field name="name">Fuel Entry and Tracking</field>
+        <field name="res_model">fuel.entry</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_today': 1}</field>
+        <field name="search_view_id" ref="view_fuel_entry_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No fuel entry records found.
+            </p>
+        </field>
+    </record>
+    <menuitem id="menu_fuel_entry" parent="menu_fuel_consumption_management" action="action_fuel_entry" sequence="1"/>
+
+    <record id="action_mileage_report" model="ir.actions.act_window">
+        <field name="name">Mileage Reports</field>
+        <field name="res_model">mileage.report</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="menu_mileage_report" parent="menu_fuel_consumption_management" action="action_mileage_report" sequence="2"/>
+
+    <record id="action_fuel_budget" model="ir.actions.act_window">
+        <field name="name">Fuel Budget and Cost Control</field>
+        <field name="res_model">fuel.budget</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="menu_fuel_budget" parent="menu_fuel_consumption_management" action="action_fuel_budget" sequence="3"/>
+
+    <record id="action_fuel_history" model="ir.actions.act_window">
+        <field name="name">Fuel History</field>
+        <field name="res_model">fuel.history</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_today': 1}</field>
+        <field name="search_view_id" ref="view_fuel_history_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No fuel history records found.
+            </p>
+        </field>
+    </record>
+    <menuitem id="menu_fuel_history" name="Fuel History" parent="menu_fuel_consumption_management" action="action_fuel_history" sequence="4"/>
+
+    <menuitem id="menu_fuel_config" name="Fuel Configuration" parent="menu_fuel_consumption_management" sequence="5"/>
+
+    <record id="action_fuel_types" model="ir.actions.act_window">
+        <field name="name">Fuel Types</field>
+        <field name="res_model">fuel.types</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="menu_fuel_types" parent="menu_fuel_config" action="action_fuel_types" sequence="1"/>
+
+    <!-- Action for Fuel Type Province Cost -->
+    <record id="action_fuel_province_cost" model="ir.actions.act_window">
+        <field name="name">Fuel Province Prices</field>
+        <field name="res_model">fuel.type.province.cost</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- <menuitem id="menu_fuel_province_cost" parent="menu_fuel_config" action="action_fuel_province_cost"/> -->
+
+    <record id="action_payment_mode" model="ir.actions.act_window">
+        <field name="name">Payment Modes</field>
+        <field name="res_model">payment.mode</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="menu_payment_mode" parent="menu_fuel_config" action="action_payment_mode" sequence="2"/>
+
+    <!-- Action for Fuel Entry Dashboard -->
+    <record id="action_fuel_entry_dashboard" model="ir.actions.act_window">
+        <field name="name">Fuel Entry Dashboard</field>
+        <field name="res_model">fuel.entry.dashboard</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No fuel entry dashboard records found.
+            </p>
+            <p>
+                Create new fuel entry records to track fuel usage and expenses.
+            </p>
+        </field>
+    </record>
+    
+    <!-- <menuitem id="menu_fuel_entry_dashboard" 
+              name="Fuel Entry Dashboard" 
+              parent="menu_fuel_config" 
+              action="action_fuel_entry_dashboard" 
+              sequence="3"/> -->
+</odoo>

@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="0">
+        <record model="ir.module.category" id="module_ecommerce_multi_tenant">
+            <field name="name">E-commerce Multi Tenant Permission</field>
+            <field name="description">Assign role to multilevel tenant</field>
+            <field name="sequence">1</field>
+        </record>
+
+        <record id="group_tenant_regional" model="res.groups">
+            <field name="name">Territorial Module (Province-Level Admin)</field>
+            <field name="category_id" ref="base_accounting_kit.module_ecommerce_multi_tenant" />
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]" />
+            <field name="comment">
+                Allocates seller categories (B2B, B2C, Agro-based, Handicrafts),
+                Connects businesses to regional suppliers,
+                Sub-domain management
+
+            </field>
+        </record>
+
+
+        <record id="group_tenant_local" model="res.groups">
+            <field name="name">Regional Module (Local Vendors and Farmers)</field>
+            <field name="category_id" ref="base_accounting_kit.module_ecommerce_multi_tenant" />
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]" />
+            <field name="comment">
+                Approves municipal/local vendors,
+                Verifies cooperative-run stores (e.g., dairy, agro-products),
+                Sub-domain management
+
+            </field>
+        </record>
+    </data>
+</odoo>

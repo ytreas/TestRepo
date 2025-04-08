@@ -1,0 +1,771 @@
+<odoo>
+    <data>
+        <!-- Insurance Company Tree View -->
+        <record id="insurance_company_tree_view" model="ir.ui.view">
+            <field name="name">insurance.company.tree</field>
+            <field name="model">insurance.company</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="code" />
+                    <field name="insurance_company_name" />
+                    <field name="insurance_company_name_np" />
+                    <field name="status" />
+                </tree>
+            </field>
+        </record>
+        <!-- Insurance Company Form View -->
+        <record id="insurance_company_form_view" model="ir.ui.view">
+            <field name="name">insurance.company.form</field>
+            <field name="model">insurance.company</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="code" />
+                            <field name="insurance_company_name" />
+                            <field name="insurance_company_name_np" />
+                            <field name="description" />
+                            <field name="status" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- Insurance Company Action -->
+        <record id="action_insurance_company" model="ir.actions.act_window">
+            <field name="name">Insurance Companies</field>
+            <field name="res_model">insurance.company</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="insurance_company_tree_view" />
+        </record>
+
+        <!-- Loan Type Tree View -->
+        <record id="loan_type_tree_view" model="ir.ui.view">
+            <field name="name">loan.type.tree</field>
+            <field name="model">loan.type</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="code" />
+                    <field name="loan_type_name" />
+                    <field name="loan_type_name_np" />
+                    <field name="status" />
+                </tree>
+            </field>
+        </record>
+        <!-- Loan Type Form View -->
+        <record id="loan_type_form_view" model="ir.ui.view">
+            <field name="name">loan.type.form</field>
+            <field name="model">loan.type</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="code" />
+                            <field name="loan_type_name" />
+                            <field name="loan_type_name_np" />
+                            <field name="description" />
+                            <field name="status" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- Loan Type Action -->
+        <record id="action_loan_type" model="ir.actions.act_window">
+            <field name="name">Loan Types</field>
+            <field name="res_model">loan.type</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="loan_type_tree_view" />
+        </record>
+
+        <!-- Advance Type Tree View -->
+        <record id="advance_type_tree_view" model="ir.ui.view">
+            <field name="name">advance.type.tree</field>
+            <field name="model">advance.type</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="code" />
+                    <field name="advance_type_name" />
+                    <field name="advance_type_name_np" />
+                    <field name="status" />
+                </tree>
+            </field>
+        </record>
+        <!-- Advance Type Form View -->
+        <record id="advance_type_form_view" model="ir.ui.view">
+            <field name="name">advance.type.form</field>
+            <field name="model">advance.type</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="code" />
+                            <field name="advance_type_name" />
+                            <field name="advance_type_name_np" />
+                            <field name="description" />
+                            <field name="status" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- Advance Type Action -->
+        <record id="action_advance_type" model="ir.actions.act_window">
+            <field name="name">Advance Types</field>
+            <field name="res_model">advance.type</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="advance_type_tree_view" />
+        </record>
+
+        <!-- Help Module Tree View -->
+        <record id="help_module_tree_view" model="ir.ui.view">
+            <field name="name">help.module.tree</field>
+            <field name="model">help.module</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="code" />
+                    <field name="help_module_name_np" />
+                    <field name="help_module" />
+                    <field name="status" />
+                </tree>
+            </field>
+        </record>
+        <!-- Help Module Form View -->
+        <record id="help_module_form_view" model="ir.ui.view">
+            <field name="name">help.module.form</field>
+            <field name="model">help.module</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="code" />
+                            <field name="help_module_name" />
+                            <field name="help_module_name_np" />
+                            <field name="help_module" />
+                            <field name="description" />
+                            <field name="status" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- Help Module Action -->
+        <record id="action_help_module" model="ir.actions.act_window">
+            <field name="name">Sub Modules</field>
+            <field name="res_model">help.module</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="help_module_tree_view" />
+        </record>
+
+        <!-- Main Subject Area Tree View -->
+        <record id="main_subject_area_tree_view" model="ir.ui.view">
+            <field name="name">main.subject.area.tree</field>
+            <field name="model">main.subject.area</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="code" />
+                    <field name="subject_area_name" />
+                    <field name="subject_area_name_np" />
+                    <field name="sequence" />
+                    <field name="status" />
+                </tree>
+            </field>
+        </record>
+        <!-- Main Subject Area Form View -->
+        <record id="main_subject_area_form_view" model="ir.ui.view">
+            <field name="name">main.subject.area.form</field>
+            <field name="model">main.subject.area</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="code" />
+                            <field name="subject_area_name" />
+                            <field name="subject_area_name_np" />
+                            <field name="sequence" />
+                            <field name="description" />
+                            <field name="status" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- Main Subject Area Action -->
+        <record id="action_main_subject_area" model="ir.actions.act_window">
+            <field name="name">Main Subject Areas</field>
+            <field name="res_model">main.subject.area</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="main_subject_area_tree_view" />
+        </record>
+
+        <!-- Subject Area Form -->
+        <record id="subject_area_form_view" model="ir.ui.view">
+            <field name="name">subject.area.form</field>
+            <field name="model">subject.area</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="code" />
+                            <field name="name_np" />
+                            <field name="name_en" />
+                            <field name="location" />
+                            <field name="email" />
+                            <field name="phone" />
+                            <field name="contact_person" />
+                            <field name="bank_name" />
+                            <field name="bank_branch" />
+                            <field name="account_no" />
+                            <field name="sanction_type" />
+                            <field name="sanction_amount_type" />
+                            <field name="total_amount_type" />
+                            <field name="main_subject_area_id" />
+                            <field name="higher_subject_area_id" />
+                            <field name="pan_no" />
+                            <field name="masalanda_goods_ids" />
+                            <field name="remarks" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Subject Area Tree -->
+        <record id="subject_area_tree_view" model="ir.ui.view">
+            <field name="name">subject.area.tree</field>
+            <field name="model">subject.area</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="code" />
+                    <field name="name_np" />
+                    <field name="name_en" />
+                    <field name="location" />
+                    <field name="email" />
+                    <field name="phone" />
+                    <field name="contact_person" />
+                    <field name="bank_name" />
+                    <field name="bank_branch" />
+                    <field name="account_no" />
+                    <field name="sanction_type" />
+                    <field name="sanction_amount_type" />
+                    <field name="total_amount_type" />
+                    <field name="main_subject_area_id" />
+                    <field name="higher_subject_area_id" />
+                    <field name="pan_no" />
+                    <field name="masalanda_goods_ids" />
+                    <field name="remarks" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- Subject Area Search View -->
+        <record id="subject_area_search_view" model="ir.ui.view">
+            <field name="name">subject.area.search</field>
+            <field name="model">subject.area</field>
+            <field name="arch" type="xml">
+                <search>
+                    <!-- Basic Filters -->
+                    <field name="code" />
+                    <field name="name_np" />
+                    <field name="name_en" />
+
+                    <!-- Location and Contact Information -->
+                    <field name="location" />
+                    <field name="email" />
+                    <field name="phone" />
+
+                    <!-- Additional Filters -->
+                    <field name="sanction_type" />
+                    <field name="sanction_amount_type" />
+                    <field name="total_amount_type" />
+                    <field name="main_subject_area_id" />
+                    <field name="higher_subject_area_id" />
+
+                    <filter string="Group by Main Subject Area" name="group_by_main_subject_area"
+                        context="{'group_by': 'main_subject_area_id'}" />
+
+                    <filter string="Group by Higher Subject Area"
+                        name="group_by_higher_subject_area"
+                        context="{'group_by': 'higher_subject_area_id'}" />
+                </search>
+            </field>
+        </record>
+
+
+        <!-- Subject Area Action -->
+        <record id="action_subject_area" model="ir.actions.act_window">
+            <field name="name">Subject Area</field>
+            <field name="res_model">subject.area</field>
+            <field name="view_mode">tree,form,search</field>
+            <field name="context">{"search_default_group_by_main_subject_area": 1,
+                "search_default_group_by_higher_subject_area": 1}</field>
+            <field name="view_id" ref="subject_area_tree_view" />
+        </record>
+        <!-- Tree View -->
+        <record id="view_allowance_master_tree" model="ir.ui.view">
+            <field name="name">allowance.master.tree</field>
+            <field name="model">allowance.master</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="code" />
+                    <field name="name_en" />
+                    <field name="name_np" />
+                    <field name="deduction" />
+                    <field name="type" />
+                    <field name="description" />
+                    <field name="status" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_allowance_master_form" model="ir.ui.view">
+            <field name="name">allowance.master.form</field>
+            <field name="model">allowance.master</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="code" />
+                            <field name="name_en" />
+                            <field name="name_np" />
+                            <field name="deduction" />
+                            <field name="type" />
+                            <field name="status" />
+                        </group>
+                        <group>
+                            <field name="description" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- Action -->
+        <record id="action_allowance_master_tree" model="ir.actions.act_window">
+            <field name="name">Allowance Master</field>
+            <field name="res_model">allowance.master</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+        </record>
+        <!-- Tree View Contract Buffer Model -->
+
+        <record id="view_contract_allowance_tree" model="ir.ui.view">
+            <field name="name">contract.allowance.tree</field>
+            <field name="model">contract.allowance</field>
+            <field name="arch" type="xml">
+                <tree string="Contract Allowances">
+                    <field name="category_id" />
+                    <field name="allowance_id" />
+                    <field name="amount" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form View Contract Buffer Model -->
+        <record id="view_contract_allowance_form" model="ir.ui.view">
+            <field name="name">contract.allowance.form</field>
+            <field name="model">contract.allowance</field>
+            <field name="arch" type="xml">
+                <form string="Contract Allowance">
+                    <group>
+                        <field name="category_id"
+                            options="{'no_create': True, 'no_create_edit': True}" />
+                        <field name="allowance_id"
+                            options="{'no_create': True, 'no_create_edit': True}" />
+                        <field name="amount" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_contract_allowance" model="ir.actions.act_window">
+            <field name="name">Contract Allowances</field>
+            <field name="res_model">contract.allowance</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Masalanda Goods Form View -->
+        <record id="view_masalanda_goods_form" model="ir.ui.view">
+            <field name="name">masalanda.goods.form</field>
+            <field name="model">masalanda.goods</field>
+            <field name="arch" type="xml">
+                <form string="Masalanda Goods">
+                    <group>
+                        <field name="name_en" />
+                        <field name="name_np" />
+                        <field name="remarks" />
+                        <field name="status" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- Masalanda Goods Tree View -->
+        <record id="view_masalanda_goods_tree" model="ir.ui.view">
+            <field name="name">masalanda.goods.tree</field>
+            <field name="model">masalanda.goods</field>
+            <field name="arch" type="xml">
+                <tree string="Masalanda Goods">
+                    <field name="name_en" />
+                    <field name="name_np" />
+                    <field name="remarks" />
+                    <field name="status" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_masalanda_goods" model="ir.actions.act_window">
+            <field name="name">Masalanda Goods</field>
+            <field name="res_model">masalanda.goods</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Subject Area Masalanda Form View-->
+        <record id="view_subject_area_masalanda_form" model="ir.ui.view">
+            <field name="name">subject.area.masalanda.form</field>
+            <field name="model">subject.area.masalanda</field>
+            <field name="arch" type="xml">
+                <form string="Subject Area Masalanda">
+                    <group>
+                        <field name="masalanda_id"
+                            options="{'no_create': True, 'no_create_edit': True}" />
+                        <field name="quantity" />
+                        <field name="unit_price" />
+                        <field name="total_price" />
+                        <field name="remarks" />
+                        <field name="subject_area_id"
+                            options="{'no_create': True, 'no_create_edit': True}" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- Subject Area Masalanda Tree View -->
+        <record id="view_subject_area_masalanda_tree" model="ir.ui.view">
+            <field name="name">subject.area.masalanda.tree</field>
+            <field name="model">subject.area.masalanda</field>
+            <field name="arch" type="xml">
+                <tree string="Subject Area Masalanda">
+                    <field name="masalanda_id" />
+                    <field name="quantity" />
+                    <field name="unit_price" />
+                    <field name="total_price" />
+                    <field name="remarks" />
+                    <field name="subject_area_id" />
+                </tree>
+            </field>
+        </record>
+
+        <!--Subject
+        Area Masalanda Action -->
+        <record id="action_subject_area_masalanda" model="ir.actions.act_window">
+            <field name="name">Subject Area Masalanda</field>
+            <field name="res_model">subject.area.masalanda</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Payment Medium Form View -->
+        <record id="view_payment_medium_form" model="ir.ui.view">
+            <field name="name">payment.medium.form</field>
+            <field name="model">payment.medium</field>
+            <field name="arch" type="xml">
+                <form string="Payment Medium">
+                    <group>
+                        <field name="code" />
+                        <field name="name_en" />
+                        <field name="name_np" />
+                        <field name="description" />
+                        <field name="status" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- Payment Medium Tree View -->
+        <record id="view_payment_medium_tree" model="ir.ui.view">
+            <field name="name">payment.medium.tree</field>
+            <field name="model">payment.medium</field>
+            <field name="arch" type="xml">
+                <tree string="Payment Medium">
+                    <field name="code" />
+                    <field name="name_en" />
+                    <field name="name_np" />
+                    <field name="description" />
+                    <field name="status" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- Month form view -->
+        <record id="view_month_form" model="ir.ui.view">
+            <field name="name">month.form</field>
+            <field name="model">month</field>
+            <field name="arch" type="xml">
+                <form string="Month">
+                    <group>
+                        <field name="code" />
+                        <field name="name_en" />
+                        <field name="name_np" />
+                        <field name="date_from" options="{'corresponding_field':'date_from_bs'}" />
+                        <field name="date_to" options="{'corresponding_field':'date_to_bs'}" />
+                        <field name="status" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- Month tree view -->
+        <record id="view_month_tree" model="ir.ui.view">
+            <field name="name">month.tree</field>
+            <field name="model">month</field>
+            <field name="arch" type="xml">
+                <tree string="Month">
+                    <field name="code" />
+                    <field name="name_en" />
+                    <field name="name_np" />
+                    <field name="date_from" />
+                    <field name="date_to" />
+                    <field name="status" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- Month Action -->
+        <record id="action_month" model="ir.actions.act_window">
+            <field name="name">Month</field>
+            <field name="res_model">month</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Payment Medium Action -->
+        <record id="action_payment_medium" model="ir.actions.act_window">
+            <field name="name">Payment Medium</field>
+            <field name="res_model">payment.medium</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!-- Tree View  for EmployeePost -->
+        <record id="view_employee_post_tree" model="ir.ui.view">
+            <field name="name">employee.post.tree</field>
+            <field name="model">employee.post</field>
+            <field name="arch" type="xml">
+                <tree string="Employee Post">
+                    <field name="code" />
+                    <field name="name_en" />
+                    <field name="name_np" />
+                    <field name="post_type" />
+                    <field name="categoty_level" />
+                    <field name="base_salary" />
+                    <field name="job_description" />
+                    <field name="allowance_ids" />
+                    <field name="remarks" />
+                    <field name="status" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form View for EmployeePost -->
+        <record id="view_employee_post_form" model="ir.ui.view">
+            <field name="name">employee.post.form</field>
+            <field name="model">employee.post</field>
+            <field name="arch" type="xml">
+                <form string="Employee Post">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="code" />
+                                <field name="name_en" />
+                                <field name="name_np" />
+                                <field name="post_type" />
+                                <field name="categoty_level" />
+                                <field name="base_salary" />
+                                <field name="job_description" />
+                                <field name="allowance_ids" />
+                                <field name="remarks" string="Remarks" />
+                                <field name="status" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action for EmployeePost -->
+        <record id="action_employee_post" model="ir.actions.act_window">
+            <field name="name">Employee Post</field>
+            <field name="res_model">employee.post</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_employee_post_tree" />
+        </record>
+
+        <!--Issuer Bank Form -->
+        <record model="ir.ui.view" id="issuer_bank_form_view">
+            <field name="name">issuer_bank.form</field>
+            <field name="model">issuer.bank</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="bank_code"/>
+                            <field name="bank_type"/>
+                            <field name="bank_name_np"/>
+                            <field name="bank_name_en"/>
+                            <field name="remarks"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--Issuer Bank Tree -->
+        <record model="ir.ui.view" id="issuer_bank_tree_view">
+            <field name="name">issuer_bank.tree</field>
+            <field name="model">issuer.bank</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="bank_code"/>
+                    <field name="bank_type"/>
+                    <field name="bank_name_np"/>
+                    <field name="bank_name_en"/>
+                    <field name="remarks"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Bank Branch Form -->
+        <record model="ir.ui.view" id="branch_bank_form_view">
+            <field name="name">branch_bank.form</field>
+            <field name="model">branch.bank</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="code"/>
+                            <field name="branch_sn"/>
+                            <field name="branch_code"/>
+                            <field name="bank_name"/>
+                            <field name="branch_name"/>
+                            <field name="branch_name_np"/>
+                            <field name="branch_phone"/>
+                            <field name="branch_email"/>
+                            <field name="branch_address"/>
+                            <field name="branch_address_np"/>
+                            <field name="branch_district"/>
+                            <field name="branch_district_np"/>
+                            <field name="branch_open_date"/>
+                            <field name="branch_manager_name"/>
+                            <field name="branch_manager_phone"/>
+                            <field name="branch_manager_email"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Bank Branch Tree -->
+        <record model="ir.ui.view" id="branch_bank_tree_view">
+            <field name="name">branch_bank.tree</field>
+            <field name="model">branch.bank</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="code"/>
+                    <field name="branch_sn"/>
+                    <field name="branch_code"/>
+                    <field name="bank_name"/>
+                    <field name="branch_name"/>
+                    <field name="branch_name_np"/>
+                    <field name="branch_address"/>
+                    <field name="branch_address_np"/>
+                    <field name="branch_district"/>
+                    <field name="branch_district_np"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Bank Type Form -->
+        <record model="ir.ui.view" id="bank_type_form_view">
+            <field name="name">bank_type.form</field>
+            <field name="model">bank.type</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="code"/>
+                            <field name="bank_type_np"/>
+                            <field name="bank_type_en"/>
+                            <field name="remarks"/>                       
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Bank Type Tree -->
+        <record model="ir.ui.view" id="bank_type_tree_view">
+            <field name="name">bank_type.tree</field>
+            <field name="model">bank.type</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="code"/>
+                    <field name="bank_type_np"/>
+                    <field name="bank_type_en"/>
+                    <field name="remarks"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Bank Form Action -->
+        <record model="ir.actions.act_window" id="issuer_bank_details_action_window">
+            <field name="name">Issuer Bank</field>
+            <field name="res_model">issuer.bank</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Bank Branch Form Action -->
+        <record model="ir.actions.act_window" id="branch_bank_details_action_window">
+            <field name="name">Branch Bank</field>
+            <field name="res_model">branch.bank</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Bank Type Action -->
+        <record model="ir.actions.act_window" id="bank_type_action_window">
+            <field name="name">Bank Type</field>
+            <field name="res_model">bank.type</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Main Menu -->
+        <menuitem id="menu_master" parent="menu_hr_payroll_community_root" name="Basic Information" />
+
+        <!-- Submenus under Basic Details -->
+        <menuitem id="menu_insurance_company" name="Insurance Companies" parent="menu_master"
+            action="action_insurance_company" />
+        <menuitem id="menu_loan_type" name="Loan Types" parent="menu_master"
+            action="action_loan_type" />
+        <menuitem id="menu_advance_type" name="Advance Types" parent="menu_master"
+            action="action_advance_type" />
+        <menuitem id="menu_help_module" name="Sub Modules" parent="menu_master"
+            action="action_help_module" />
+        <menuitem id="menu_main_subject_area" name="Main Subject Areas" parent="menu_master"
+            action="action_main_subject_area" />
+        <menuitem id="menu_subject_area" name="Subject Area" parent="menu_master"
+            action="action_subject_area" />
+        <menuitem id="menu_allowance_master" name="Allowance Master"
+            parent="hr.menu_config_recruitment" action="action_allowance_master_tree" />
+        <menuitem id="menu_masalanda_goods" name="Masalanda Goods" parent="menu_master"
+            action="action_masalanda_goods" />
+        <menuitem id="menu_subject_area_masalanda" name="Subject Area Masalanda"
+            parent="menu_master" action="action_subject_area_masalanda" />
+        <menuitem id="menu_payment_medium" name="Payment Medium" parent="menu_master"
+            action="action_payment_medium" />
+        <menuitem id="menu_month" name="Month" parent="menu_master" action="action_month" />
+        <menuitem id="menu_bank_form" name="Bank Form" parent="menu_master"
+            action="issuer_bank_details_action_window" />
+        <menuitem id="menu_branch_bank_form" name="Branch Bank Form" parent="menu_master"
+            action="branch_bank_details_action_window" />
+        <menuitem id="menu_bank_type" name="Bank Type" parent="menu_master"
+            action="bank_type_action_window" />
+    </data>
+</odoo>

@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Service Category Views -->
+    <record id="view_service_category_tree" model="ir.ui.view">
+        <field name="name">service.category.tree</field>
+        <field name="model">service.category</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="service_type_ids" widget="many2many_tags"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_service_category_form" model="ir.ui.view">
+        <field name="name">service.category.form</field>
+        <field name="model">service.category</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                        </group>
+                        <group>
+                            <field name="notes"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Service Types">
+                            <field name="service_type_ids">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name="standard_cost"/>
+                                    <field name="average_duration"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Service Type Views -->
+    <record id="view_service_type_tree" model="ir.ui.view">
+        <field name="name">service.type.tree</field>
+        <field name="model">service.type</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="category_id"/>
+                <field name="name"/>
+                <field name="standard_cost"/>
+                <field name="average_duration"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_service_type_form" model="ir.ui.view">
+        <field name="name">service.type.form</field>
+        <field name="model">service.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="category_id"/>
+                            <field name="standard_cost"/>
+                            <field name="average_duration"/>
+                        </group>
+                        <group>
+                            <field name="description"/>
+                            <field name="notes"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Notification Mode Views -->
+    <record id="view_notification_mode_tree" model="ir.ui.view">
+        <field name="name">notification.mode.tree</field>
+        <field name="model">notification.mode</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="is_email"/>
+                <field name="is_sms"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_notification_mode_form" model="ir.ui.view">
+        <field name="name">notification.mode.form</field>
+        <field name="model">notification.mode</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="is_email"/>
+                            <field name="is_sms"/>
+                        </group>
+                        <group>
+                            <field name="template_id" invisible="not is_email"/>
+                            <field name="notes"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Service Scheduling Views -->
+    <record id="view_service_scheduling_tree" model="ir.ui.view">
+        <field name="name">service.scheduling.tree</field>
+        <field name="model">service.scheduling</field>
+        <field name="arch" type="xml">
+            <tree decoration-danger="state=='draft'" decoration-success="state=='done'" decoration-info="state=='in_progress'">
+                <field name="code"/>
+                <field name="vehicle_id"/>
+                <field name="next_service_due_date_bs" string="Next Service Date"/>
+                <field name="service_type_id" widget="many2many_tags"/>
+                <field name="notification_mode_id"/>
+                <field name="state"/>
+                <field name="priority" widget="priority"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_service_scheduling_form" model="ir.ui.view">
+        <field name="name">service.scheduling.form</field>
+        <field name="model">service.scheduling</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_schedule" 
+                            string="Schedule" 
+                            type="object" 
+                            invisible="state != 'draft'"
+                            class="oe_highlight"/>
+                    <!-- <button name="action_start" 
+                            string="Start Service" 
+                            type="object" 
+                            invisible="state != 'scheduled'"
+                            class="oe_highlight"/>
+                    <button name="action_done" 
+                            string="Mark Done" 
+                            type="object" 
+                            invisible="state != 'in_progress'"
+                            class="oe_highlight"/> -->
+                    <button name="action_cancel" 
+                            string="Cancel" 
+                            type="object" 
+                            invisible="state not in ('draft', 'scheduled', 'in_progress')"/>
+                    <field name="state" widget="statusbar" 
+                        statusbar_visible="draft,scheduled,in_progress,done"/>
+                </header>
+                <sheet>
+                    <!-- <div class="oe_button_box" name="button_box">
+                        <button name="action_send_reminder" 
+                                type="object" 
+                                class="oe_stat_button" 
+                                icon="fa-envelope"
+                                invisible="reminder_sent">
+                            <span>Send Reminder</span>
+                        </button>
+                    </div> -->
+                    <div class="oe_title">
+                        <h1><field name="code" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="vehicle_id"/>
+                            <field name="last_service_date" options="{'corresponding_field': 'last_service_date_bs'}"/>
+                            <field name="next_service_due_date" options="{'corresponding_field': 'next_service_due_date_bs'}"/>
+                            <field name="service_type_id" widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="notification_mode_id"/>
+                            <field name="priority" widget="priority"/>
+                            <field name="reminder_sent" invisible="1"/>
+                            <!-- <field name="color" widget="color_picker"/> -->
+                        </group>
+                    </group>
+                    <notebook invisible="state not in ('scheduled')">
+                        <page string="Service Executions" >
+                            <field name="execution_ids">
+                                <tree>
+                                    <field name="code"/>
+                                    <field name="start_time"/>
+                                    <field name="end_time"/>
+                                    <field name="cost_incurred"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <!-- <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div> -->
+            </form>
+        </field>
+    </record>
+
+    <record id="view_service_scheduling_search" model="ir.ui.view">
+        <field name="name">service.scheduling.search</field>
+        <field name="model">service.scheduling</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="state"/>
+                <filter string="Draft" name="filter_draft" domain="[('state', '=', 'draft')]" />
+                <filter string="Scheduled" name="filter_scheduled" domain="[('state', '=', 'scheduled')]" />
+                <filter string="In Progress" name="filter_in_progress" domain="[('state', '=', 'in_progress')]" />
+                <filter string="Done" name="filter_done" domain="[('state', '=', 'done')]" />
+                <filter string="Cancelled" name="filter_cancelled" domain="[('state', '=', 'cancel')]" />
+                <filter string="Today's Schedule" 
+                    name="today" 
+                    domain="[('is_today', '=', True)]"/>
+                <filter string="This Week's Schedule" 
+                    name="this_week" 
+                    domain="[('is_this_week', '=', True)]"/>
+                <filter string="This Month's Schedule" 
+                    name="this_month" 
+                    domain="[('is_this_month', '=', True)]"/>
+                <!-- Vehicle Grouping -->
+                <filter string="Vehicle" 
+                    name="group_by_vehicle" 
+                    context="{'group_by': 'vehicle_id'}"/>
+                <!-- Advanced Date Filters -->
+                <filter string="Scheduled Date" 
+                    name="filter_date" 
+                    date="next_service_due_date"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Scheduled action to recompute Service Scheduling date filters daily -->
+    <record id="ir_cron_recompute_service_scheduling" model="ir.cron">
+        <field name="name">Recompute Service Scheduling Date Filters</field>
+        <field name="model_id" ref="model_service_scheduling"/>
+        <field name="state">code</field>
+        <field name="code">model.recompute_date_filters()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+    </record>
+
+    <!-- Service Execution Views -->
+    <record id="view_service_execution_tree" model="ir.ui.view">
+        <field name="name">service.execution.tree</field>
+        <field name="model">service.execution</field>
+        <field name="arch" type="xml">
+            <tree decoration-info="state=='draft'" decoration-warning="state=='in_progress'" decoration-success="state=='completed'">
+                <field name="code"/>
+                <field name="vehicle_id"/>
+                <field name="service_provider"/>
+                <field name="service_date_bs"/>
+                <field name="cost_incurred"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_service_execution_form" model="ir.ui.view">
+        <field name="name">service.execution.form</field>
+        <field name="model">service.execution</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_start_service" string="Start Service" type="object" 
+                        invisible="state != 'draft'" class="oe_highlight"/>
+                    <button name="action_complete_service" string="Complete Service" type="object" 
+                            invisible="state != 'in_progress'" class="oe_highlight"/>
+                    <button name="action_cancel_service" string="Cancel" type="object" 
+                            invisible="state not in ('draft', 'in_progress')"/>
+                    <field name="state" widget="statusbar" 
+                        statusbar_visible="draft,in_progress,completed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="code" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="service_scheduling_id"/>
+                            <field name="vehicle_id"/>
+                            <field name="service_provider"/>
+                            <field name="start_time" options="{'corresponding_field': 'start_time_bs'}"/>
+                            <field name="end_time" options="{'corresponding_field': 'service_date_bs'}"/>
+                        </group>
+                        <group>
+                            <field name="odometer_reading"/>
+                            <field name="last_odometer_reading"/>
+                            <field name="service_location"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="services" string="Services Done">
+                            <field name="execution_line_id">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="cost_per_service"/>
+                                    <field name="start_time" string="Start Date"/>
+                                    <field name="end_time" string="End Date"/>
+                                    <field name="duration"/>
+                                    <field name="technician_notes"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="parts_replaced" string="Parts Replaced">
+                            <field name="parts_replaced_ids">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="part_number"/>
+                                    <field name="cost"/>
+                                    <field name="warranty_period"/>
+                                    <field name="warranty_end_date"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="feedback" string="Feedback">
+                            <group>
+                                <field name="service_quality_feedback"/>
+                                <field name="notes"/>
+                            </group>
+                        </page>
+                    </notebook>
+                    <group class="oe_subtotal_footer">
+                        <field name="cost_incurred" widget="monetary" class="oe_subtotal_footer_separator"/>
+                    </group>
+                </sheet>
+                <!-- <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div> -->
+            </form>
+        </field>
+    </record>
+
+    <!-- Service History Views -->
+    <record id="view_service_history_tree" model="ir.ui.view">
+        <field name="name">service.history.tree</field>
+        <field name="model">service.history</field>
+        <field name="arch" type="xml">
+            <tree create="False">
+                <field name="name"/>
+                <field name="vehicle_id"/>
+                <field name="service_date"/>
+                <field name="service_date_bs"/>
+                <field name="cost_trend"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_service_history_form" model="ir.ui.view">
+        <field name="name">service.history.form</field>
+        <field name="model">service.history</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="vehicle_id" readonly="1"/>
+                            <field name="service_date" options="{'corresponding_field': 'service_date_bs'}" readonly="1"/>
+                            <!-- <field name="service_date_bs"/> -->
+                            <field name="odometer_reading" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="cost_trend" string="Cost" readonly="1"/>
+                            <field name="performance_after_servicing"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="service_record" readonly="1"/>
+                        <field name="notes"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_service_history_search" model="ir.ui.view">
+        <field name="name">service.history.search</field>
+        <field name="model">service.history</field>
+        <field name="arch" type="xml">
+            <search string="Service History">
+                <!-- Basic Search Fields -->
+                <field name="vehicle_id"/>
+
+                <!-- Filter Groups -->
+                <filter string="Today" 
+                    name="today" 
+                    domain="[('is_today', '=', True)]"/>
+                <filter string="This Week" 
+                    name="this_week" 
+                    domain="[('is_this_week', '=', True)]"/>
+                <filter string="This Month" 
+                    name="this_month" 
+                    domain="[('is_this_month', '=', True)]"/>
+
+                <!-- Vehicle Grouping -->
+                <filter string="Vehicle" 
+                    name="group_by_vehicle" 
+                    context="{'group_by': 'vehicle_id'}"/>
+
+                <!-- Advanced Date Filters -->
+                <filter string="Date" 
+                    name="filter_date" 
+                    date="service_date"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Scheduled action to recompute ServiceHistory date filters daily -->
+    <record id="ir_cron_recompute_service_history" model="ir.cron">
+        <field name="name">Recompute Service History Date Filters</field>
+        <field name="model_id" ref="model_service_history"/>
+        <field name="state">code</field>
+        <field name="code">model.recompute_date_filters()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+    </record>
+
+    <!-- Service Category Tree View -->
+    <record id="view_service_category_tree" model="ir.ui.view">
+        <field name="name">service.category.tree</field>
+        <field name="model">service.category</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--Service Category Form View -->
+    <record id="view_service_category_form" model="ir.ui.view">
+        <field name="name">service.category.form</field>
+        <field name="model">service.category</field>
+        <field name="arch" type="xml">
+            <form string="Service Category">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                    </group>
+                    <group>
+                        <field name="service_type_ids">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Actions -->
+    <record id="action_service_category" model="ir.actions.act_window">
+        <field name="name">Service Categories</field>
+        <field name="res_model">service.category</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_service_type" model="ir.actions.act_window">
+        <field name="name">Service Types</field>
+        <field name="res_model">service.type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_notification_mode" model="ir.actions.act_window">
+        <field name="name">Notification Modes</field>
+        <field name="res_model">notification.mode</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_service_scheduling" model="ir.actions.act_window">
+        <field name="name">Service Scheduling</field>
+        <field name="res_model">service.scheduling</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_today': 1}</field>
+        <field name="search_view_id" ref="view_service_scheduling_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No service scheduling records found.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_service_execution" model="ir.actions.act_window">
+        <field name="name">Service Execution</field>
+        <field name="res_model">service.execution</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'group_by': ['service_date_bs']}</field>
+    </record>
+
+    <record id="action_service_history" model="ir.actions.act_window">
+        <field name="name">Service History</field>
+        <field name="res_model">service.history</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_today': 1}</field>
+        <field name="search_view_id" ref="view_service_history_search"/>
+    </record>
+
+    <record id="action_service_category" model="ir.actions.act_window">
+        <field name="name">Service Categories</field>
+        <field name="res_model">service.category</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu Items -->
+    <menuitem id="menu_servicing_and_maintenance" 
+              name="Servicing and Maintenance" 
+              parent="menu_vehicle" 
+              sequence="4"/>
+
+    <menuitem id="menu_servicing_management" 
+              name="Servicing Management" 
+              parent="menu_servicing_and_maintenance" 
+              sequence="1"/>
+
+    <menuitem id="menu_service_category" 
+              name="Service Categories" 
+              parent="menu_servicing_management" 
+              action="action_service_category" 
+              sequence="1"/>
+
+    <menuitem id="menu_service_type" 
+              name="Service Types" 
+              parent="menu_servicing_management" 
+              action="action_service_type" 
+              sequence="2"/>
+
+    <menuitem id="menu_notification_mode" 
+              name="Notification Modes" 
+              parent="menu_servicing_management" 
+              action="action_notification_mode" 
+              sequence="3"/>
+
+    <menuitem id="menu_service_scheduling" 
+              name="Service Scheduling" 
+              parent="menu_servicing_management" 
+              action="action_service_scheduling" 
+              sequence="4"/>
+
+    <menuitem id="menu_service_execution" 
+              name="Service Execution" 
+              parent="menu_servicing_management" 
+              action="action_service_execution" 
+              sequence="5"/>
+
+    <menuitem id="menu_service_history" 
+              name="Service History" 
+              parent="menu_servicing_management" 
+              action="action_service_history" 
+              sequence="6"/>
+
+    <menuitem id="menu_service_category" 
+              name="Service Categories" 
+              parent="menu_servicing_management" 
+              action="action_service_category"
+              sequence="7"/>
+    
+</odoo>

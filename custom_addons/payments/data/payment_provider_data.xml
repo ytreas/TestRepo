@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+	<data noupdate='1'>
+        <record id="payment_provider_type_1" model="organization.payment.gateways">
+            <field name="payment_method_name">Esewa</field>
+            <field name="code">esewa</field>
+            <field name="merchant_api">demo</field>
+            <field name="merchant_api_key">demo</field>
+            <field name="other_details">Other Details</field>
+        </record>
+        <record id="payment_provider_type_2" model="organization.payment.gateways">
+            <field name="payment_method_name">Khalti</field>
+            <field name="code">khalti</field>
+            <field name="merchant_api">demo</field>
+            <field name="merchant_api_key">demo</field>
+            <field name="other_details">Other Details</field>
+        </record>
+        <record id="payment_provider_type_3" model="organization.payment.gateways">
+            <field name="payment_method_name">Cash</field>
+            <field name="code">cash</field>
+            <field name="merchant_api">None</field>
+            <field name="merchant_api_key">None</field>
+            <field name="other_details">Other Details</field>
+        </record>
+        <record id="payment_provider_type_4" model="organization.payment.gateways">
+            <field name="payment_method_name">Revenue</field>
+            <field name="code">revenue</field>
+            <field name="merchant_api">None</field>
+            <field name="merchant_api_key">None</field>
+            <field name="other_details">Other Details</field>
+        </record>
+    </data>
+</odoo>

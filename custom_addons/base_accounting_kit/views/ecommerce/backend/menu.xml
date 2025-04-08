@@ -1,0 +1,256 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="ecommerce_delivery_charges_master_view_tree" model="ir.ui.view">
+        <field name="name">E-commerce Delivery Charges Master</field>
+        <field name="model">ecommerce.delivery.charges</field>
+        <field name="priority">1</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="delivery_type" />
+                <field name="distance_below" />
+                <field name="min_price" />
+                <field name="max_price" />
+            </tree>
+        </field>
+    </record>
+    <record id="delivery_charges_master_view_form" model="ir.ui.view">
+        <field name="name">Delivery Charges Master</field>
+        <field name="model">ecommerce.delivery.charges</field>
+        <field name="priority">1</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <field name="delivery_type" />
+                        <field name="distance_below" />
+                        <field name="min_price" />
+                        <field name="max_price" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="ecommerce_delivery_charges_view_tree" model="ir.ui.view">
+        <field name="name">E-commerce Delivery Charges</field>
+        <field name="model">ecommerce.delivery.charges</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="delivery_type" />
+                <field name="distance_below" />
+                <field name="delivery_charge" />
+                <field name="is_active" widget="boolean_toggle" />
+                <field name="weight_limit" />
+                <field name="additional_charge_per_kg" />
+                <field name="priority" />
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="delivery_charges_view_form" model="ir.ui.view">
+        <field name="name">Delivery Charges</field>
+        <field name="model">ecommerce.delivery.charges</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="delivery_type" />
+                            <field name="distance_below" />
+                            <field name="delivery_charge" />
+                            <field name="weight_limit" />
+                            <field name="additional_charge_per_kg" />
+
+                        </group>
+                        <group>
+                            <!-- <field name="distance_limit" /> -->
+                            <field name="priority" />
+                            <label for="free_over" />
+                            <div name="free_over_amount" class="row">
+                                <field name="free_over" field_id="free_over_0" />
+                                <field name="free_delivery_threshold" widget="monetary"
+                                    class="oe_inline" invisible="not free_over" required="free_over"
+                                    field_id="free_delivery_threshold_0" />
+                            </div>
+                            <field name="is_active" widget="boolean_toggle" />
+                        </group>
+
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="ecommerce_main_settings_view_tree" model="ir.ui.view">
+        <field name="name">ecommerce_main_settings.view.tree</field>
+        <field name="model">ecommerce.main.settings</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="enable_delivery_charge" widget="boolean_toggle" />
+                <field name="enable_voucher" widget="boolean_toggle" />
+                <field name="color_theme" widget="color_picker" />
+                
+            </tree>
+        </field>
+    </record>
+
+    <record id="ecommerce_main_settings_view_form" model="ir.ui.view">
+        <field name="name">ecommerce_main_settings.view.form</field>
+        <field name="model">ecommerce.main.settings</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <field name="enable_delivery_charge" widget="boolean_toggle" />
+                        <label for="enable_voucher"/>
+                        <div name="voucher_enable" class="row">
+                            <field  class="oe_inline" name="enable_voucher" widget="boolean_toggle" field_id="enable_voucher_0" />
+                            <field name="voucher_code"
+                                class="oe_inline" invisible="not enable_voucher"
+                                required="enable_voucher"
+                                placeholder="Voucher Code"
+                                field_id="voucher_code_0" />
+                        </div>
+                        <field name="color_theme" widget="color_picker" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="base_accounting_kit.ecommerce_payment_methods" model="ir.actions.act_window">
+        <field name="name">E-commerce Payment Methods</field>
+        <field name="res_model">ecommerce.payment.methods</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <record id="base_accounting_kit.ecommerce_payment_charges" model="ir.actions.act_window">
+        <field name="name">Payment Charges</field>
+        <field name="res_model">ecommerce.payment.charges</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <record id="action_ecommerce_delivery_charges_master_form" model="ir.actions.act_window">
+        <field name="name">Delivery Charges Master</field>
+        <field name="res_model">ecommerce.delivery.charges</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('free_over', '=', None)]</field>
+
+        <field name="view_ids"
+            eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('ecommerce_delivery_charges_master_view_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('delivery_charges_master_view_form')})]" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add delivery charges
+            </p>
+            <p>
+                This is a master setting in which you will set the minimum and the maximum delivery
+                charges.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_ecommerce_delivery_charges_form" model="ir.actions.act_window">
+        <field name="name">Delivery Charges</field>
+        <field name="res_model">ecommerce.delivery.charges</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('free_over', '!=', None)]</field>
+        <field name="view_ids"
+            eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('ecommerce_delivery_charges_view_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('delivery_charges_view_form')})]" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add Delivery Charges
+            </p>
+        </field>
+    </record>
+
+    <record id="base_accounting_kit.ecommerce_delivery_charges" model="ir.actions.act_window">
+        <field name="name">Delivery Charges</field>
+        <field name="res_model">ecommerce.delivery.charges</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="ecommerce_main_settings_action" model="ir.actions.act_window">
+        <field name="name">E-commerce Settings</field>
+        <field name="res_model">ecommerce.main.settings</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Configure E-commerce Settings
+            </p>
+        </field>
+    </record>
+
+
+    <menuitem
+        id="ecommerce_menu"
+        name="E-Commerce"
+        parent="sale.sale_menu_root"
+        sequence="10">
+        <menuitem
+            id="ecommerce_ecommerce_payment_parent_menu"
+            name="Payment Settings"
+            sequence="1">
+            <menuitem
+                id="ecommerce_payment_methods_menu"
+                name="Payment Methods"
+                action="base_accounting_kit.ecommerce_payment_methods"
+                sequence="1" />
+            <menuitem
+                id="ecommerce_payment_charges_menu"
+                name="Payment Charges"
+                action="base_accounting_kit.ecommerce_payment_charges"
+                sequence="2" />
+
+
+            <menuitem
+                id="ecommerce_delivery_charges_master_menu"
+                groups="base.group_system"
+                name="Delivery Charges Master"
+                action="base_accounting_kit.action_ecommerce_delivery_charges_master_form"
+                sequence="3" />
+            <menuitem
+                id="ecommerce_delivery_charges_menu"
+                name="Delivery Charges"
+                action="base_accounting_kit.action_ecommerce_delivery_charges_form"
+                sequence="4" />
+            <menuitem
+                id="ecommerce_main_settings_menu"
+                name="E-commerce Settings"
+                action="ecommerce_main_settings_action"
+                sequence="10" />
+        </menuitem>
+    </menuitem>
+
+    <record id="ecommerce_payment_method_settings_view_tree" model="ir.ui.view">
+        <field name="name">E-commerce Payment Method Settings</field>
+        <field name="model">ecommerce.payment.methods</field>
+        <field name="arch" type="xml">
+            <tree string="" editable="top">
+                <field name="id" widget="handle" />
+                <field name="code" />
+                <field name="name" />
+                <field name="status" widget="boolean_toggle" />
+            </tree>
+        </field>
+    </record>
+    <record id="ecommerce_payment_charges_view_tree" model="ir.ui.view">
+        <field name="name">E-commerce Payment Charges Settings</field>
+        <field name="model">ecommerce.payment.charges</field>
+        <field name="arch" type="xml">
+            <tree string="" editable="top">
+                <field name="payment_method" options="{'no_create':True}" />
+                <field name="title" />
+                <field name="fee" widget="monetary" options="{'currency_field': 'currency_id'}" />
+            </tree>
+        </field>
+    </record>
+
+
+</odoo>

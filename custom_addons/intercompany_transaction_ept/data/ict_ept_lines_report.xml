@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_inter_company_transfer_line_ept_report" model="ir.actions.report">
+        <field name="name">Transactions reporting</field>
+        <field name="model">inter.company.transfer.line.ept</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">intercompany_transaction_ept.farmer_inter_ctle_report</field>
+        <field name="binding_model_id" ref="model_inter_company_transfer_line_ept"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="farmer_inter_ctle_report">
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <style>
+                    @font-face {
+                    font-family: 'Kalimati';
+                    src: url('/intercompany_transaction_ept/static/src/fonts/kalimati/Kalimati.ttf')
+                    }
+                    body{
+                    font-family: 'Kalimati', sans-serif;
+                    }
+                </style>
+                <div>
+                    <!-- Left-aligned logo -->
+                    <div style="font-size: 10px; line-height: 1.6;">
+                        <t t-set="current_company" t-value="env.user.company_id"/>
+                        <t t-if="current_company.parent_id">
+                            <t t-set="display_company" t-value="current_company.parent_id"/>
+                        </t>
+                        <t t-else="">
+                            <t t-set="display_company" t-value="current_company"/>
+                        </t>
+    
+                        <img style="float: left; height: 80px; width: 80px;" t-if="display_company.logo" t-att-src="image_data_uri(display_company.logo)" alt="Logo"/>
+                        <img style="float: right; height: 90px; width: 90px;" src="/intercompany_transaction_ept/static/images/farmers.png" alt="Farmer Logo"/>
+                        
+                        <!-- Centered content -->
+                        <div style="overflow: hidden; text-align: center;">
+                            <strong><span style="font-weight: 900; font-size: 16px; color: black; padding: 0; margin: 0;">
+                              <t t-esc="display_company.name"/> Rural Municipality
+                            </span></strong><br/>
+                            <strong><span style="font-weight: 900; font-size: 16px; color: black; padding: 0; margin: 0;">
+                              Office of Rural Municipal Executive
+                            </span></strong><br/>
+                            <strong><span style="font-weight: 900; font-size: 16px; color: black; padding: 0; margin: 0;" t-esc="display_company.street"></span></strong><br/>
+                            <strong><span style="font-weight: 900; font-size: 16px; color: black; padding: 0; margin: 0;"><span t-esc="display_company.province.name"></span>, Nepal</span></strong><br/>
+                          </div>                                                 
+                    </div>
+                </div>                          
+                <div class="title" style="text-align: center;">
+                    <h2 style="font-weight: 900; font-size: 16px; color: black; padding: 0; margin: 0;">Transaction Report</h2>
+                </div>
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr class="thead-light">
+                            <th>Farmer ID</th>
+                            <th>Name</th>
+                            <th>Transaction Date</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Unit</th>
+                            <th>Rate</th>
+                            <th>Sub-total</th>
+                            <th>Service Charge</th>
+                            <th>Delivery Charge</th>
+                            <th>Total</th>
+                            <th>Subsidy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="sub_total" t-value="0"/>
+                        <t t-set="inter_company_service_charge_calc" t-value="0"/>
+                        <t t-set="delivery_charge" t-value="0"/>
+                        <t t-set="total" t-value="0"/>
+                        <t t-set="subsidy_total" t-value="0"/> <!-- Add a new variable to store the total subsidy -->
+                        <t t-foreach="docs" t-as="o">
+                            <tr>
+                                <td width="8%"><span t-field="o.farmerid"/></td>
+                                <td width="8%"><span t-field="o.src_company_id.name"/></td>
+                                <td width="12%"><span t-field="o.transaction_date"/></td>
+                                <td width="12%"><span t-field="o.product_id.name"/></td>
+                                <td width="8%"><span t-field="o.quantity"/></td>
+                                <td width="8%"><span t-field="o.uom.name"/></td>
+                                <td class="text-end" width="8%"><span t-field="o.price" t-options='{"widget": "float", "precision": 2}'/></td>
+                                <td class="text-end" width="8%"><span t-field="o.sub_total" t-options='{"widget": "float", "precision": 2}'/></td>
+                                <td class="text-end" width="8%"><span t-field="o.inter_company_service_charge_calc" t-options='{"widget": "float", "precision": 2}'/></td>
+                                <td class="text-end" width="8%"><span t-field="o.delivery_charge" t-options='{"widget": "float", "precision": 2}'/></td>
+                                <td class="text-end" width="8%"><span t-field="o.total" t-options='{"widget": "float", "precision": 2}'/></td>
+                                <td class="text-end" width="8%"><span t-field="o.inter_company_subsidy" t-options='{"widget": "float", "precision": 2}'/></td>
+                                <t t-set="sub_total" t-value="sub_total + o.sub_total"/>
+                                <t t-set="inter_company_service_charge_calc" t-value="inter_company_service_charge_calc + o.inter_company_service_charge_calc"/>
+                                <t t-set="delivery_charge" t-value="delivery_charge + o.delivery_charge"/>
+                                <t t-set="total" t-value="total + o.total"/>
+                                <t t-set="subsidy_total" t-value="subsidy_total + o.inter_company_subsidy"/> <!-- Add the subsidy amount to the total -->
+                            </tr>
+                        </t>
+                        <tr>
+                            <td colspan="7">Total</td>
+                            <td class="text-end" width="8%"><span t-esc="sub_total" t-options='{"widget": "float", "precision": 2}'/></td>
+                            <td class="text-end" width="8%"><span t-esc="inter_company_service_charge_calc" t-options='{"widget": "float", "precision": 2}'/></td>
+                            <td class="text-end" width="8%"><span t-esc="delivery_charge" t-options='{"widget": "float", "precision": 2}'/></td>
+                            <td class="text-end" width="8%"><span t-esc="total" t-options='{"widget": "float", "precision": 2}'/></td>
+                            <td class="text-end" width="8%"><span t-esc="subsidy_total" t-options='{"widget": "float", "precision": 2}'/></td> <!-- Display the total subsidy -->
+                            <!-- <td class="text-end" width="8%"></td> -->
+                        </tr>
+                    </tbody>
+                </table> 
+            <div class="page">
+                <div class="footer">
+                    <div class="page_number">
+                        <span>Page </span>
+                        <span class="page"/>
+                        <span> of </span>
+                        <span class="topage"/>
+                    </div>
+                </div>
+            </div>
+            </t>
+        </t>
+    </template>
+</odoo>

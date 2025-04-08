@@ -1,0 +1,85 @@
+<odoo>
+    <record id="view_sale_order_form_inherit" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <!-- Insert 'validity_date' and 'validity_date_bs' after the expiration date field -->
+            <xpath expr="//field[@name='validity_date']" position="attributes">
+                <attribute name="options">{'corresponding_field': 'validity_date_bs'}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+
+
+
+
+
+    <!-- <record id="view_purchase_order_form_inherit" model="ir.ui.view">
+        <field name="name">purchase.order.form.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date_planned']" position="attributes">
+                <attribute name="options">{'corresponding_field': 'date_planned_bs'}</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='date_planned']" position="after">
+                <field name="date_planned_bs"/>
+            </xpath>
+        </field>
+    </record> -->
+       <record id="view_account_move_tree_inherit" model="ir.ui.view">
+        <field name="name">account.move.tree.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date']" position="after">
+                <field name="date_bs" />
+            </xpath>
+
+            <!-- <xpath expr="//field[@name='date']" position="attributes">
+                <attribute name="options">{'corresponding_field': 'date_bs'}</attribute>
+            </xpath> -->
+        </field>
+    </record>
+
+    <record id="view_account_move_tree_inherit" model="ir.ui.view">
+        <field name="name">account.move.tree.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date']" position="after">
+                <field name="date_bs" />
+            </xpath>
+        </field>
+    </record>
+    <record id="view_account_move_line_tree_inherit" model="ir.ui.view">
+        <field name="name">account.move.line.tree.inherit</field>
+        <field name="model">account.move.line</field>
+        <field name="inherit_id" ref="account.view_move_line_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date']" position="after">
+                <field name="date_bs" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_move_form_inherit" model="ir.ui.view">
+        <field name="name">account.move.form.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <!-- Insert 'invoice_date_bs' as an option for 'invoice_date' -->
+            <xpath expr="//field[@name='invoice_date']" position="attributes">
+                <attribute name="options">{'corresponding_field': 'invoice_date_bs'}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    
+    
+</odoo>
+
+

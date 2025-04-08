@@ -1,0 +1,142 @@
+<odoo>
+    <data>
+        <!-- Product Custom Details Form View -->
+        <record id='product_custom_details_views_form' model="ir.ui.view">
+            <field name="name">Product Custom Details Form</field>
+            <field name="model">product.custom.price</field>
+            <field name="arch" type="xml">
+                <form>
+                <header>
+                    <button name="action_update_variant_quantities" type="object" string="Update" class="btn-primary"/>
+                </header>
+                    <sheet style="margin-inline:auto;">
+                        <group class="pt-5">
+                            <group>
+                                <field name="product_id" />
+                                <field name="product_name" invisible="True" />
+                                <field name="company_id" />
+                                <field name="qty_available" />
+                                <field name="virtual_available" />
+                        <field name="sales_price"/>
+                        <field name="cost_price"/>
+                                <field name="price_sell" />
+                                <field name="price_cost" />
+                                <field name="min_qty" />
+                                <field name="max_qty" />
+                                <field name="saleable_qty" />
+                                <field name="discount" />
+                                <field name="publish" widget="boolean_toggle" />
+                                <field name="free_delivery" widget="boolean_toggle" />
+                                <field name="ribbon_id" />
+                                <field name="purchase_ok"/>
+                                <field name="sale_ok"/>
+                            </group>
+                            <group style="max-width:300px;margin-left:auto;">
+                                <field name="product_featured_image" widget="image"
+                                    class="oe_avatar" />
+                            </group>
+
+                        </group>
+                        <group string="Product Description" name="description">
+                            <field colspan="2" name="product_description" widget="html"
+                                nolabel="1"
+                                placeholder="This description is added to product page" />
+                        </group>
+
+                        <group string="Product Recommendations" name="recommended_products">
+
+                        </group>
+
+                        <!-- <group name="product_template_images" string="Extra Product Media"
+                        > -->
+
+                        <!-- </group> -->
+
+
+                        <notebook>
+                            <page name="variants" string="Attributes &amp; Variants">
+                                <field name="product_attributes_ids" widget="one2many"
+                                    context="{'show_attribute': False}" on_change="1"
+                                    field_id="attribute_line_ids_1">
+                                    <tree string="Variants" editable="bottom"
+                                        decoration-info="value_count &lt;= 1">
+                                        <field name="value_count" column_invisible="True" />
+                                        <field name="sequence" widget="handle" />
+                                        <field name="attribute_id" readonly="id" on_change="1"
+                                            can_create="True" can_write="True" />
+                                        <field name="value_ids" widget="many2many_tags"
+                                            options="{'no_create_edit': True, 'color_field': 'color'}"
+                                            context="{'default_attribute_id': attribute_id, 'show_attribute': False}"
+                                            on_change="1" can_create="True" can_write="True" />
+                                        <button string="Configure" class="float-end btn-secondary"
+                                            type="object" name="action_open_attribute_values" />
+                                    </tree>
+                                </field>
+                                <p class="oe_grey oe_edit_only">
+                                    <strong>Warning</strong>: adding or deleting attributes will
+                                    delete and recreate existing variants and lead to the loss of
+                                    their possible customizations. </p>
+                            </page>
+                            <page string="Variant Quantities">
+                                <field name="variant_quantities" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="variant_name" readonly="1"/>
+                                        <field name="qty_available" readonly="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+
+                            <page string="Featured Images">
+                                <field name="product_template_image_ids"
+                                    class="o_website_sale_image_list image_grid"
+                                    context="{'default_name': product_name}"
+                                    mode="kanban" add-label="Add a Media" nolabel="1" />
+                            </page>
+
+                            <page string="Product Recommendations">
+
+                                <group string="Product Recommendations" name="recommended_products">
+                                    <field colspan="2" name="product_recommendations" placeholder="Is there any products that you want to recommend?"
+                                        widget="many2many_tags" />
+                        <field name="sale_ok"/>
+                        <field name="purchase_ok"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Product Custom Details Tree View -->
+        <record id='product_custom_details_views_tree' model="ir.ui.view">
+            <field name="name">Product Custom Details Tree</field>
+            <field name="model">product.custom.price</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="product_id" />
+                    <field name="qty_available" />
+                    <field name="virtual_available" />
+                    <field name="price_sell" />
+                    <field name="price_cost" />
+                    <field name="min_qty" />
+                    <field name="max_qty" />
+                    <field name="saleable_qty" />
+                    <field name="sale_ok"/>
+                    <field name="purchase_ok"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Product Custom Details Action -->
+        <record id='product_custom_details_action' model="ir.actions.act_window">
+            <field name="name">Product Custom Details</field>
+            <field name="res_model">product.custom.price</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Product Custom Details Menu -->
+        <menuitem id="menu_product_custom_details" name="Product Custom Details"
+            parent="stock.menu_stock_inventory_control" action="product_custom_details_action" />
+    </data>
+</odoo>

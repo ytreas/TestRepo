@@ -1,0 +1,94 @@
+<odoo>
+    <record id="organization_field_organization_name_en" model="organization.field.selection">
+        <field name="name">Organization Name (English)</field>
+        <field name="field_code">organization_name_en</field>
+    </record>
+    <record id="organization_field_organization_name_np" model="organization.field.selection">
+        <field name="name">Organization Name (Nepali)</field>
+        <field name="field_code">organization_name_np</field>
+    </record>
+    <record id="organization_field_owner_name_en" model="organization.field.selection">
+        <field name="name">Owner Name (English)</field>
+        <field name="field_code">owner_name_en</field>
+    </record>
+    <record id="organization_field_owner_name_np" model="organization.field.selection">
+        <field name="name">Owner Name (Nepali)</field>
+        <field name="field_code">owner_name_np</field>
+    </record>
+    <record id="organization_field_registration_no" model="organization.field.selection">
+        <field name="name">Registration Number</field>
+        <field name="field_code">registration_no</field>
+    </record>
+    <record id="organization_field_start_date" model="organization.field.selection">
+        <field name="name">Start Date</field>
+        <field name="field_code">start_date</field>
+    </record>
+    <record id="organization_field_organization_type" model="organization.field.selection">
+        <field name="name">Organization Type</field>
+        <field name="field_code">organization_type</field>
+    </record>
+    <record id="organization_field_login_bg_img_company" model="organization.field.selection">
+        <field name="name">Login Background Image (Company)</field>
+        <field name="field_code">login_bg_img_company</field>
+    </record>
+    <record id="organization_field_company_category_ids" model="organization.field.selection">
+        <field name="name">Company Category</field>
+        <field name="field_code">company_category_ids</field>
+    </record>
+    <record id="organization_field_total_amount" model="organization.field.selection">
+        <field name="name">Total Amount</field>
+        <field name="field_code">total_amount</field>
+    </record>
+    <record id="organization_field_tax_id" model="organization.field.selection">
+        <field name="name">Tax ID</field>
+        <field name="field_code">tax_id</field>
+    </record>
+    <record id="organization_field_recent_tax_paid_year" model="organization.field.selection">
+        <field name="name">Recent Tax Paid Year</field>
+        <field name="field_code">recent_tax_paid_year</field>
+    </record>
+    <record id="organization_field_pan_number" model="organization.field.selection">
+        <field name="name">PAN Number</field>
+        <field name="field_code">pan_number</field>
+    </record>
+    <record id="organization_field_email" model="organization.field.selection">
+        <field name="name">Email</field>
+        <field name="field_code">email</field>
+    </record>
+    <record id="organization_field_mobile" model="organization.field.selection">
+        <field name="name">Mobile</field>
+        <field name="field_code">mobile</field>
+    </record>
+    <record id="organization_field_phone" model="organization.field.selection">
+        <field name="name">Phone</field>
+        <field name="field_code">phone</field>
+    </record>
+    <record id="organization_field_owner_citizenship_front" model="organization.field.selection">
+        <field name="name">Owner Citizenship Front</field>
+        <field name="field_code">owner_citizenship_front</field>
+    </record>
+    <record id="organization_field_owner_citizenship_back" model="organization.field.selection">
+        <field name="name">Owner Citizenship Back</field>
+        <field name="field_code">owner_citizenship_back</field>
+    </record>
+    <record id="organization_field_province" model="organization.field.selection">
+        <field name="name">Province</field>
+        <field name="field_code">province</field>
+    </record>
+    <record id="organization_field_district" model="organization.field.selection">
+        <field name="name">District</field>
+        <field name="field_code">district</field>
+    </record>
+    <record id="organization_field_palika" model="organization.field.selection">
+        <field name="name">Palika</field>
+        <field name="field_code">palika</field>
+    </record>
+    <record id="organization_field_ward_no" model="organization.field.selection">
+        <field name="name">Ward Number</field>
+        <field name="field_code">ward_no</field>
+    </record>
+    <record id="organization_field_business_second_ids" model="organization.field.selection">
+        <field name="name">Business Second IDs</field>
+        <field name="field_code">business_second_ids</field>
+    </record>
+</odoo>

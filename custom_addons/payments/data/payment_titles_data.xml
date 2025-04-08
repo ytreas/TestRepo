@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="1">
+    
+        <record id="payment_title_1" model="organization.payment.titles">
+            <field name="code">450</field>
+            <field name="name_en">ujuri niwedan dastaur</field>
+            <field name="name_np">उजुरी निवेदन दस्तुर</field>
+            <field name="rate_per_unit">200</field>
+        </record>
+    
+    </data>
+    
+</odoo>

@@ -1,0 +1,195 @@
+<!--Nikasa Pratiwedan कर्मचारीको तलब हिसाब गर्ने-->
+<odoo>
+    <report
+        id="kalaya_kosa_katti_amount"
+        model="hr.payslip"
+        string="Kalaya Kosa Katti Amount"
+        report_type="qweb-pdf"
+        name="hr_payroll_community.kalaya_kosa_katti_amount"
+        file="hr_payroll_community.kalaya_kosa_katti_amount"
+    />
+    <template id="kalaya_kosa_katti_amount_id">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <style>
+                    .header{
+                    font-size: 28px;
+                    font-weight: 600;
+                    }
+                    #subject{
+                    text-align: center; / Center align the content /
+                    margin-top:0%;
+                    }
+                    #sub1{
+                    display:flex;
+                    flex: 25%;
+                    }
+                    #sub2{
+                    display:flex;
+                    flex: 33%;
+                    margin-left:50%;
+                    }
+                    h1 {
+                    text-align: center;
+                    font-weight: 600 !important;
+                    font-size: 18px !important;
+                    }
+                    h3 {
+                    text-align: center; / Center align the content /
+                    margin-top:0%;
+                    }
+                    h4{
+                    text-align: center; / Center align the content /
+                    margin-top:0%;
+                    }
+                    #item5{
+                    display:flex;
+                    flex: 33%;
+                    margin-left:0%;
+                    }
+                    #item6{
+                    display:flex;
+                    flex: 33%;
+                    margin-left:17%;
+                    }
+                    #item7{
+                    display:flex;
+                    flex: 33%;
+                    margin-left:55%;
+                    }
+                    #sub1{
+                    display:flex;
+                    flex: 25%;
+                    }
+                    #sub2{
+                    display:flex;
+                    flex: 33%;
+                    margin-left:70%;
+                    }
+                    @font-face {
+                    font-family: 'Kalimati';
+                    src: url('/bank_form/static/src/font/kalimati_regular/Kalimati.ttf')
+                    }
+                    body{
+                    font-family: 'Kalimati', sans-serif;
+                    }
+                    #dataTable {
+                    border-collapse: collapse;
+                    width: 100%;
+                    margin-bottom: 0px;
+                    font-size: 20px;
+                    }
+
+                    #dataTable th, #dataTable td {
+                    border: 1px solid #ddd;
+                    padding: 8px;
+                    text-align: center; /* Centers text horizontally */
+                    vertical-align: middle; /* Centers text vertically */
+                    }
+
+                    #dataTable th {
+                    background-color: whitesmoke;
+                    color: black;
+                    }
+                </style>
+                <t t-foreach="docs" t-as="o"></t>
+                <div>
+                    <!-- Left-aligned logo -->
+                    <div>
+                        <!-- <img style="float: right; height: 90px; width: 80px;"
+                        t-if="display_company.logo" t-att-src="image_data_uri(display_company.logo)"
+                        alt="Logo"/> -->
+                        <!-- <img style="float: left; height: 80px; width: 90px;"
+                        src="/bank_form/static/src/img/logo.png" alt="alt-Logo"/> -->
+                        <!-- Centered content -->
+                        <div style="overflow: hidden; text-align: center;">
+                            <strong>
+                                <span class="header"
+                                    t-field="env.user.company_id" />
+                            </strong>
+                            <br></br>
+                            <strong>
+                                <span class="header" t-field="env.user.company_id.street_np" />
+                            </strong>
+                            <br />
+                                <span class="header">
+                                   कल्याण कोष कट्टि बिवरण
+                                </span>
+                                <br />
+                             <span><strong><span t-out="o.batches_id.fiscal_year.name"/> साल, <span t-out="o.batches_id.months.name_np"/> महिनाको </strong></span>
+                            <br />
+                            <br />
+                            <br></br>
+                            <br></br>
+                        </div>
+                    </div>
+                </div>
+                <br></br>
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr class="active">
+                            <th>सि.नं </th>
+                            <th> कर्मचारीको नाम थर </th>
+                            <th> सथायी लेखा नं </th>
+                            <th>दर्जा </th>
+                            <th>मासिक तलब भत्ता </th>
+                            <th>कल्याण कोष कट्टी रकम </th>
+                            <th>कैफियत </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="sn" t-value="1" />
+                        <t t-set="total_amount_welfare_fund_cut" t-value="0" />
+                        <t t-foreach="docs" t-as="o">
+                        <t t-set="calculate_salary_batches" t-value="o.get_report_value(o.batches_id.id,o.employee_id.id)"/>
+                        <t t-set="total_amount_welfare_fund_cut" t-value="total_amount_welfare_fund_cut + calculate_salary_batches.welfare_fund_cut" />
+                            <tr>
+                                <td>
+                                    <t t-esc="sn" />
+                                    <t t-set="sn" t-value="sn+1" />
+                                </td>
+                                <td>
+                                    <t t-esc="o.employee_id.name" />
+                                </td>
+                                <td>
+                                     <t t-esc="o.employee_id.pan_number" />
+                                </td>
+                                <td>
+                                    <t t-esc="o.employee_id.employee_post.name_np" />
+                                </td>
+                                <td>
+                                    <t t-esc="calculate_salary_batches.total" />
+                                </td>
+                                <td>
+                                    <t t-esc="calculate_salary_batches.welfare_fund_cut" />
+                                </td>
+                                <td>
+                                </td>
+
+                            </tr>
+                        </t>
+                    </tbody>
+                    <tr>
+                        <td colspan="5">Total</td>
+                        <td>
+                            <t t-out="total_amount_welfare_fund_cut"/>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="7">Total in Words</td>
+                    </tr>
+                </table>
+            </t>
+        </t>
+    </template>
+    <record id="action_kalaya_kosa_katti_amount" model="ir.actions.report">
+        <field name="name">Kalaya Kosa Katti Amount</field>
+        <field name="model">hr.payslip</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hr_payroll_community.kalaya_kosa_katti_amount_id</field>
+        <field name="binding_model_id" ref="model_hr_payslip" />
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

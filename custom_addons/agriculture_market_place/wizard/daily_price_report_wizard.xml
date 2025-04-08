@@ -1,0 +1,29 @@
+<odoo>
+    <record id="view_daily_price_wizard_form" model="ir.ui.view">
+        <field name="name">amp.daily.price.wizard.form</field>
+        <field name="model">amp.daily.price.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Daily Price Entry Report">
+                <group>
+                    <!-- <field name="select_report"/> -->
+                    <field name="report_range"/>
+                    <field name="report_type"/>
+                    <field name="is_all_commodities"/>
+                    <field name="commodity" invisible="is_all_commodities == True"/>
+                    <!-- <field name="comparison_commodity" invisible="report_type != 'comparison'"/> -->
+                    <!-- <field name="target_date" invisible="report_type != 'comparison'"/> -->
+                </group>
+                <group>
+                    <field name="date_from" invisible="report_range != 'custom'"/>
+                    <field name="date_to" invisible="report_range != 'custom'"/>
+                </group>
+                <footer>
+                    <button string="Print" type="object" name="print_report" class="btn-primary" context="{'action_type': 'print'}"/>
+                    <button string="View Report" type="object" name="print_report" class="btn-primary" context="{'action_type': 'view'}"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+                
+            </form>
+        </field>
+    </record>
+</odoo>

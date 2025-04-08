@@ -1,0 +1,24 @@
+<data noupdate="1">
+    
+    <record id="cp_attr_brand" model="cp.attribute">
+        <field name="id">1</field>
+        <field name="name">Brand</field>
+    </record>
+    <record id="cp_attr_color" model="cp.attribute">
+        <field name="id">2</field>
+        <field name="name">Color</field>
+    </record>
+    <record id="cp_attr_size" model="cp.attribute">
+        <field name="id">3</field>
+        <field name="name">Size</field>
+    </record>
+    <record id="cp_attr_ram" model="cp.attribute">
+        <field name="id">4</field>
+        <field name="name">RAM</field>
+    </record>
+    <record id="cp_attr_storage" model="cp.attribute">
+        <field name="id">5</field>
+        <field name="name">Storage</field>
+    </record>
+
+</data>

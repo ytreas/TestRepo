@@ -1,0 +1,533 @@
+<odoo>
+    <data>
+        <!-- Employee Add Sub View -->
+        <record id="employee_add_sub_form_view" model="ir.ui.view">
+            <field name="name">employee.add.sub.form</field>
+            <field name="model">employee.add.sub</field>
+            <field name="arch" type="xml">
+                <form string="Employee Add Sub Form">
+                    <group>
+                        <field name="code" />
+                        <field name="fiscal_years" />
+                        <field name="month" />
+                        <field name="local_position" />
+                        <field name="account_id" />
+                        <field name="amount" />
+                        <field name="addsub" />
+                        <field name="status" />
+                        <field name="remarks" />
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="employee_add_sub_tree_view" model="ir.ui.view">
+            <field name="name">employee.add.sub.tree</field>
+            <field name="model">employee.add.sub</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="code" />
+                    <field name="fiscal_years" />
+                    <field name="month" />
+                    <field name="local_position" />
+                    <field name="account_id" />
+                    <field name="amount" />
+                    <field name="addsub" />
+                    <field name="status" />
+                    <field name="remarks" />
+                </tree>
+            </field>
+        </record>
+        <record id="employee_add_sub_form_action" model="ir.actions.act_window">
+            <field name="name">Employee Add Sub Form</field>
+            <field name="res_model">employee.add.sub</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!-- Position Type View -->
+        <record id="position_type_form_view" model="ir.ui.view">
+            <field name="name">position.type.form</field>
+            <field name="model">position.type</field>
+            <field name="arch" type="xml">
+                <form string="Position Type">
+                    <sheet>
+                        <group>
+                            <field name="code" />
+                            <field name="name_en" />
+                            <field name="name_np" />
+                            <field name="description" />
+                            <field name="status" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="position_type_tree_view" model="ir.ui.view">
+            <field name="name">position.type.tree</field>
+            <field name="model">position.type</field>
+            <field name="arch" type="xml">
+                <tree string="Position Type">
+                    <field name="code" />
+                    <field name="name_en" />
+                    <field name="name_np" />
+                    <field name="description" />
+                    <field name="status" />
+                </tree>
+            </field>
+        </record>
+        <record id="position_type_action_window" model="ir.actions.act_window">
+            <field name="name">Position Type</field>
+            <field name="res_model">position.type</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!-- Employee Service Group View -->
+        <record id="employee_service_group_form_view" model="ir.ui.view">
+            <field name="name">employee.service.group.form</field>
+            <field name="model">employee.service.group</field>
+            <field name="arch" type="xml">
+                <form string="Employee Service Group">
+                    <sheet>
+                        <group>
+                            <field name="code" />
+                            <field name="name_en" />
+                            <field name="name_np" />
+                            <field name="description" />
+                            <field name="status" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="employee_service_group_tree_view" model="ir.ui.view">
+            <field name="name">employee.service.group.tree</field>
+            <field name="model">employee.service.group</field>
+            <field name="arch" type="xml">
+                <tree string="Employee Service Group">
+                    <field name="code" />
+                    <field name="name_en" />
+                    <field name="name_np" />
+                    <field name="description" />
+                    <field name="status" />
+                </tree>
+            </field>
+        </record>
+        <record id="employee_service_group_action_window" model="ir.actions.act_window">
+            <field name="name">Employee Service Group</field>
+            <field name="res_model">employee.service.group</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!-- Employee Area View -->
+        <record id="employee_area_form_view" model="ir.ui.view">
+            <field name="name">employee.area.form</field>
+            <field name="model">employee.area</field>
+            <field name="arch" type="xml">
+                <form string="Employee Area">
+                    <sheet>
+                        <group>
+                            <field name="code" />
+                            <field name="name_en" />
+                            <field name="name_np" />
+                            <field name="description" />
+                            <field name="status" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="employee_area_tree_view" model="ir.ui.view">
+            <field name="name">employee.area.tree</field>
+            <field name="model">employee.area</field>
+            <field name="arch" type="xml">
+                <tree string="Employee Area">
+                    <field name="code" />
+                    <field name="name_en" />
+                    <field name="name_np" />
+                    <field name="description" />
+                    <field name="status" />
+                </tree>
+            </field>
+        </record>
+        <record id="employee_area_action_window" model="ir.actions.act_window">
+            <field name="name">Employee Area</field>
+            <field name="res_model">employee.area</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!-- Representative Details View -->
+        <record id="view_representative_details_tree" model="ir.ui.view">
+            <field name="name">representative.details.tree</field>
+            <field name="model">representative.details</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="code" />
+                    <field name="current" />
+                    <field name="designation" />
+                    <field name="first_name_np" />
+                    <field name="representative_position" />
+                    <field name="current_position_start_date_np" />
+                    <field name="current_position_end_date_np" />
+                    <field name="email" />
+                    <field name="mobile_number" />
+                    <field name="status" />
+                </tree>
+            </field>
+        </record>
+        <!-- Form View -->
+        <record id="view_representative_details_form" model="ir.ui.view">
+            <field name="name">representative.details.form</field>
+            <field name="model">representative.details</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group string="Basic Information">
+                            <group>
+                                <field name="code" />
+                                <field name="designation" />
+                                <field name="representative_position" />
+                            </group>
+                            <group>
+                                <field name="status" />
+                                <field name="current" />
+                            </group>
+                        </group>
+                        <group string="Personal Information">
+                            <group>
+                                <field name="first_name_en" />
+                                <field name="first_name_np" />
+                                <field name="middle_name_en" />
+                                <field name="middle_name_np" />
+                                <field name="surname_en" />
+                                <field name="surname_np" />
+                                <field name="fathers_name_en" />
+                                <field name="fathers_name_np" />
+                                <field name="grandfather_name_en" />
+                                <field name="grandfather_name_np" />
+                            </group>
+                            <group>
+                                <field name="date_of_birth" options="{'corresponding_field': 'date_of_birth_np'}" />
+                                <field name="gender" />
+                                <field name="religion" />
+                                <field name="mother_tongue" />
+                                <field name="country" />
+                                <field name="nationality" />
+                            </group>
+                        </group>
+                        <group string="Identification Details">
+                            <group string="Citizenship Details">
+                                <field name="citizenship_number" />
+                                <field name="citizenship_issue_date" options="{'corresponding_field': 'citizenship_issue_date_np'}" />
+                                <field name="citizenship_issue_district" />
+                            </group>
+                            <group string="Passport Details">
+                                <field name="passport_number" />
+                                <field name="passport_issue_date" options="{'corresponding_field': 'passport_issue_date_np'}" />
+                                <field name="passport_issue_district" />
+                            </group>
+                            <group string="Voter Details">
+                                <field name="identity_card_number" />
+                                <field name="identity_issue_date" options="{'corresponding_field': 'identity_issue_date_np'}" />
+                                <field name="identity_issue_district" />
+                            </group>
+                            <group string="Other Details">
+                                <field name="pan_number" />
+                                <field name="other_description" />
+                            </group>
+                        </group>
+                        <group string="Address Details">
+                            <group string="Permanent">
+                                <field name="permanent_address" />
+                                <field name="permanent_house_number" />
+                                <field name="permanent_tole_name" />
+                                <field name="permanent_street_name" />
+                            </group>
+                            <group string="Temporary">
+                                <field name="temporary_address" />
+                                <field name="temporary_house_number" />
+                                <field name="temporary_tole_name" />
+                                <field name="temporary_street_name" />
+                            </group>
+                            <group string="Contact Details">
+                                <field name="phone_number" />
+                                <field name="mobile_number" />
+                                <field name="email_address" />
+                                <field name="mailing_address" />
+                            </group>
+                        </group>
+                        <group string="Employment Details">
+                            <group>
+                                <field name="current_position_start_date" options="{'corresponding_field': 'current_position_start_date_np'}" />
+                                <field name="current_position_end_date" options="{'corresponding_field': 'current_position_end_date_np'}" />
+                                <field name="sequentially" />
+                            </group>
+                        </group>
+                        <group string="Payment Information">
+                            <group>
+                                <field name="payment_medium" />
+                                <field name="bank_name" />
+                                <field name="bank_slip_number" />
+                                <field name="account_number" />
+                            </group>
+                        </group>
+                        <group string="Others">
+                            <field name="remarks" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="representative_details_action_window" model="ir.actions.act_window">
+            <field name="name">Representative Details</field>
+            <field name="res_model">representative.details</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help">"""Manage the details of representatives."""</field>
+        </record>
+        <!-- <record id="representative_details_action_window" model="ir.actions.act_window">
+            <field name="name">Representative Details</field>
+            <field name="res_model">representative.details</field>
+            <field name="view_mode">tree,form</field>
+        </record> -->
+        <!-- Representative Position View -->
+        <record id="representative_position_form_view" model="ir.ui.view">
+            <field name="name">representative.position.form</field>
+            <field name="model">representative.position</field>
+            <field name="arch" type="xml">
+                <form string="Representative Position">
+                    <sheet>
+                        <group>
+                            <field name="code" />
+                            <field name="name_en" />
+                            <field name="name_np" />
+                            <field name="description" />
+                            <field name="meeting_allowance" />
+                            <field name="month_range" />
+                            <field name="sequentially" />
+                            <field name="status" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="representative_position_tree_view" model="ir.ui.view">
+            <field name="name">representative.position.tree</field>
+            <field name="model">representative.position</field>
+            <field name="arch" type="xml">
+                <tree string="Representative Position">
+                    <field name="code" />
+                    <field name="name_en" />
+                    <field name="name_np" />
+                    <field name="description" />
+                    <field name="meeting_allowance" />
+                    <field name="month_range" />
+                    <field name="sequentially" />
+                    <field name="status" />
+                </tree>
+            </field>
+        </record>
+        <record id="representative_position_action_window" model="ir.actions.act_window">
+            <field name="name">Representative Position</field>
+            <field name="res_model">representative.position</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!-- Representative Facilities View-->
+        <record id="representative_facilities_form_view" model="ir.ui.view">
+            <field name="name">representative.facilities.form</field>
+            <field name="model">representative.facilities</field>
+            <field name="arch" type="xml">
+                <form string="Representative Facilities">
+                    <sheet>
+                        <group>
+                            <field name="code" />
+                            <field name="fiscal_years" />
+                            <field name="month" />
+                            <field name="position" />
+                            <field name="account_id" />
+                            <field name="addsub" />
+                            <field name="amount" />
+                            <field name="status" />
+                            <field name="remarks" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="representative_facilities_tree_view" model="ir.ui.view">
+            <field name="name">representative.facilities.tree</field>
+            <field name="model">representative.facilities</field>
+            <field name="arch" type="xml">
+                <tree string="Representative Facilities">
+                    <field name="code" />
+                    <field name="fiscal_years" />
+                    <field name="month" />
+                    <field name="position" />
+                    <field name="account_id" />
+                    <field name="addsub" />
+                    <field name="amount" />
+                    <field name="status" />
+                    <field name="remarks" />
+                </tree>
+            </field>
+        </record>
+        <record id="representative_facilities_action_window" model="ir.actions.act_window">
+            <field name="name">Representative Facilities</field>
+            <field name="res_model">representative.facilities</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Representative Attendance View -->
+        <record id="representative_attendance_form_view" model="ir.ui.view">
+            <field name="name">representative.attendance.form</field>
+            <field name="model">representative.attendance</field>
+            <field name="arch" type="xml">
+                <form string="Representative Attendance">
+                    <sheet>
+                        <group>
+                            <field name="code" />
+                            <field name="fiscal_years" />
+                            <field name="representative" />
+                            <field name="meeting_date" />
+                            <field name="month" />
+                            <field name="remarks" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="representative_attendance_tree_view" model="ir.ui.view">
+            <field name="name">representative.attendance.tree</field>
+            <field name="model">representative.attendance</field>
+            <field name="arch" type="xml">
+                <tree string="Representative Attendance">
+                    <field name="code" />
+                    <field name="fiscal_years" />
+                    <field name="representative" />
+                    <field name="meeting_date" />
+                    <field name="month" />
+                    <field name="remarks" />
+                </tree>
+            </field>
+        </record>
+        <record id="representative_attendance_action_window" model="ir.actions.act_window">
+            <field name="name">Representative Attendance</field>
+            <field name="res_model">representative.attendance</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Employee Loan View -->
+        <record id="employee_loan_form_view" model="ir.ui.view">
+            <field name="name">employee.loan.form</field>
+            <field name="model">employee.loan</field>
+            <field name="arch" type="xml">
+                <form string="Employee Loan">
+                    <sheet>
+                        <group>
+                            <field name="employee_id" />
+                            <field name="account_id" />
+                            <field name="loan_type" />
+                            <field name="loan_amount" />
+                            <field name="installment_count" />
+                            <field name="monthly_installment" />
+                            <field name="start_date" />
+                            <field name="status" />
+                            <field name="remarks" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="employee_loan_tree_view" model="ir.ui.view">
+            <field name="name">employee.loan.tree</field>
+            <field name="model">employee.loan</field>
+            <field name="arch" type="xml">
+                <tree string="Employee Loan">
+                    <field name="employee_id" />
+                    <field name="account_id" />
+                    <field name="loan_type" />
+                    <field name="loan_amount" />
+                    <field name="installment_count" />
+                    <field name="monthly_installment" />
+                    <field name="start_date" />
+                    <field name="status" />
+                    <field name="remarks" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="employee_loan_action_window" model="ir.actions.act_window">
+            <field name="name">Employee Loan</field>
+            <field name="res_model">employee.loan</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Employee Advance View -->
+        <record id="employee_advance_form_view" model="ir.ui.view">
+            <field name="name">employee.advance.form</field>
+            <field name="model">employee.advance</field>
+            <field name="arch" type="xml">
+                <form string="Employee Advance">
+                    <sheet>
+                        <group>
+                            <field name="employee_id" />
+                            <field name="account_id" />
+                            <field name="advance_type" />
+                            <field name="advance_amount" />
+                            <field name="installment_count" />
+                            <field name="monthly_installment" />
+                            <field name="start_date" />
+                            <field name="status" />
+                            <field name="remarks" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="employee_advance_tree_view" model="ir.ui.view">
+            <field name="name">employee.advance.tree</field>
+            <field name="model">employee.advance</field>
+            <field name="arch" type="xml">
+                <tree string="Employee Advance">
+                    <field name="employee_id" />
+                    <field name="account_id" />
+                    <field name="advance_type" />
+                    <field name="advance_amount" />
+                    <field name="installment_count" />
+                    <field name="monthly_installment" />
+                    <field name="start_date" />
+                    <field name="status" />
+                    <field name="remarks" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="employee_advance_action_window" model="ir.actions.act_window">
+            <field name="name">Employee Advance</field>
+            <field name="res_model">employee.advance</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Human Resource Root Menu -->
+        <menuitem id="hr_menu" name="Human Resource" parent="menu_hr_payroll_community_root"
+            sequence="10" />
+        <!-- Human Resource Sub Menu -->
+        <menuitem id="employee_add_sub_menu" name="Employee Add Sub" parent="hr_menu"
+            action="employee_add_sub_form_action" />
+        <menuitem id="position_type_menu" name="Position Type" parent="hr_menu"
+            action="position_type_action_window" />
+        <menuitem id="employee_service_group_menu" name="Employee Service Group" parent="hr_menu"
+            action="employee_service_group_action_window" />
+        <menuitem id="employee_area_menu" name="Employee Area" parent="hr_menu"
+            action="employee_area_action_window" />
+        <menuitem id="representative_details_menu" name="Representative Details" parent="hr_menu"
+            action="representative_details_action_window" />
+        <menuitem id="representative_position_menu" name="Representative Position" parent="hr_menu"
+            action="representative_position_action_window" />
+        <menuitem id="representative_facilities_menu" name="Representative Facilities"
+            parent="hr_menu" action="representative_facilities_action_window" />
+        <menuitem id="representative_attendance_menu" name="Representative Attendance"
+            parent="hr_menu" action="representative_attendance_action_window" />
+        <menuitem id="employee_loan_menu" name="Employee Loan" parent="hr_menu"
+            action="employee_loan_action_window" />
+        <menuitem id="employee_advance_menu" name="Employee Advance" parent="hr_menu"
+            action="employee_advance_action_window" />
+    </data>
+</odoo>

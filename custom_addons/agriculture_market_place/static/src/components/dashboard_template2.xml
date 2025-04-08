@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="owl.OwlReportingDashboard2" owl="1">
+        <!-- Link Nepali DatePicker JS and CSS -->
+        <t t-javascript="https://nepalidatepicker.sajanmaharjan.com.np/nepali.datepicker/js/nepali.datepicker.v4.0.5.min.js" />
+        <t t-link="https://nepalidatepicker.sajanmaharjan.com.np/nepali.datepicker/css/nepali.datepicker.v4.0.5.min.css" />
+
+        <div class="vh-100 overflow-auto bg-muted">
+            <div class="row m-3">
+                <div class="col-lg-12">
+
+             
+                    <div class="col-lg-12">
+                        <header>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="w-100 text-center">
+                                    <h2 style=" 
+                                        text-decoration: underline;
+                                        color: #7eed9c;
+                                        text-shadow: 0px 0px 5px rgb(236, 245, 237), 0px 0px 10px rgb(223, 241, 224), 0px 0px 15px rgb(224, 245, 230), 0px 0px 20px #49f276;">
+                                Daily Price Report
+                                    </h2>
+                                </div>
+                                <button class="btn btn-success custom-btn" t-on-click="onPrint">
+                                    Print Chart
+                                </button>
+                            </div>
+                        </header>
+                    
+                        <div class="row mb-4">
+                            <div class="col-4">
+                                <label for="date_from_price" class="form-label">Arrival Date From:</label>
+                                <input type="text" id="date_from_price" class="form-control nepali-datepicker" t-model="stateChart2.dateStartPrice" />
+                            </div>
+                            <div class="col-4">
+                                <label for="date_to_price" class="form-label">Arrival Date To:</label>
+                                <input type="text" id="date_to_price" class="form-control nepali-datepicker" t-model="stateChart2.dateEndPrice"/>
+                            </div>
+                            <div class="col-4">
+                                <label for="commodity_name" class="form-label">Select Name:</label>
+                                <select id="commodity_name" class="form-select" t-model="stateChart2.selectedCommodityNameP" t-on-change="onCommodityChangePrices">
+                                    <option value="">Select a Name</option>
+                                    <t t-foreach="stateChart2.namesprice" t-as="name" t-key="name.id">
+                                        <option t-att-value="name.id" t-esc="name.name"/>
+                                    </t>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 printable-chart2">
+                        <div class="row">
+                            <div class="col m-0 p-0">
+                                <div class="shadow-sm border m-2 p-4 bg-white">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <h3 class="text-primary fw-bold">Pricing Report</h3>
+                                        <div class="px-3 py-1 bg-primary cursor-pointer">
+                                            <span class="fa fa-arrow-right text-white"/>
+                                        </div>
+                                    </div>
+                                    <!-- Render the chart with the dynamic data -->
+                                    <ChartRenderer2 type="'line'" title="'Pricing Report'" config="stateChart2.fetchPriceData"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

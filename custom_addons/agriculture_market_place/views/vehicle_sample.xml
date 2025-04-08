@@ -1,0 +1,31 @@
+<odoo>
+  <record id="view_vehicle_tree" model="ir.ui.view">
+        <field name="name">vehicle.tree.view</field>
+        <field name="model">vehicle.info</field>
+        <field name="arch" type="xml">
+            <tree js_class="vehicle_info_button_tree" create="false" edit="false" delete="false"> 
+                <field name="vehicle_number"/>
+                <field name="vehicle_system"/>
+                <field name="vehicle_classification"/>
+                <field name="zone"/>
+                <field name="vehicle_type_old"/>
+                <field name="custom_number"/>
+                <field name="lot_number_old"/>
+                <field name="province_new"/>
+                <field name="province_number"/>
+                <field name="two_wheeler"/>
+                <field name="four_wheeler"/>
+                <field name="heavy"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_vehicle_info" model="ir.actions.act_window">
+         <field name="name">Vehicle Sample Numbers</field>
+        <field name="res_model">vehicle.info</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_vehicle_tree"/>
+    </record>
+ <menuitem id="menu_vehicle_list" name="Vehicles Sample" parent="menu_amp_import_sample" action="action_vehicle_info" sequence='4'/>
+
+ </odoo>

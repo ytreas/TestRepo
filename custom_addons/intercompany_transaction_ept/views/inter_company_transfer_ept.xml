@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Search View added by Maulik Barad. -->
+    <record id="inter_company_transfer_ept_search_view" model="ir.ui.view">
+        <field name="name">inter.company.transfer.ept.search.view</field>
+        <field name="model">inter.company.transfer.ept</field>
+        <field name="arch" type="xml">
+            <search string="Muti Stakeholder Transaction">
+                <filter name="Draft" string="Draft" domain="[('state','=', 'draft')]"/>
+                <filter name="Processed" string="Processed" domain="[('state','=', 'processed')]"/>
+                <filter name="Cancel" string="Cancel" domain="[('state','=', 'cancel')]"/>
+                <field name="name" string="ID" filter_domain="[('name','ilike',self)]"/>
+                <field name="source_warehouse_id"/>
+                <field name="source_company_id"/>
+                <field name="destination_warehouse_id"/>
+                <field name="destination_company_id"/>
+                <group expand="0" string="Group By">
+                    <group string="Nepali Date">
+                        <filter string="Nepali Year" domain="[]" name="nyear" context="{'group_by':'nyear'}"/>
+                        <filter string="Nepali Month" domain="[]" name="nmonth" context="{'group_by':'nmonth'}"/>
+                        <filter string="Nepali Day" domain="[]" name="nday" context="{'group_by':'nday'}"/>
+                    </group>
+                    <filter string="Source Warehouse" domain="[]" name="source_warehouse_id" context="{'group_by':'source_warehouse_id'}"/>
+                    <filter string="To Warehouse" domain="[]" name="destination_warehouse_id" context="{'group_by':'destination_warehouse_id'}"/>
+                    <filter string="State" domain="[]" name="state" context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Form View added by Maulik Barad. -->
+    <record id="inter_company_transfer_ept_form_view" model="ir.ui.view">
+        <field name="name">inter.company.transfer.ept.view.form</field>
+        <field name="model">inter.company.transfer.ept</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Muti Stakeholder Transfer">
+                <header>
+                    <button string="Process" type="object" name="process_ict" class="oe_highlight"
+                            invisible="state != 'draft'"/>
+                    <button string="Reverse" type="object" name="create_reverse_ict" class="oe_highlight"
+                    invisible="[('|', ('type', 'in', ['ict_reverse', 'int_reverse']), ('state', '!=', 'processed'))]"/>
+                    <button string="Cancel" type="object" name="action_cancel"/>
+                    <button string="Reset to Draft" type="object" name="reset_to_draft" class="oe_highlight"
+                    invisible="state in ['cancel']"/>
+                    <button name="%(import_or_export_products)d" type="action" string="Import/Export Product List"
+                            class="oe_highlight"
+                            invisible="[('|', ('type', 'in', ['ict_reverse', 'int_reverse']), ('state', 'in', ['cancel', 'processed']))]"/>
+                    <button string="Lot/Serial Scan" type="object" name="open_lot_serial_scan_wizard"
+                            class="oe_highlight" context="{'loose_lot':False}"
+                            invisible="state != 'draft'"/>
+                    <button string="Loose Lot Scan" type="object" name="open_lot_serial_scan_wizard"
+                            class="oe_highlight" context="{'loose_lot':True}"
+                            invisible="state != 'draft'"/>
+                    <!-- <button string="Calculate Service Charge" type="object" name="calc_serv_charge" class="oe_highlight"
+                         invisible="dest_allow or is_calculated_service_charge or calculated_service_charge"/> -->
+                    <field name="state" widget="statusbar" statusbar_visible="draft,processed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button type="object" name="open_related_records"
+                                invisible="reverse_inter_company_transfer_ids == []"
+                                class="oe_stat_button" icon="fa-undo" string="Reverse ICTs"
+                                context="{'view_model':'inter.company.transfer.ept'}">
+                            <field name="reverse_inter_company_transfer_ids" invisible="1"/>
+                        </button>
+
+                        <button type="object" name="open_related_records" string="Sales Orders"
+                                invisible="[('|', ('state', '!=', 'processed'), ('sale_order_ids', '=', []))]"
+                                class="oe_stat_button" icon="fa-usd" context="{'view_model':'sale.order'}">
+                            <field name="sale_order_ids" invisible="1"/>
+                        </button>
+
+                        <button type="object" name="open_related_records" string="Purchase Orders"
+                                invisible="[('|', ('state', '!=', 'processed'), ('purchase_order_ids', '=', []))]"
+                                class="oe_stat_button" icon="fa-shopping-cart"
+                                context="{'view_model':'purchase.order'}">
+                            <field name="purchase_order_ids" invisible="1"/>
+                        </button>
+
+                        <button type="object" name="open_related_records" string="Pickings"
+                                invisible="[('|', ('state', '!=', 'processed'), ('picking_ids', '=', []))]"
+                                class="oe_stat_button" icon="fa-truck" context="{'view_model':'stock.picking'}">
+                            <field name="picking_ids" invisible="1"/>
+                        </button>
+
+                        <button type="object" name="open_related_records" string="Invoices"
+                                invisible="invoice_ids == []" class="oe_stat_button"
+                                icon="fa-pencil-square-o" context="{'view_model':'account.move'}">
+                            <field name="invoice_ids" invisible="1"/>
+                        </button>
+
+                        <field name="log_line_ids" invisible="1"/>
+                        <button type="object" name="open_related_records" class="oe_stat_button" icon="fa-list"
+                                context="{'view_model':'inter.company.transfer.log.line.ept'}"
+                                invisible="log_count == 0" groups="base.group_user">
+                            <field name="log_count" widget="statinfo" string="LOG"/>
+                        </button>
+                    </div>
+
+                    <field name="_barcode_scanned" widget="barcode_handler" invisible="1"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="src_farmerid" invisible="search_by_farmerid==False"/>
+                            <field name="src_company_id" options="{'no_create':True,'no_create_edit': True}" string="Source Company"/>
+
+                            <field name="source_warehouse_id" required="True"
+                                   options="{'no_create':True,'no_create_edit': True}"
+                                   readonly="True"
+                                   domain="[('company_id','=',src_company_id)]"
+                                   invisible= "1"/>
+                            <field name="id" invisible="1"/>
+                            <field name="source_company_id" invisible="1"/>
+                            <field name="pricelist_id"
+                            invisible="type == 'internal'" readonly="state != 'draft'"/>
+                            <field name="crm_team_id" readonly="state != 'draft'"/>
+                            <field name="search_by_farmerid" invisible="search_by_farmerid==True"/>
+                        </group>
+                        <group>
+                            <field name="dst_farmerid" invisible="search_by_farmerid==False"/>
+                            <field name="dst_company_id"  options="{'no_create':True,'no_create_edit': True}"/>
+                            <field name="destination_warehouse_id" required="True"
+                            options="{'no_create':True,'no_create_edit': True}"
+                            readonly = "True"
+                            domain="[('company_id', '=', dst_company_id)]"
+                            invisible="1"/>                     
+                            <field name="auto_workflow_id" domain="[('type', '=', type)]" required="1"
+                                   readonly="state != 'draft'"
+                                   options="{'no_create':True,'no_create_edit': True}"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="transaction_date" options="{'corresponding_field': 'transaction_date_bs'}" />
+                            <field name="nyear" invisible="1"/>
+                            <field name="nmonth" invisible="1"/>
+                            <field name="nday" invisible="1"/>
+                            <field name="processed_date" readonly="1" options="{'corresponding_field': 'processed_date_bs'}" />
+                            <field name="dest_allow" invisible="1"/>
+                            <!-- <field name="is_calculated_service_charge" invisible="1"/> -->
+                            <!-- <field name="calculated_service_charge" invisible="1"/> -->
+                            <field name="delivery_charge"/>
+                            <!-- <field name="corresponding_service_charge" readonly="1"/> -->
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="Products" string="Products">
+                            <field name="inter_company_transfer_line_ids"
+                                   readonly="state != 'draft'"
+ nolabel="1">
+                            <tree editable="bottom">
+                                <!-- <field name="src_company_id"/> -->
+                                <!-- <field name="dst_company_id" optional="hide"/> -->
+                                <!-- <field name="transaction_date" optional="hide"/> -->
+                                <!-- <field name="inter_company_transfer_id"/> -->
+                                <field name="product_id"/>
+                                <field name="quantity"/>
+                                <field name="uom" />
+                                <field name="price"/>
+                                <field name="sub_total" optional="hide" sum="Sub Total"/>
+                                <!-- <field name="service_charge" optional="hide" sum="Total Service Charge"/> -->
+                                <field name="inter_company_service_charge_calc" optional="hide" sum="Total Service Charge"/>
+                                <field name="delivery_charge" optional="hide" sum="Total Delivery Charge"/>
+                                <field name="total" optional="hide" sum="Total"/>
+                            </tree>
+                            </field>
+                        </page>
+                        <page name="General Info" string="General Info">
+                            <group>
+                                <field name="inter_company_transfer_id" readonly="1"
+                                invisible="type in ['ict', 'internal']"/>
+                                <field name="create_date" readonly="1" options="{'corresponding_field': 'create_date_bs'}" />
+                                <field name="type" readonly="1" force_save="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                    <group>
+                    <div string="Message" colspan="4">
+                        <field name="message" nolabel="1" readonly="1"/>
+                    </div>
+                   </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View added by Maulik Barad. -->
+    <record id="inter_company_transfer_ept_tree_view" model="ir.ui.view">
+        <field name="name">inter.company.transfer.ept.tree.view</field>
+        <field name="model">inter.company.transfer.ept</field>
+        <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="src_company_id"/>
+                    <field name="dst_company_id"/>
+                    <field name="transaction_date"/>
+                    <field name="state"/>
+                </tree>
+        </field>
+    </record>
+    
+    <record id="inter_company_transfer_ept_lines_tree_view" model="ir.ui.view">
+        <field name="name">inter.company.transfer.line.ep.tree.view</field>
+        <field name="model">inter.company.transfer.line.ept</field>
+        <field name="arch" type="xml">
+            <tree>            
+                <field name="ict_code" optional="hide"/>
+                <field name="farmerid"/>
+                <field name="src_company_id"/>
+                <field name="dst_company_id" optional="hide"/>
+                <field name="transaction_date"/>
+                <!-- <field name="inter_company_transfer_id"/> -->
+                <field name="product_id"/>
+                <field name="quantity"/>
+                <field name="uom" />
+                <field name="price"/>
+                <field name="nyear" optional="hide"/>
+                <field name="nmonth" optional="hide"/>
+                <field name="nday" optional="hide"/>
+                <field name="newyear" optional="hide"/>
+                <field name="newmonth" optional="hide"/>
+                <field name="newday" optional="hide"/>
+                <field name="sub_total" sum="Sub Total"/>
+                <field name="inter_company_service_charge_calc" sum="Total Service Charge"/>
+                <field name="delivery_charge" sum="Total Delivery Charge"/>
+                <field name="total" sum="Total"/>
+                <field name="inter_company_subsidy" sum="Inter Company Subsidy"/>
+                <field name="invoice_ids" optional="hide" widget="tags"/>
+            </tree>
+        </field>
+    </record>
+    <record id="inter_company_transfer_ept_lines_tree_view_inherit" model="ir.ui.view">
+        <field name="name">inter.company.transfer.line.ep.tree.view.inherit</field>
+        <field name="model">inter.company.transfer.line.ept</field>
+        <field name="inherit_id" ref="intercompany_transaction_ept.inter_company_transfer_ept_lines_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="js_class">ict_report_list_view</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_inter_company_transfer_line_ept_search" model="ir.ui.view">
+        <field name="name">inter.company.transfer.line.eptSearch</field>
+        <field name="model">inter.company.transfer.line.ept</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="farmerid"/>
+                <field name='src_company_id'/>
+                <field name='dst_company_id'/>
+                <field name='product_id'/>
+                <separator />
+                <!-- <filter string="Pending" name="serive_request_search_filter_pending" domain="[('state', '=', 'Pending')]"/> -->
+                <group expand="0" string="Group By">
+                    <group string="Nepali Date">
+                        <filter string="Nepali Year" domain="[]" name="newyear" context="{'group_by':'newyear'}"/>
+                        <filter string="Nepali Month" domain="[]" name="newmonth" context="{'group_by':'newmonth'}"/>
+                        <filter string="Nepali Day" domain="[]" name="newday" context="{'group_by':'newday'}"/>
+                    </group>
+                    <filter string="Product" name="ept_line_search_group_by_product" context="{'group_by': 'product_id'}"/>
+                    <filter string="Seller" name="ept_line_search_group_by_src_company" context="{'group_by': 'src_company_id'}"/>
+                    <filter string="Buyer" name="ept_line_search_group_by_dst_company" context="{'group_by': 'dst_company_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Actions for ICT added by Maulik Barad. -->
+    <record id="inter_company_transfer_ept_action" model="ir.actions.act_window">
+        <field name="name">Muti Stakeholder Transaction</field>
+        <field name="res_model">inter.company.transfer.ept</field>
+        <field name="domain">[('type','=','ict')]</field>
+        <field name="context">{'default_type':'ict'}</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="internal_inter_company_transfer_ept_action" model="ir.actions.act_window">
+        <field name="name">Internal Transfer</field>
+        <field name="res_model">inter.company.transfer.ept</field>
+        <field name="domain">[('type','=','internal')]</field>
+        <field name="context">{'default_type':'internal'}</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="reverse_inter_company_transfer_ept_action" model="ir.actions.act_window">
+        <field name="name">Reverse Muti Stakeholder Transfer</field>
+        <field name="res_model">inter.company.transfer.ept</field>
+        <field name="domain">[('type','=','ict_reverse')]</field>
+        <field name="context">{'default_type':'ict_reverse'}</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="reverse_internal_transfer_ept_action" model="ir.actions.act_window">
+        <field name="name">Reverse Internal Transfer</field>
+        <field name="res_model">inter.company.transfer.ept</field>
+        <field name="domain">[('type','=','int_reverse')]</field>
+        <field name="context">{'default_type':'int_reverse'}</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="reverse_internal_transfer_ept_lines_action" model="ir.actions.act_window">
+        <field name="name">Products</field>
+        <field name="res_model">inter.company.transfer.line.ept</field>
+        <field name="domain">[('is_calculated_service_charge','=',False),('state','in',('processed','draft'))]</field>
+        <field name="view_mode">tree,graph</field>
+    </record>
+
+    <!-- Menus -->
+    <menuitem id="inter_company_transfer_ept_main_menu" parent="stock.menu_stock_warehouse_mgmt"
+              groups="inter_company_transfer_user_group,inter_company_transfer_manager_group"
+              name="Muti Stakeholder Transaction &amp; Muti Stakeholder Transfer" sequence="170"/>
+
+    <menuitem id="inter_company_transfer_ept_child_menu" parent="inter_company_transfer_ept_main_menu" sequence='1'
+              action="inter_company_transfer_ept_action"/>
+
+    <menuitem id="internal_inter_company_transfer_ept_menu" parent="inter_company_transfer_ept_main_menu" sequence='5'
+              action="internal_inter_company_transfer_ept_action"/>
+
+    <menuitem id="reverse_inter_company_transfer_ept_menu" parent="inter_company_transfer_ept_main_menu" sequence='9'
+              action="reverse_inter_company_transfer_ept_action"/>
+
+    <menuitem id="reverse_internal_transfer_ept_menu" parent="inter_company_transfer_ept_main_menu" sequence='13'
+              action="reverse_internal_transfer_ept_action"/>
+
+    <menuitem id="reverse_internal_transfer_ept_lines_menu" parent="inter_company_transfer_ept_main_menu" sequence='13'
+              name = "Report"
+              action="reverse_internal_transfer_ept_lines_action"/>
+
+</odoo>

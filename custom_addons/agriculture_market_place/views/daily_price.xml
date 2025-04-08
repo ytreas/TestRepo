@@ -1,0 +1,160 @@
+<odoo>
+
+    <!-- Form view -->
+    <record id="view_amp_daily_price_form" model="ir.ui.view">
+    <field name="name">amp.daily.price.form</field>
+    <field name="model">amp.daily.price</field>
+    <field name="arch" type="xml">
+        <form string="Daily Price">
+            <sheet>
+                <group>
+                    <group string="Product">
+                        <field name="commodity" readonly="id" options="{'no_create':True}"/>
+                        <field name="unit"/>
+                
+                        <field name="max_price" invisible="1" readonly="id"/>
+                        <field name="min_price" invisible="1" readonly="id"/>
+                        <field name="avg_price" invisible="1" readonly="id"/>
+                        <field name="last_min" readonly="1" modifiers="{'invisible': [['id', '!=', False]]}"/>
+                        <field name="last_max" readonly="1" modifiers="{'invisible': [['id', '!=', False]]}"/>
+                        <field name="last_avg" readonly="1" modifiers="{'invisible': [['id', '!=', False]]}"/>                            
+                    </group>
+                    <group string="Prices">
+                        <field name="price1_label" readonly="1" />
+                        <group string="Price 1">
+                            <field name="trader1" domain="[('id', 'in', trader1_domain_ids)]"/>
+                            <field name="price1" readonly="id"/>
+                            <field name="trader1_domain_ids" invisible="1"/>
+                        </group>
+                        <group string="Price 2">
+                            <field name="trader2" domain="[('id', 'in', trader2_domain_ids)]"/>
+                            <field name="price2" readonly="id"/>
+                            <field name="trader2_domain_ids" invisible="1"/>
+                        </group>
+                        <group string="Price 3">
+                            <field name="trader3" domain="[('id', 'in', trader3_domain_ids)]"/>
+                            <field name="price3" readonly="id"/>
+                            <field name="trader3_domain_ids" invisible="1"/>
+                        </group>
+                        <group string="Price 4">
+                            <field name="trader4" domain="[('id', 'in', trader4_domain_ids)]"/>
+                            <field name="price4" readonly="id"/>
+                            <field name="trader4_domain_ids" invisible="1"/>
+                        </group>
+                        <group string="Price 5">
+                            <field name="trader5" domain="[('id', 'in', trader5_domain_ids)]"/>
+                            <field name="price5" readonly="id"/>
+                            <field name="trader5_domain_ids" invisible="1"/>
+                        </group>
+                    </group>
+                </group>
+            </sheet>
+        </form>
+    </field>
+</record>
+    
+    <!-- Tree view -->
+    <record id="view_amp_daily_price_tree" model="ir.ui.view">
+        <field name="name">amp.daily.price.tree</field>
+        <field name="model">amp.daily.price</field>
+        <field name="arch" type="xml">
+            <tree string="Daily Prices" default_order="create_date desc">
+                <!-- <field name="serial_number" string="S.N." readonly="1"/> -->
+                <field name="commodity"/>
+                <field name="unit"/>
+                <field name="max_price"/>
+                <field name="min_price"/>
+                <field name="avg_price"/>
+                <field name="current_date"/>
+                <field name="current_date_bs"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_amp_daily_price" model="ir.actions.act_window">
+        <field name="name">Daily Prices</field>
+        <field name="res_model">amp.daily.price</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_amp_daily_price_tree"/>
+        <field name="context">{'search_default_today': 1}</field>
+    </record>
+
+    <!-- Search view -->
+    <record id="view_amp_daily_price_search" model="ir.ui.view">
+        <field name="name">amp.daily.price.search</field>
+        <field name="model">amp.daily.price</field>
+        <field name="arch" type="xml">
+            <search string="Daily Prices">
+                <field name="commodity"/>
+                <field name="current_date"/>
+                <filter string="Today's Records" name="today" domain="[('current_date', '=', context_today())]" />
+            </search>
+        </field>
+    </record>
+
+    <record id="amp_daily_price_tree_view_inherit" model="ir.ui.view">
+        <field name="name">amp.daily.price.tree.inherit</field>
+        <field name="model">amp.daily.price</field>
+        <field name="inherit_id" ref="agriculture_market_place.view_amp_daily_price_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="js_class">button_in_tree</attribute>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="view_temp_commodity_price_tree" model="ir.ui.view">
+        <field name="name">temp.commodity.price.tree</field>
+        <field name="model">temp.commodity.price</field>
+        <field name="arch" type="xml">
+            <tree string="Commodity Price Data" create="false">
+                <field name="name" string="Commodity Name"/>
+                <field name="unit" string="Unit"/>
+                <field name="arrival_date" string="Arrival Date"/>
+                <field name="maximum" string="Maximum Price"/>
+                <field name="minimum" string="Minimum Price"/>
+                <field name="avg_price" string="Average Price"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_temp_commodity_normal_tree" model="ir.ui.view">
+        <field name="name">temp.commodity.price.normal.tree</field>
+        <field name="model">temp.commodity.normal</field>
+        <field name="arch" type="xml">
+            <tree string="Commodity Price Data" create="false">
+                <field name="name" string="Commodity Name"/>
+                <field name="unit" string="Unit"/>
+                <field name="arrival_date" string="Arrival Date"/>
+                <field name="maximum" string="Maximum Price"/>
+                <field name="minimum" string="Minimum Price"/>
+                <field name="avg_price" string="Average Price"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="view_temp_commodity_compare_tree" model="ir.ui.view">
+        <field name="name">temp.commodity.compare.tree</field>
+        <field name="model">temp.commodity.compare</field>
+        <field name="arch" type="xml" >
+            <tree create="false" decoration-danger="change_rate_avg_price_status == 'decrease'" decoration-success = "change_rate_avg_price_status == 'increase'">
+                <field name="name"/>
+                <field name="unit"/>
+                <!-- <field name="date_from"/> -->
+                <field name="avg_price_from"/>
+                <!-- <field name="date_to"/> -->
+                <field name="avg_price_to"/>
+                <field name="change_rate_avg_price"/>
+
+                <field name="change_rate_avg_price_status"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <!-- Menu item -->
+    <menuitem id="menu_amp_daily_price" name="Daily Prices" parent="menu_amp" action="action_amp_daily_price" sequence="1"/>
+              
+</odoo>

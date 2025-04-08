@@ -1,0 +1,37 @@
+<odoo>
+    <record id="allowance_master_hra" model="allowance.master">
+        <field name="code">1</field>
+        <field name="name_en">House Rent Allowance</field>
+        <field name="name_np">घर भाडा भत्ता</field>
+        <field name="description">House Rent Allowance</field>
+        <field name="status">active</field>
+    </record>
+    <record id="allowance_master_da" model="allowance.master">
+        <field name="code">2</field>
+        <field name="name_en">Dearness Allowance</field>
+        <field name="name_np">महँगाई भत्ता</field>
+        <field name="description">Dearness Allowance</field>
+        <field name="status">active</field>
+    </record>
+    <record id="allowance_master_travel" model="allowance.master">
+        <field name="code">3</field>
+        <field name="name_en">Travel Allowance</field>
+        <field name="name_np">यात्रा भत्ता</field>
+        <field name="description">Travel Allowance</field>
+        <field name="status">active</field>
+    </record>
+    <record id="allowance_master_meal" model="allowance.master">
+        <field name="code">4</field>
+        <field name="name_en">Meal Allowance</field>
+        <field name="name_np">खाना भत्ता</field>
+        <field name="description">Meal Allowance</field>
+        <field name="status">active</field>
+    </record>
+    <record id="allowance_master_other" model="allowance.master">
+        <field name="code">5</field>
+        <field name="name_en">Other Allowance</field>
+        <field name="name_np">अन्य भत्ता</field>
+        <field name="description">Other Allowance</field>
+        <field name="status">active</field>
+    </record>
+</odoo>

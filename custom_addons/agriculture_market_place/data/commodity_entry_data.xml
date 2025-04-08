@@ -1,0 +1,181 @@
+<odoo>
+    <data>
+        <record id="commodity_entry_1" model="commodity.entry">
+            <field name="commodity">गोलभेडा सानो</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_2" model="commodity.entry">
+            <field name="commodity">आलु रातो</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_3" model="commodity.entry">
+            <field name="commodity">प्याज सुकेको</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_4" model="commodity.entry">
+            <field name="commodity">गाजर</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_5" model="commodity.entry">
+            <field name="commodity">बन्दा</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_6" model="commodity.entry">
+            <field name="commodity">काउली स्थानिय</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_7" model="commodity.entry">
+            <field name="commodity">मूला सेतो</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_8" model="commodity.entry">
+            <field name="commodity">भन्टा लाम्चो</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_9" model="commodity.entry">
+            <field name="commodity">बोडी</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_10" model="commodity.entry">
+            <field name="commodity">मटरकोशा</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_11" model="commodity.entry">
+            <field name="commodity">घिउ सिमी</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_12" model="commodity.entry">
+            <field name="commodity">टाटे सिमी</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_13" model="commodity.entry">
+            <field name="commodity">तितो करेला</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_14" model="commodity.entry">
+            <field name="commodity">लौका</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_15" model="commodity.entry">
+            <field name="commodity">फर्सी हरियो</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_16" model="commodity.entry">
+            <field name="commodity">भिण्डी</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_17" model="commodity.entry">
+            <field name="commodity">सखरखण्ड</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_18" model="commodity.entry">
+            <field name="commodity">बरेला</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_19" model="commodity.entry">
+            <field name="commodity">पिंडालू</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_20" model="commodity.entry">
+            <field name="commodity">स्कूस</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_21" model="commodity.entry">
+            <field name="commodity">रायो साग</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_22" model="commodity.entry">
+            <field name="commodity">पालूगो साग</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_23" model="commodity.entry">
+            <field name="commodity">चमसूरको साग</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_24" model="commodity.entry">
+            <field name="commodity">मेथीको साग</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_25" model="commodity.entry">
+            <field name="commodity">प्याज हरियो</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_26" model="commodity.entry">
+            <field name="commodity">बकूला</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_27" model="commodity.entry">
+            <field name="commodity">तरुल</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_28" model="commodity.entry">
+            <field name="commodity">च्याउ</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_29" model="commodity.entry">
+            <field name="commodity">ब्रोकाउली</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_30" model="commodity.entry">
+            <field name="commodity">चुकुन्दर</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_31" model="commodity.entry">
+            <field name="commodity">स्याउ</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_32" model="commodity.entry">
+            <field name="commodity">कागती</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_33" model="commodity.entry">
+            <field name="commodity">अंगुर</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_34" model="commodity.entry">
+            <field name="commodity">सुन्तला</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_35" model="commodity.entry">
+            <field name="commodity">काक्रो</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_36" model="commodity.entry">
+            <field name="commodity">रुख कटहर</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_37" model="commodity.entry">
+            <field name="commodity">अदुवा</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_38" model="commodity.entry">
+            <field name="commodity">खु्र्सानी सुकेको</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_39" model="commodity.entry">
+            <field name="commodity">खुर्सानी हरियो</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_40" model="commodity.entry">
+            <field name="commodity">भेडे खु्र्सानी</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_41" model="commodity.entry">
+            <field name="commodity">लसुन हरियो</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_42" model="commodity.entry">
+            <field name="commodity">हरियो धनिया</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_43" model="commodity.entry">
+            <field name="commodity">माछा ताजा</field>
+            <field name="unit">kg</field>
+        </record>
+        <record id="commodity_entry_44" model="commodity.entry">
+            <field name="commodity">अन्य</field>
+            <field name="unit">kg</field>
+        </record>
+
+    </data>
+</odoo>

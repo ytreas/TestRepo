@@ -1,0 +1,584 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <template id="base_accounting_kit.ecommerce_product_view" name="ecommerce_product_view">
+        <t t-call="website.layout">
+            <link rel="stylesheet"
+                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+                integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+                crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css"
+                rel="stylesheet" />
+            <link rel="stylesheet"
+                href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.css"
+                integrity="sha512-uHuCigcmv3ByTqBQQEwngXWk7E/NaPYP+CFglpkXPnRQbSubJmEENgh+itRDYbWV0fUZmUz7fD/+JDdeQFD5+A=="
+                crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="/base_accounting_kit/static/src/js/ecommerce/utils/image_viewer.js"></script>
+
+            <t t-set="default_product_name"
+                t-value="'Fantech Multi Platform Gamepad Android PC PS Gamepad Wireless Shooter III WGP13S Joystick USB Type C'" />
+            <xpath expr="//head/*[1]" position="before">
+                <t t-set="title" t-value="product.name">
+                    <t t-esc="default_product_name" />
+                </t>
+            </xpath>
+            <t t-call="base_accounting_kit.color_palette">
+                <t t-set="color_palette_company" t-value="request.env.user.company_id" />
+            </t>
+
+            <t t-call-assets="base_accounting_kit.ecommerce_assets" />
+            <div class="website-wrapper  product-page">
+                <t t-call="base_accounting_kit.breadcrumb" />
+                <t t-call="base_accounting_kit.product_hero_section" />
+                <t t-call="base_accounting_kit.auth_modal" />
+
+
+                <div class="share-to-wrapper">
+                    <div class="row-between mb-3">
+                        <span class="close" id="close_share_btn">
+                            <i class="fa-solid fa-xmark"></i>
+                        </span>
+                        <span>
+                            <t t-translation="True">Share to</t>
+                        </span>
+                    </div>
+                    <t t-snippet-call="website.s_share">
+                        <t t-set="_exclude_share_links"
+                            t-value="['whatsapp', 'linkedin']" />
+                        <t t-set="_no_title" t-value="True" />
+                        <t t-set="_classes" t-valuef="text-lg-end" />
+                        <t t-set="_link_classes" t-valuef="mx-1 my-0" />
+                    </t>
+                </div>
+
+                <div class="share-to-backdrop"></div>
+            </div>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+                integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+                crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+            <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+
+            <!-- <script type="text/javascript"
+                src="/base_accounting_kit/static/src/js/ecommerce/image-magnifier.js"></script> -->
+            <script
+                src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"
+                integrity="sha512-NqYds8su6jivy1/WLoW8x1tZMRD7/1ZfhWG/jcRQLOzV1k1rIODCpMgoBnar5QXshKJGV7vi0LXLNXPoFsM5Zg=="
+                crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            <script type="text/javascript"
+                src="/base_accounting_kit/static/src/js/ecommerce/product_script.js"></script>
+
+
+        </t>
+    </template>
+
+
+    <template id="base_accounting_kit.breadcrumb">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb let-wrapper">
+                <li class="breadcrumb-item">
+                    <a href="/products">
+                        <t t-translation="true">Home</t>
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a t-attf-href="/products/category/#{slug(product.categ_id)}">
+                        <span t-field="product.categ_id">Gaming</span>
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <span t-field="product.name">
+                        <t t-esc="default_product_name" />
+                    </span>
+                </li>
+            </ol>
+        </nav>
+    </template>
+
+    <template id="base_accounting_kit.product_hero_section" name="product_hero_section">
+        <div class="product-hero js_product_hero let-wrapper">
+            <t t-call="base_accounting_kit.product_images" />
+            <t t-call="base_accounting_kit.product_details" />
+        </div>
+        <div class="pdr let-wrapper">
+            <t t-call="base_accounting_kit.product_description" />
+        </div>
+
+        <t t-call="base_accounting_kit.rating_and_reviews" />
+
+        <div class="product-recommendations let-wrapper">
+            <t t-call="base_accounting_kit.recommended_products" />
+        </div>
+    </template>
+
+    <template id="base_accounting_kit.product_images" name="product_images">
+        <t t-set="product_available_to_sell"
+            t-value="vendor_product.saleable_qty>0" />
+        <div class="products-images">
+            <div class="js_product_image_zoom position-relative">
+                <div t-if="not vendor_product.saleable_qty>0"
+                    class="out-of-stock">
+                    <t t-translation="True">Sorry this item is no longer available!!</t>
+                </div>
+                <div id="thumbnail-carousel" class="splide">
+                    <div
+                        t-attf-class="featured-img splide__track #{'' if vendor_product.product_template_image_ids else 'd-none' }"
+                        t-if="vendor_product.product_template_image_ids">
+                        <ul class="splide__list">
+                            <li class="splide__slide" role="button">
+                                <div>
+                                    <img class="main-img active"
+                                        t-if="vendor_product.product_featured_image"
+                                        t-attf-src="/web/image?model=product.custom.price&amp;id=#{vendor_product.id}&amp;field=product_featured_image"
+                                        t-att-alt="vendor_product.product_id.name" />
+                                    <img t-else=""
+                                        t-attf-src="/web/image/product.product/31/image_1024/%5BFURN_6666%5D%20Acoustic%20Bloc%20Screens?unique=97d6b0f"
+                                        t-att-alt="vendor_product.product_id.name" />
+                                </div>
+                            </li>
+                            <t t-foreach="vendor_product.product_template_image_ids"
+                                t-as="product_image">
+                                <li class="splide__slide" role="button">
+                                    <div t-field="product_image.image_1024"
+                                        class="d-flex align-items-start justify-content-center oe_unmovable"
+                                        t-options='{"widget": "image", "preview_image": "image_1024", "class": "oe_unmovable product_detail_img", "alt-field": "name", "zoom": "True"}'
+                                    />
+                                </li>
+                            </t>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="main-featured-img position-relative">
+                    <a t-if="vendor_product.product_featured_image"
+                        t-attf-href="/web/image?model=product.custom.price&amp;id=#{vendor_product.id}&amp;field=product_featured_image"
+                        class="spotlight js_featured_main_img_spotlight_holder">
+                        <img
+                            t-attf-src="/web/image?model=product.custom.price&amp;id=#{vendor_product.id}&amp;field=product_featured_image"
+                            t-att-alt="vendor_product.product_id.name" />
+                    </a>
+                    <a t-else=""
+                        t-attf-href="/web/image/product.product/31/image_1024/%5BFURN_6666%5D%20Acoustic%20Bloc%20Screens?unique=97d6b0f"
+                        class="spotlight">
+                        <img
+                            t-attf-src="/web/image/product.product/31/image_1024/%5BFURN_6666%5D%20Acoustic%20Bloc%20Screens?unique=97d6b0f"
+                            t-att-alt="vendor_product.product_id.name" />
+                    </a>
+                    <div class="js_prev_content swipe_btn">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </div>
+
+                    <div class="js_next_content swipe_btn">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+    </template>
+    <template id="base_accounting_kit.product_details" name="product_details">
+        <div class="product-details px-3">
+            <h1 class="product-title p-row">
+                <t t-esc="product.name" />
+            </h1>
+            <input type="hidden" id="product_id" t-attf-data-value="#{vendor_product.id}" />
+            <div class="w-full-margin-in-between p-row">
+                <div class="w-full-margin-in-between rating">
+                    <div class="product-reviews-stars">
+                        <a href="#o_product_page_reviews"
+                            class="o_product_page_reviews_link text-decoration-none">
+                            <t t-call="portal_rating.rating_widget_stars_static">
+                                <t t-set="rating_avg" t-value="vendor_product.rating_avg" />
+                                <t t-set="trans_text_plural">%s reviews</t>
+                                <t t-set="trans_text_singular">%s review</t>
+                                <t t-set="rating_count"
+                                    t-value="(trans_text_plural if vendor_product.rating_count > 1 else trans_text_singular) % vendor_product.rating_count" />
+                            </t>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center js_wishlist_wrapper">
+                    <div class="product-wishlist">
+                        <t t-if="wishlist">
+                            <i class="fa-solid fa-heart added add-to-wishlist" data-toggle="tooltip"
+                                data-placement="top"
+                                title="This item is already in the wishlist"></i>
+                        </t>
+                        <t t-else="">
+                            <i class="fa-regular fa-heart add-to-wishlist" data-toggle="tooltip"
+                                data-placement="top"
+                                title="Add to wishlist"></i>
+
+                        </t>
+
+                    </div>
+                    <span t-if="wishlist_count>0" class="wishlist_count">
+                        <t t-esc="wishlist_count" />
+                    </span>
+
+                </div>
+            </div>
+            <div class="product-attr">
+                <div class="brand">
+                    <span>Brand:</span>
+                    <t t-foreach="vendor_product.product_attributes_ids" t-as="c_attr">
+                        <t t-if="c_attr.attribute_id.name== 'Brand'">
+                            <a
+                                t-attf-href="/products?attribute_variants=#{c_attr.attribute_id.id}-#{c_attr.value_ids[0].id}">
+                                <span class="fw-600" t-field="c_attr.value_ids.name">
+                                    <t t-translation="True">No brand</t>
+                                </span>
+                            </a>
+                        </t>
+                    </t>
+
+                </div>
+            </div>
+
+            <div class="w-full-margin-in-between price-container">
+                <div class="product-price">
+                    <t t-translation="true">Rs.</t>
+                    <span id="price_sell" t-esc="vendor_product.price_sell" />
+                    <input type="hidden" id="product_unit_price"
+                        t-attf-data-value="#{vendor_product.price_sell}" />
+
+                    <t t-if="vendor_product.discount>0">
+                        <div class="discount-section">
+                            <span class='before-price'>
+                                <t t-translation='true'>Rs.</t>
+                                <t
+                                    t-esc="round((vendor_product.price_sell * vendor_product.discount)/100 + vendor_product.price_sell)" />
+                            </span>
+                            -<span class='discount-percentage'
+                                t-esc="vendor_product.discount">0</span>% </div>
+                    </t>
+                </div>
+            </div>
+            <div class="w-full-margin-in-between other-attrs-container">
+                <t t-foreach="vendor_product.product_attributes_ids" t-as="c_attr">
+                    <t t-if="c_attr.attribute_id.name!= 'Brand'">
+                        <div class="main-attr-wrapper">
+                            <span class="attr-title" t-field="c_attr.attribute_id.name"></span>
+                            <div class="attr-vals">
+                                <select class="arrt-select form-control">
+                                    <t t-foreach="c_attr.value_ids" t-as="c_attr_val">
+                                        <option
+                                            t-attf-value="#{c_attr.attribute_id.id}-#{c_attr_val.id}"
+                                            t-field="c_attr_val.name">
+                                            <t t-translation="True">Bibek</t>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </div>
+            <div class="qty-in-stock">
+                <t t-translation="True">Quantity in stock: </t>
+                <span id="max_qty" t-attf-data-val='#{vendor_product.max_qty}'
+                    t-field="vendor_product.saleable_qty" />
+            </div>
+
+            <div class="product-quantity js_product_quantity">
+                <span class="label">
+                    <t t-translation="True">Quantity</t>
+                </span>
+                <div class="input-group">
+                    <div class="btn-dec btn">
+                        <i class="fa-solid fa-minus"></i>
+                    </div>
+
+                    <div class="quantity">
+                        <input type="text" value="1" class="form-control input-quantity"
+                            t-attf-data-min-qty="#{vendor_product.min_qty}"
+                            t-attf-data-max-qty="#{vendor_product.max_qty}"
+                            t-attf-value="#{int(vendor_product.min_qty)}"
+                            id="p_quantity" />
+                    </div>
+
+                    <div class="btn-inc btn">
+                        <i class="fa-solid fa-plus"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div t-if="vendor_product.saleable_qty>0" class="buy-add-cart d-none">
+                <a t-attf-href="#" class="btn add-to-cart btn-outline__primary">
+                    <t t-translation="True">Add to Cart</t>
+                </a>
+                <form id="instant_buy__form" action="/proceed-to-checkout" method="POST">
+                    <input type="hidden" name="csrf_token" t-attf-value="#{request.csrf_token()}"
+                        required="True" />
+                    <input type="hidden" name="my_orders[]" id="item_id" required="True" />
+                    <input type="hidden" name="t_amt" id="t_amt" required="True" />
+                    <input type="hidden" name="type" value="cart" required="True" />
+                    <button class="btn buy-now">
+                        <t t-translation="True">Buy Now</t>
+                    </button>
+
+                </form>
+            </div>
+            <button class="position-relative share-wrapper" id="open_share_wrapper">
+                <img src="/base_accounting_kit/static/images/ecommerce/share.svg" alt="Share"
+                    class="share-icon" />
+                <span>
+                    <t t-translation="True">Share</t>
+                </span>
+
+            </button>
+
+            <div class="vendor-details mt-30 row mi-auto justify-content-center">
+                <div class="col-md-6 d-flex justify-content-center">
+                    <div class="avatar-round-sm" t-field="vendor_product.company_id.logo"
+                        t-options='{"widget": "image", "alt-field": "name", "zoom": "True"}' />
+                    <div class="col__">
+                        <span class="text-muted">
+                            <t t-translation="True">Sold by</t>
+                        </span>
+                        <span class="title" t-field="vendor_product.company_id.name">SoftDrax Pvt.
+                            Ltd. </span>
+                    </div>
+                </div>
+                <div class="d-flex col-md-6  justify-content-center">
+                    <div class="col__">
+                        <span class="text-muted">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span t-field="vendor_product.company_id.street" />
+                        </span>
+                        <a t-attf-href="/products?vendor=#{slug(vendor_product.company_id)}"
+                            class="btn text-highlight mt-1">
+                            <t t-translation="True">Visit Store</t>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </template>
+
+
+    <template id="base_accounting_kit.product_description" name="product_description">
+        <div class="product-description">
+            <p class="fw-600">
+                <i class="fa-solid fa-circle-info me-2"></i>
+                <t t-translation="True">Description of <span t-field="product.name">MacBook</span></t>
+            </p>
+            <div t-field="vendor_product.product_description">
+                Product Description
+            </div>
+
+        </div>
+        <div class=" btn-container-center">
+            <button class="d-none btn btn-action mi-auto show-more-btn" data-attr="show-more">
+                <t t-translation="True">Show More</t>
+            </button>
+        </div>
+    </template>
+
+
+    <template id="base_accounting_kit.recommended_products" name="recommended_products">
+        <p class="fw-600">
+            <t t-translation="True">You may also like</t>
+        </p>
+        <div class="recommended-products-sm splide" id="r-products-carousel">
+            <t t-set="p_count" t-value="0" />
+            <div class="splide__track">
+                <ul class="splide__list">
+                    <t t-foreach="vendor_product.product_recommendations" t-as="r_product">
+                        <t t-if="r_product.saleable_qty>0">
+                            <li class="splide__slide" role="button">
+                                <t t-set="p_count" t-value="p_count+1" />
+
+                                <t t-if="p_count &lt;= 10">
+                                    <div t-attf-class="product">
+                                        <a
+                                            t-attf-href="/products/#{slug(r_product.product_id)}/#{slug(r_product.company_id)}">
+                                            <div class="img-holder">
+                                                <img t-if="r_product.product_featured_image"
+                                                    t-attf-src="/web/image?model=product.custom.price&amp;id=#{r_product.id}&amp;field=product_featured_image"
+                                                    t-att-alt="r_product.product_id.name" />
+                                                <img t-else=""
+                                                    t-attf-src="/web/image/product.product/31/image_1024/%5BFURN_6666%5D%20Acoustic%20Bloc%20Screens?unique=97d6b0f"
+                                                    t-att-alt="r_product.product_id.name" />
+                                            </div>
+                                            <div class="product-description">
+                                                <div class="product-title"
+                                                    t-att-data-product-name="r_product.product_id.name">
+                                                    <t t-if="layout_mode=='list'">
+                                                        <t
+                                                            t-esc="r_product.product_id.name[:100]+('...' if len(r_product.product_id.name) > 100 else '')" />
+                                                    </t>
+                                                    <t t-else="">
+                                                        <t
+                                                            t-esc="r_product.product_id.name[:50]+('...' if len(r_product.product_id.name) > 50 else '')" />
+                                                    </t>
+                                                </div>
+                                                <!-- <t t-if="layout_mode=='list'">
+                                                    <div class="product-details">
+                                                        <div class="product-location">
+                                                            <t t-esc="r_product.company_id.street" />
+                                                        </div>
+                                                    </div>
+                                                </t> -->
+                                                <div class="product-price">
+                                                    <t t-translation="true">Rs.</t>
+                                                    <t t-esc="r_product.price_sell" />
+                                                    <t t-if="r_product.discount>0">
+                                                        <div class="discount-section">
+                                                            <span class='before-price'>
+                                                                <t t-translation='true'>Rs.</t>
+                                                                <t
+                                                                    t-esc="round((r_product.price_sell * r_product.discount)/100 + r_product.price_sell)" />
+                                                            </span>
+                                                            -<span class='discount-percentage'
+                                                                t-esc="r_product.discount">0</span>% </div>
+                                                    </t>
+                                                </div>
+                                                <div class="p_ratings">
+                                                    <t
+                                                        t-call="portal_rating.rating_widget_stars_static">
+                                                        <t t-set="rating_avg"
+                                                            t-value="r_product.rating_avg" />
+                                                        <t t-set="trans_text_plural">%s reviews</t>
+                                                        <t t-set="trans_text_singular">%s review</t>
+                                                        <t t-set="rating_only" t-value="True" />
+                                                        <t t-set="rating_numbers"
+                                                            t-value="r_product.rating_count" />
+                                                        <t t-set="rating_count"
+                                                            t-value="(trans_text_plural if r_product.rating_count > 1 else trans_text_singular) % r_product.rating_count" />
+                                                    </t>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </t>
+                            </li>
+                        </t>
+                    </t>
+                </ul>
+            </div>
+        </div>
+    </template>
+
+
+    <template id="base_accounting_kit.rating_and_reviews" name="rating_and_reviews">
+        <!-- <xpath expr="//div[@t-field='product.website_description']" position="after"> -->
+        <div class="o_shop_discussion_rating let-wrapper" data-anchor='true'>
+            <section id="o_product_page_reviews" class="container pt32 pb32 o_product_page_reviews"
+                data-anchor='true'>
+                <a
+                    class="o_product_page_reviews_title d-flex justify-content-between text-decoration-none collapsed"
+                    type="button" data-bs-toggle="collapse"
+                    data-bs-target="#o_product_page_reviews_content" aria-expanded="false"
+                    aria-controls="o_product_page_reviews_content">
+
+                    <h3 class="mb32"><i class="fa-solid fa-thumbs-up me-2"></i> Customer Reviews
+                        &amp; Ratings for <span t-field="product.name">MacBook</span></h3>
+                    <i class="fa align-self-start" />
+                </a>
+                <div id="o_product_page_reviews_content" class="collapse">
+                    <t t-call="portal.message_thread">
+                        <t t-set="object" t-value="vendor_product" />
+                        <t t-set="display_rating" t-value="True" />
+                        <t t-set="message_per_page" t-value="10" />
+                        <t t-set="two_columns" t-value="false" />
+                    </t>
+                </div>
+            </section>
+        </div>
+        <!-- </xpath> -->
+    </template>
+
+    <template id="base_accounting_kit.auth_modal" name="auth_modal">
+        <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen modal-dialog-centered">
+                <div class="container">
+                    <div class="user-data-form modal-content">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                        <div class="text-center">
+                            <h2>
+                                <t t-translation="True">Hi, Welcome Back!</t>
+                            </h2>
+                            <p>
+                                <t t-translation="True">Still don't have an account?</t>
+                                <a class="text-highlight" href="/web/login">
+                                    <t t-translation="True">Sign up</t>
+                                </a>
+                            </p>
+                        </div>
+                        <div class="form-wrapper m-auto px-5">
+                            <form class="mt-10">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="input-group-meta position-relative mb-25">
+                                            <label><t t-translation="True">Email</t>*</label>
+                                            <input type="email" id="userEmail"
+                                                placeholder="abc@gmail.com" required="required" />
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="input-group-meta position-relative mb-20">
+                                            <label><t t-translation="True">Password</t>*</label>
+                                            <input type="password" id="userPass"
+                                                placeholder="Enter Password" required="required"
+                                                class="pass_log_id" />
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div
+                                            class="agreement-checkbox d-flex justify-content-between align-items-center">
+                                            <a href="#">
+                                                <t t-translation="True">Forget Password?</t>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button id="submitBtn"
+                                            class="btn-eleven fw-500 tran3s d-block mt-20">Login</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <p class="text-center mt-10">
+                                <t t-translation="True">Don't have an account?</t>
+                                <a href="/web/signup" class="text-highlight fw-500">
+                                    <t t-translation="True">Sign Up</t>
+                                </a>
+                            </p>
+                        </div>
+                        <!-- /.form-wrapper -->
+                    </div>
+                    <!-- /.user-data-form -->
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="base_accounting_kit.wishlist_count" name="wishlist_count">
+        <div class="product-wishlist">
+            <t t-if="wishlist">
+                <i class="fa-solid fa-heart added add-to-wishlist" data-toggle="tooltip"
+                    data-placement="top"
+                    title="This item is already in the wishlist"></i>
+            </t>
+            <t t-else="">
+                <i class="fa-regular fa-heart add-to-wishlist" data-toggle="tooltip"
+                    data-placement="top"
+                    title="Add to wishlist"></i>
+
+            </t>
+
+        </div>
+        <span t-if="wishlist_count and wishlist_count>0" class="wishlist_count">
+            <t t-esc="wishlist_count" />
+        </span>
+    </template>
+
+</odoo>

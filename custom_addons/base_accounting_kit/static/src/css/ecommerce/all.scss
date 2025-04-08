@@ -1,0 +1,43 @@
+$clr-wishlist: #b01e28;
+$p-row-mt: 1em;
+$main-background: #f2f2f2;
+:root {
+  --clr-skin: #f0fff7;
+  --clr-foreground: #00cc70;
+  --txt-clr-foreground: #fff;
+  --clr-foreground-light: #00ff8c39;
+  --clr-background-light: #fbfffd;
+  --top-filter-ht: 40px;
+  --border-sm-dark: 1px solid var(--clr-border, #e9e9e9);
+  --clr-hover: #00ca61;
+  --clr-text-dark: #3a3a3a;
+  --clr-text-light: #898989;
+}
+
+
+.text-bg-ecom-promary{
+    background: var(--clr-foreground);
+    color: #fff;
+  }
+
+  .btn-action{
+    background-color: var(--clr-foreground);
+    color: var(--txt-clr-foreground);
+    &:hover{
+      color: var(--txt-clr-foreground);
+      opacity: 0.9;
+    }
+  }
+
+
+  img[role='icon']{
+    display: inline-block;
+    aspect-ratio: 1;
+    width: 18px;
+    margin-inline-end: 4px;
+  }
+
+  div[name='is_published']{
+    display: none !important;
+  }
+  

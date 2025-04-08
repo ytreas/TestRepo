@@ -1,0 +1,330 @@
+<odoo>
+    <report
+            id="payslip_report"
+            model="hr.payslip"
+            string="Custom Payslip Report"
+            report_type="qweb-pdf"
+            name="hr_payroll_community.report_payroll"
+            file="hr_payroll_community.report_payroll"
+    />
+
+    <template id="payslip_report_id">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div style="text-align: right;">
+                    <p>म.ले.प.फाराम नं: २२६ </p>
+                </div>
+                <div>
+                    <!-- Left-aligned logo -->
+                    <div style="font-size: 10px; line-height: 1.6;">
+                        <t t-set="current_company" t-value="env.user.company_id"/>
+                        <t t-if="current_company.parent_id">
+                            <t t-set="display_company" t-value="current_company.parent_id"/>
+                        </t>
+                        <t t-else="">
+                            <t t-set="display_company" t-value="current_company"/>
+                        </t>
+    
+                        <!-- <img style="float: right; height: 90px; width: 80px;" t-if="display_company.logo" t-att-src="image_data_uri(display_company.logo)" alt="Logo"/> -->
+                        <img style="float: left; height: 80px; width: 90px;" src="/bank_form/static/src/img/logo.png" alt="alt-Logo"/>
+                        
+                        <!-- Centered content -->
+                        <div style="overflow: hidden; text-align: center;">
+                        <strong><span style="font-weight: 900; font-size: 16px; color: black; padding: 0; margin: 0;">
+                              सङ्घ/ प्रदेश / स्थानीय तह  
+                            </span></strong><br/>
+
+                            <strong><span style="font-weight: 900; font-size: 25px; color: black; padding: 0; margin: 0;">
+                              <t t-esc="display_company.name"/>
+                            </span></strong><br/>
+
+                            <strong><span style="font-weight: 900; font-size: 16px; color: black; padding: 0; margin: 0;">
+                              कार्यालय कोड नं.:
+                            </span></strong><br/>
+                            <br></br>
+                            <br></br>
+                        
+                          </div>                                                                    
+                    </div>
+                </div>  
+                <br> 
+                    <h3>तलवी फाराम</h3>
+                </br>
+                   <h6>......साल ......महिना</h6>
+                <style>
+
+                    h1 {
+                    text-align: center;
+                    font-weight: 600 !important;
+                    font-size: 18px !important; 
+                    }
+
+
+                    h3 {
+                    text-align: center; / Center align the content /
+                    margin-top:0%;
+                    }
+
+                    h6 {
+                    text-align: center; / Center align the content /
+                    margin-top:0%;
+                    }
+                    
+
+                    #sub1{
+                    display:flex;
+                    flex: 25%;
+                    }
+
+                    #sub2{
+                    display:flex;
+                    flex: 33%;
+                    margin-left:40%;
+                    }
+
+                    #checkbox-options{
+                        display:flex;
+                        flex:33%;
+                        margin-left:15%;
+                    }
+
+                    @font-face {
+                    font-family: 'kalimatiregular';
+                    src: url('/bank_form/static/src/font/kalimati regular/Kalimati Regular.otf')
+                    }
+                    body{
+                    font-family: 'kalimatiregular', sans-serif;
+                    }
+
+                </style>
+                <div class="page">
+                    <style>
+                        #item1 {
+                            display: flex;
+                            flex: 25%;
+                        }
+
+                        #item2 {
+                            display: flex;
+                            flex: 33%;
+                            margin-left: 35%;
+                        }
+
+                        #item3 {
+                            display: flex;
+                            flex: 33%;
+                            margin-left: 25%;
+                        }
+
+                        #dataTable {
+                            border-collapse: collapse;
+                            width: 100%;
+                            margin-bottom: 0px;
+                            font-size: 10px;
+                        }
+
+                        #dataTable th, #dataTable td {
+                            border: 1px solid #ddd;
+                            padding: 8px;
+                            text-align: center; /* Centers text horizontally */
+                            vertical-align: middle; /* Centers text vertically */
+                        }
+
+                        #dataTable th {
+                            background-color: whitesmoke;
+                            color: black;
+                        }
+
+                        .active {
+                            background-color: #4CAF50;
+                            color: white;
+                        }
+                    </style>
+
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr class="active">
+                                <th rowspan="3">क्र.सं.</th>
+                                <th rowspan="3">सिट रोल नं/संकेत नं</th>
+                                <th rowspan="3">कर्मचरीको नाम</th>
+                                <th rowspan="3">एकल/दम्पत्ती/अपाङग</th>
+                                <th rowspan="3">लिंग </th>
+                                <th rowspan="3">पद</th>
+                                <th rowspan="3">पान (PAN Number)</th>
+                                <th colspan="8">मासिक पाउने </th>
+                                <th colspan="5">कट्टी</th>
+                                <th rowspan="3">खुद पाउने </th>
+                                <th rowspan="3">दस्तखत </th>
+                                <th rowspan="3">बैंक खाता नं</th>
+                                <th rowspan="3">बैंकको नाम</th>
+                                <th rowspan="3">कैफियत</th>
+                            </tr>
+                            <tr>
+                                <th rowspan="2">तलब </th>
+                                <th rowspan="2">ग्रेड रकम </th>
+                                <th rowspan="2">भत्ता</th>
+                                <th rowspan="2">बिशेष भत्ता</th>
+                                <th rowspan="2">अन्य भत्ता</th>
+                                <th rowspan="2">सञ्चय कोष  </th>
+                                <th rowspan="2">अन्य......</th>
+                                <th rowspan="2">जम्मा</th>
+                                <th rowspan="2">सञ्चय कोष</th>
+                                <th colspan="2">कर </th>
+                                <th rowspan="2">अन्य कट्टी .......</th>
+                                <th rowspan="2">कुल जम्मा </th>
+                            </tr>
+                            <tr>
+                                <th>सा.सु.कर</th>
+                                <th>पारिश्रमिक कर</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="docs" t-as="o">
+
+                                    <tr>
+                                        <td>
+                                            <!-- <t t-esc="sn"/>
+                                            <t t-set="sn" t-value="sn+1"/> -->
+                                          </td>
+                                        <td>
+                                            <!-- <t t-esc="o.irregularity_clause_no"/> -->
+                                        </td>
+                                        <td>
+                                            <span t-field="o.employee_id"/>
+                                        </td>
+                                        <td>
+                                            <!-- <span t-field="o.employee_id.employee_status"/> -->
+                                        </td>
+                                        <td>
+                                            <t t-esc="o.employee_id.gender if o.employee_id.gender else 'रेकर्ड भेटिएन'"/>
+                                        </td>
+                                         <td>
+                                            <t t-esc="o.employee_id.job_id.name"/>
+                                        </td>
+                                         <td>
+                                            <t t-esc="o.employee_id.pan_number if o.employee_id.pan_number else 'रेकर्ड भेटिएन'"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="o.contract_id.wage"/>
+                                        </td>
+                                      
+                                        <td>
+                                           <t t-esc="o.contract_id.grade_amount"/>
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                             
+                                        </td>
+                                        <td>
+                                            <!--sanchaya kosh -->
+                                            <t t-set="total_amount" t-value="(((o.contract_id.wage or 0) + (o.contract_id.grade_amount or 0))*0.1)"/>
+                                            <t t-esc="total_amount"/>
+                                        </td>                                     
+                                        <td>
+                                            <!--Anya-->
+                                        </td>
+                                        <td>
+                                        <!--jamma-->
+                                        </td>
+                                        <td>
+                                        <!--sanchaya kosh-->
+                                            <t t-set="sanchaya_kosh" t-value="((total_amount)*2)"/>
+                                            <t t-esc="sanchaya_kosh"/>
+                                        </td>
+                                      
+                                        <td>
+                                            
+                                        </td>
+                                        <td>
+                                        
+                                        </td>
+                                        <td>
+                                        
+                                        </td>
+                                        <td>
+                                        
+                                        </td>
+                                        <td>
+                                        
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td>
+                                            <t t-esc="o.employee_id.bank_account_id.acc_number if o.employee_id.bank_account_id.acc_number else 'रेकर्ड भेटिएन' "/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="o.employee_id.bank_account_id.bank_id.name if o.employee_id.bank_account_id.bank_id.name else 'रेकर्ड भेटिएन'"/>
+                                        
+                                        </td>
+                                        <td>
+                                        
+                                        </td>
+                                    </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <div class="d-flex flex-row mb-3">
+                        <div class="p-2 flex-grow-1" id="item1">
+                            <p class="d-flex justify-content-start">तयार गर्ने:</p>
+                            <p class="d-flex justify-content-start">नाम:
+                                <!-- <t t-foreach="docs" t-as="o">
+                                    <t t-esc="o.store_branch_name.name"/>
+                                </t> -->
+                            </p>
+                            <p class="d-flex justify-content-start">पद:</p>
+                            <p class="d-flex justify-content-start">मिति:
+                                <!-- <t t-foreach="docs" t-as="o">
+                                    <t t-esc="o.handout_date"/>
+                                </t> -->
+                            </p>
+                        </div>
+                        <div class="p-2 flex-grow-1 ml-auto" id="item2">
+                            <p class="d-flex justify-content-around">भुक्तानी दिने:</p>
+                            <p class="d-flex justify-content-start">नाम:
+                                <!-- <t t-foreach="docs" t-as="o">
+                                    <t t-esc="o.approved_person.name"/>
+                                </t> -->
+                            </p>
+                            <p class="d-flex justify-content-start">पद:</p>
+                            <p class="d-flex justify-content-start">मिति:
+                                <!-- <t t-foreach="docs" t-as="o">
+                                    <t t-esc="o.handout_date"/>
+                                </t> -->
+                            </p>
+                        </div>
+                        <div class="p-2 flex-grow-1 ml-auto" id="item3">
+                            <p class="d-flex justify-content-around">प्रमाणित गर्ने:</p>
+                            <p class="d-flex justify-content-start">नाम:
+                                <!-- <t t-foreach="docs" t-as="o">
+                                    <t t-esc="o.approved_person.name"/>
+                                </t> -->
+                            </p>
+                            <p class="d-flex justify-content-start">पद:</p>
+                            <p class="d-flex justify-content-start">मिति:
+                                <!-- <t t-foreach="docs" t-as="o">
+                                    <t t-esc="o.handout_date"/>
+                                </t> -->
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+    <record id="action_payslip_report" model="ir.actions.report">
+        <field name="name">Custom Payslip Report</field>
+        <field name="model">hr.payslip</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hr_payroll_community.payslip_report_id</field>
+        <field name="binding_model_id" ref="model_hr_payslip"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

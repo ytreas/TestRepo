@@ -1,0 +1,94 @@
+<odoo>
+    <record id="individual_field_first_name_en" model="individual.field.selection">
+        <field name="name">First Name (English)</field>
+        <field name="field_code">first_name_en</field>
+    </record>
+    <record id="individual_field_middle_name_en" model="individual.field.selection">
+        <field name="name">Middle Name (English)</field>
+        <field name="field_code">middle_name_en</field>
+    </record>
+    <record id="individual_field_last_name_en" model="individual.field.selection">
+        <field name="name">Last Name (English)</field>
+        <field name="field_code">last_name_en</field>
+    </record>
+    <record id="individual_field_first_name_np" model="individual.field.selection">
+        <field name="name">First Name (Nepali)</field>
+        <field name="field_code">first_name_np</field>
+    </record>
+    <record id="individual_field_middle_name_np" model="individual.field.selection">
+        <field name="name">Middle Name (Nepali)</field>
+        <field name="field_code">middle_name_np</field>
+    </record>
+    <record id="individual_field_last_name_np" model="individual.field.selection">
+        <field name="name">Last Name (Nepali)</field>
+        <field name="field_code">last_name_np</field>
+    </record>
+    <record id="individual_field_gender" model="individual.field.selection">
+        <field name="name">Gender</field>
+        <field name="field_code">gender</field>
+    </record>
+    <record id="individual_field_login_bg_img_individual" model="individual.field.selection">
+        <field name="name">Login Background Image (Individual)</field>
+        <field name="field_code">login_bg_img_individual</field>
+    </record>
+    <record id="individual_field_company_category_ids" model="individual.field.selection">
+        <field name="name">Company Category</field>
+        <field name="field_code">company_category_ids</field>
+    </record>
+    <record id="individual_field_total_amount" model="individual.field.selection">
+        <field name="name">Total Amount</field>
+        <field name="field_code">total_amount</field>
+    </record>
+    <record id="individual_field_tax_id" model="individual.field.selection">
+        <field name="name">Tax ID</field>
+        <field name="field_code">tax_id</field>
+    </record>
+    <record id="individual_field_recent_tax_paid_year" model="individual.field.selection">
+        <field name="name">Recent Tax Paid Year</field>
+        <field name="field_code">recent_tax_paid_year</field>
+    </record>
+    <record id="individual_field_pan_number" model="individual.field.selection">
+        <field name="name">PAN Number</field>
+        <field name="field_code">pan_number</field>
+    </record>
+    <record id="individual_field_email" model="individual.field.selection">
+        <field name="name">Email</field>
+        <field name="field_code">email</field>
+    </record>
+    <record id="individual_field_mobile" model="individual.field.selection">
+        <field name="name">Mobile</field>
+        <field name="field_code">mobile</field>
+    </record>
+    <record id="individual_field_phone" model="individual.field.selection">
+        <field name="name">Phone</field>
+        <field name="field_code">phone</field>
+    </record>
+    <record id="individual_field_owner_citizenship_front" model="individual.field.selection">
+        <field name="name">Owner Citizenship Front</field>
+        <field name="field_code">owner_citizenship_front</field>
+    </record>
+    <record id="individual_field_owner_citizenship_back" model="individual.field.selection">
+        <field name="name">Owner Citizenship Back</field>
+        <field name="field_code">owner_citizenship_back</field>
+    </record>
+    <record id="individual_field_province" model="individual.field.selection">
+        <field name="name">Province</field>
+        <field name="field_code">province</field>
+    </record>
+    <record id="individual_field_district" model="individual.field.selection">
+        <field name="name">District</field>
+        <field name="field_code">district</field>
+    </record>
+    <record id="individual_field_palika" model="individual.field.selection">
+        <field name="name">Palika</field>
+        <field name="field_code">palika</field>
+    </record>
+    <record id="individual_field_ward_no" model="individual.field.selection">
+        <field name="name">Ward Number</field>
+        <field name="field_code">ward_no</field>
+    </record>
+    <record id="individual_field_business_second_ids" model="individual.field.selection">
+        <field name="name">Business Second IDs</field>
+        <field name="field_code">business_second_ids</field>
+    </record>
+</odoo>

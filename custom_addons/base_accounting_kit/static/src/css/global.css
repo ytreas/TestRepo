@@ -1,0 +1,59 @@
+.oe_website_login_container{
+    background-image: url("https://images.unsplash.com/photo-1492584328860-c0c7bb599679?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    backdrop-filter: brightness(0.2);
+    -webkit-backdrop-filter:  brightness(0.2);
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
+    min-height: 100svh;
+    padding-top: 2em;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.oe_website_login_container>div:nth-child(2){
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(255, 255, 255, 0.75);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.125);
+    max-width: 100% !important;
+}
+
+.d-center{
+    display: grid;
+    place-items: center;
+}
+.d-center a{
+    text-align: center;
+}
+a[title="Shangrila Microsystems Pvt. Ltd."]{
+    display: block !important;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    user-select: none;
+}
+a[title="Shangrila Microsystems Pvt. Ltd."]::after{
+    position: absolute;
+    content: "Shangrila Microsystems Pvt. Ltd.";
+}
+
+.oe_signup_form {
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.125);
+    margin-inline: auto;
+    padding-bottom: 6em;
+    padding-inline: 0.8em;
+    padding-top: 2em;
+    position: relative;
+    max-width: 400px;
+    border-radius: 10px;
+    input{
+        padding: 0.8em;
+    }
+  }
+
+

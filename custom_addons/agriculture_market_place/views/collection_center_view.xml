@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_commodity_center_tree" model="ir.ui.view">
+        <field name="name">commodity.center.tree</field>
+        <field name="model">commodity.center</field>
+        <field name="arch" type="xml">
+            <tree string="Collection Centers">
+                <field name="name"/>
+                <field name="location"/>
+                <field name="status"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_commodity_center_form" model="ir.ui.view">
+        <field name="name">commodity.center.form</field>
+        <field name="model">commodity.center</field>
+        <field name="arch" type="xml">
+            <form string="Collection Center">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="location"/>
+                        <field name="trader_ids" widget="many2many_tags"/>
+                        <field name="status"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_commodity_center" model="ir.actions.act_window">
+        <field name="name">Collection Centers</field>
+        <field name="res_model">commodity.center</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu Items -->
+    <menuitem id="menu_commodity_centers" name="Collection Centers"
+              parent="menu_amp_config"
+              action="action_commodity_center"/>
+</odoo>

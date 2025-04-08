@@ -1,0 +1,76 @@
+<odoo>
+    <data noupdate="1">
+        <!-- Create the Kalimati Admin group -->
+        <record id="group_kalimati_admin" model="res.groups">
+            <field name="name">Kalimati Admin</field>
+        </record>
+
+        <!-- Rule to restrict records to the user's company -->
+         <record id="record_user_rule_one" model="ir.rule">
+            <field name="name">Amp Daily Price</field>
+            <field name="model_id" ref="model_amp_daily_price"/> 
+            <field name="domain_force">[('company_id', '=', user.company_id.id)]</field> 
+            <field name="global" eval="True"/> 
+            <field name="groups" eval="[(4, ref('agriculture_market_place.group_kalimati_admin'))]"/>
+        </record>
+
+        <record id="record_user_two" model="ir.rule">
+            <field name="name">Amp Daily Arrival Entry</field>
+            <field name="model_id" ref="model_amp_daily_arrival_entry"/> 
+            <field name="domain_force">[('company_id', '=', user.company_id.id)]</field> 
+            <field name="global" eval="True"/> 
+            <field name="groups" eval="[(4, ref('agriculture_market_place.group_kalimati_admin'))]"/>
+        </record>
+
+        <record id="record_user_three" model="ir.rule">
+            <field name="name">Amp Trader</field>
+            <field name="model_id" ref="model_amp_trader"/> 
+            <field name="domain_force">[('company_id', '=', user.company_id.id)]</field> 
+            <field name="global" eval="True"/> 
+            <field name="groups" eval="[(4, ref('agriculture_market_place.group_kalimati_admin'))]"/>
+        </record>
+        <record id="record_user_four" model="ir.rule">
+            <field name="name">Amp Commodity</field>
+            <field name="model_id" ref="model_amp_commodity"/> 
+            <field name="domain_force">[('company_id', '=', user.company_id.id)]</field> 
+            <field name="global" eval="True"/> 
+            <field name="groups" eval="[(4, ref('agriculture_market_place.group_kalimati_admin'))]"/>
+        </record>
+     
+
+
+
+
+<!-- ***************** -->
+    <record id="record_user_rule_twevel" model="ir.rule">
+            <field name="name">Amp Admin Daily Price</field>
+            <field name="model_id" ref="model_amp_daily_price"/> 
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="global" eval="True"/> 
+            <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+        </record>
+        <record id="record_user_thirteen" model="ir.rule">
+            <field name="name">Amp Admin Daily Arrival Entry</field>
+            <field name="model_id" ref="model_amp_daily_arrival_entry"/> 
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="global" eval="True"/> 
+            <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+        </record>
+      
+        <record id="record_user_fourteen" model="ir.rule">
+            <field name="name">Amp Admin Trader</field>
+            <field name="model_id" ref="model_amp_trader"/> 
+             <field name="domain_force">[(1,'=',1)]</field>
+            <field name="global" eval="True"/> 
+            <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+        </record>
+       <record id="record_user_fifteen" model="ir.rule">
+            <field name="name">Amp Admin Commodity</field>
+            <field name="model_id" ref="model_amp_commodity"/> 
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="global" eval="True"/> 
+            <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+        </record>
+       
+    </data>
+</odoo>

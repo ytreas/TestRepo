@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Province Views -->
+    <record id="view_location_province_tree" model="ir.ui.view">
+        <field name="name">location.province.tree</field>
+        <field name="model">location.province</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="name_np"/>
+                <field name="reference_id"/>
+                <field name="reference_code"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_location_province_form" model="ir.ui.view">
+        <field name="name">location.province.form</field>
+        <field name="model">location.province</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="name_np"/>
+                        <field name="reference_id"/>
+                        <field name="reference_code"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_location_province" model="ir.actions.act_window">
+        <field name="name">Provinces</field>
+        <field name="res_model">location.province</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- District Views -->
+    <record id="view_location_district_tree" model="ir.ui.view">
+        <field name="name">location.district.tree</field>
+        <field name="model">location.district</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="province_name"/>
+                <field name="district_name"/>
+                <field name="district_name_np"/>
+                <field name="reference_id"/>
+                <field name="reference_code"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_location_district_form" model="ir.ui.view">
+        <field name="name">location.district.form</field>
+        <field name="model">location.district</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="province_name"/>
+                        <field name="district_name"/>
+                        <field name="district_name_np"/>
+                        <field name="reference_id"/>
+                        <field name="reference_code"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_location_district" model="ir.actions.act_window">
+        <field name="name">Districts</field>
+        <field name="res_model">location.district</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Palika Views -->
+    <record id="view_location_palika_tree" model="ir.ui.view">
+        <field name="name">location.palika.tree</field>
+        <field name="model">location.palika</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="district_name"/>
+                <field name="palika_name"/>
+                <field name="palika_name_np"/>
+                <field name="type"/>
+                <field name="type_np"/>
+                <field name="reference_id"/>
+                <field name="reference_code"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_location_palika_form" model="ir.ui.view">
+        <field name="name">location.palika.form</field>
+        <field name="model">location.palika</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="district_name"/>
+                        <field name="palika_name"/>
+                        <field name="palika_name_np"/>
+                        <field name="type"/>
+                        <field name="type_np"/>
+                        <field name="reference_id"/>
+                        <field name="reference_code"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_location_palika" model="ir.actions.act_window">
+        <field name="name">Palikas</field>
+        <field name="res_model">location.palika</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="location_master" name="Location Master" parent="base.menu_administration"/>
+    <menuitem id="location_province" name="Location Province"
+            parent="location_master" action="action_location_province" />
+    <menuitem id="location_district" name="Location District"
+            parent="location_master" action="action_location_district" />
+    <menuitem id="location_palika" name="Location Palika"
+            parent="location_master" action="action_location_palika" />
+
+</odoo>

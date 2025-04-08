@@ -1,0 +1,618 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <template id="base_accounting_kit.checkout" name="checkout">
+        <t t-call="website.layout">
+            <link rel="stylesheet"
+                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+                integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+                crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+            <xpath expr="//head/*[1]" position="before">
+                <t t-set="title">
+                    <t translation="True">Checkout</t>
+                </t>
+            </xpath>
+            <t t-call="base_accounting_kit.color_palette">
+                <t t-set="color_palette_company" t-value="request.env.user.company_id" />
+            </t>
+            <t t-call-assets="base_accounting_kit.ecommerce_assets" />
+            <div
+                class="website-wrapper  my-cart-page js_address_config_page js_location_autocomplete">
+                <div class="cart0-products1 checkout0">
+                    <t t-call="base_accounting_kit.shipping_address" />
+                    <div class="js_product_template">
+                        <t t-call="base_accounting_kit.shipping_product_details" />
+                    </div>
+                </div>
+                <t t-call="base_accounting_kit.order_details_sidebar" />
+                <t t-call="base_accounting_kit.address_configure_modal" />
+                <t t-call="base_accounting_kit.add_new_address" />
+                <input type="hidden" id="order_arr" name="order_arr[]"
+                    t-attf-value="#{my_orders_str}" />
+            </div>
+        </t>
+    </template>
+
+    <template id="base_accounting_kit.shipping_address" name="shipping_address">
+        <div class="let-wrapper shipping-address p-2">
+            <div class="cart0-products1-item item-header0">
+                <div class="count-left">
+                    <t t-translation="True">Shipping &amp; Billing Address</t>
+                </div>
+                <div class="action-right edit-address">
+                    <i class="fa-solid fa-edit me-1"></i>
+                    <t t-translation="true">Edit</t>
+                </div>
+            </div>
+
+            <div class="shipping-details">
+                <div class="p-2 default_address_field">
+
+                </div>
+
+                <div class="block-line card p-2 mt-4 p-2 mx-2">
+                    <div class="input">
+                        <input type="radio"
+                            name="receive_option"
+                            value="onsitepickup"
+                            class="form-check-input pickup_type"
+                        />
+                    </div>
+                    <span>
+                        <t t-translation="True">Onsite Pickup</t>
+                    </span>
+                </div>
+            </div>
+
+        </div>
+    </template>
+
+    <template id="base_accounting_kit.default_address" name="default_address">
+        <div class="block-line card p-2">
+            <div t-if="default_billing">
+                <span class="fw-600">
+                    <t t-translation="true">Billing:</t>
+                </span>
+                <div t-foreach="default_billing" t-as="db">
+                    <div class="default_billing">
+                        <div class="card-row main">
+                            <span
+                                t-field="db.name">Bibek
+                                Shrestha</span>
+                            <span
+                                t-field="db.mobile"></span>
+                        </div>
+                        <div class="card-row">
+                            <span
+                                t-field="db.street">Dallu-15,
+                                Kathmandu</span>
+                            <span
+                                t-field="db.street2">
+                                Kathmandu</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div t-else="">
+                <t t-translation="True">Please add billing address</t>
+            </div>
+        </div>
+        <div t-if="default_shipping" class="block-line card mt-4 p-2">
+            <div class="input">
+                <input type="radio"
+                    name="receive_option"
+                    value="shipping"
+                    class="form-check-input pickup_type"
+                    checked="True"
+                />
+            </div>
+            <div>
+                <span class="fw-600">
+                    <t t-translation="true">Shipping:</t>
+                </span>
+                <div class="default_shipping">
+                    <div class="card-row main">
+                        <span
+                            t-field="default_shipping[0].name">Bibek
+                            Shrestha</span>
+                        <span
+                            t-field="default_shipping[0].mobile"></span>
+                    </div>
+                    <div class="card-row">
+                        <span
+                            t-field="default_shipping[0].street">Dallu-15,
+                            Kathmandu</span>
+                        <span
+                            t-field="default_shipping[0].street2">
+                            Kathmandu</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div t-else="" class="block-line card mt-4 p-2">
+            <t t-translation="True">Please add shipping address</t>
+        </div>
+    </template>
+
+    <template id="base_accounting_kit.shipping_product_details" name="shipping_product_details">
+        <t t-set="overall_total_price" t-value="0" />
+        <t t-foreach="related_companies" t-as="rc">
+            <t t-set="rc_config"
+                t-value="company_main_config.get_config(rc.id)" />
+            <t t-set="company_total_price" t-value="0" />
+            <div class="let-wrapper cart0-products1-item cpi2 px-3">
+                <div class="c-vendor0">
+                    <div>
+                        <a t-attf-href="/products?vendor=#{slug(rc)}"
+                            class="c-vendor-v">
+                            <div t-field="rc.logo"
+                                class="logo-sm-container"
+                                t-options='{"widget": "image","alt-field": "name", "zoom": "True"}' />
+                            <div t-field="rc.name">Softdrax Pvt.
+                                Ltd.</div>
+                        </a>
+                    </div>
+                    <!-- <div class="delivery-charge">
+                            <img src="/base_accounting_kit/static/images/ecommerce/location_pin.svg" role="icon"
+                    alt="delivery-location"/>
+                        </div> -->
+                </div>
+                <div class="company-wise-products">
+                    <t t-set="delivery_charge" t-value="False" />
+                    <t t-foreach="items" t-as="cart">
+                        <t t-if="rc.id==cart.product_id.company_id.id">
+                            <div t-if='not delivery_charge' class="delivery-config0">
+                                <span class="text-muted text-sm">
+                                    <t t-translation="True">Choose your delivery option</t>
+                                </span>
+                                <div class="delivery-options mt-2">
+                                    <div class="option">
+                                        <div class="wrap">
+                                            <input type="radio" class="form-check-input"
+                                                t-attf-data-delivery-company-id="#{rc.id}"
+                                                t-attf-name='delivery_selection-#{rc.id}'
+                                                checked="True" />
+                                        </div>
+                                        <div class="wrap">
+                                            <span class='js_delivery_item_price'
+                                                t-if='rc_config["enable_delivery_charge"]'
+                                                t-attf-data-company-id="#{rc.id}"
+                                                t-attf-data-delivery-price='#{round(company_delivery_config.get_delivery_charge(cart.product_id.company_id.id,partner_latitude,partner_longitude))}'>
+                                                <t t-translation="True">Rs.</t>
+                                                <span
+                                                    t-out="round(company_delivery_config.get_delivery_charge(cart.product_id.company_id.id,partner_latitude,partner_longitude))" />
+                                                <t t-set="company_total_price"
+                                                    t-value="company_total_price+round(company_delivery_config.get_delivery_charge(cart.product_id.company_id.id,partner_latitude,partner_longitude))" />
+                                            </span>
+                                            <span t-else=''
+                                                class='text-highlight js_delivery_item_price'
+                                                t-attf-data-delivery-price='#{"0"}'
+                                                t-out="'Free Delivery'" />
+                                            <span>Standard Delivery</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <t t-set="delivery_charge" t-value="True" />
+                            </div>
+                            <div class="cart0prd">
+
+                                <div
+                                    class="cpi0-ch1 thumbnail">
+                                    <div t-field="cart.product_id.product_featured_image"
+                                        class="d-flex align-items-start justify-content-center oe_unmovable g-center"
+                                        t-options='{"widget": "image", "class": "oe_unmovable product_featured_image", "alt-field": "name", "zoom": "True"}' />
+                                </div>
+                                <div class="cpi0-ch2 title">
+                                    <div t-field="cart.product_id.product_id.name" />
+                                    <span>
+                                        <t t-foreach="cart.cart_attribute_ids" t-as="cca">
+                                            <span t-field="cca.value_id"
+                                                t-attf-data-attr-id="#{cca.attribute_id.id}" />, </t>
+                                    </span>
+                                </div>
+                                <div class="cpi0-ch3 price-action mx-3">
+                                    <div class="price">
+                                        <t t-translation="True">Rs.</t>
+                                        <span t-field="cart.price_unit"></span>
+                                    </div>
+                                </div>
+                                <div class="js_product_quantity cpi0-ch4 quantity">
+                                    <div class="d-flex justify-content-end text-sm text-muted">
+                                        <span class="mx-2">
+                                            <t t-translation="True">quantity</t>
+                                        </span>
+
+                                        <span t-field="cart.quantity">1</span>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <t t-set="company_total_price"
+                                t-value="company_total_price+(cart.price_unit*cart.quantity)" />
+                        </t>
+                    </t>
+                    <div class="g-center vendor_price_total">
+                        <span>
+                            <span t-translation="True">Subtotal: </span>
+                            <span t-translation="True">Rs.</span>
+                            <span t-attf-data-company-total-price="#{company_total_price}" class="js_vendor_subtotal"
+                                t-attf-data-company-id="#{rc.id}"
+                                t-esc="company_total_price" />
+                        </span>
+                    </div>
+                    <t t-set="overall_total_price" t-value="overall_total_price+company_total_price" />
+                </div>
+            </div>
+
+        </t>
+        <input type='hidden' id="overall_total_price" t-attf-value="#{overall_total_price}"/>
+    </template>
+
+    <template id="base_accounting_kit.order_details_sidebar" name="order_details_sidebar">
+        <div class="let-wrapper order-summary0 sticky-top js_checkout">
+            <t t-translation="True">My Order Summary</t>
+            <div class="order-details-container">
+                <div class="odc1">
+                    <span><t t-translation="True">Subtotal</t>(<span id="odc_item_count"
+                            t-out="total_items"></span> item(s))</span>
+                    <span>
+                        <t t-translation="True">Rs.</t>
+                        <span id="odc_item_price" t-out="total_items_price">0.00</span>
+                    </span>
+                </div>
+                <div class="odc2">
+                    <span>
+                        <t t-translation="True">Shipping Fee</t>
+                    </span>
+                    <span>
+                        <t t-translation="True">Rs.</t>
+                        <span id="odc_shipping_price">0.00</span>
+                    </span>
+                </div>
+                <div t-attf-class="odc-3 #{'d-none' if no_voucher else ''}">
+                    <input type="text" class="voucher" id="my_voucher"
+                        placeholder="Enter Voucher Code Here..." />
+                    <button class="btn btn-primary">
+                        <t t-translation="True">Apply</t>
+                    </button>
+                </div>
+                <div class="odc4">
+                    <span>
+                        <t t-translation="True">Total</t>
+                    </span>
+                    <span>
+                        <t t-translation="True">Rs.</t>
+                        <span id="odc_total_price" t-out="total_items_price">0.00</span>
+                    </span>
+                </div>
+                <div class="odc5 row">
+                    <form action='/proceed-to-payment' method="POST"
+                        class="row proceed_to_payment_form">
+                        <input type="hidden" name="csrf_token"
+                            t-attf-value="#{request.csrf_token()}" />
+                        <input type="hidden" name="voucher" id="voucher" />
+                        <input type="hidden" name="t_amt" t-attf-value="#{total_items_price}"
+                            id="t_amt" />
+                        <input type="hidden" name="my_orders[]" t-attf-value="#{items.ids}"
+                            id="my_orders" />
+                        <input type="hidden" name="pickup_type" id="pickup_value" />
+                        <input type="hidden" name="price_breakdown[]" id="price_breakdown" />
+                        <button class="btn proceed_to_pay_btn d-none position-relative">
+                            <t t-translation="True">Proceed To Payment</t>
+                                  
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </template>
+
+
+    <template id="base_accounting_kit.address_configure_modal" name="address_configure_modal">
+        <div class="modal fade" id="address_configure_modal" data-bs-backdrop="static" tabindex="-1"
+            aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="container">
+                    <div class="user-data-form modal-content">
+                        <div class="form-wrapper m-auto w-100">
+                            <div class="row  w-100">
+                                <div class="card-wrapper js_main_address_modal">
+
+                                    <div class="card shipping-card">
+                                        <div class="card-header1 d-flex justify-content-between">
+                                            <span>
+                                                <t t-translation="True">Shipping Address</t>
+                                            </span>
+                                            <a class='btn add-new-shipping-btn'
+                                                t-attf-address-type="shipping">
+                                                <t t-translation="True">Add New</t>
+                                            </a>
+                                        </div>
+                                        <t t-if="shipping_addresses"
+                                            t-foreach="shipping_addresses"
+                                            t-as="shipping_address">
+                                            <div class="card-content">
+                                                <div class="card">
+                                                    <div class="input">
+                                                        <input type="radio"
+                                                            name="shipping_address"
+                                                            class="js_shipping_address form-check-input"
+                                                            t-attf-data-address-id="#{shipping_address.id}"
+                                                            t-att-checked="shipping_address.address_selected" />
+                                                    </div>
+                                                    <div>
+                                                        <div class="card-row main">
+                                                            <span
+                                                                t-field="shipping_address.name">Bibek
+                                                                Shrestha</span>
+                                                            <span
+                                                                t-field="shipping_address.mobile"></span>
+                                                        </div>
+                                                        <div class="card-row">
+                                                            <span
+                                                                t-field="shipping_address.street">Dallu-15,
+                                                                Kathmandu</span>
+                                                            <span
+                                                                t-field="shipping_address.street2">
+                                                                Kathmandu</span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div
+                                                        t-attf-class="card_edit #{'d-none' if shipping_address.address_selected else ''}"
+                                                        t-attf-data-card-id="#{shipping_address.id}">
+                                                        <i class="fa-solid fa-trash me-1"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </div>
+                                    <div class="card shipping-card">
+                                        <div class="card-header1 d-flex justify-content-between">
+                                            <span>
+                                                <t t-translation="True">Billing Address</t>
+                                            </span>
+                                            <t t-if="not billing_address">
+                                                <a class='btn add-new-billing-btn'>
+                                                    <t t-translation="True">Add New</t>
+                                                </a>
+
+                                            </t>
+                                        </div>
+                                        <t t-foreach="billing_address" t-as="billing">
+                                            <div class="card-content">
+                                                <div class="card">
+                                                    <div class="input">
+                                                        <input type="radio"
+                                                            name="billing_address"
+                                                            class="js_billing_address form-check-input"
+                                                            checked="True" />
+                                                    </div>
+                                                    <div>
+                                                        <div class="card-row main">
+                                                            <span t-field="billing.name">Bibek
+                                                                Shrestha</span>
+                                                            <span>981023654781</span>
+                                                        </div>
+                                                        <div class="card-row">
+                                                            <span t-field="billing.street">Dallu-15,
+                                                                Kathmandu</span>
+                                                            <span t-field="billing.street2">
+                                                                Kathmandu</span>
+                                                        </div>
+                                                    </div>
+                                                    <div
+                                                        t-attf-class="card_edit"
+                                                        t-attf-data-card-id="#{billing.id}">
+                                                        <i class="fa-solid fa-trash me-1"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
+                                <div class="modal-footer-btn-container my-5">
+                                    <a class="btn tran3s btn-cancel js_btn_close">
+                                        <t t-translation="True">Close</t>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="base_accounting_kit.js_main_address_modal" name="js_main_address_modal">
+        <div class="card shipping-card">
+            <div class="card-header1 d-flex justify-content-between">
+                <span>
+                    <t t-translation="True">Shipping Address</t>
+                </span>
+                <a class='btn add-new-shipping-btn'
+                    t-attf-address-type="shipping">
+                    <t t-translation="True">Add New</t>
+                </a>
+            </div>
+            <t t-if="shipping_addresses"
+                t-foreach="shipping_addresses"
+                t-as="shipping_address">
+                <div class="card-content">
+                    <div class="card">
+                        <div class="input">
+                            <input type="radio"
+                                name="shipping_address"
+                                class="js_shipping_address form-check-input"
+                                t-attf-data-address-id="#{shipping_address.id}"
+                                t-att-checked="shipping_address.address_selected" />
+                        </div>
+                        <div>
+                            <div class="card-row main">
+                                <span
+                                    t-field="shipping_address.name">Bibek
+                                    Shrestha</span>
+                                <span
+                                    t-field="shipping_address.mobile"></span>
+                            </div>
+                            <div class="card-row">
+                                <span
+                                    t-field="shipping_address.street">Dallu-15,
+                                    Kathmandu</span>
+                                <span
+                                    t-field="shipping_address.street2">
+                                    Kathmandu</span>
+                            </div>
+                        </div>
+
+                        <div
+                            t-attf-class="card_edit #{'d-none' if shipping_address.address_selected else ''}"
+                            t-attf-data-card-id="#{shipping_address.id}">
+                            <i class="fa-solid fa-trash me-1"></i>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </div>
+        <div class="card shipping-card">
+            <div class="card-header1 d-flex justify-content-between">
+                <span>
+                    <t t-translation="True">Billing Address</t>
+                </span>
+                <t t-if="not billing_address">
+                    <a class='btn add-new-billing-btn'>
+                        <t t-translation="True">Add New</t>
+                    </a>
+
+                </t>
+            </div>
+            <t t-foreach="billing_address" t-as="billing">
+                <div class="card-content">
+                    <div class="card">
+                        <div class="input">
+                            <input type="radio"
+                                name="billing_address"
+                                class="js_billing_address form-check-input"
+                                checked="True" />
+                        </div>
+                        <div>
+                            <div class="card-row main">
+                                <span t-field="billing.name">Bibek
+                                    Shrestha</span>
+                                <span>981023654781</span>
+                            </div>
+                            <div class="card-row">
+                                <span t-field="billing.street">Dallu-15, Kathmandu</span>
+                                <span t-field="billing.street2">Kathmandu</span>
+                            </div>
+                        </div>
+                        <div
+                            t-attf-class="card_edit"
+                            t-attf-data-card-id="#{billing.id}">
+                            <i class="fa-solid fa-trash me-1"></i>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </template>
+
+    <template id="base_accounting_kit.add_new_address" name="add_new_address">
+        <div class="modal fade" id="add_new_address" data-bs-backdrop="static" tabindex="-1"
+            aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="container">
+                    <div class="user-data-form modal-content modal-content-address">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="base_accounting_kit.address_modal_body" name="address_modal_body">
+        <p class="text-center fw-600">
+            <t t-translation="True">
+                <span id="modalTitle">Add New Shipping Address</span>
+            </t>
+        </p>
+        <div class="form-wrapper m-auto w-100">
+            <form action="#" class="mt-10 addressForm">
+                <div class="row  w-100">
+                    <div class="col-12">
+                        <div class="input-group-meta position-relative mb-25">
+                            <label for="fullname">
+                                <t t-translation="True">Full name</t>
+                            </label>
+                            <input type="text" id="fullname"
+                                placeholder="Enter your first and last name"
+                                required="True" autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="input-group-meta position-relative mb-25">
+                            <label for="phone">
+                                <t t-translation="True">Phone number</t>
+                            </label>
+                            <input type="text" id="phone"
+                                placeholder="Enter the phone number" required="True" maxLength="10" />
+                            <span id="result"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="input-group-meta position-relative mb-25">
+                            <label for="email">
+                                <t t-translation="True">Email</t>
+                            </label>
+                            <input type="email" id="email"
+                                placeholder="e.g. abc@mail.com" />
+                        </div>
+                    </div>
+                    <div class="col-12 js_location_autocomplete position-relative">
+                        <div class="input-group-meta position-relative mb-25">
+                            <label for="address">
+                                <t t-translation="True">Region</t>
+                            </label>
+                            <input type="text" id="address"
+                                placeholder="Tindhara, Kathmandu" required="True" />
+                            <input type='hidden' id='address_latitude' />
+                            <input type='hidden' id='address_longitude' />
+                        </div>
+
+                        <ul
+                            id="location-suggestions"
+                            class="list-group position-absolute w-100 suggestions"
+                        >
+                        </ul>
+
+
+                    </div>
+                    <div class="col-12">
+                        <div class="input-group-meta position-relative mb-25">
+                            <label for="street">
+                                <t t-translation="True">Building / House No / Floor
+                                    / Street</t>
+                            </label>
+                            <input type="text" id="street"
+                                placeholder="Building / House No / Floor / Street"
+                                required="True" />
+                            <input type="hidden" id="type"
+                                required="True" />
+                        </div>
+                    </div>
+                    <div class="modal-footer-btn-container my-5">
+                        <a class="btn tran3s btn-cancel-add-new">
+                            <t t-translation="True">Cancel</t>
+                        </a>
+                        <button class="btn tran3s btn-submit">
+                            <t t-translation="True">Save</t>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </template>
+</odoo>

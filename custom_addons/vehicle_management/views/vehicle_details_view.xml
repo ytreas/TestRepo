@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="vehicle_bluebook_notification_cron" model="ir.cron">
+        <field name="name">Vehicle Bluebook Notification </field>
+        <field name="model_id" ref="model_custom_vehicle_bluebook"/>
+        <field name="state">code</field>
+        <field name="code">model.sendNotifications()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <!-- <field name="numbercall">-1</field> -->
+        <field name="active">True</field>
+    </record>
+
+    <record id="vehicle_permit_notification_cron" model="ir.cron">
+        <field name="name">Vehicle Permit Notification </field>
+        <field name="model_id" ref="model_custom_vehicle_permit"/>
+        <field name="state">code</field>
+        <field name="code">model.sendNotifications()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <!-- <field name="numbercall">-1</field> -->
+        <field name="active">True</field>
+    </record>
+     <record id="vehicle_pollution_notification_cron" model="ir.cron">
+        <field name="name">Vehicle Pollution Notification </field>
+        <field name="model_id" ref="model_custom_vehicle_pollution"/>
+        <field name="state">code</field>
+        <field name="code">model.sendNotifications()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <!-- <field name="numbercall">-1</field> -->
+        <field name="active">True</field>
+    </record>
+    <record id="vehicle_insurance_notification_cron" model="ir.cron">
+        <field name="name">Vehicle Insurance Notification </field>
+        <field name="model_id" ref="model_custom_vehicle_insurance"/>
+        <field name="state">code</field>
+        <field name="code">model.sendNotifications()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <!-- <field name="numbercall">-1</field> -->
+        <field name="active">True</field>
+    </record>
+
+    <!-- Base Document Views -->
+    <record id="view_base_vehicle_document_form" model="ir.ui.view">
+        <field name="name">base.vehicle.document.form</field>
+        <field name="model">base.vehicle.document</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="vehicle_company_id"/>
+                            <field name="owner_id" domain="[('vehicle_company_id', '=', vehicle_company_id)]"/>
+                            <field name="vehicle_number" domain="vehicle_number_domain"/>
+                            <field name="last_renewal_date" options="{'corresponding_field': 'last_renewal_date_bs'}"/>
+                            <field name="expiry_date" options="{'corresponding_field': 'expiry_date_bs'}"/>
+                            <field name="vehicle_number_domain" invisible="1"/>
+                            <field name="renewed"/>
+                            <field name="renewal_cost"/>
+                            <field name="fine_cost"/>
+                            <field name="total_cost" readonly="True"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_base_vehicle_document_tree" model="ir.ui.view">
+        <field name="name">base.vehicle.document.tree</field>
+        <field name="model">base.vehicle.document</field>
+        <field name="arch" type="xml">
+            <tree default_order="create_date desc">
+                <field name="vehicle_company_id"/>
+                <field name="owner_id"/>
+                <field name="vehicle_number"/>
+                <field name="last_renewal_date_bs"/>
+                <field name="expiry_date_bs"/>
+                <field name="renewed"/>
+                <field name="renewal_cost"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Vehicle Bluebook Views -->
+    <record id="view_custom_vehicle_bluebook_form" model="ir.ui.view">
+        <field name="name">custom.vehicle.bluebook.form</field>
+        <field name="model">custom.vehicle.bluebook</field>
+        <field name="inherit_id" ref="view_base_vehicle_document_form"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <form position="attributes">
+                <attribute name="string">Vehicle Bluebook</attribute>
+            </form>
+            <sheet position="inside">
+                <notebook>
+                    <page string="Bluebook Documents">
+                        <field name="bluebook_document_ids" widget="one2many_list">
+                            <tree editable="top">
+                                <field name="type_id" string="Document Type"/>
+                                <field name="documents" widget="binary" filename="file_name"/>
+                                <field name="file_name"/>
+                                <field name="preview" widget="html"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page name="due_details" string="Due Details">
+                        <field name="due_details">
+                            <tree string="Due Details Records" create="false">
+                                <field name="renewal_date_bs"/>
+                                <field name="expiry_date_bs"/>
+                                <field name="renewal_cost"/>
+                                <field name="remarks"/>
+                                <field name="due_status"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </sheet>
+        </field>
+    </record>
+
+    <record id="view_custom_vehicle_bluebook_tree" model="ir.ui.view">
+        <field name="name">custom.vehicle.bluebook.tree</field>
+        <field name="model">custom.vehicle.bluebook</field>
+        <field name="inherit_id" ref="view_base_vehicle_document_tree"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <tree position="attributes">
+                <attribute name="string">Vehicle Bluebooks</attribute>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Vehicle Permit Views -->
+    <record id="view_custom_vehicle_permit_form" model="ir.ui.view">
+        <field name="name">custom.vehicle.permit.form</field>
+        <field name="model">custom.vehicle.permit</field>
+        <field name="inherit_id" ref="view_base_vehicle_document_form"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <form position="attributes">
+                <attribute name="string">Vehicle Permit</attribute>
+            </form>
+            <sheet position="inside">
+                <notebook>
+                    <page string="Permit Documents">
+                        <field name="permit_document_ids" widget="one2many_list" mode="tree">
+                            <tree editable="top">
+                                <field name="type_id" string="Document Type"/>
+                                <field name="documents" widget="binary" filename="file_name"/>
+                                <field name="file_name"/>
+                                <field name="preview" widget="html"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page name="due_details" string="Due Details">
+                        <field name="due_details">
+                            <tree string="Due Details Records" create="false">
+                                <field name="renewal_date_bs"/>
+                                <field name="expiry_date_bs"/>
+                                <field name="renewal_cost"/>
+                                <field name="remarks"/>
+                                <field name="due_status"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </sheet>
+        </field>
+    </record>
+
+    <record id="view_custom_vehicle_permit_tree" model="ir.ui.view">
+        <field name="name">custom.vehicle.permit.tree</field>
+        <field name="model">custom.vehicle.permit</field>
+        <field name="inherit_id" ref="view_base_vehicle_document_tree"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <tree position="attributes">
+                <attribute name="string">Vehicle Permits</attribute>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Vehicle Pollution Views -->
+    <record id="view_custom_vehicle_pollution_form" model="ir.ui.view">
+        <field name="name">custom.vehicle.pollution.form</field>
+        <field name="model">custom.vehicle.pollution</field>
+        <field name="inherit_id" ref="view_base_vehicle_document_form"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <form position="attributes">
+                <attribute name="string">Vehicle Pollution</attribute>
+            </form>
+            <sheet position="inside">
+                <notebook>
+                    <page string="Pollution Control Documents">
+                        <field name="pollution_document_ids" widget="one2many_list" mode="tree">
+                            <tree editable="top">
+                                <field name="type_id" string="Document Type"/>
+                                <field name="documents" widget="binary" filename="file_name"/>
+                                <field name="file_name"/>
+                                <field name="preview" widget="html"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page name="due_details" string="Due Details">
+                        <field name="due_details">
+                            <tree string="Due Details Records" create="false">
+                                <field name="renewal_date_bs"/>
+                                <field name="expiry_date_bs"/>
+                                <field name="renewal_cost"/>
+                                <field name="remarks"/>
+                                <field name="due_status"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </sheet>
+        </field>
+    </record>
+
+    <record id="view_custom_vehicle_pollution_tree" model="ir.ui.view">
+        <field name="name">custom.vehicle.pollution.tree</field>
+        <field name="model">custom.vehicle.pollution</field>
+        <field name="inherit_id" ref="view_base_vehicle_document_tree"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <tree position="attributes">
+                <attribute name="string">Vehicle Pollution</attribute>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Vehicle Insurance Views -->
+    <record id="view_custom_vehicle_insurance_form" model="ir.ui.view">
+        <field name="name">custom.vehicle.insurance.form</field>
+        <field name="model">custom.vehicle.insurance</field>
+        <field name="inherit_id" ref="view_base_vehicle_document_form"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <form position="attributes">
+                <attribute name="string">Vehicle Insurance</attribute>
+            </form>
+            <field name="renewal_cost" position="after">
+                <field name="insurance_company"/>
+                <field name="insurance_policy_number"/>
+            </field>
+            <sheet position="inside">
+                <notebook>
+                    <page string="Insurance Documents">
+                        <field name="insurance_document_ids" widget="one2many_list" mode="tree">
+                            <tree editable="top">
+                                <field name="type_id" string="Document Type"/>
+                                <field name="documents" widget="binary" filename="file_name"/>
+                                <field name="file_name"/>
+                                <field name="preview" widget="html"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page name="due_details" string="Due Details">
+                        <field name="due_details">
+                            <tree string="Due Details Records" create="false">
+                                <field name="renewal_date_bs"/>
+                                <field name="expiry_date_bs"/>
+                                <field name="renewal_cost"/>
+                                <field name="remarks"/>
+                                <field name="due_status"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </sheet>
+        </field>
+    </record>
+
+    <record id="view_custom_vehicle_insurance_tree" model="ir.ui.view">
+        <field name="name">custom.vehicle.insurance.tree</field>
+        <field name="model">custom.vehicle.insurance</field>
+        <field name="inherit_id" ref="view_base_vehicle_document_tree"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <tree position="attributes">
+                <attribute name="string">Vehicle Insurance</attribute>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Actions -->
+    <record id="action_custom_vehicle_bluebook" model="ir.actions.act_window">
+        <field name="name">Vehicle Bluebook</field>
+        <field name="res_model">custom.vehicle.bluebook</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_custom_vehicle_permit" model="ir.actions.act_window">
+        <field name="name">Vehicle Permit</field>
+        <field name="res_model">custom.vehicle.permit</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_custom_vehicle_pollution" model="ir.actions.act_window">
+        <field name="name">Vehicle Pollution</field>
+        <field name="res_model">custom.vehicle.pollution</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="action_custom_vehicle_insurance" model="ir.actions.act_window">
+        <field name="name">Vehicle Insurance</field>
+        <field name="res_model">custom.vehicle.insurance</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu Items -->
+    <menuitem id="menu_vehicle_details" name="Vehicle Details" parent="menu_vehicle" sequence="3"/>
+    <menuitem id="menu_vehicle_papers" name="Vehicle Papers" parent="menu_vehicle_details" sequence="2"/>
+    <menuitem id="menu_custom_vehicle_bluebook_list" name="Vehicle Bluebook List" parent="menu_vehicle_papers" action="action_custom_vehicle_bluebook" sequence="1"/>
+    <menuitem id="menu_custom_vehicle_permit_list" name="Vehicle Permit List" parent="menu_vehicle_papers" action="action_custom_vehicle_permit" sequence="2"/>
+    <menuitem id="menu_custom_vehicle_pollution_list" name="Vehicle Pollution List" parent="menu_vehicle_papers" action="action_custom_vehicle_pollution" sequence="3"/>
+    <menuitem id="menu_custom_vehicle_insurance_list" name="Vehicle Insurance List" parent="menu_vehicle_papers" action="action_custom_vehicle_insurance" sequence="4"/>
+
+    <menuitem id="menu_route" name="Route" parent="menu_vehicle_details" sequence="3"/>
+    <menuitem id="menu_fleet_route" name="Route" parent="menu_route" action="action_fleet_route"/>
+    <menuitem id="menu_checkpoints_route" name="Check Points" parent="menu_route" action="action_fleet_checkpoints"/>
+    <menuitem id="menu_data_route" name="Route Data" parent="menu_route" action="action_data_route"/>
+
+    <!-- Form and Tree Views for Vehicle Owner -->
+    <record id="view_custom_vehicle_owner_form" model="ir.ui.view">
+        <field name="name">custom.vehicle.owner.form</field>
+        <field name="model">custom.vehicle.owner</field>
+        <field name="arch" type="xml">
+            <form string="Vehicle Owner">
+                <sheet>
+                    <group>
+                        <group>
+                            <!-- <field name="company_id"/> -->
+                            <field name="vehicle_company_id" widget="many2one_tags"/> 
+                            <field name="name"/> 
+                            <field name="address"/>
+                            <field name="phone"/>
+                            <field name="email"/>
+                            <field name="vehicle_number" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_custom_vehicle_owner_tree" model="ir.ui.view">
+        <field name="name">custom.vehicle.owner.tree</field>
+        <field name="model">custom.vehicle.owner</field>
+        <field name="arch" type="xml">
+            <tree string="Vehicle Owners" default_order="create_date desc">
+                <!-- <field name="company_id"/> -->
+                <field name="vehicle_company_id"/>
+                <field name="address"/>
+                <field name="name"/>
+                <field name="phone"/>
+                <field name="email"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Action for Vehicle Owner -->
+    <record id="action_custom_vehicle_owner" model="ir.actions.act_window">
+        <field name="name">Vehicle Owners</field>
+        <field name="res_model">custom.vehicle.owner</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+    </record>
+
+    <!-- Menu Items for Vehicle Owner -->
+    <menuitem id="menu_custom_vehicle_owners" name="Vehicle Owners" parent="menu_vehicle_details" sequence="4"/>
+    <menuitem id="menu_custom_vehicle_owner_list" name="Vehicle Owner List" parent="menu_custom_vehicle_owners" action="action_custom_vehicle_owner"/>
+
+    <!-- Form and Tree Views for Vehicle Company -->
+    <record id="view_custom_vehicle_company_form" model="ir.ui.view">
+        <field name="name">custom.vehicle.company.form</field>
+        <field name="model">custom.vehicle.company</field> 
+        <field name="arch" type="xml">
+            <form string="Vehicle Company">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="company_name"/>
+                            <field name="name_np"/>
+                            <field name="company_address"/>
+                            <field name="contact_person"/>
+                            <field name="phone"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Vehicle Owners">
+                            <field name="vehicle_owner_ids">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="phone"/>
+                                    <field name="address"/>
+                                    <field name="vehicle_number" context="{'default_vehicle_owner_ids': active_id}">
+                                        <tree>
+                                            <field name="vehicle_number"/>
+                                        </tree>
+                                    </field>
+                                </tree>
+                            </field>
+                        </page>
+                        <!-- <page string="Vehicles">
+                            <field name="vehicle_ids">
+                                <tree>
+                                    <field name="vehicle_number"/>
+                                </tree>
+                            </field>
+                        </page> -->
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_custom_vehicle_company_tree" model="ir.ui.view">
+        <field name="name">custom.vehicle.company.tree</field>
+        <field name="model">custom.vehicle.company</field>
+        <field name="arch" type="xml">
+            <tree string="Vehicle Companies" default_order="create_date desc">
+                <field name="company_name"/>
+                <field name="company_address"/>
+                <field name="contact_person"/>
+                <field name="phone"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Action for Vehicle Company -->
+    <record id="action_custom_vehicle_company" model="ir.actions.act_window">
+        <field name="name">Vehicle Companies</field>
+        <field name="res_model">custom.vehicle.company</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+    </record>
+
+    <!-- Menu Items for Vehicle Company -->
+    <menuitem id="menu_custom_vehicle_companies" name="Vehicle Companies" parent="menu_vehicle_details" sequence="5"/>
+    <menuitem id="menu_custom_vehicle_company_list" name="Vehicle Company List" parent="menu_custom_vehicle_companies" action="action_custom_vehicle_company"/>
+</odoo>

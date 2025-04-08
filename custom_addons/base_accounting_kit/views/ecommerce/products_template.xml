@@ -1,0 +1,600 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <template id="base_accounting_kit.ecommerce_products_page" name="Products">
+        <t t-call="website.layout">
+            <link rel="stylesheet"
+                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+                integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+                crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <xpath expr="//head/*[1]" position="before">
+                <t t-set="title">
+                    <t t-translation="True">Shop at affordable price</t>
+                </t>
+            </xpath>
+            <t t-call="base_accounting_kit.color_palette">
+                <t t-set="color_palette_company" t-value="request.env.user.company_id" />
+            </t>
+            <t t-call-assets="base_accounting_kit.ecommerce_assets" />
+            <t t-set="categories" t-value="product_categories" />
+
+            <div class="main-wrapper js_all_products">
+                <t t-call="base_accounting_kit.products_page_sidebar" />
+                <t t-call="base_accounting_kit.main_products" />
+            </div>
+
+
+        </t>
+
+    </template>
+
+    <template id="base_accounting_kit.products_page_sidebar" name="Products Filter">
+
+        <div class="display-lt-992">
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasWithBackdrop"
+                aria-labelledby="offcanvasWithBackdropLabel">
+                <div class="offcanvas-header">
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                        aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <t t-call="base_accounting_kit.products_sidebar_body" />
+                </div>
+            </div>
+        </div>
+
+        <div class="display-gt-992 sidebar-s-l js-sidebar">
+            <div class="section categories">
+                <div class="section-title">
+                    <t t-translation="true">Categories</t>
+                </div>
+                <ul>
+                    <t t-foreach="categories" t-as="category">
+                        <li>
+                            <a
+                                t-attf-class="#{'category-active' if category == filter_category else '' }"
+                                t-attf-href="/products/category/#{slug(category)}"
+                                class="d-inline-flex align-items-center transition-15s">
+                                <t t-esc="category['name']" />
+                            </a>
+                        </li>
+                    </t>
+                </ul>
+            </div>
+
+            <div class="section price-range products-sidebar">
+                <div class="section-title">
+                    <t t-translation="true">Price</t>
+                </div>
+                <ul>
+                    <li>
+                        <input type='text' class="form-control min_price" id='min_price_lg'
+                            t-attf-value="#{min_price if min_price else '' }"
+                            t-attf-data-value='min_price'
+                            placeholder="Min"
+                            t-translation="true" />
+                    </li>
+                    <li>-</li>
+                    <li>
+                        <input type='text' class="form-control max_price" id='max_price_lg'
+                            t-attf-value="#{max_price if max_price else '' }"
+                            t-attf-data-value='max_price'
+                            placeholder="Max"
+                            t-translation="true" />
+                    </li>
+                    <li>
+                        <input type='hidden' id='price_range' t-attf-data-value="price_range" />
+                        <button class="btn d-inline-flex align-items-center transition-15s link"
+                            id="price_filter"
+                            title="Search within this price range" t-translation="true"
+                            t-attf-data-attr-value="price_range"
+                        >
+                            <i class="fa fa-play" aria-hidden="true"
+                                t-attf-data-attr-value="price_range"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+            <t t-foreach="product_attributes" t-as="attributes">
+                <!-- <t t-esc="parsed_variants" /> -->
+                <div class="section attributes">
+                    <div class="section-title">
+                        <span t-field="attributes.name" />
+                    </div>
+                    <ul class="product-variants-attributes">
+                        <t t-foreach="attributes.value_ids" t-as="value_id">
+                            <li>
+                                <input type="checkbox" name="attribute_value"
+                                    t-attf-id="attribute_value_#{attributes.id}_#{value_id.id}"
+                                    t-attf-data-value-id="#{attributes.id}-#{value_id.id}"
+                                    class="form-check-input transition-3s"
+                                    t-att-checked="parsed_variants and (tuple([int(attributes.id), int(value_id.id)]) in parsed_variants)"
+                                />
+                                <label t-field="value_id.name" class="transition-3s"
+                                    t-attf-for="attribute_value_#{attributes.id}_#{value_id.id}">
+                                </label>
+                            </li>
+                        </t>
+                    </ul>
+                </div>
+
+            </t>
+        </div>
+    </template>
+
+
+    <template id="products_sidebar_body" name="sidebar_template_body">
+        <ul class="list-unstyled mb-0  pt-md-1 sidebar-content">
+            <li class="mb-1">
+                <button class="btn d-inline-flex align-items-center collapsed btn-collapse-toggle"
+                    data-bs-toggle="collapse" data-bs-target="#filter-by-toggle"
+                    aria-expanded="false">
+                    <t t-translation="true">Filter Products</t>
+                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                </button>
+
+                <div class="collapse collapse-body" id="filter-by-toggle">
+                    <ul class="list-unstyled fw-normal pb-1">
+
+                        <li>
+                            <a t-attf-data-sort-value="my_area"
+                                t-attf-data-attr-value="filter"
+                                class="d-inline-flex align-items-center filter-by-item">
+                                <t t-translation="true">My area</t>
+
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="mb-1">
+                <button class="btn d-inline-flex align-items-center collapsed btn-collapse-toggle"
+                    data-bs-toggle="collapse" data-bs-target="#sort-by-toggle"
+                    aria-expanded="false">
+                    <t t-translation="true">Sort by</t>
+                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                </button>
+
+                <div class="collapse collapse-body" id="sort-by-toggle">
+                    <ul class="list-unstyled fw-normal pb-1">
+
+                        <li>
+                            <a t-attf-data-sort-value="best"
+                                t-attf-data-attr-value="sort_by"
+                                class="d-inline-flex align-items-center sort-by-item">
+                                <t t-translation="true">Best Match</t>
+
+                            </a>
+                        </li>
+                        <li>
+                            <a t-attf-data-sort-value="asc"
+                                t-attf-data-attr-value="sort_by"
+                                class="d-inline-flex align-items-center sort-by-item">
+                                <t t-translation="true">Price low to high</t>
+
+                            </a>
+                        </li>
+                        <li>
+                            <a t-attf-data-sort-value="dsc"
+                                t-attf-data-attr-value="sort_by"
+                                class="d-inline-flex align-items-center sort-by-item">
+                                <t t-translation="true">Price high to low</t>
+
+                            </a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </li>
+            <li class="mb-1">
+                <button class="btn d-inline-flex align-items-center collapsed btn-collapse-toggle"
+                    data-bs-toggle="collapse" data-bs-target="#categories-toggle"
+                    aria-expanded="false">
+                    <t t-translation="true">Categories</t>
+                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                </button>
+
+                <div class="collapse collapse-body" id="categories-toggle">
+                    <ul class="list-unstyled fw-normal pb-1">
+                        <t t-foreach="categories" t-as="category">
+                            <li>
+                                <a t-attf-href="/products/category/#{slug(category)}"
+                                    class="d-inline-flex align-items-center">
+                                    <t t-esc="category['name']" />
+                                </a>
+                            </li>
+                        </t>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="mb-1">
+                <button class="btn d-inline-flex align-items-center collapsed btn-collapse-toggle"
+                    data-bs-toggle="collapse" data-bs-target="#colors-started-collapse"
+                    aria-expanded="false">
+                    <t t-translation="true">Price</t>
+                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+
+                </button>
+
+                <div class="collapse collapse-body " id="colors-started-collapse">
+                    <ul class="list-unstyled fw-normal pb-1 js-sidebar offbody-ul">
+                        <li>
+                            <input type='text' class="form-control min_price_sm"
+                                t-attf-value="#{min_price if min_price else '' }"
+                                placeholder="Min"
+                                t-attf-data-value='min_price'
+                                t-translation="true" />
+                        </li>
+                        <li>-</li>
+                        <li>
+                            <input type='text' class="form-control max_price_sm"
+                                t-attf-value="#{max_price if max_price else '' }"
+                                placeholder="Max"
+                                t-attf-data-value='max_price'
+                                t-translation="true" />
+                        </li>
+                        <li>
+                            <button class="btn d-inline-flex align-items-center transition-15s link"
+                                id="price_filter"
+                                title="Search within this price range" t-translation="true">
+                                <i class="fa fa-play" aria-hidden="true"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+
+            <t t-foreach="product_attributes" t-as="attributes">
+                <li class="mb-1">
+                    <button
+                        class="btn d-inline-flex align-items-center collapsed btn-collapse-toggle"
+                        data-bs-toggle="collapse"
+                        t-attf-data-bs-target="##{attributes.name}-#{attributes.id}-started-collapse"
+                        aria-expanded="false">
+                        <t t-translation="true">
+                            <span t-field="attributes.name" />
+                        </t>
+                        <i class="fa fa-angle-down" aria-hidden="true"></i>
+
+                    </button>
+
+                    <div class="collapse collapse-body"
+                        t-attf-id="#{attributes.name}-#{attributes.id}-started-collapse">
+                        <ul class="list-unstyled fw-normal pb-1 product-variants-attributes">
+                            <t t-foreach="attributes.value_ids" t-as="value_id">
+                                <li>
+                                    <input type="checkbox" name="attribute_value"
+                                        t-attf-id="mob_attribute_value_#{attributes.id}_#{value_id.id}"
+                                        t-attf-data-value-id="#{attributes.id}-#{value_id.id}"
+                                        class="form-check-input transition-3s" />
+                                    <label t-field="value_id.name" class="transition-3s"
+                                        t-attf-for="mob_attribute_value_#{attributes.id}_#{value_id.id}">
+                                    </label>
+                                </li>
+                            </t>
+                        </ul>
+                    </div>
+                </li>
+            </t>
+        </ul>
+    </template>
+
+    <template id="main_products" name="Main Products">
+        <div class="section main">
+        <t t-set="page_navigation_link" t-value="'/products?page='"/>
+            <section t-if="vendor_product"
+                t-attf-class="full-banner-container bg-#{vendor_product.color}">
+                <t t-set="page_navigation_link" t-value="'/products?vendor='+slug(vendor_product)+'&amp;page='"/>
+                <div class="vendor-banner w-100">
+                    <div class="vendor-banner-img" t-field="vendor_product.logo"
+                        t-options="{'widget':'image','class':'vendor-page-logo img-responsive'}" />
+
+                    <div class="page-vendor-details">
+                        <div class="title" t-field="vendor_product.name" />
+                        <div class="subtitle">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span t-field="vendor_product.street" />
+                        </div>
+                    </div>
+                    <div class="page-vendor-others">
+                        <span t-if="vendor_product.start_date"><t t-translation="True">Start Date</t>
+                            : <span t-field="vendor_product.start_date" /></span>
+                        <span t-if="vendor_product.registration_no"><t t-translation="True">Registration
+                            Number</t>: <span t-field="vendor_product.registration_no" /></span>
+                        <span t-if="vendor_product.tax_id"><t t-translation="True">VAT</t>: <span
+                                t-field="vendor_product.tax_id" /></span>
+                    </div>
+                </div>
+
+            </section>
+            <div>
+                <t t-call="base_accounting_kit.top_filter" />
+                <span class="search-result-numbering" t-if="keyword">
+                    <t t-esc="product_count" /> <t t-translation="true">item(s) found for</t> "<span>
+                        <t t-esc="keyword" />
+                    </span>" </span>
+                <t t-if="not all_attr_products">
+                    <div class="no-products">
+                        <span>
+                            <t t-translation="true">We're sorry. We cannot find any matches for your
+                                search term.</t>
+                        </span>
+
+                        <span>
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </span>
+
+                    </div>
+                </t>
+
+                <div t-attf-class="products js_products  #{'grid' if layout_mode=='list' else ''}">
+                    <t t-if="all_attr_products">
+
+                        <t t-foreach="all_attr_products" t-as="custom_products">
+                            <t t-call="base_accounting_kit.custom_product_template" />
+                        </t>
+                    </t>
+
+                </div>
+                <t t-call="base_accounting_kit.pagination_links" />
+            </div>
+        </div>
+    </template>
+
+
+    <template id="top_filter" name="top_filter">
+    <t t-set="search_url" t-value="'/products'"/>
+        <t t-if="vendor_product">
+            <t t-set="search_url" t-attf-value="/products?vendor=#{vendor_product}"/>
+        </t>
+        <div class="top-bar">
+            <div class="searchbar js_searchbar">
+                <form method="GET" t-attf-action="#{search_url}" id="product_search_form">
+                    <input type="search" class="form-control search-bar" placeholder="Search..."
+                        t-attf-value="#{keyword if keyword else ''}"
+                        name="q" />
+                    <input t-if="vendor_product" type="hidden"
+                        t-attf-value="#{slug(vendor_product)}"
+                        name="vendor" id="vendor_search" t-attf-data-vendor-id="#{vendor_product.id}" t-attf-data-company-slug="#{slug(vendor_product)}" />
+                    
+                    <button class="btn search-btn">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </button>
+                </form>
+
+                <div class="search-recommendations-container d-none">
+                    <ul class="searchbar_results">
+                        <li class="text-center">
+                            <i class="fa fa-spinner fa-spin"></i>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="sort-by d-gt">
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle" type="button"
+                        id="sort_by" data-bs-toggle="dropdown" aria-expanded="false">
+                        <t t-translation="true">
+
+                            <span>
+                                <t t-esc="sort_by" />
+                            </span>
+                        </t>
+                        <input type="hidden" id="sort_by_value" />
+                    </button>
+
+
+                    <ul class="dropdown-menu" aria-labelledby="sort_by">
+                        <li>
+                            <a class="dropdown-item sort-by-item"
+                                t-attf-data-sort-value="best"
+                                t-attf-data-attr-value="sort_by"
+                            >
+                                <t t-translation="true">Best Match</t>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item sort-by-item"
+                                t-attf-data-sort-value="asc"
+                                t-attf-data-attr-value="sort_by"
+                            >
+                                <t t-translation="true">Price low to high</t>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item sort-by-item"
+                                t-attf-data-sort-value="dsc"
+                                t-attf-data-attr-value="sort_by"
+                            >
+                                <t t-translation="true">Price high to low</t>
+                            </a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+            <div class="sort-by d-gt">
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle" type="button"
+                        id="filter_by" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-filter" aria-hidden="true"></i>
+                        <input type="hidden" id="filter_by_value" />
+                    </button>
+
+
+                    <ul class="dropdown-menu" aria-labelledby="filter_by">
+                        <li>
+                            <a class="dropdown-item filter-by-item"
+                                t-attf-data-sort-value="my_area"
+                                t-attf-data-attr-value="filter"
+                            >
+                                <t t-translation="true">My area</t>
+                            </a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button
+                    t-attf-class="btn layout_changer  #{'focused' if layout_mode=='grid' else ''}"
+                    id="layout_grid" t-attf-data-layout-mode="grid">
+                    <i class="fa fa-th-large" aria-hidden="true" t-attf-data-layout-mode="grid"></i>
+                </button>
+
+                <button
+                    t-attf-class="btn layout_changer  #{'focused' if layout_mode=='list' else ''}"
+                    id="layout_grid_columns" t-attf-data-layout-mode="list">
+                    <i class="fa fa-bars" aria-hidden="true" t-attf-data-layout-mode="list"></i>
+                </button>
+            </div>
+
+            <div class="controls">
+                <button class="btn" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasWithBackdrop" aria-controls="offcanvasWithBackdrop">
+                    <i class="fa fa-sliders" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    </template>
+
+
+    <template id="pagination_links" name="pagination_links">
+        <nav aria-label="Page navigation"
+            t-attf-class="pagination #{'' if all_attr_products else 'd-none'}">
+            <ul class="pagination justify-content-center">
+
+                <li t-attf-class="page-item #{'disabled' if page &lt;= 1 else ''}">
+                    <a class="page-link" t-attf-href="/products?page=#{page-1}" tabindex="-1"
+                        aria-disabled="true">
+                        <t t-translation="true">Previous</t>
+                    </a>
+                </li>
+
+                <t t-if="page > 5">
+                    <li class="page-item">
+                        <a class="page-link" t-attf-href="/products?page=1">1</a>
+                    </li>
+                    <li class="page-item disabled">
+                        <span class="page-link">...</span>
+                    </li>
+                </t>
+
+                <t t-foreach="range(max(1, page - 3), min(total_pages, page + 3) + 1)" t-as="p">
+                    <li t-attf-class="page-item #{'active' if p == page else ''}">
+                        <a class="page-link" t-attf-href="#{page_navigation_link}#{p}">
+                            <t t-esc="p" />
+                        </a>
+                    </li>
+                </t>
+
+                <t t-if="page &lt; total_pages - 3">
+                    <li class="page-item disabled">
+                        <span class="page-link">...</span>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" t-attf-href="#{page_navigation_link}#{total_pages}">
+                            <t t-esc="total_pages" />
+                        </a>
+                    </li>
+                </t>
+
+                <li t-attf-class="page-item #{'disabled' if page == total_pages else ''}">
+                    <a class="page-link" t-attf-href="/products?page=#{page+1}">
+                        <t t-translation="true">Next</t>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </template>
+
+
+    <template id="custom_product_template" name="base_accounting_kit.product_template">
+        <div t-attf-class="product">
+            <a
+                class="product_link"
+                t-attf-data-product-id="#{custom_products['custom_product'].id}"
+                t-attf-href="/products/#{slug(custom_products['custom_product'].product_id)}/#{slug(custom_products['custom_product'].company_id)}">
+                <div class="img-holder pointer-none position-relative">
+                    <img t-if="custom_products['custom_product'].product_featured_image"
+                        t-attf-src="/web/image?model=product.custom.price&amp;id=#{custom_products['custom_product'].id}&amp;field=product_featured_image"
+                        t-att-alt="custom_products['custom_product'].product_id.name" />
+                    <img t-else=""
+                        t-attf-src="/web/image/product.product/31/image_1024/%5BFURN_6666%5D%20Acoustic%20Bloc%20Screens?unique=97d6b0f"
+                        t-att-alt="custom_products['custom_product'].product_id.name" />
+
+                    <span class="position-absolute products_page_add_to_wishlist">
+                        <i class="fa-regular fa-heart  add-to-wishlist" aria-label="add to wishlist" t-attf-data-product-id="#{custom_products['custom_product'].id}" title="Add to wishlist"/>
+                        <i class="fa-solid fa-heart d-none added add-to-wishlist"/>
+                    </span>
+                </div>
+                <div class="product-description">
+                    <div class="product-title"
+                        t-att-data-product-name="custom_products['custom_product'].product_id.name">
+                        <t t-if="layout_mode=='list'">
+                            <t
+                                t-esc="custom_products['custom_product'].product_id.name[:100]+('...' if len(custom_products['custom_product'].product_id.name) > 100 else '')" />
+
+                        </t>
+                        <t t-else="">
+                            <t
+                                t-esc="custom_products['custom_product'].product_id.name[:50]+('...' if len(custom_products['custom_product'].product_id.name) > 50 else '')" />
+                        </t>
+                    </div>
+                    <t t-if="layout_mode=='list'">
+                        <div class="product-details">
+                            <div class="product-location">
+                                <t t-esc="custom_products['custom_product'].company_id.street" />
+                            </div>
+                        </div>
+                    </t>
+
+
+                    <div class="product-price">
+                        <t t-translation="true">Rs.</t>
+                        <t t-esc="custom_products['custom_product'].price_sell" />
+                        <t t-if="custom_products['custom_product'].discount>0">
+                            <div class="discount-section">
+                                <span class='before-price'>
+                                    <span class="discount-inner-text">
+                                        <t t-translation='true'>Rs.</t>
+                                        <t
+                                            t-esc="round((custom_products['custom_product'].price_sell * custom_products['custom_product'].discount)/100 + custom_products['custom_product'].price_sell)" />
+                                    </span>
+                                </span>
+                                -<span class='discount-percentage'>
+                                    <span t-esc="custom_products['custom_product'].discount" /> 0</span>
+                                % 
+                            </div>
+                        </t>
+                    </div>
+
+                    <div class="p_ratings">
+                        <t
+                            t-call="portal_rating.rating_widget_stars_static">
+                            <t t-set="rating_avg"
+                                t-value="custom_products['custom_product'].rating_avg" />
+                            <t t-set="trans_text_plural">%s reviews</t>
+                            <t t-set="trans_text_singular">%s review</t>
+                            <t t-set="rating_only" t-value="True" />
+                            <t t-set="rating_numbers"
+                                t-value="custom_products['custom_product'].rating_count" />
+                            <t t-set="rating_count"
+                                t-value="(trans_text_plural if custom_products['custom_product'].rating_count > 1 else trans_text_singular) % custom_products['custom_product'].rating_count" />
+                        </t>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <t t-call="base_accounting_kit.auth_modal"/>
+
+
+    </template>
+
+</odoo>

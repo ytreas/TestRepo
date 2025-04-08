@@ -1,0 +1,61 @@
+<odoo>
+    <!-- View for Movement Details Wizard -->
+    <record id="view_movement_details_wizard" model="ir.ui.view">
+        <field name="name">movement.details.wizard.form</field>
+        <field name="model">movement.details.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Movement Details">
+                <group>
+                    <field name="date_from" options="{'corresponding_field': 'date_from_bs'}"/>
+                    <field name="date_to" options="{'corresponding_field': 'date_to_bs'}"/>
+                    <field name="vehicle_number"/>
+                    <!-- <field name="date_to"/> -->
+                </group>
+                <footer>
+                    <button string="Confirm" type="object" name="action_confirm" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- View for fuel consumption wizard -->
+    <record id="view_fuel_details_wizard_form" model="ir.ui.view">
+        <field name="name">fuel.details.wizard.form</field>
+        <field name="model">fuel.details.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Fuel Consumption Report">
+                <sheet> 
+                    <!-- Filter Selection -->
+                    <group>
+                        <field name="filter_by"/>
+                    </group>
+                    <group>
+                        <field name="filter_by" invisible="1"/>
+                        <!-- Date Filter Group -->
+                        <group string="Date Filter" invisible="filter_by != 'date'">
+                            <field name="date_from" placeholder="Select date"
+                                options="{'corresponding_field': 'date_from_bs'}"/>
+                            <field name="date_to" placeholder="Select date"
+                                options="{'corresponding_field': 'date_to_bs'}"/>
+                        </group>
+                        <!-- Vehicle Filter Group -->
+                        <group string="Vehicle Filter" invisible="filter_by != 'vehicle'">
+                            <field name="vehicle_id" placeholder="Select vehicle"/>
+                        </group>
+                        <!-- Location Filter Group (Province, then District, then Municipality) -->
+                        <group string="Location Filter" invisible="filter_by != 'location'">
+                            <field name="fuel_station_province" placeholder="Select province"/>
+                            <field name="fuel_station_district" placeholder="Select district"/>
+                            <field name="fuel_station_municipality" placeholder="Select municipality"/>
+                        </group> 
+                    </group>
+                    <footer>
+                        <button string="Confirm" type="object" name="action_confirm" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

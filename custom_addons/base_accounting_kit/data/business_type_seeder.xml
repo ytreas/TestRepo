@@ -1,0 +1,148 @@
+<odoo>
+    <data>
+    <record id='business_type_1' model='company.category'>
+        <field name='code'>100100000</field>
+        <field name='name'>Groceries</field>
+        <field name='name_np'>किराना तथा खाद्यान्न</field>
+    </record>
+
+    <record id='business_type_2' model='company.category'>
+        <field name='code'>100200000</field>
+        <field name='name'>Beverage Service</field>
+        <field name='name_np'>पेय पदार्थ</field>
+    </record>
+
+    <record id='business_type_3' model='company.category'>
+        <field name='code'>100300000</field>
+        <field name='name'>Hotel, Restaurant &amp; Catering Service</field>
+        <field name='name_np'>होटेल, रेस्टुरेन्ट र केटरिङ सेवा</field>
+    </record>
+
+    <record id='business_type_4' model='company.category'>
+        <field name='code'>100400000</field>
+        <field name='name'>Electrical Supplies Service</field>
+        <field name='name_np'>विद्युतीय सामाग्री सेवा</field>
+    </record>
+
+    <record id='business_type_5' model='company.category'>
+        <field name='code'>100500000</field>
+        <field name='name'>Hardware Service</field>
+        <field name='name_np'>हार्डवेयर सेवा</field>
+    </record>
+
+    <record id='business_type_6' model='company.category'>
+        <field name='code'>100600000</field>
+        <field name='name'>Fresh Vegetables and Fruits Supplies Service</field>
+        <field name='name_np'>तरकारी तथा फलफुल</field>
+    </record>
+
+    <record id='business_type_7' model='company.category'>
+        <field name='code'>100700000</field>
+        <field name='name'>Personal Care Supplies</field>
+        <field name='name_np'>व्यक्तिगत सामग्रीहरू</field>
+    </record>
+
+    <record id='business_type_8' model='company.category'>
+        <field name='code'>100800000</field>
+        <field name='name'>Dairy Supplies</field>
+        <field name='name_np'>डेरी सप्लाइज</field>
+    </record>
+
+    <record id='business_type_9' model='company.category'>
+        <field name='code'>100900000</field>
+        <field name='name'>Meat and Seafood Supplies</field>
+        <field name='name_np'>मासु र समुद्री खाद्य सप्लाइज</field>
+    </record>
+
+    <record id='business_type_10' model='company.category'>
+        <field name='code'>101000000</field>
+        <field name='name'>Bakery Supplies</field>
+        <field name='name_np'>बेकरी सप्लाइज</field>
+    </record>
+
+    <record id='business_type_11' model='company.category'>
+        <field name='code'>101100000</field>
+        <field name='name'>Stationery Service</field>
+        <field name='name_np'>स्टेशनरी सेवा</field>
+    </record>
+
+    <record id='business_type_12' model='company.category'>
+        <field name='code'>101200000</field>
+        <field name='name'>Pet Animals Supplies</field>
+        <field name='name_np'>घर पालुवा जनावरको खाद्यन्न</field>
+    </record>
+
+    <record id='business_type_13' model='company.category'>
+        <field name='code'>101300000</field>
+        <field name='name'>Medical and Sanitation Supplies</field>
+        <field name='name_np'>औषधी तथा सरसफाई सामग्रीहरू</field>
+    </record>
+
+    <record id='business_type_14' model='company.category'>
+        <field name='code'>101400000</field>
+        <field name='name'>Furniture Service</field>
+        <field name='name_np'>फर्नीचर सेवा</field>
+    </record>
+
+    <record id='business_type_15' model='company.category'>
+        <field name='code'>101500000</field>
+        <field name='name'>Garments &amp; Clothes Sales</field>
+        <field name='name_np'>गार्मेण्ट तथा कपडा पसल</field>
+    </record>
+
+    <record id='business_type_16' model='company.category'>
+        <field name='code'>101600000</field>
+        <field name='name'>Arts &amp; Handicrafts</field>
+        <field name='name_np'>कला र हस्तशिप</field>
+    </record>
+
+    <record id='business_type_17' model='company.category'>
+        <field name='code'>10000</field>
+        <field name='name'>Academic Institutions</field>
+        <field name='name_np'>शैक्षिक संस्थाहरु</field>
+    </record>
+
+    <record id='business_type_18' model='company.category'>
+        <field name='code'>101700000</field>
+        <field name='name'>Parking Services- Two Wheeler</field>
+        <field name='name_np'>पार्किङ सेवा- दुई पाङ्ग्रे सवारी</field>
+    </record>
+
+    <record id='business_type_19' model='company.category'>
+        <field name='code'>101800000</field>
+        <field name='name'>Parking Services- Four Wheeler</field>
+        <field name='name_np'>पार्किङ सेवा- चार पाङ्ग्रे (हल्का सवारी)</field>
+    </record>
+
+    <record id='business_type_20' model='company.category'>
+        <field name='code'>101900000</field>
+        <field name='name'>Parking Services- Heavy Vehicles</field>
+        <field name='name_np'>पार्किङ सेवा- भारी सवारी</field>
+    </record>
+
+    <record id='business_type_21' model='company.category'>
+        <field name='code'>102000000</field>
+        <field name='name'>Ride Sharing</field>
+        <field name='name_np'>राईड सेयरिङ्ग</field>
+    </record>
+
+    <record id='business_type_22' model='company.category'>
+        <field name='code'>102100000</field>
+        <field name='name'>Delivery- Two Wheeler Vehicle</field>
+        <field name='name_np'>ढुवानी- दुई पाङ्ग्रे सवारी</field>
+    </record>
+
+    <record id='business_type_23' model='company.category'>
+        <field name='code'>102200000</field>
+        <field name='name'>Delivery- Four Wheeler Vehicle</field>
+        <field name='name_np'>ढुवानी- चार पाङ्ग्रे सवारी</field>
+    </record>
+
+    <record id='business_type_24' model='company.category'>
+        <field name='code'>1000000001</field>
+        <field name='name'>All</field>
+        <field name='name_np'>सबै</field>
+    </record>
+
+    </data>
+</odoo>

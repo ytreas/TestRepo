@@ -1,0 +1,23 @@
+<odoo>
+    <data noupdate="1">
+        <record id="document_type_bluebook" model="document.type">
+            <field name="name">Bluebook</field>
+            <field name="code">BLUEBOOK</field>
+        </record>
+
+        <record id="document_type_permit" model="document.type">
+            <field name="name">Permit Document</field>
+            <field name="code">PERMIT</field>
+        </record>
+
+        <record id="document_type_pollution_control" model="document.type">
+            <field name="name">Pollution Control</field>
+            <field name="code">POLLUTION</field>
+        </record>
+
+        <record id="document_type_insurance" model="document.type">
+            <field name="name">Insurance Document</field>
+            <field name="code">INSURANCE</field>
+        </record>
+    </data>
+</odoo>

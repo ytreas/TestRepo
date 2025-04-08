@@ -1,0 +1,51 @@
+<odoo>
+    <record id="view_notification_tree" model="ir.ui.view">
+        <field name="name">notification.tree</field>
+        <field name="model">notification.notification</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="message"/>
+                <field name="model"/>
+                <field name="record_id"/>
+                <field name="user_id"/>
+                <field name="state"/>
+                <field name="create_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_notification_form" model="ir.ui.view">
+        <field name="name">notification.form</field>
+        <field name="model">notification.notification</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="message"/>
+                        <field name="model"/>
+                        <field name="record_id"/>
+                        <field name="user_id"/>
+                        <field name="state"/>
+                    </group>
+                    <footer>
+                        <button name="mark_as_read" type="object" string="Mark as Read" class="oe_highlight"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_notification" model="ir.actions.act_window">
+        <field name="name">Notifications</field>
+        <field name="res_model">notification.notification</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('user_id', '=', uid)]</field>
+    </record>
+
+    <menuitem id="menu_notification_root" name="Notifications" sequence="10"/>
+
+    <menuitem id="menu_notification"
+              name="Notifications"
+              parent="menu_notification_root"
+              action="action_notification"/>
+</odoo>

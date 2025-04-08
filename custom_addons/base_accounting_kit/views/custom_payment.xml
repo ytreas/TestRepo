@@ -1,0 +1,204 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+    <!-- LekhaPlus Payment Gateways -->
+    <record id="lekhaplus_payment_action"
+        model="ir.actions.act_window">
+        <field name="name">LekhaPlus Payment</field>
+        <field name="res_model">custom.payment.gateways</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="lekhaplus_payment_gateways_view_tree_"
+        model="ir.ui.view">
+        <field name="name">LekhaPlus Payment</field>
+        <field name="model">custom.payment.gateways</field>
+        <field name="arch"
+            type="xml">
+            <tree string="">
+                <field name="payment_method_name" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="lekhaplus_payment_gateways_view_form"
+        model="ir.ui.view">
+        <field name="name">LekhaPlus Payment</field>
+        <field name="model">custom.payment.gateways</field>
+        <field name="arch"
+            type="xml">
+            <form>
+                <sheet>
+                    <group name="payment"
+                        string="Payment  Method">
+                        <group>
+                            <field name="payment_method_name" />
+                            <field name="code" />
+                        </group>
+                        <group>
+                            <field name="merchant_api" invisible="payment_method_name == 'cash'" />
+                            <field name="merchant_api_key" invisible="payment_method_name == 'cash'" />
+                        </group>
+
+                        <group>
+                            <field name="bank" invisible="payment_method_name != 'bank'" />
+                            <field name="bank_account" invisible="payment_method_name != 'bank'" />
+                            <field name="bank_account_holder_name"
+                                invisible="payment_method_name != 'bank'" />
+                            <field name="other_details" />
+
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- LekhaPlus Payment Gateways -->
+
+    <!-- Lekhaplus Bank Setup -->
+    <record id="lekhaplus_bank_action"
+        model="ir.actions.act_window">
+        <field name="name">LekhaPlus Bank Setup</field>
+        <field name="res_model">lekhaplus.bank</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="lekhaplus_bank_view_tree_"
+        model="ir.ui.view">
+        <field name="name">Bank Setup</field>
+        <field name="model">lekhaplus.bank</field>
+        <field name="arch"
+            type="xml">
+            <tree string="">
+                <field name="name" />
+                <field name="code" />
+                <field name="location" />
+            </tree>
+        </field>
+    </record>
+    <!-- Lekhaplus Bank Setup -->
+
+    <!-- Lekha payment master -->
+    <record id="_lekhaplus_payment_master_action" model="ir.actions.act_window">
+        <field name="name">Action Name</field>
+        <field name="res_model">lekhaplus.payment.master</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('payment_success_from_provider', '=', True),('payment_status', '=',
+            False)]</field>
+    </record>
+
+    <record id="lekhaplus_failure_transaction_view_tree_"
+        model="ir.ui.view">
+        <field name="name">System Failed Payments</field>
+        <field name="model">lekhaplus.payment.master</field>
+        <field name="arch"
+            type="xml">
+            <tree string="" editable="top" create="false">
+                <field name="client_id" readonly="True" />
+                <field name="amount"  readonly="True"/>
+                <field name="transaction_id"  readonly="True"/>
+                <field name="payment_method"  readonly="True"/>
+                <field name="remarks" />
+                <field name="payment_success_from_provider" widget="boolean_toggle"  readonly="True"/>
+                <field name="payment_status" widget="boolean_toggle" />
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="lekhaplus_payment_master_view_form"
+        model="ir.ui.view">
+        <field name="name">lekhaplus_payment_master_view_form</field>
+        <field name="model">lekhaplus.payment.master</field>
+        <field name="arch"
+            type="xml">
+            <form> 
+                <sheet>
+                    <group name="payment">
+                        <group>
+                            <field name="payment_method" required="True" />
+                            <field name="tax_amount" required="True" />
+                            <field name="amount" string="Total amount" required="True" />
+                            <field name="show_voucher" invisible='1' />
+                            <field name="voucher" invisible="not show_voucher" widget="image" class="oe_avatar" options="{'preview_image': 'image', 'size': [90, 90]}"/>
+                            <field name="remarks" />
+                            
+                            <field name="account_move_id" invisible="True" />
+                            <field name="client_id" invisible="True" />
+                            <field name="transaction_id" invisible="True" />
+
+                        </group>
+                    </group>
+                </sheet>
+
+                <footer>
+                    <button string="Proceed for Payment" type="object" name="proceed_for_payment"
+                        class="btn btn-primary" />
+                    <button string="Cancel" class="btn btn-secondary" special="cancel" />
+                </footer>
+
+            </form>
+        </field>
+    </record>
+
+    <!-- <record id="lekhaplus_payment_bank_payment_master_view_form"
+        model="ir.ui.view">
+        <field name="name">lekhaplus_payment_master_bank_view_form</field>
+        <field name="model">lekhaplus.payment.master</field>
+        <field name="arch"
+            type="xml">
+            <form>
+                <sheet>
+                    <group name="payment">
+                        <group>
+                            <field name="payment_method" required="True"
+    domain="[('payment_method_name','!=','esewa'),('payment_method_name','!=','khalti'),('payment_method_name','!=','imepay')]"/>
+                            <field name="tax_amount" required="True"/>
+                            <field name="amount" string="Total amount" required="True"/>
+                            <field name="remarks" />
+                            <field name="account_move_id" invisible="True"/>
+                            <field name="client_id" invisible="True"/>
+                            <field name="transaction_id" invisible="True"/>
+
+                        </group>
+                    </group>
+                </sheet>
+
+                <footer>
+                    <button string="Proceed for Payment Bank" type="object" name="proceed_for_payment" class="btn
+    btn-primary"/>
+                    <button string="Cancel" class="btn btn-secondary" special="cancel"/>
+                </footer>
+                
+            </form>
+        </field>
+    </record> -->
+
+    <!-- Lekha payment master -->
+
+
+    <!--Lekhaplus
+    menuitems -->
+    <menuitem id="custom_payment_gateways_menu"
+        name="Payment Gateways Setup"
+        action="lekhaplus_payment_action"
+        parent="master_menu"
+        sequence="3"
+    />
+<!-- 
+    <menuitem id="lekhaplus_bank_master_menu"
+        name="Bank Master Setup"
+        action="lekhaplus_bank_action"
+        parent="master_menu"
+        sequence="4"
+    /> -->
+
+    <menuitem id="system_failed_payments"
+        name="System Failed Payments"
+        action="_lekhaplus_payment_master_action"
+        parent="master_menu"
+        sequence="5"
+    />
+
+
+</odoo>

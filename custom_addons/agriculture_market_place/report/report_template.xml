@@ -1,0 +1,333 @@
+<odoo>
+    <!-- QWeb report -->
+    <report
+        id="report_daily_arrival_template"
+        model="amp.daily.arrival.entry"
+        string="Daily Arrival Report"
+        report_type="qweb-pdf"
+        name="agriculture_market_place.daily_arrival_template"
+        file="agriculture_market_place.daily_arrival_template"
+    />
+
+    <!-- QWeb template -->
+    <template id="daily_arrival_template">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page">
+                    <div style="font-size: 12px; line-height: 1.6; background-color: #f9f9f9; padding: 20px;">
+                        <t t-set="current_company" t-value="env.user.company_id"/>
+                        <t t-if="current_company.parent_id">
+                            <t t-set="display_company" t-value="current_company.parent_id"/>
+                        </t>
+                        <t t-else="">
+                            <t t-set="display_company" t-value="current_company"/>
+                        </t>
+
+                        <img style="float: right; height: 90px; width: 90px;" src="agriculture_market_place/static/src/img/kalimati logo.png" alt="Kalimati Logo"/>
+                        <img style="float: left; height: 80px; width: 90px;" src="agriculture_market_place/static/src/img/logo.png" alt="Company Logo"/>
+
+                        <!-- Centered content -->
+                        <div style="overflow: hidden; text-align: center; margin: 30px 0;">
+                            <strong><span style="font-weight: 900; font-size: 20px; color: #333;">नेपाल सरकार</span></strong><br/>
+                            <strong><span style="font-weight: 900; font-size: 20px; color: #333;">कृषि तथा पशुपन्छी विकास मन्त्रालय</span></strong><br/>
+                            <strong><span style="font-weight: 900; font-size: 28px; color: #008000;">
+                                कालीमाटी फलफूल तथा तरकारी बजार विकास समिति
+                            </span></strong><br/><br/>
+                        </div>
+
+                        <!-- <div style="text-align: center; margin: 20px 0; font-size: 16px;">
+                            <strong>Arrival Date: <t t-esc="context.get('arrival_date', 'N/A')"/></strong>
+                        </div> -->
+                    </div>
+
+                    <style>
+                        @font-face {
+                            font-family: 'kalimatiregular';
+                            src: url('agriculture_market_place/static/src/font/kalimati regular/Kalimati Regular.otf');
+                        }
+
+                        body {
+                            font-family: 'kalimatiregular', sans-serif;
+                        }
+
+                        #dataTable {
+                            border-collapse: collapse;
+                            width: 100%;
+                            margin: 20px 0;
+                            background-color: #fff;
+                            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        }
+
+                        #dataTable th, #dataTable td {
+                            border: 1px solid #ddd;
+                            padding: 10px;
+                            text-align: center;
+                        }
+
+                        #dataTable th {
+                            background-color: #008000;
+                            color: white;
+                            font-weight: bold;
+                        }
+
+                        #dataTable tr:hover {
+                            background-color: #f1f1f1;
+                        }
+
+                        #dataTable .active {
+                            background-color: #28a745;
+                            color: white;
+                        }
+
+                        #box-1 {
+                            width: 900px;
+                            border: 1px solid black;
+                            padding: 10px;
+                            margin: 20px 0;
+                        }
+                    </style>
+  
+                    <t t-if="context.get('time_from') and context.get('time_to')">
+                        समय: <t t-esc="context.get('time_from')"/> - <t t-esc="context.get('time_to')"/>
+                    </t>
+
+                     <t t-if="context.get('date_from')">
+                        सुरु मिति: <t t-esc="context.get('date_from')"/>
+                        अन्त्य मिति: <t t-esc="context.get('date_to')"/>
+                    </t>
+                    <!-- <t t-if="context.get('report_type')">
+                        Report Type: <t t-esc="context.get('report_type').upper()"/>
+                    </t> -->
+                    <t t-if="context.get('date_for_time')">
+                        मिति: <t t-esc="context.get('date_for_time')"/>
+                    </t>
+                    <t t-if="context.get('report_type')">
+                        प्रतिवेदनको प्रकार: 
+                        <t t-esc="
+                            {
+                                'daily': 'आज',
+                                'weekly': 'यो हप्ता',
+                                'monthly': 'यो महिना',
+                                'custom': 'अनुकूल'
+                            }.get(context.get('report_type'), 'अज्ञात')
+                        "/>
+                    </t>
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <!-- <th>आगमन मिति</th> -->
+                                <th>कृषि उपज</th>
+                                <th>आगमन</th>
+                                <th>ईकाइ</th>
+                                <!-- <th>Vehicle Number</th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                         <t t-foreach="context['aggregated_data']" t-as="record"> 
+                                <tr>
+                                    <!-- <td><t t-esc="record['arrival_date']"/></td>  -->
+                                    <td><t t-esc="record['name']"/></td>
+                                    <td><t t-esc="record['volume']"/></td>
+                                    <td><t t-esc="record['unit']"/></td>
+                                    <!-- <td><t t-esc="record['final_number']"/></td> -->
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <!-- Action for the report -->
+    <record id="action_amp_daily_arrival_entry" model="ir.actions.report">
+        <field name="name">Daily Arrival Report</field>
+        <field name="model">amp.daily.arrival.entry</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">agriculture_market_place.daily_arrival_template</field>
+        <field name="binding_model_id" ref="agriculture_market_place.model_amp_daily_arrival_entry"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <report id="report_daily_arrival_comparable_template"
+            model="amp.daily.arrival.entry"
+            string="Daily Arrival Report"
+            report_type="qweb-pdf"
+            name="agriculture_market_place.daily_arrival_comparable_template"
+            file="agriculture_market_place.daily_arrival_comparable_template"
+    />
+
+    <!-- QWeb template -->
+    <template id="daily_arrival_comparable_template">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <div class="page">
+                    <div style="font-size: 12px; line-height: 1.6; background-color: #f9f9f9; padding: 20px;">
+                        <t t-set="current_company" t-value="env.user.company_id"/>
+                        <t t-if="current_company.parent_id">
+                            <t t-set="display_company" t-value="current_company.parent_id"/>
+                        </t>
+                        <t t-else="">
+                            <t t-set="display_company" t-value="current_company"/>
+                        </t>
+
+                        <img style="float: right; height: 90px; width: 90px;" src="agriculture_market_place/static/src/img/kalimati logo.png" alt="Kalimati Logo"/>
+                        <img style="float: left; height: 80px; width: 90px;" src="agriculture_market_place/static/src/img/logo.png" alt="Company Logo"/>
+
+                        <!-- Centered content -->
+                        <div style="overflow: hidden; text-align: center; margin: 30px 0;">
+                            <strong><span style="font-weight: 900; font-size: 20px; color: #333;">नेपाल सरकार</span></strong><br/>
+                            <strong><span style="font-weight: 900; font-size: 20px; color: #333;">कृषि तथा पशुपन्छी विकास मन्त्रालय</span></strong><br/>
+                            <strong><span style="font-weight: 900; font-size: 28px; color: #008000;">
+                                कालीमाटी फलफूल तथा तरकारी बजार विकास समिति
+                            </span></strong><br/><br/>
+                        </div>
+                    </div>
+
+                    <style>
+                        @font-face {
+                            font-family: 'kalimatiregular';
+                            src: url('agriculture_market_place/static/src/font/kalimati regular/Kalimati Regular.otf');
+                        }
+
+                        body {
+                            font-family: 'kalimatiregular', sans-serif;
+                        }
+
+                        #dataTable {
+                            border-collapse: collapse;
+                            width: 100%;
+                            margin: 20px 0;
+                            background-color: #fff;
+                            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        }
+
+                        #dataTable th, #dataTable td {
+                            border: 1px solid #ddd;
+                            padding: 10px;
+                            text-align: center;
+                        }
+
+                        #dataTable th {
+                            background-color: #008000;
+                            color: white;
+                            font-weight: bold;
+                        }
+
+                        #dataTable tr:hover {
+                            background-color: #f1f1f1;
+                        }
+
+                        #dataTable .active {
+                            background-color: #28a745;
+                            color: white;
+                        }
+
+                        #box-1 {
+                            width: 900px;
+                            border: 1px solid black;
+                            padding: 10px;
+                            margin: 20px 0;
+                        }
+                    </style>
+
+                    <!-- Table structure -->
+                    <t t-if="context.get('date_from')">
+                        सुरु मिति: <t t-esc="context.get('date_from')"/>
+                        अन्त्य मिति: <t t-esc="context.get('date_to')"/>
+                    </t>
+
+                    <t t-if="context.get('report_type')">
+                        प्रतिवेदनको प्रकार: 
+                        <t t-esc="
+                            {
+                                'daily': 'आज ,',
+                                'weekly': 'यो हप्ता ,',
+                                'monthly': 'यो महिना ,',
+                                'custom': 'अनुकूल ,'
+                            }.get(context.get('report_type'), 'अज्ञात ,')
+                        "/>
+                    </t>
+                     <t t-if="context.get('commodity')">
+                        कृषि उपज: <t t-esc="context.get('commodity')"/>
+                    </t>
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th rowspan="2">कृषि उपज</th>
+                                <th colspan="2">आगमन <br/> (<t t-esc="context['date_from']"/>)</th>
+                                <th colspan="2">आगमन <br/> (<t t-esc="context['date_to']"/>)</th>
+                                <th rowspan="2">फरक %</th>
+                            </tr>
+                            <tr>
+                                <th>आगमन</th>
+                                <th>ईकाइ</th>
+                                <th>आगमन</th>
+                                <th>ईकाइ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="context['all_aggregated_data']" t-as="record">
+                            <tr>
+                                <td><t t-esc="record['name']"/></td>
+                                <td><t t-esc="record['from_volume']"/></td>
+                                <td><t t-esc="record['unit']"/></td>
+                                <td><t t-esc="record['to_volume']"/></td>
+                                <td><t t-esc="record['unit']"/></td>
+                                <td><t t-esc="'{:.2f}'.format(record['change_rate'] or 0)"/>%</td>
+                            </tr>
+                        </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <!-- Action for the report -->
+    <record id="action_amp_daily_comparable_arrival_entry" model="ir.actions.report">
+        <field name="name">Daily Arrival Comparable Report</field>
+        <field name="model">amp.daily.arrival.entry</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">agriculture_market_place.daily_arrival_comparable_template</field>
+        <field name="binding_model_id" ref="agriculture_market_place.model_amp_daily_arrival_entry"/>
+        <field name="binding_type">report</field>
+    </record>
+
+
+
+    <template id="report_daily_arrival_entry">
+        <t t-name="agriculture_market_place.report_daily_arrival_entry">
+            <h1>Daily Arrival Entry Report</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Field 1</th>
+                        <th>Field 2</th>
+                        <!-- Add more fields as necessary -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="docs" t-as="o">
+                        <tr>
+                            <td><t t-esc="o.field1"/></td>
+                            <td><t t-esc="o.field2"/></td>
+                            <!-- Add more fields as necessary -->
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </t>
+    </template>
+
+        <report
+            id="report_daily_arrival_entry"
+            model="temp.commodity.arrival"
+            string="Daily Arrival Entry Report"
+            report_type="qweb-pdf"
+            name="agriculture_market_place.report_daily_arrival_entry"
+            file="agriculture_market_place.report_daily_arrival_entry"
+            attachment_use="False"
+        />
+
+</odoo>

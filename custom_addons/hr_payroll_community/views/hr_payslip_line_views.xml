@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--  Payslip Line tree view  -->
+    <record id="hr_payslip_line_view_tree" model="ir.ui.view">
+        <field name="name">hr.payslip.line.view.tree</field>
+        <field name="model">hr.payslip.line</field>
+        <field name="arch" type="xml">
+            <tree string="Salary Structure" editable="bottom"
+                decoration-info="total == 0">
+                <field name="category_id" />
+                <field name="employee_id" invisible="1" />
+                <field name="sequence" />
+                <field name="name" />
+                <field name="code" />
+                <field name="quantity" />
+                <field name="rate" />
+                <field name="amount" />
+                <field name="total" />
+                <field name="amount_select" invisible="1" />
+                <field name="register_id" invisible="1" />
+            </tree>
+        </field>
+    </record>
+    <!--  Payslip Line form view  -->
+    <record id="hr_payslip_line_view_form" model="ir.ui.view">
+        <field name="name">hr.payslip.line.view.form</field>
+        <field name="model">hr.payslip.line</field>
+        <field name="arch" type="xml">
+            <form string="Payslip Line">
+                <group>
+                    <group>
+                        <field name="name" />
+                        <field name="code" />
+                        <field name="slip_id" />
+                        <field name="employee_id" />
+                    </group>
+                    <group string="Calculations">
+                        <field name="category_id" />
+                        <field name="amount_select" />
+                        <field name="amount_fix"
+                            readonly="amount_select,'!=','fix'" />
+                        <field name="amount_percentage"
+                            readonly="amount_select,'!=','percentage'" />
+                        <field name="sequence" />
+                    </group>
+                    <field name="note" />
+                </group>
+            </form>
+        </field>
+    </record>
+    <!--  Payslip Line search option  -->
+    <record id="hr_payslip_line_search" model="ir.ui.view">
+        <field name="name">hr.payslip.line.select</field>
+        <field name="model">hr.payslip.line</field>
+        <field name="arch" type="xml">
+            <search string="Search Payslip Lines">
+                <field name="name" string="Payslip Lines"
+                    filter_domain="['|',('name','ilike',self),('code','ilike',self)]" />
+                <field name="amount_select" />
+                <field name="slip_id" />
+                <field name="category_id" />
+                <group col="8" colspan="4" expand="0" string="Group By">
+                    <filter string="Salary Rule Category" name="category_id"
+                        context="{'group_by':'category_id'}" />
+                    <filter string="Contribution Register" name="register_id"
+                        context="{'group_by':'register_id'}" />
+                    <filter string="Amount Type" name="amount_select"
+                        context="{'group_by':'amount_select'}" />
+                    <filter string="Employees" name="employee_id"
+                        context="{'group_by':'employee_id'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!--    removed src_model="hr.payslip" -->
+    <record id="action_hr_payslip_line" model="ir.actions.act_window">
+        <field name="name">Payslip Computation Details</field>
+        <field name="res_model">hr.payslip.line</field>
+        <field name="context">{'default_slip_id':
+            active_id,'search_default_slip_id': active_id}
+        </field>
+    </record>
+    <record id="hr_payslip_view_form" model="ir.ui.view">
+        <field name="name">hr.payslip.view.form</field>
+        <field name="model">hr.payslip</field>
+        <field name="arch" type="xml">
+            <form string="Payslip">
+                <header>
+                    <button string="Confirm" name="action_payslip_done"
+                        type="object" invisible="state != 'draft'"
+                        class="oe_highlight" />
+                    <button string="Refund" name="action_refund_sheet"
+                        invisible="state not in ('confirm', 'done')"
+                        type='object' />
+                    <button string="Set to Draft" name="action_payslip_draft"
+                        type="object" invisible="state != 'cancel'" />
+                    <button string="Compute Sheet" name="action_compute_sheet"
+                        type="object" invisible="state != 'draft'"
+                        class="oe_highlight" />
+                    <button string="Cancel Payslip" name="action_payslip_cancel"
+                        type="object"
+                        invisible="state in ('draft','hr_check','confirm','verify','cancel')" />
+
+                    <button name="action_preview" string="Preview" type="object"
+                        class="btn-secondary" />
+                    <field name="state" widget="statusbar"
+                        statusbar_visible="draft,confirm" />
+                    <button name="action_test" string="Test" type="object" class="btn-secondary" />
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="%(action_hr_payslip_line)d"
+                            class="oe_stat_button"
+                            icon="fa-money"
+                            type="action">
+                            <field name="payslip_count" widget="statinfo"
+                                string="Payslip"
+                                help="Payslip Computation Details" />
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="employee_id" class="oe_edit_only" />
+                        <h1>
+                            <field name="employee_id" placeholder="Employee"
+                                readonly="state != 'draft'" />
+                        </h1>
+                    </div>
+                    <div class="oe_title">
+                        <label for="batches_id" class="oe_edit_only" />
+                        <h1>
+                            <field name="batches_id" placeholder="Batch Id" />
+                        </h1>
+                    </div>
+                    <group col="4">
+                        <label for="date_from" string="Period" />
+                        <div>
+                            <field name="date_from"
+                                options="{'corresponding_field': 'date_from_bs'}" class="oe_inline"
+                                readonly="state != 'draft'" /> - <field name="date_to"
+                                options="{'corresponding_field': 'date_to_bs'}" class="oe_inline"
+                                readonly="state != 'draft'" />
+                        </div>
+                        <field name="contract_id"
+                            domain="[('employee_id','=',employee_id),('date_start','&lt;=',date_to),'|',('date_end','&gt;=',date_from),('date_end','=',False)]"
+                            context="{'default_employee_id': employee_id}"
+                            readonly="state != 'draft'" />
+                        <field name="number" readonly="state != 'draft'" />
+                        <field name="struct_id" readonly="state != 'draft'" />
+                        <field name="name" readonly="state != 'draft'" />
+                        <field name="letter_num" />
+                        <field name="credit_note" readonly="state != 'draft'" />
+                        <field name="overtime_hr" readonly="state != 'draft'" />
+                        <field name="annual_salary" />
+                        <field name="use_yearly_service" />
+                        <!-- <field name="income_tax"/>
+                        <field name="ss_tax"/> -->
+                    </group>
+                    <group>
+                        <group string="Salary Details">
+                            <field name="starting_salary" />
+                            <field name="grade_quantity" />
+                            <field name="grade_amount" />
+                            <field name="salary_grade" />
+                            <field name="total" />
+                            <!-- <field name="citizen_investment_fund" /> -->
+                        </group>
+                        <group string="Allowances">
+                            <group>
+                                <field name="allowance" />
+                                <field name="special_allowance" />
+                                <field name="dearness_allowance" />
+                                <field name="lunch_allowance" />
+                                <field name="dress_allowance" />
+                                <field name="local_allowance" />
+                                <field name="qa_allowance" />
+                            </group>
+                            <group>
+                                <field name="medical_allowance" />
+                                <field name="technical_allowance" />
+                                <field name="transport_allowance" />
+                                <field name="food_allowance" />
+                                <field name="incentive_allowance" />
+                                <field name="other_allowance" />
+                                <field name="total_allowance" />
+                            </group>
+                        </group>
+                        <group string="Additions">
+                            <field name="pf_add" />
+                            <field name="insurance_add" />
+                            <field name="submission" />
+                        </group>
+
+                        <group string="Deductions and Adjustments">
+                            <group>
+                                <field name="absent_days" />
+                                <field name="absent_deduction" />
+                                <field name="insurance_deduction" />
+                                <field name="pf_deduction" />
+                                <field name="communication_expense" />
+                                <field name="interest_fund_deduction" />
+                                <field name="social_security_tax" />
+                            </group>
+                            <group>
+                                <field name="extraordinary_holiday" />
+                                <field name="extraordinary_holiday_deduction" />
+                                <field name="cit_cut" />
+                                <field name="income_tax" />
+                                <field name="loan" />
+                                <field name="other_deduction" />
+                                <field name="total_deduction" />
+                            </group>
+                        </group>
+                    </group>
+                    <group string="Summary">
+                        <group>
+                            <field name="total_total" />
+                            <field name="welfare_fund_cut" />
+                            <field name="woman_tax_discount" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Worked Days &amp; Inputs">
+                            <separator string="Worked Days" />
+                            <field name="worked_days_line_ids"
+                                readonly="state != 'draft'">
+                                <tree string="Worked Days" editable="bottom">
+                                    <field name="name" />
+                                    <field name="code" />
+                                    <field name="number_of_days"
+                                        sum="Total Working Days" />
+                                    <field name="number_of_hours" />
+                                    <!-- <field name="contract_id"/> -->
+                                    <!-- <field name="sequence" invisible="True"/> -->
+                                </tree>
+                                <form string="Worked Day">
+                                    <group col="4">
+                                        <field name="name" />
+                                        <field name="code" />
+                                        <!-- <field name="sequence"/> -->
+                                        <field name="number_of_days" />
+                                        <field name="number_of_hours" />
+                                        <!-- <field name="contract_id"/> -->
+                                    </group>
+                                </form>
+                            </field>
+                            <!-- <separator string="Other Inputs"/>
+                            <field name="input_line_ids" colspan="4" nolabel="1"
+                                   readonly="state != 'draft'">
+                                <tree string="Input Data" editable="bottom">
+                                    <field name="name"/>
+                                    <field name="code"/>
+                                    <field name="amount"/>
+                                    <field name="contract_id"/>
+                                    <field name="sequence" invisible="True"/>
+                                </tree>
+                                <form string="Payslip Line">
+                                    <group col="4">
+                                        <field name="name"/>
+                                        <field name="code"/>
+                                        <field name="sequence"/>
+                                        <field name="amount"/>
+                                        <field name="contract_id"/>
+                                    </group>
+                                </form>
+                            </field> -->
+                        </page>
+                        <page string="Salary Computation">
+                            <field name="line_ids" colspan="4" nolabel="1"
+                                readonly="state != 'draft'">
+                                <tree string="Salary Structure"
+                                    editable="bottom"
+                                    decoration-info="total == 0">
+                                    <!-- <field name="name"/> -->
+                                    <field name="category_id" />
+                                    <field name="salary_rule_id" />
+                                    <!-- <field name="code"/> -->
+                                    <!-- <field name="sequence" invisible="1"/> -->
+                                    <!-- <field name="quantity"/> -->
+                                    <!-- <field name="rate"/> -->
+                                    <field name="amount" />
+                                    <field name="total" />
+                                </tree>
+                                <form string="Payslip Line">
+                                    <group col="4">
+                                        <!-- <field name="name"/> -->
+                                        <field name="category_id" />
+                                        <field name="salary_rule_id" />
+                                        <!-- <field name="code"/> -->
+                                        <!-- <field name="sequence"/> -->
+                                        <!-- <field name="quantity"/> -->
+                                        <!-- <field name="rate"/> -->
+                                        <field name="amount" />
+                                        <field name="total" />
+
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <!-- <page string="Details By Salary Rule Category">
+
+                            <field name="details_by_salary_rule_category_ids"
+                                   context="{'search_default_category_id':1}"
+                                   domain="[('appears_on_payslip', '=', True)]">
+                                <tree string="Payslip Lines"
+                                      decoration-info="total == 0">
+                                    <field name="category_id"/>
+                                    <field name="name"/>
+                                    <field name="code"/>
+                                    <field name="total"/>
+                                </tree>
+                            </field>
+                        </page> -->
+                        <page string="Accounting Information">
+                            <group>
+                                <group string="Miscellaneous">
+                                    <field name="company_id"
+                                        groups="base.group_multi_company"
+                                        readonly="state != 'draft'" />
+                                    <field name="payslip_run_id"
+                                        domain="[('state','=','draft')]"
+                                        readonly="state != 'draft'" />
+                                </group>
+                                <group name="accounting" string="Accounting">
+                                    <field name="paid"
+                                        readonly="state != 'draft'" />
+                                </group>
+                            </group>
+                            <div colspan="4">
+                                <field name="note"
+                                    placeholder="Add an internal note..."
+                                    readonly="state != 'draft'" />
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!--  Shortcuts -->
+    <record id="hr_payslip_line_action"
+        model="ir.actions.act_window">
+        <field name="name">Payslip Lines</field>
+        <field name="res_model">hr.payslip.line</field>
+        <field name="domain">[('register_id', '=', active_id)]</field>
+        <field name="context">{'default_register_id': active_id,
+            'search_default_register_id': 1}
+        </field>
+    </record>
+    <!-- Tree View for Employee Tax Config -->
+    <record id="view_employee_tax_config_tree" model="ir.ui.view">
+        <field name="name">employee.tax.config.tree</field>
+        <field name="model">employee.tax.config</field>
+        <field name="arch" type="xml">
+            <tree string="Employee Tax Configuration">
+                <field name="fiscal_years" />
+                <field name="marital_status" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View for Employee Tax Config -->
+    <record id="view_employee_tax_config_form" model="ir.ui.view">
+        <field name="name">employee.tax.config.form</field>
+        <field name="model">employee.tax.config</field>
+        <field name="arch" type="xml">
+            <form string="Employee Tax Configuration">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="fiscal_years" />
+                            <field name="marital_status" />
+                        </group>
+                        <notebook>
+                            <page name="Annual Salary" string="Annual Salary">
+                                <field name="annual_salary_ids">
+                                    <tree editable="top" create="true" edit="false" delete="false">
+                                        <field name="annual_salary_from" />
+                                        <field name="annual_salary_to" />
+                                        <field name="tax_idsss" />
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action to Open the Tree/Form Views for Employee Tax Config -->
+    <record id="action_employee_tax_config" model="ir.actions.act_window">
+        <field name="name">Employee Tax Config</field>
+        <field name="res_model">employee.tax.config</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Tree View for Annual Salary Model -->
+    <record id="view_annual_salary_tree" model="ir.ui.view">
+        <field name="name">annual.salary.tree</field>
+        <field name="model">annual.salary.model</field>
+        <field name="arch" type="xml">
+            <tree string="Annual Salary List">
+                <field name="annual_salary_from" />
+                <field name="annual_salary_to" />
+                <field name="tax_idsss" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View for Annual Salary Model -->
+    <record id="view_annual_salary_form" model="ir.ui.view">
+        <field name="name">annual.salary.form</field>
+        <field name="model">annual.salary.model</field>
+        <field name="arch" type="xml">
+            <form string="Annual Salary Form">
+                <sheet>
+                    <group>
+                        <field name="annual_salary_from" />
+                        <field name="annual_salary_to" />
+                        <field name="tax_idsss" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action to Open Annual Salary Views -->
+    <record id="action_annual_salary_model" model="ir.actions.act_window">
+        <field name="name">Annual Salary</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">annual.salary.model</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

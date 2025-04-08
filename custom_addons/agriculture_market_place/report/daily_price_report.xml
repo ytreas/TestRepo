@@ -1,0 +1,378 @@
+<odoo>
+
+    <template id="preview_daily_price_report">
+        <t t-call="web.html_container">
+            <div class="oe_structure"/>
+            <h2>Daily Price Report Preview</h2>
+            <t t-if="daily_price_report">
+                <table class="table table-striped">
+                    <thead>
+                        <!-- <tr>
+                            <th>ID</th>
+                            <th style="width: 200px;">Arrival Date</th>
+                            <th>Commodity</th>
+                            <th>Min Price</th>
+                            <th>Max Price</th>
+                            <th>Avg Price</th>
+                        </tr> -->
+
+                        <tr>
+                            <th>ID</th>
+                            <th style="width: 200px;">आगमन मिति</th>
+                            <th>कृषि उपज</th>
+                            <th>ईकाइ</th>
+                            <th>न्यूनतम मूल्य</th>
+                            <th>अधिकतम मूल्य</th>
+                            <th>औसत मूल्य</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="daily_price_report" t-as="record">
+                            <tr>
+                                <td><t t-esc="record['id']"/></td>
+                                <td><t t-esc="record['current_date']"/></td>
+                                <td><t t-esc="record['commodity_id']"/></td>
+                                <td><t t-esc="record['min_price']"/></td>
+                                <td><t t-esc="record['max_price']"/></td>
+                                <td><t t-esc="record['avg_price']"/></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+                <!-- Download button -->
+            
+            </t>
+            <t t-if="not daily_price_report">
+          
+                <p>No data available to display.</p>
+            </t>
+        </t>
+    </template>
+
+<report
+        id="report_daily_price_template"
+        model="amp.daily.price"
+        string="Daily Arrival Report"
+        report_type="qweb-pdf"
+        name="agriculture_market_place.report_daily_price"
+        file="agriculture_market_place.report_daily_price"
+    />
+
+    <template id="report_daily_price">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                    <div class="page">
+                        <div style="font-size: 12px; line-height: 1.6; background-color: #f9f9f9; padding: 20px;">
+                            <t t-set="current_company" t-value="env.user.company_id"/>
+                            <t t-if="current_company.parent_id">
+                                <t t-set="display_company" t-value="current_company.parent_id"/>
+                            </t>
+                            <t t-else="">
+                                <t t-set="display_company" t-value="current_company"/>
+                            </t>
+
+                            <img style="float: right; height: 90px; width: 90px;" src="agriculture_market_place/static/src/img/kalimati logo.png" alt="Kalimati Logo"/>
+                            <img style="float: left; height: 80px; width: 90px;" src="agriculture_market_place/static/src/img/logo.png" alt="Company Logo"/>
+
+                            <!-- Centered content -->
+                            <div style="overflow: hidden; text-align: center; margin: 30px 0;">
+                                <strong><span style="font-weight: 900; font-size: 20px; color: #333;">नेपाल सरकार</span></strong><br/>
+                                <strong><span style="font-weight: 900; font-size: 20px; color: #333;">कृषि तथा पशुपन्छी विकास मन्त्रालय</span></strong><br/>
+                                <strong><span style="font-weight: 900; font-size: 28px; color: #008000;">
+                                    कालीमाटी फलफूल तथा तरकारी बजार विकास समिति
+                                </span></strong><br/><br/>
+                            </div>
+                        </div>
+
+                        <style>
+                            @font-face {
+                                font-family: 'kalimatiregular';
+                                src: url('agriculture_market_place/static/src/font/kalimati regular/Kalimati Regular.otf');
+                            }
+
+                            body {
+                                font-family: 'kalimatiregular', sans-serif;
+                            }
+
+                            #dataTable {
+                                border-collapse: collapse;
+                                width: 100%;
+                                margin: 20px 0;
+                                background-color: #fff;
+                                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                            }
+
+                            #dataTable th, #dataTable td {
+                                border: 1px solid #ddd;
+                                padding: 10px;
+                                text-align: center;
+                            }
+
+                            #dataTable th {
+                                background-color: #008000;
+                                color: white;
+                                font-weight: bold;
+                            }
+
+                            #dataTable tr:hover {
+                                background-color: #f1f1f1;
+                            }
+
+                            #dataTable .active {
+                                background-color: #28a745;
+                                color: white;
+                            }
+
+                            #box-1 {
+                                width: 900px;
+                                border: 1px solid black;
+                                padding: 10px;
+                                margin: 20px 0;
+                            }
+                        </style>
+        
+                    <!-- Table structure -->
+                    <t t-if="context.get('date_from')">
+                        सुरु मिति: <t t-esc="context.get('date_from')"/>
+                        अन्त्य मिति: <t t-esc="context.get('date_to')"/>
+                    </t>
+                    <t t-if="context.get('report_type')">
+                        प्रतिवेदनको प्रकार: 
+                        <t t-esc="
+                            {
+                                'today': 'आज ,',
+                                'this_week': 'यो हप्ता ,',
+                                'this_month': 'यो महिना ,',
+                                'custom': 'अनुकूल'
+                            }.get(context.get('report_type'), 'अज्ञात ,')
+                        "/>
+                    </t>
+                    <span></span>
+                    <t t-if="context.get('commodity')">
+                        कृषि उपज: <t t-esc="context.get('commodity')"/>
+                    </t>
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <!-- <tr>
+                        <th>Commodity</th>
+                        <th>Unit</th>
+                        <th style="width: 200px;">Arrival Date</th>
+                        <th>Minimum Price</th>
+                        <th>Maximum Price</th>
+                        <th>Average Price</th>
+                    </tr> -->
+
+                    <tr>
+                        <th>कृषि उपज</th>
+                        <th>ईकाइ</th>
+                        <th style="width: 200px;">आगमन मिति</th>
+                        <th>न्यूनतम मूल्य</th>
+                        <th>अधिकतम मूल्य</th>
+                        <th>औसत मूल्य</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="context['daily_price_report']" t-as="data">
+                        <tr>
+                            <td><span t-esc="data['commodity_id']"/></td>
+                            <td><span t-esc="data['unit']"/></td>
+                            <td><span t-esc="data['current_date']"/></td>
+                            <td><span t-esc="data['min_price'] or 'N/A'"/></td>
+                            <td><span t-esc="data['max_price'] or 'N/A'"/></td>
+                            <td><span t-esc="data['avg_price'] or 'N/A'"/></td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+    </t>
+    </t>
+</template>
+
+<record id="action_report_daily_price" model="ir.actions.report">
+    <field name="name">Daily Price Report</field>
+    <field name="model">amp.daily.price</field>
+    <field name="report_type">qweb-pdf</field>
+    <field name="report_name">agriculture_market_place.report_daily_price</field>
+    <field name="binding_model_id" ref="agriculture_market_place.model_amp_daily_price"/>
+    <field name="binding_type">report</field>
+</record>
+
+   <report
+        id="report_comparable_daily_price_template"
+        model="amp.daily.price"
+        string="Daily Arrival Report"
+        report_type="qweb-pdf"
+        name="agriculture_market_place.daily_arrival_template"
+        file="agriculture_market_place.daily_arrival_template"
+    />
+
+
+    <!--  QWeb template -->
+    <template id="report_comparable_daily_price">
+        <t t-call="web.html_container">
+        <t t-call="web.internal_layout">
+                    <div class="page">
+                        <div style="font-size: 12px; line-height: 1.6; background-color: #f9f9f9; padding: 20px;">
+                            <t t-set="current_company" t-value="env.user.company_id"/>
+                            <t t-if="current_company.parent_id">
+                                <t t-set="display_company" t-value="current_company.parent_id"/>
+                            </t>
+                            <t t-else="">
+                                <t t-set="display_company" t-value="current_company"/>
+                            </t>
+
+                            <img style="float: right; height: 90px; width: 90px;" src="agriculture_market_place/static/src/img/kalimati logo.png" alt="Kalimati Logo"/>
+                            <img style="float: left; height: 80px; width: 90px;" src="agriculture_market_place/static/src/img/logo.png" alt="Company Logo"/>
+
+                            <!-- Centered content -->
+                            <div style="overflow: hidden; text-align: center; margin: 30px 0;">
+                                <strong><span style="font-weight: 900; font-size: 20px; color: #333;">नेपाल सरकार</span></strong><br/>
+                                <strong><span style="font-weight: 900; font-size: 20px; color: #333;">कृषि तथा पशुपन्छी विकास मन्त्रालय</span></strong><br/>
+                                <strong><span style="font-weight: 900; font-size: 28px; color: #008000;">
+                                    कालीमाटी फलफूल तथा तरकारी बजार विकास समिति
+                                </span></strong><br/><br/>
+                            </div>
+                        </div>
+
+                        <style>
+                            @font-face {
+                                font-family: 'kalimatiregular';
+                                src: url('agriculture_market_place/static/src/font/kalimati regular/Kalimati Regular.otf');
+                            }
+
+                            body {
+                                font-family: 'kalimatiregular', sans-serif;
+                            }
+
+                            #dataTable {
+                                border-collapse: collapse;
+                                width: 100%;
+                                margin: 20px 0;
+                                background-color: #fff;
+                                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                            }
+
+                            #dataTable th, #dataTable td {
+                                border: 1px solid #ddd;
+                                padding: 10px;
+                                text-align: center;
+                            }
+
+                            #dataTable th {
+                                background-color: #008000;
+                                color: white;
+                                font-weight: bold;
+                            }
+
+                            #dataTable tr:hover {
+                                background-color: #f1f1f1;
+                            }
+
+                            #dataTable .active {
+                                background-color: #28a745;
+                                color: white;
+                            }
+
+                            #box-1 {
+                                width: 900px;
+                                border: 1px solid black;
+                                padding: 10px;
+                                margin: 20px 0;
+                            }
+                        </style>
+        
+                <!-- Table structure-->
+                    <t t-if="context.get('date_from')">
+                        सुरु मिति: <t t-esc="context.get('date_from')"/>
+                        अन्त्य मिति: <t t-esc="context.get('date_to')"/>
+                    </t>
+                    <t t-if="context.get('report_type')">
+                        प्रतिवेदनको प्रकार: 
+                        <t t-esc="
+                            {
+                                'today': 'आज ,',
+                                'this_week': 'यो हप्ता ,',
+                                'this_month': 'यो महिना ,',
+                                'custom': 'अनुकूल ,'
+                            }.get(context.get('report_type'), 'अज्ञात ,')
+                        "/>
+                    </t>
+                    <t t-if="context.get('commodity')">
+                        कृषि उपज: <t t-esc="context.get('commodity')"/>
+                    </t>
+                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th rowspan="2">कृषि उपज</th>
+                            <th rowspan="2">ईकाइ</th>
+                            <th colspan="3">आगमन (<t t-esc="context['date_from']"/>)</th>
+                            <th colspan="3">आगमन (<t t-esc="context['date_to']"/>)</th>
+                            <th colspan="3">फरक %</th>
+                        </tr>
+                        <tr>
+                            <th>न्यूनतम मूल्य</th>
+                            <th>अधिकतम मूल्य</th>
+                            <th>औसत मूल्य</th>
+                            <th>न्यूनतम मूल्य</th>
+                            <th>अधिकतम मूल्य</th>
+                            <th>औसत मूल्य</th>
+                            <th>फरक % (अधिकतम मूल्य)</th>
+                            <th>फरक % (न्यूनतम मूल्य)</th>
+                            <th>फरक % (औसत मूल्य)</th>
+                        </tr>
+                        <!-- <tr>
+                            <th>Commodity Name</th>
+                            <th colspan="2">Incoming (Date From <t t-esc="context['date_from']"/></th>
+                            <th colspan="2">Incoming Date To <t t-esc="context['date_to']"/></th>
+                            <th>Change Rate</th>
+                        </tr> -->
+                        <!-- <tr>
+                            <th></th>  
+                            <th>Volume</th>
+                            <th>Unit</th>
+                            <th>Volume</th>
+                            <th>Unit</th>
+                            <th></th>  
+                        </tr> -->
+                    </thead>
+                    <tbody>
+                       
+                        <t t-foreach="context['comparison_report']" t-as="data">
+                            <tr>
+                                <td><span t-esc="data['name']"/></td>
+                                <td><span t-esc="data['unit']"/></td>
+                                <td><span t-esc="data['from_data']['min_price'] or 'N/A'"/></td>
+                                <td><span t-esc="data['from_data']['max_price'] or 'N/A'"/></td>
+                                <td><span t-esc="data['from_data']['avg_price'] or 'N/A'"/></td>
+                                <td><span t-esc="data['to_data']['min_price'] or 'N/A'"/></td>
+                                <td><span t-esc="data['to_data']['max_price'] or 'N/A'"/></td>
+                                <td><span t-esc="data['to_data']['avg_price'] or 'N/A'"/></td>
+                                <td>
+                                    <span t-if="data['change_rate'].get('max_price')" t-esc="data['change_rate']['max_price']"/>%
+                                </td>
+                                <td>
+                                    <span t-if="data['change_rate'].get('min_price')" t-esc="data['change_rate']['min_price']"/>%
+                                </td>
+                                <td>
+                                    <span t-if="data['change_rate'].get('avg_price')" t-esc="data['change_rate']['avg_price']"/>%
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+         </div>
+        </t>
+        </t>
+    </template>
+
+        <record id="action_report_comparable_daily_price" model="ir.actions.report">
+            <field name="name">Daily Price Comparable Report</field>
+            <field name="model">amp.daily.price</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">agriculture_market_place.report_comparable_daily_price</field>
+            <field name="binding_model_id" ref="agriculture_market_place.model_amp_daily_price"/>
+            <field name="binding_type">report</field>
+        </record>
+
+</odoo>

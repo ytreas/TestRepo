@@ -1,0 +1,80 @@
+.badge-warning {
+    background-color: #f0ad4e;
+    color: white;
+}
+
+.badge-success {
+    background-color: #5cb85c; 
+    color: white;
+}
+
+.badge-danger {
+    background-color: #d9534f; 
+    color: white;
+}
+
+
+
+
+
+.o_form_button_save i{
+    color: #fff;
+
+}
+.o_form_button_save{
+    background-color: #008504;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 7px;
+    margin-right: 5px;
+    transition: all 0.3s ease;
+    padding: 3px 8px;
+    text-transform: uppercase;
+    border-color: transparent !important;
+}
+
+
+
+.o_form_button_cancel i{
+    color: #fff;
+
+}
+
+.o_form_button_cancel{
+    text-transform: uppercase;
+    background-color: #ff0000;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 7px;
+    margin-right: 5px;
+    transition: all 0.3s ease;
+    padding: 3px 8px;
+    border-color: transparent !important;
+
+    
+}
+
+.o_form_button_cancel:hover{
+    background-color: #ff0000;
+    color: #fff;
+    
+}
+.o_form_button_save:hover{
+    background-color: #008504;
+    color: #fff;
+
+}
+.o_form_button_cancel:hover,.o_form_button_save:hover{
+    filter: brightness(80%);
+    
+}
+
+
+/* e-commerce */
+.image_grid .o_kanban_renderer{
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: space-between !important;
+}
+

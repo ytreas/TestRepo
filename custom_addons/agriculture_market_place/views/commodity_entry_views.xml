@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <!-- Modify commodity entry tree view to add button -->
+        <record id="view_commodity_entry_tree" model="ir.ui.view">
+            <field name="name">commodity.entry.tree</field>
+            <field name="model">commodity.entry</field>
+            <field name="arch" type="xml">
+                <tree create="false" delete="false" js_class="commodity_entry_list_view">
+                    <field name="commodity"/>
+                    <field name="unit"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Action to open the tree view -->
+        <record id="action_commodity_entry" model="ir.actions.act_window">
+            <field name="name">Commodity Entries</field>
+            <field name="res_model">commodity.entry</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <!-- Menu item -->
+        <menuitem id="menu_commodity_entry"
+                  name="Commodity Sample"
+                  action="action_commodity_entry"
+                  parent="menu_amp_import_sample"
+                  sequence="3"/>
+
+    </data>
+</odoo>
