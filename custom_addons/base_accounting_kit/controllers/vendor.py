@@ -212,8 +212,6 @@ class Vendor(http.Controller):
             # Prepare the fields to update
             update_fields = {}
 
-
-            print("haha",kw.get('image_1920'))
             if 'vendor_name' in kw:
                 if kw.get('vendor_name') is not "":
                     update_fields['name'] = kw.get('vendor_name')

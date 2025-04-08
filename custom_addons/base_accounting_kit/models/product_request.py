@@ -15,6 +15,11 @@ class ProductRequest(models.Model):
         default=lambda self: self.env.company,
         required=True
     )
+    product_business_type = fields.Many2many(
+        "company.category",
+        string="Business Type",
+        required=True
+    )
     state = fields.Selection([
         ('draft', 'Draft'),
         ('approved', 'Approved')
@@ -71,4 +76,21 @@ class ProductRequest(models.Model):
         }
         self.env['product.custom.price'].create(custom_price_vals)
 
+        # Create a business.based.products record
+        business_product = self.env['business.based.products'].create({
+            'product_id': product.product_tmpl_id.id,
+            'company_id': self.company_id.id,
+        })
+        
+        # Add the product to each business type by updating their products_ids field
+        for business_type in self.product_business_type:
+            # Update the business_id on the business.based.products record
+            business_product.business_id = business_type.id
+            
+            # Add the product to the business type's products_ids
+            business_type.write({
+                'products_ids': [(4, business_product.id)]
+            })
+        self.company_id.sudo()._compute_company_category_product()
         self.write({'state': 'approved'})
+        return True

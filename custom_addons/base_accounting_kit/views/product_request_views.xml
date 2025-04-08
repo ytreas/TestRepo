@@ -7,6 +7,7 @@
             <tree>
                 <field name="name"/>
                 <field name="sale_price"/>
+                <field name="product_business_type" widget="many2many_tags"/>
                 <field name="cost_price"/>
                 <field name="state"/>
                 <!-- <field name="company_category_ids"/> -->
@@ -34,6 +35,7 @@
                         <field name="description"/>
                         <field name="sale_price"/>
                         <field name="cost_price"/>
+                        <field name="product_business_type" widget="many2many_tags"/>
                         <!-- <field name="company_category_ids" widget="many2many_tags"/> -->
                     </group>
                 </sheet>

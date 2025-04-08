@@ -513,7 +513,6 @@ class Sale(http.Controller):
                     headers=[("Content-Type", "application/json")],
                     status=status
                 )
-
             demand_data = json_data.get("demand", {})
             validate_response, validate_status = self._validate_delivered_products(sale_order.sudo(), demand_data)
             if validate_status != 200:
