@@ -24,6 +24,7 @@ class ProductRequest(models.Model):
         ('draft', 'Draft'),
         ('approved', 'Approved')
     ], string='Status', default='draft', readonly=True)
+    image_image = fields.Binary(string='Image')
     # company_category_ids = fields.Many2many(
     #     "company.category",
     #     string="Business Type",
@@ -65,6 +66,7 @@ class ProductRequest(models.Model):
             'list_price': self.sale_price,
             'standard_price': self.cost_price,
             'description': self.description,
+            'image_1920': self.image_image,
         })
 
         # Create custom price entry
@@ -73,6 +75,7 @@ class ProductRequest(models.Model):
             'price_sell': self.sale_price,
             'price_cost': self.cost_price,
             'company_id': self.create_uid.company_id.id,
+            'product_featured_image': self.image_image,
         }
         self.env['product.custom.price'].create(custom_price_vals)
 

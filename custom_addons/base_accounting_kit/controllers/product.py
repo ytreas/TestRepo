@@ -722,7 +722,8 @@ class ProductRequestController(http.Controller):
             
             # Apply filters
             if company_id:
-                domain.append(('company_id', '=', int(company_id)))
+                if not company_id == '1':
+                    domain.append(('company_id', '=', int(company_id)))
             if request_id:
                 domain.append(('id', '=', int(request_id)))
             if state:
@@ -798,8 +799,8 @@ class ProductRequestController(http.Controller):
                     status=status_code
                 )
             
-            # Get request data
-            data = request.httprequest.data and json.loads(request.httprequest.data) or kw
+            # Get form data - use kw directly since form data is passed in kw
+            data = kw
             
             # Validate required fields
             required_fields = ['name', 'sale_price', 'cost_price', 'company_id', 'business_type_ids']
@@ -814,6 +815,13 @@ class ProductRequestController(http.Controller):
                     }),
                     headers=[('Content-Type', 'application/json')]
                 )
+            
+            # Handle image from form-data
+            image_binary = None
+            if 'image' in request.httprequest.files:
+                image_file = request.httprequest.files.get('image')
+                if image_file:
+                    image_binary = base64.b64encode(image_file.read())
             
             # Check if company exists
             company = request.env['res.company'].sudo().search([('id', '=', int(data.get('company_id')))], limit=1)
@@ -841,8 +849,16 @@ class ProductRequestController(http.Controller):
                     headers=[('Content-Type', 'application/json')]
                 )
             
-            # Validate business types
+            # Convert business_type_ids from string to list if needed
             business_type_ids = data.get('business_type_ids')
+            if isinstance(business_type_ids, str):
+                try:
+                    # Try to parse as JSON if it's a string representation of a list
+                    business_type_ids = json.loads(business_type_ids)
+                except json.JSONDecodeError:
+                    # If it's a comma-separated string
+                    business_type_ids = [int(x.strip()) for x in business_type_ids.split(',') if x.strip().isdigit()]
+            
             if not isinstance(business_type_ids, list):
                 return http.Response(
                     status=400,
@@ -852,6 +868,9 @@ class ProductRequestController(http.Controller):
                     }),
                     headers=[('Content-Type', 'application/json')]
                 )
+            
+            # Convert string IDs to integers if needed
+            business_type_ids = [int(id) for id in business_type_ids]
             
             # Verify all business types exist
             business_types = request.env['company.category'].sudo().browse(business_type_ids)
@@ -873,6 +892,7 @@ class ProductRequestController(http.Controller):
                 'cost_price': cost_price,
                 'company_id': int(data.get('company_id')),
                 'product_business_type': [(6, 0, business_type_ids)],
+                'image_image': image_binary,
                 'state': 'draft'
             })
             
@@ -891,7 +911,7 @@ class ProductRequestController(http.Controller):
             return http.Response(
                 status=400,
                 response=json.dumps({
-                    "status": "fail",
+                    "status": "fail", 
                     "data": {"message": f"Invalid parameter value: {str(e)}"}
                 }),
                 headers=[('Content-Type', 'application/json')]
@@ -963,6 +983,7 @@ class ProductRequestController(http.Controller):
                     'list_price': product_request.sale_price,
                     'standard_price': product_request.cost_price,
                     'description': product_request.description,
+                    'image_1920': product_request.image_image,
                 })
                 
                 # Create custom price entry
@@ -971,262 +992,7 @@ class ProductRequestController(http.Controller):
                     'price_sell': product_request.sale_price,
                     'price_cost': product_request.cost_price,
                     'company_id': product_request.company_id.id,
-                    'saleable_qty': 0,
-                    'min_qty': 0,
-                    'max_qty': 0,
-                }
-                custom_price = request.env['product.custom.price'].sudo().create(custom_price_vals)
-                
-                
-                # Add the product to each business type by updating their products_ids field
-                for business_type in product_request.product_business_type:
-                    # Create a business.based.products record
-                    business_product = request.env['business.based.products'].sudo().create({
-                        'product_id': product.id,
-                        'company_id': product_request.company_id.id,
-                    })
-                    # Update the business_id on the business.based.products record
-                    print("business_type", business_type)
-                    business_product.business_id = business_type.id
-                    
-                    # Add the product to the business type's products_ids
-                    business_type.write({
-                        'products_ids': [(4, business_product.id)]
-                    })
-                
-                # Update company's product list if needed
-                product_request.company_id.sudo()._compute_company_category_product()
-                
-                # Mark request as approved
-                product_request.sudo().write({'state': 'approved'})
-                
-                return request.make_response(
-                    json.dumps({
-                        "status": "success",
-                        "data": {
-                            "message": "Product request approved successfully",
-                            "product_id": product.id,
-                            "product_name": product.name
-                        }
-                    }),
-                    headers=[("Content-Type", "application/json")]
-                )
-                
-            except Exception as e:
-                return http.Response(
-                    status=400,
-                    response=json.dumps({
-                        "status": "fail",
-                        "data": {"message": f"Error during approval: {str(e)}"}
-                    }),
-                    headers=[('Content-Type', 'application/json')]
-                )
-            
-        except ValueError as e:
-            return http.Response(
-                status=400,
-                response=json.dumps({
-                    "status": "fail",
-                    "data": {"message": f"Invalid parameter value: {str(e)}"}
-                }),
-                headers=[('Content-Type', 'application/json')]
-            )
-        except Exception as e:
-            _logger.error(f"Error in approve_product_request: {str(e)}")
-            return http.Response(
-                status=500,
-                response=json.dumps({
-                    "status": "fail",
-                    "data": {"message": str(e)}
-                }),
-                headers=[('Content-Type', 'application/json')]
-            )
-    
-    @http.route("/trading/api/create_product_request", type="http", cors="*", auth="public", methods=["POST"], csrf=False)
-    def create_product_request(self, **kw):
-        try:
-            # Authenticate the request
-            auth_status, status_code = jwt_token_auth.JWTAuth.authenticate_request(self, request)
-            if auth_status['status'] == 'fail':
-                return request.make_response(
-                    json.dumps(auth_status),
-                    headers=[('Content-Type', 'application/json')],
-                    status=status_code
-                )
-            
-            # Get request data
-            data = request.httprequest.data and json.loads(request.httprequest.data) or kw
-            
-            # Validate required fields
-            required_fields = ['name', 'sale_price', 'cost_price', 'company_id', 'business_type_ids']
-            missing_fields = [field for field in required_fields if not data.get(field)]
-            
-            if missing_fields:
-                return http.Response(
-                    status=400,
-                    response=json.dumps({
-                        "status": "fail",
-                        "data": {"message": f"Missing required fields: {', '.join(missing_fields)}"}
-                    }),
-                    headers=[('Content-Type', 'application/json')]
-                )
-            
-            # Check if company exists
-            company = request.env['res.company'].sudo().search([('id', '=', int(data.get('company_id')))], limit=1)
-            if not company:
-                return http.Response(
-                    status=404,
-                    response=json.dumps({
-                        "status": "fail",
-                        "data": {"message": "Company not found"}
-                    }),
-                    headers=[('Content-Type', 'application/json')]
-                )
-            
-            # Validate prices
-            sale_price = float(data.get('sale_price'))
-            cost_price = float(data.get('cost_price'))
-            
-            if cost_price > sale_price:
-                return http.Response(
-                    status=400,
-                    response=json.dumps({
-                        "status": "fail",
-                        "data": {"message": "Cost price must be less than or equal to sale price"}
-                    }),
-                    headers=[('Content-Type', 'application/json')]
-                )
-            
-            # Validate business types
-            business_type_ids = data.get('business_type_ids')
-            if not isinstance(business_type_ids, list):
-                return http.Response(
-                    status=400,
-                    response=json.dumps({
-                        "status": "fail",
-                        "data": {"message": "business_type_ids must be a list of business type IDs"}
-                    }),
-                    headers=[('Content-Type', 'application/json')]
-                )
-            
-            # Verify all business types exist
-            business_types = request.env['company.category'].sudo().browse(business_type_ids)
-            if len(business_types) != len(business_type_ids):
-                return http.Response(
-                    status=404,
-                    response=json.dumps({
-                        "status": "fail",
-                        "data": {"message": "One or more business types not found"}
-                    }),
-                    headers=[('Content-Type', 'application/json')]
-                )
-            
-            # Create the product request
-            product_request = request.env['product.request'].sudo().create({
-                'name': data.get('name'),
-                'description': data.get('description'),
-                'sale_price': sale_price,
-                'cost_price': cost_price,
-                'company_id': int(data.get('company_id')),
-                'product_business_type': [(6, 0, business_type_ids)],
-                'state': 'draft'
-            })
-            
-            return request.make_response(
-                json.dumps({
-                    "status": "success",
-                    "data": {
-                        "id": product_request.id,
-                        "message": "Product request created successfully"
-                    }
-                }),
-                headers=[("Content-Type", "application/json")]
-            )
-            
-        except ValueError as e:
-            return http.Response(
-                status=400,
-                response=json.dumps({
-                    "status": "fail",
-                    "data": {"message": f"Invalid parameter value: {str(e)}"}
-                }),
-                headers=[('Content-Type', 'application/json')]
-            )
-        except Exception as e:
-            _logger.error(f"Error in create_product_request: {str(e)}")
-            return http.Response(
-                status=500,
-                response=json.dumps({
-                    "status": "fail",
-                    "data": {"message": str(e)}
-                }),
-                headers=[('Content-Type', 'application/json')]
-            )
-        
-    @http.route("/trading/api/approve_product_request/<int:request_id>", type="http", cors="*", auth="public", methods=["POST"], csrf=False)
-    def approve_product_request(self, request_id, **kw):
-        try:
-            # Authenticate the request
-            auth_status, status_code = jwt_token_auth.JWTAuth.authenticate_request(self, request)
-            if auth_status['status'] == 'fail':
-                return request.make_response(
-                    json.dumps(auth_status),
-                    headers=[('Content-Type', 'application/json')],
-                    status=status_code
-                )
-            
-            # Validate request_id
-            if not request_id:
-                return http.Response(
-                    status=400,
-                    response=json.dumps({
-                        "status": "fail",
-                        "data": {"message": "Product request ID is required"}
-                    }),
-                    headers=[('Content-Type', 'application/json')]
-                )
-            
-            # Find the product request
-            product_request = request.env['product.request'].sudo().browse(request_id)
-            if not product_request.exists():
-                return http.Response(
-                    status=404,
-                    response=json.dumps({
-                        "status": "fail",
-                        "data": {"message": f"Product request with ID {request_id} not found"}
-                    }),
-                    headers=[('Content-Type', 'application/json')]
-                )
-            
-            # Check if already approved
-            if product_request.state == 'approved':
-                return http.Response(
-                    status=400,
-                    response=json.dumps({
-                        "status": "fail",
-                        "data": {"message": "This product request is already approved"}
-                    }),
-                    headers=[('Content-Type', 'application/json')]
-                )
-            
-            # Approve the product request
-            try:
-                # Create product
-                product = request.env['product.template'].sudo().create({
-                    'name': product_request.name,
-                    'type': 'product',
-                    'detailed_type': 'product',
-                    'list_price': product_request.sale_price,
-                    'standard_price': product_request.cost_price,
-                    'description': product_request.description,
-                })
-                
-                # Create custom price entry
-                custom_price_vals = {
-                    'product_id': product.id,
-                    'price_sell': product_request.sale_price,
-                    'price_cost': product_request.cost_price,
-                    'company_id': product_request.company_id.id,
+                    'product_featured_image': product_request.image_image,
                     'saleable_qty': 0,
                     'min_qty': 0,
                     'max_qty': 0,

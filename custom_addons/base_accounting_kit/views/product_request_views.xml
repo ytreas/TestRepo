@@ -32,6 +32,8 @@
                 <sheet>
                     <group>
                         <field name="name"/>
+                        <field name="image_image" widget="image"
+                                    class="oe_avatar" />
                         <field name="description"/>
                         <field name="sale_price"/>
                         <field name="cost_price"/>
