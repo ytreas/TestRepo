@@ -756,6 +756,7 @@ class ProductRequestController(http.Controller):
                     "state": prod_request.state if prod_request.state else 'draft',
                     # "create_uid": prod_request.create_uid.id if prod_request.create_uid else None,
                     "create_user_name": prod_request.create_uid.name if prod_request.create_uid and prod_request.create_uid.name else None,
+                    'image': f"http://lekhaplus.com/web/image?model=product.request&id={prod_request.id}&field=image_image" if prod_request.image_image else None,
                     "business_types": business_types
                 })
             
