@@ -90,8 +90,6 @@ access_individual_field_selection,access_individual_field_selection,model_indivi
 access_organization_field_selection,access_organization_field_selection,model_organization_field_selection,base.group_user,1,1,1,1
 
 access_product_request_user,access_product_request_user,model_product_request,base.group_user,1,1,1,0
-access_product_request_portal,access_product_request_portal,model_product_request,base.group_portal,1,0,0,0
-access_product_request_public,access_product_request_public,model_product_request,base.group_public,1,0,0,0
 access_product_request_admin,access_product_request_admin,model_product_request,base.group_system,1,1,1,1
 
 access_res_users,access_res_users,model_res_users,base.group_user,1,1,1,0

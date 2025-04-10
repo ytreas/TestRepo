@@ -1,4 +1,4 @@
-from odoo import http, _
+from odoo import http,fields, _
 from odoo.http import request
 from odoo.exceptions import ValidationError
 import base64
@@ -689,4 +689,157 @@ class DuplicateCheckController(http.Controller):
                 json.dumps({'success': False, 'error': str(e), 'message': 'An error occurred while checking for duplicates.'}),
                 headers={'Content-Type': 'application/json'},
                 status=500
+            )
+class PaymentSuccess(http.Controller):
+    @http.route(
+        "/trading/api/client-payment-success",
+        type="http",
+        auth="public",
+        methods=["POST"],
+        csrf=False,
+        cors="*"
+    )
+    def api_client_payment_success(self, **kw):
+        try:
+            print("Received request for /trading/api/client-payment-success")
+            data = request.httprequest.data and json.loads(request.httprequest.data) or kw
+            print("Parsed data:", data)
+
+            transaction_id = data.get('transaction_id')
+            email = data.get('email')
+            amount = data.get('amount')
+            service_type_ids = data.get('service_type_ids')
+            payment_method = data.get('payment_method', 'esewa')
+            payment_reference = data.get('payment_reference')
+            client_name = data.get('client_name', email)
+
+            print(f"transaction_id: {transaction_id}, email: {email}, amount: {amount}")
+
+            if not transaction_id or not email or not amount:
+                print("Missing required parameters")
+                return http.Response(
+                    json.dumps({
+                        'status': 'error',
+                        'message': 'Missing required parameters: transaction_id, email, and amount are required'
+                    }),
+                    status=400,
+                    headers={'Content-Type': 'application/json'}
+                )
+
+            if service_type_ids and isinstance(service_type_ids, str):
+                try:
+                    service_type_ids = json.loads(service_type_ids)
+                except json.JSONDecodeError:
+                    service_type_ids = [int(x.strip()) for x in service_type_ids.split(',') if x.strip().isdigit()]
+            if not service_type_ids:
+                service_type_ids = []
+
+            print("Service Type IDs:", service_type_ids)
+
+            product = request.env['product.product'].sudo().search([
+                ('default_code', '=', 'SERVICE_PAYMENT'),
+                ('company_id', '=', 1)
+            ], limit=1)
+            if not product:
+                print("Creating default service product")
+                product = request.env['product.product'].sudo().create({
+                    'name': 'Service Payment',
+                    'type': 'service',
+                    'default_code': 'SERVICE_PAYMENT',
+                    'company_id': 1,
+                    'list_price': 0.0,
+                    'standard_price': 0.0,
+                })
+
+            partner = request.env['res.partner'].sudo().search([('email', '=', email)], limit=1)
+            if not partner:
+                print("Creating new partner")
+                partner = request.env['res.partner'].sudo().create({
+                    'name': client_name,
+                    'email': email,
+                    'company_id': 1,
+                })
+
+            account_receivable = request.env['account.account'].sudo().search([
+                ('company_id', '=', 1),
+                ('account_type', '=', 'asset_receivable'),
+                ('deprecated', '=', False)
+            ], limit=1)
+            if not account_receivable:
+                print("Falling back to any available account")
+                account_receivable = request.env['account.account'].sudo().search([
+                    ('company_id', '=', 1),
+                    ('deprecated', '=', False)
+                ], limit=1)
+
+            invoice_lines = []
+            service_descriptions = []
+            for business_type_id in service_type_ids:
+                business_type = request.env['company.category'].sudo().browse(business_type_id)
+                if business_type.exists():
+                    service_descriptions.append(business_type.name)
+
+            service_description = "Payment for services: " + ", ".join(service_descriptions) if service_descriptions else "Service Payment"
+            print("Invoice service description:", service_description)
+
+            invoice_lines = [(0, 0, {
+                'product_id': product.id,
+                'name': service_description,
+                'quantity': 1.0,
+                'price_unit': float(amount),
+                'tax_ids': [(6, 0, [])], 
+            })]
+
+            print("Invoice lines:", invoice_lines)
+            journal = request.env['account.journal'].sudo().search([
+                ('type', '=', 'sale'),
+                ('company_id', '=', 1)
+            ], limit=1)
+            print("Using journal:", journal.name)
+
+            move_vals = {
+                'partner_id': partner.id,
+                'invoice_date': fields.Date.today(),
+                'date': fields.Date.today(),
+                'move_type': 'out_invoice',
+                'journal_id': journal.id,
+                'invoice_line_ids': invoice_lines,
+                'state': 'draft',
+                'company_id': 1,
+                'ref': transaction_id,
+                'payment_reference': payment_reference or transaction_id,
+            }
+
+            print("Creating invoice with values:", move_vals)
+            invoice = request.env['account.move'].sudo().create(move_vals)
+            print("Invoice Lines After Creation:", invoice.invoice_line_ids)
+            invoice.sudo().action_post()
+            print("Invoice created and posted. ID:", invoice.id)
+
+            return http.Response(
+                json.dumps({
+                    'status': 'success',
+                    'message': 'Payment recorded successfully',
+                    'data': {
+                        'transaction_id': transaction_id,
+                        'email': email,
+                        'amount': amount,
+                        'payment_date': fields.Date.today().isoformat(),
+                        'service_type_ids': service_type_ids,
+                        'invoice_id': invoice.id
+                    }
+                }),
+                status=200,
+                headers={'Content-Type': 'application/json'}
+            )
+
+        except Exception as e:
+            print("Error occurred:", str(e))
+            return http.Response(
+                json.dumps({
+                    'status': 'error',
+                    'message': f'Error creating invoice: {str(e)}'
+                }),
+                status=500,
+                headers={'Content-Type': 'application/json'}
             )
