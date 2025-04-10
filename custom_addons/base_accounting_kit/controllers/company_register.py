@@ -708,7 +708,7 @@ class PaymentSuccess(http.Controller):
             transaction_id = data.get('transaction_id')
             email = data.get('email')
             amount = data.get('amount')
-            service_type_ids = data.get('service_type_ids')
+            # service_type_ids = data.get('service_type_ids')
             payment_method = data.get('payment_method', 'esewa')
             payment_reference = data.get('payment_reference')
             client_name = data.get('client_name', email)
@@ -726,13 +726,24 @@ class PaymentSuccess(http.Controller):
                     headers={'Content-Type': 'application/json'}
                 )
 
-            if service_type_ids and isinstance(service_type_ids, str):
+            # Normalize service_type_ids to always be a list of integers
+            service_type_ids_raw = data.get('service_type_ids')
+            service_type_ids = []
+
+            if isinstance(service_type_ids_raw, list):
+                service_type_ids = [int(x) for x in service_type_ids_raw if str(x).isdigit()]
+            elif isinstance(service_type_ids_raw, str):
                 try:
-                    service_type_ids = json.loads(service_type_ids)
+                    # Try to parse it as a JSON array
+                    service_type_ids = json.loads(service_type_ids_raw)
+                    if isinstance(service_type_ids, list):
+                        service_type_ids = [int(x) for x in service_type_ids if str(x).isdigit()]
+                    else:
+                        service_type_ids = []
                 except json.JSONDecodeError:
-                    service_type_ids = [int(x.strip()) for x in service_type_ids.split(',') if x.strip().isdigit()]
-            if not service_type_ids:
-                service_type_ids = []
+                    # Fallback: comma-separated values
+                    service_type_ids = [int(x.strip()) for x in service_type_ids_raw.split(',') if x.strip().isdigit()]
+
 
             print("Service Type IDs:", service_type_ids)
 
