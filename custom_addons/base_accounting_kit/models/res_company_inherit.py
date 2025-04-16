@@ -364,7 +364,6 @@ class emailWizard(models.TransientModel):
     def action_send_email(self):
         self.password = self.generate_password()
         template = self.env.ref("base_accounting_kit.user_registration_templates")
-
         action_name = self.env.context.get("action")
         print("Action Name", action_name)
         template = self.env.ref("base_accounting_kit.user_registration_templates")
@@ -566,6 +565,8 @@ class emailWizard(models.TransientModel):
                 limit=1,
             )
         )
+        
+        
         res_partner_user = (
             self.env["res.partner"]
             .sudo()

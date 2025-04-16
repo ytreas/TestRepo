@@ -8,6 +8,9 @@ class ResUsersInherit(models.Model):
     mobile = fields.Char(string="Mobile Number")
     can_add_users = fields.Boolean(string='Can Add Users', default=False)
     is_added_later = fields.Boolean(string='Is Added Later', default=True)
+    reset_password_otp = fields.Char(string="Password Reset OTP", copy=False)
+    reset_password_otp_expiry = fields.Datetime(string="OTP Expiration", copy=False)
+    # reset_password_verification_token = fields.Char(string="Password Reset Verification Token", copy=False)
 
     @api.model
     def create(self, vals):
