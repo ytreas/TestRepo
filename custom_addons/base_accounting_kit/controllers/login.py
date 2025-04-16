@@ -53,7 +53,12 @@ class AuthAPI(http.Controller):
                         break
                     else:
                         role = 'user'
-                        
+                # Check if this is the first login
+                is_first_login = user.is_first_login
+                
+                # If it's the first login, update the flag
+                if is_first_login:
+                    user.sudo().write({'is_first_login': False})        
                 # Generate access token
                 related_register_id = request.env['company.register'].sudo().search([('email', '=', email)]).id
                 access_payload = {
@@ -82,7 +87,8 @@ class AuthAPI(http.Controller):
                             'role': role,
                             'company_id': user.company_id.id,
                             'register_id': related_register_id if related_register_id else None,
-                            'refresh_token': refresh_token
+                            'refresh_token': refresh_token,
+                            'is_first_login': is_first_login
                         }
                     }),
                     headers=[
