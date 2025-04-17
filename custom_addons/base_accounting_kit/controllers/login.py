@@ -430,3 +430,154 @@ class PublicReportController(http.Controller):
             return request.make_response(
                 str(e), headers=[('Content-Type', 'text/plain')], status=500
             )
+
+
+    @http.route('/trading/api/change_password', type='http', auth='public', csrf=False, cors="*", methods=['POST'])
+    def change_password(self, **kw):
+        try:
+            # Authenticate the request using JWT token
+            auth_status, status_code = jwt_token_auth.JWTAuth.authenticate_request(self, request)
+            if auth_status['status'] == 'fail':
+                return request.make_response(
+                    json.dumps(auth_status),
+                    headers=[('Content-Type', 'application/json')],
+                    status=status_code
+                )
+            
+            # Parse request data
+            raw_data = request.httprequest.data
+            json_data = json.loads(raw_data)
+            
+            current_password = json_data.get('current_password')
+            new_password = json_data.get('new_password')
+            retype_password = json_data.get('retype_password')
+            
+            # Validate required fields
+            if not all([current_password, new_password, retype_password]):
+                return http.Response(
+                    status=400,
+                    response=json.dumps({
+                        "status": "fail",
+                        "data": {
+                            "message": "Current password, new password, and retyped password are required"
+                        }
+                    }),
+                    content_type="application/json"
+                )
+            
+            # Validate new password matches retyped password
+            if new_password != retype_password:
+                return http.Response(
+                    status=400,
+                    response=json.dumps({
+                        "status": "fail",
+                        "data": {
+                            "message": "New password and retyped password do not match"
+                        }
+                    }),
+                    content_type="application/json"
+                )
+            
+            # Enforce password policy
+            if len(new_password) < 8:
+                return http.Response(
+                    status=400,
+                    response=json.dumps({
+                        "status": "fail",
+                        "data": {
+                            "message": "Password must be at least 8 characters long"
+                        }
+                    }),
+                    content_type="application/json"
+                )
+            
+            # Get user ID from token
+            token = request.httprequest.headers.get("Authorization")       
+            if token and token.startswith("Bearer "):
+                bearer_token = token[len("Bearer "):]
+            else:
+                return http.Response(
+                    status=400,
+                    response=json.dumps({
+                        "status": "fail",
+                        "data": {
+                            "message": "No Authorization token provided"
+                        }
+                    }),
+                    content_type="application/json"
+                )
+            
+            payload = jwt.decode(bearer_token, SECRET_KEY, algorithms=['HS256'])
+            user_id = payload.get('user_id')
+            email = payload.get('email')
+            
+            # Get user record
+            user = request.env['res.users'].sudo().browse(user_id)
+            if not user:
+                return http.Response(
+                    status=404,
+                    response=json.dumps({
+                        "status": "fail",
+                        "data": {
+                            "message": "User not found"
+                        }
+                    }),
+                    content_type="application/json"
+                )
+            
+            # Verify current password
+            try:
+                # Check if the credentials are valid
+                uid = request.session.authenticate(request.db, email, current_password)
+                if not uid or uid != user_id:
+                    return http.Response(
+                        status=400,
+                        response=json.dumps({
+                            "status": "fail",
+                            "data": {
+                                "message": "Current password is incorrect"
+                            }
+                        }),
+                        content_type="application/json"
+                    )
+            except AccessDenied:
+                return http.Response(
+                    status=400,
+                    response=json.dumps({
+                        "status": "fail",
+                        "data": {
+                            "message": "Current password is incorrect"
+                        }
+                    }),
+                    content_type="application/json"
+                )
+            
+            # Change the password
+            user.sudo().write({'password': new_password})
+            
+            # Optionally, invalidate old tokens or sessions for security
+            # (this would require additional implementation)
+            
+            return http.Response(
+                status=200,
+                response=json.dumps({
+                    "status": "success",
+                    "data": {
+                        "message": "Password has been successfully changed"
+                    }
+                }),
+                content_type="application/json"
+            )
+        
+        except Exception as e:
+            _logger.error(f"Error in change_password: {str(e)}")
+            return http.Response(
+                status=500,
+                response=json.dumps({
+                    "status": "fail",
+                    "data": {
+                        "message": str(e)
+                    }
+                }),
+                content_type="application/json"
+            )
