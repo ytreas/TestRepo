@@ -111,6 +111,7 @@ class InventoryController(http.Controller):
                     {
                         "id": record.product_tmpl_id.id,  # Use product.template ID instead of product.product ID
                         "name": record.display_name,
+                        "name_np": record.product_tmpl_id.name_np if record.product_tmpl_id.name_np else None,
                         'on_hand_quantity': record.qty_available,
                         'unit_cost': record.free_qty,  # Ensure correct field is used for unit cost
                         'create_date': record.create_date.strftime('%Y-%m-%d %H:%M:%S'),

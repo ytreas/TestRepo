@@ -319,12 +319,11 @@ class ProductController(http.Controller):
             #             ('Content-Type', 'application/json')
             #         ],
             #     )
-            image_1920 = kw.get('image_1920')
-            if image_1920:
-                image_1920_binary =  base64.b64encode(image_1920.read())
-            else:
-                image_1920_binary = None
-
+            image_1920_binary = None
+            if 'image_1920' in request.httprequest.files:
+                image_file = request.httprequest.files.get('image_1920')
+                if image_file:
+                    image_1920_binary = base64.b64encode(image_file.read())
             
 
             # category_id = kw.get('category_id')
@@ -349,7 +348,39 @@ class ProductController(http.Controller):
             standard_price = kw.get('cost_price')
             min_qty = kw.get('min_qty')
             max_qty = kw.get('max_qty')
+            business_type_ids = kw.get('business_type_ids')
+            if isinstance(business_type_ids, str):
+                try:
+                    # Try to parse as JSON if it's a string representation of a list
+                    business_type_ids = json.loads(business_type_ids)
+                except json.JSONDecodeError:
+                    # If it's a comma-separated string
+                    business_type_ids = [int(x.strip()) for x in business_type_ids.split(',') if x.strip().isdigit()]
             
+            if not isinstance(business_type_ids, list):
+                return http.Response(
+                    status=400,
+                    response=json.dumps({
+                        "status": "fail",
+                        "data": {"message": "business_type_ids must be a list of business type IDs"}
+                    }),
+                    headers=[('Content-Type', 'application/json')]
+                )
+            
+            # Convert string IDs to integers if needed
+            business_type_ids = [int(id) for id in business_type_ids]
+            
+            # Verify all business types exist
+            business_types = request.env['company.category'].sudo().browse(business_type_ids)
+            if len(business_types) != len(business_type_ids):
+                return http.Response(
+                    status=404,
+                    response=json.dumps({
+                        "status": "fail",
+                        "data": {"message": "One or more business types not found"}
+                    }),
+                    headers=[('Content-Type', 'application/json')]
+                )
             # company_category = request.env['company.category'].search([('id', '=', category_id)], limit=1)
         
             # if not company_category:
@@ -375,7 +406,8 @@ class ProductController(http.Controller):
                 'standard_price': standard_price,
                 'min_qty': min_qty,
                 'max_qty': max_qty,
-                'image_1920': image_1920_binary if image_1920 else None
+                'image_1920': image_1920_binary if image_1920_binary else None,
+                'company_category': [(6, 0, business_type_ids)] if business_type_ids else None,
             }
             # _logger.info(f"Product Details: {product_details}")
             product = request.env['product.template'].sudo().create(product_details)
