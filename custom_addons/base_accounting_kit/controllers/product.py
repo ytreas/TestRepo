@@ -390,7 +390,8 @@ class ProductController(http.Controller):
                 http.json.dumps({
                     "status": "success", 
                     "data":{
-                        "product_id":product.id
+                        "product_id":product.id,
+                        "message": "Product created successfully"
                         }
                     }),
                 headers=[
