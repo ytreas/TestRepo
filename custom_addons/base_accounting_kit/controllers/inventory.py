@@ -286,9 +286,9 @@ class InventoryController(http.Controller):
             
             if stock_quant:
                 # Add new quantity to existing stock
-                new_quantity = stock_quant.quantity + float(counted_quantity)
-                stock_quant.sudo().write({'quantity': new_quantity})
-                message = f"Quantity of '{product.name}' increased by {counted_quantity} (New Total: {new_quantity})"
+                # new_quantity = stock_quant.quantity + float(counted_quantity)
+                stock_quant.sudo().write({'quantity': counted_quantity})
+                message = f"Quantity of '{product.name}' updated to {counted_quantity}."
             else:
                 return http.Response(
                     status=404,  
