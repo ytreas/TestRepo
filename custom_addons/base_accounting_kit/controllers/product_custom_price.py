@@ -288,8 +288,90 @@ class CustomPrices(http.Controller):
                     headers=[('Content-Type', 'application/json')],
                     status=400
                 )
+                
+            # Step 4: Validate User Company (added from create endpoint)
+            if str(custom_price.company_id.id) != str(auth_status['company_id']):
+                return request.make_response(
+                    json.dumps({'status': 'fail', 'data': {'message': 'You can only edit custom prices for your own company'}}),
+                    headers=[('Content-Type', 'application/json')],
+                    status=400
+                )
+                
+            # Step 5: Validate Product (get product information for additional validations)
+            product = custom_price.product_id
+            if not product:
+                return request.make_response(
+                    json.dumps({'status': 'fail', 'data': {'message': 'Associated product not found'}}),
+                    headers=[('Content-Type', 'application/json')],
+                    status=400
+                )
 
-            # Step 4: Prepare Values for Update
+            # Step 6: Validate min_qty and max_qty (added from create endpoint)
+            if min_qty is not None and max_qty is not None and float(min_qty) > float(max_qty):
+                return request.make_response(
+                    json.dumps({'status': 'fail', 'data': {'message': 'Maximum Qty should be greater than Minimum Qty'}}),
+                    headers=[('Content-Type', 'application/json')],
+                    status=400
+                )
+            elif min_qty is not None and max_qty is None and custom_price.max_qty and float(min_qty) > float(custom_price.max_qty):
+                return request.make_response(
+                    json.dumps({'status': 'fail', 'data': {'message': 'Maximum Qty should be greater than Minimum Qty'}}),
+                    headers=[('Content-Type', 'application/json')],
+                    status=400
+                )
+            elif min_qty is None and max_qty is not None and custom_price.min_qty and float(custom_price.min_qty) > float(max_qty):
+                return request.make_response(
+                    json.dumps({'status': 'fail', 'data': {'message': 'Maximum Qty should be greater than Minimum Qty'}}),
+                    headers=[('Content-Type', 'application/json')],
+                    status=400
+                )
+
+            # Step 7: Validate saleable_qty (added from create endpoint)
+            if saleable_qty is not None and float(saleable_qty) > product.qty_available:
+                return request.make_response(
+                    json.dumps({'status': 'fail', 'data': {'message': 'Saleable Qty should be less than Qty on Hand'}}),
+                    headers=[('Content-Type', 'application/json')],
+                    status=400
+                )
+                
+            # Step 8: Validate numerical values (additional validation)
+            if price_sell is not None:
+                try:
+                    float(price_sell)
+                except ValueError:
+                    return request.make_response(
+                        json.dumps({'status': 'fail', 'data': {'message': 'Price Sell must be a valid number'}}),
+                        headers=[('Content-Type', 'application/json')],
+                        status=400
+                    )
+                    
+            if price_cost is not None:
+                try:
+                    float(price_cost)
+                except ValueError:
+                    return request.make_response(
+                        json.dumps({'status': 'fail', 'data': {'message': 'Price Cost must be a valid number'}}),
+                        headers=[('Content-Type', 'application/json')],
+                        status=400
+                    )
+                    
+            if discount is not None:
+                try:
+                    discount_value = float(discount)
+                    if discount_value < 0 or discount_value > 100:
+                        return request.make_response(
+                            json.dumps({'status': 'fail', 'data': {'message': 'Discount must be between 0 and 100'}}),
+                            headers=[('Content-Type', 'application/json')],
+                            status=400
+                        )
+                except ValueError:
+                    return request.make_response(
+                        json.dumps({'status': 'fail', 'data': {'message': 'Discount must be a valid number'}}),
+                        headers=[('Content-Type', 'application/json')],
+                        status=400
+                    )
+
+            # Step 9: Prepare Values for Update
             update_vals = {}
 
             if price_sell is not None:
@@ -307,13 +389,17 @@ class CustomPrices(http.Controller):
             update_vals['publish'] = publish
             update_vals['free_delivery'] = free_delivery
 
-            # Step 5: Handle File Upload
+            # Step 10: Handle File Upload
             if product_featured_image:
                 update_vals['product_featured_image'] = base64.b64encode(product_featured_image.read())
 
-            # Step 6: Update Record
+            # Step 11: Update Record
             if update_vals:
                 custom_price.sudo().write(update_vals)
+                
+                # Optional: Add notification logic here for price updates
+                # Similar to what was recommended in the OneSignal integration
+                
                 return request.make_response(
                     json.dumps({
                         'status': 'success',
