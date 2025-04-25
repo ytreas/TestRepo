@@ -332,14 +332,15 @@ class Vendor(http.Controller):
                 status=400
             )
 
-    @http.route('/trading/api/company_payables_receivables', type='http', auth='public', cors="*", methods=['GET'], csrf=False)
-    def get_company_payables_receivables(self, **kwargs):
+    @http.route('/trading/api/company_payables_receivables_report', type='http', auth='public', cors="*", methods=['GET'], csrf=False)
+    def get_company_payables_receivables_report(self, **kwargs):
         """
         API endpoint to get total payables and receivables for the company,
-        along with lists of vendors/customers and their balances.
+        counts of partners, and totals per partner, with individual unpaid
+        documents embedded within each partner's summary.
+        Excludes company filter if company_id is 1.
         """
         try:
-            # Step 1: Authenticate the request and get company_id
             auth_status, status_code = jwt_token_auth.JWTAuth.authenticate_request(self, request)
             if auth_status['status'] == 'fail':
                 return request.make_response(
@@ -347,7 +348,7 @@ class Vendor(http.Controller):
                     headers=[('Content-Type', 'application/json')],
                     status=status_code
                 )
-            
+
             company_id = auth_status.get('company_id')
             if not company_id:
                  return request.make_response(
@@ -356,87 +357,128 @@ class Vendor(http.Controller):
                     status=400
                 )
 
-            MoveLine = request.env['account.move.line'].sudo()
-            
-            # Common domain filters
+            AccountMove = request.env['account.move'].sudo()
+
             base_domain = [
-                ('company_id', '=', company_id),
-                ('parent_state', '=', 'posted'),
-                ('partner_id', '!=', False),
-                ('account_id.reconcile', '=', True) # Consider only reconcilable accounts
+                ('state', '=', 'posted'),
+                ('payment_state', 'in', ['not_paid', 'partial'])
             ]
+            if company_id != 1:
+                base_domain.append(('company_id', '=', company_id))
 
-            # Step 2: Calculate Payables (Vendor Balances)
-            payable_domain = expression.AND([base_domain, [('account_id.account_type', '=', 'liability_payable')]])
-            payable_data = MoveLine.read_group(
-                payable_domain,
-                fields=['partner_id', 'amount_residual'],
-                groupby=['partner_id']
-            )
-            
+            payable_domain = expression.AND([base_domain, [('move_type', '=', 'in_invoice')]])
+            unpaid_bills = AccountMove.search(payable_domain)
+
             total_payable = 0.0
-            vendor_payables = []
-            for group in payable_data:
-                balance = group['amount_residual']
-                # Payables have negative balances (credits)
-                if balance < 0:
-                    payable_amount = abs(balance)
-                    total_payable += payable_amount
-                    partner = request.env['res.partner'].sudo().browse(group['partner_id'][0])
-                    vendor_payables.append({
-                        'vendor_id': partner.id,
-                        'vendor_name': partner.display_name,
-                        'payable_amount': payable_amount
-                    })
+            payables_per_vendor = defaultdict(lambda: {
+                'vendor_name': '',
+                'total_payable': 0.0,
+                'bill_count': 0,
+                'payable_bills': []
+            })
 
-            # Step 3: Calculate Receivables (Customer Balances)
-            receivable_domain = expression.AND([base_domain, [('account_id.account_type', '=', 'asset_receivable')]])
-            receivable_data = MoveLine.read_group(
-                receivable_domain,
-                fields=['partner_id', 'amount_residual'],
-                groupby=['partner_id']
-            )
+            for bill in unpaid_bills:
+                payable_amount = abs(bill.amount_residual_signed)
+                total_payable += payable_amount
+                vendor_id = bill.partner_id.id
+                vendor_name = bill.partner_id.display_name
+
+                bill_detail = {
+                    'bill_id': bill.id,
+                    'bill_number': bill.name,
+                    'bill_date': fields.Date.to_string(bill.invoice_date),
+                    'due_date': fields.Date.to_string(bill.invoice_date_due),
+                    'amount_due': payable_amount,
+                    'total_amount': bill.amount_total_signed
+                }
+
+                payables_per_vendor[vendor_id]['vendor_name'] = vendor_name
+                payables_per_vendor[vendor_id]['total_payable'] += payable_amount
+                payables_per_vendor[vendor_id]['bill_count'] += 1
+                payables_per_vendor[vendor_id]['payable_bills'].append(bill_detail)
+
+            payables_summary_list = [
+                {
+                    'vendor_id': vid,
+                    'vendor_name': vdata['vendor_name'],
+                    'total_payable': vdata['total_payable'],
+                    'total_payable_bill_count': vdata['bill_count'],
+                    'payable_bills': sorted(vdata['payable_bills'], key=lambda x: x['due_date'] or '9999-12-31') # Embed sorted list
+                 }
+                for vid, vdata in payables_per_vendor.items()
+            ]
+            payable_vendor_count = len(payables_per_vendor)
+
+            receivable_domain = expression.AND([base_domain, [('move_type', '=', 'out_invoice')]])
+            unpaid_invoices = AccountMove.search(receivable_domain)
 
             total_receivable = 0.0
-            customer_receivables = []
-            for group in receivable_data:
-                balance = group['amount_residual']
-                # Receivables have positive balances (debits)
-                if balance > 0:
-                    receivable_amount = balance
-                    total_receivable += receivable_amount
-                    partner = request.env['res.partner'].sudo().browse(group['partner_id'][0])
-                    customer_receivables.append({
-                        'customer_id': partner.id,
-                        'customer_name': partner.display_name,
-                        'receivable_amount': receivable_amount
-                    })
+            receivables_per_customer = defaultdict(lambda: {
+                'customer_name': '',
+                'total_receivable': 0.0,
+                'invoice_count': 0,
+                'receivable_invoices': []
+            })
 
-            # Step 4: Prepare the response
+            for invoice in unpaid_invoices:
+                receivable_amount = invoice.amount_residual_signed
+                total_receivable += receivable_amount
+                customer_id = invoice.partner_id.id
+                customer_name = invoice.partner_id.display_name
+
+                invoice_detail = {
+                    'invoice_id': invoice.id,
+                    'invoice_number': invoice.name,
+                    'invoice_date': fields.Date.to_string(invoice.invoice_date),
+                    'due_date': fields.Date.to_string(invoice.invoice_date_due),
+                    'amount_due': receivable_amount,
+                    'total_amount': invoice.amount_total_signed
+                }
+
+                receivables_per_customer[customer_id]['customer_name'] = customer_name
+                receivables_per_customer[customer_id]['total_receivable'] += receivable_amount
+                receivables_per_customer[customer_id]['invoice_count'] += 1
+                receivables_per_customer[customer_id]['receivable_invoices'].append(invoice_detail)
+
+            receivables_summary_list = [
+                {
+                    'customer_id': cid,
+                    'customer_name': cdata['customer_name'],
+                    'total_receivable': cdata['total_receivable'],
+                    'total_receivable_invoice_count': cdata['invoice_count'],
+                    'receivable_invoices': sorted(cdata['receivable_invoices'], key=lambda x: x['due_date'] or '9999-12-31') # Embed sorted list
+                }
+                for cid, cdata in receivables_per_customer.items()
+            ]
+            receivable_customer_count = len(receivables_per_customer)
+
             response_data = {
                 'status': 'success',
                 'data': {
                     'company_id': company_id,
                     'total_payable': total_payable,
                     'total_receivable': total_receivable,
-                    'vendor_payables': sorted(vendor_payables, key=lambda x: x['payable_amount'], reverse=True), # Optional: sort by amount
-                    'customer_receivables': sorted(customer_receivables, key=lambda x: x['receivable_amount'], reverse=True) # Optional: sort by amount
+                    'payable_vendor_count': payable_vendor_count,
+                    'receivable_customer_count': receivable_customer_count,
+                    'payables_by_vendor': sorted(payables_summary_list, key=lambda x: x['total_payable'], reverse=True),
+                    'receivables_by_customer': sorted(receivables_summary_list, key=lambda x: x['total_receivable'], reverse=True),
                 }
             }
 
             return request.make_response(
-                json.dumps(response_data),
+                json.dumps(response_data, default=str),
                 headers=[("Content-Type", "application/json")],
                 status=200
             )
 
         except Exception as e:
-            _logger.error(f"Error fetching payables/receivables: {str(e)}")
+            _logger.error(f"Error fetching detailed payables/receivables report: {str(e)}")
             return request.make_response(
                 json.dumps({"status": "fail", "data": {"message": f"An error occurred: {str(e)}"}}),
                 headers=[("Content-Type", "application/json")],
-                status=500 # Use 500 for internal server errors
+                status=500
             )
+
             
     @http.route('/trading/api/company_payables_receivables_detailed', type='http', auth='public', cors="*", methods=['GET'], csrf=False)
     def get_company_payables_receivables_detailed(self, **kwargs):
