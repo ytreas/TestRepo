@@ -13,7 +13,15 @@ from datetime import datetime, timedelta
 from odoo import http
 from odoo.http import request
 from odoo.exceptions import AccessError
+from odoo import http, fields, _
+from dateutil.relativedelta import relativedelta # Needed for date calculations
+import base64
+import logging
+import werkzeug.urls # For generating URL
+from odoo.tools.misc import get_lang
 
+_logger = logging.getLogger(__name__)
+  
 class GeneralLedger(http.Controller):
     @http.route('/trading/api/general_ledger', type='http', auth='public', cors="*", methods=['GET'], csrf=False)
     def get_account_general_ledger(self, **kw):
@@ -734,6 +742,257 @@ class AccountReport(http.Controller):
             )
 
         except Exception as e:
+            return request.make_response(
+                json.dumps({
+                    'status': 'fail',
+                    'data': {'message': f'An unexpected error occurred: {str(e)}'}
+                }),
+                headers=[('Content-Type', 'application/json')],
+                status=500
+            )
+
+    @http.route('/trading/api/aged_partner_balance', type='http', auth='public', csrf=False, cors="*", methods=['POST'])
+    def aged_partner_balance(self, **kw):
+        """
+        API to generate Aged Partner Balance report (Receivable or Payable)
+        Required POST data:
+        {
+            "date_from": "2025-04-25", # Analysis date (required)
+            "period_length": 30,        # Period length in days (required)
+            "result_selection": "customer", # "customer", "supplier", or "customer_supplier" (required)
+            "target_move": "posted",    # "all" or "posted" (required)
+            "company_id": 1,            # Company ID (default: from JWT token)
+            "journal_ids": [1,2,3]      # Journal IDs to include (optional, default: all)
+        }
+        """
+        hosturl = request.httprequest.environ.get("HTTP_REFERER", "n/a")
+
+        try:
+            # 1. Authenticate Request
+            auth_status, status_code = jwt_token_auth.JWTAuth.authenticate_request(self, request)
+            if auth_status['status'] == 'fail':
+                return request.make_response(
+                    json.dumps(auth_status),
+                    headers=[('Content-Type', 'application/json')],
+                    status=status_code
+                )
+
+            request_uid = request.session.uid or auth_status.get('user_id')
+            user_company_id = auth_status.get('company_id')
+            
+            # 2. Parse Request Data
+            try:
+                data = json.loads(request.httprequest.data.decode('utf-8'))
+            except (ValueError, UnicodeDecodeError):
+                return request.make_response(
+                    json.dumps({
+                        'status': 'fail',
+                        'data': {'message': 'Invalid JSON data'}
+                    }),
+                    headers=[('Content-Type', 'application/json')],
+                    status=400
+                )
+                
+            required_fields = ['date_from', 'period_length', 'result_selection', 'target_move']
+            missing_fields = [field for field in required_fields if field not in data]
+            if missing_fields:
+                return request.make_response(
+                    json.dumps({
+                        'status': 'fail',
+                        'data': {'message': f'Missing required fields: {", ".join(missing_fields)}'}
+                    }),
+                    headers=[('Content-Type', 'application/json')],
+                    status=400
+                )
+                
+            # Get date as string and convert it to date object (not the other way around)
+            date_from = data['date_from']  # Keep original string version for later use
+            
+            # Convert string to date object for the wizard
+            # try:
+            #     # date_from = fields.Date.from_string(date_from_str)
+            # except ValueError:
+            #     return request.make_response(
+            #         json.dumps({
+            #             'status': 'fail',
+            #             'data': {'message': 'Invalid date format. Use YYYY-MM-DD'}
+            #         }),
+            #         headers=[('Content-Type', 'application/json')],
+            #         status=400
+            #     )
+                
+            # Period length validation
+            period_length = int(data['period_length'])
+            if period_length <= 0:
+                return request.make_response(
+                    json.dumps({
+                        'status': 'fail',
+                        'data': {'message': 'Period length must be greater than 0'}
+                    }),
+                    headers=[('Content-Type', 'application/json')],
+                    status=400
+                )
+                
+            # Result selection validation
+            result_selection = data['result_selection']
+            if result_selection not in ['customer', 'supplier', 'customer_supplier']:
+                return request.make_response(
+                    json.dumps({
+                        'status': 'fail',
+                        'data': {'message': 'Result selection must be one of: customer, supplier, customer_supplier'}
+                    }),
+                    headers=[('Content-Type', 'application/json')],
+                    status=400
+                )
+                
+            # Target move validation
+            target_move = data['target_move']
+            if target_move not in ['all', 'posted']:
+                return request.make_response(
+                    json.dumps({
+                        'status': 'fail',
+                        'data': {'message': 'Target move must be one of: all, posted'}
+                    }),
+                    headers=[('Content-Type', 'application/json')],
+                    status=400
+                )
+                
+            # Company validation
+            company_id = data.get('company_id', user_company_id)
+            
+            # Journals (optional)
+            journal_ids = data.get('journal_ids', [])
+            if not isinstance(journal_ids, list):
+                return request.make_response(
+                    json.dumps({
+                        'status': 'fail',
+                        'data': {'message': 'Journal IDs must be a list of integers'}
+                    }),
+                    headers=[('Content-Type', 'application/json')],
+                    status=400
+                )
+            
+            # 5. Create Wizard 
+            env = request.env(user=request_uid)
+            company = env['res.company'].browse(company_id)
+            
+            # Get all journals if none specified
+            if not journal_ids:
+                journal_ids = env['account.journal'].search([]).ids
+                
+            wizard_vals = {
+                'date_from': date_from,  # Date object, not string
+                'period_length': period_length,
+                'result_selection': result_selection,
+                'target_move': target_move,
+                'company_id': company_id,
+                'journal_ids': [(6, 0, journal_ids)],
+            }
+            
+            # Create wizard and call check_report to get the report action
+            print('wizard_vals:', wizard_vals)
+            wizard = env['account.aged.trial.balance'].sudo().create(wizard_vals)
+            report_action = wizard.check_report()
+            print('report_action:', report_action)
+            # 6. Generate the PDF using the report information from check_report
+            report_name = report_action.get('report_name')
+            if not report_name:
+                report_name = 'base_accounting_kit.report_agedpartnerbalance'
+                
+            report_data = report_action.get('data', {})
+            
+            # CRITICAL FIX: Set the active_model and active_id in the environment context
+            # This ensures the report's _get_report_values method has the context it needs
+            ctx = dict(env.context,
+                    active_model='account.aged.trial.balance',
+                    active_id=wizard.id,
+                    active_ids=[wizard.id],
+                    discard_logo_check=True)  # Add discard_logo_check flag
+            env_with_context = env(context=ctx)
+            print('env_with_context:', env_with_context)
+            # Get and render the report with the correct context
+            pdf_content, content_type = env_with_context['ir.actions.report'].sudo()._render_qweb_pdf(
+                report_name, 
+                wizard.ids, 
+                data=report_data
+            )
+            print('pdf_content:', pdf_content)
+            
+            if not pdf_content:
+                return request.make_response(
+                    json.dumps({
+                        'status': 'fail',
+                        'data': {'message': 'Failed to generate PDF report'}
+                    }),
+                    headers=[('Content-Type', 'application/json')],
+                    status=500
+                )
+                
+            # 7. Store the PDF as an attachment
+            # safe_date = date_from.strftime('%Y%m%d')
+            attachment_name = f"aged_partner_balance_{result_selection}_{date_from}.pdf"
+            
+            attachment = env['ir.attachment'].sudo().create({
+                'name': attachment_name,
+                'type': 'binary',
+                'datas': base64.b64encode(pdf_content),
+                'res_model': 'account.aged.trial.balance',
+                'res_id': wizard.id,
+                'mimetype': 'application/pdf',
+            })
+            
+            # 8. Generate Download URL
+            base_url = env['ir.config_parameter'].sudo().get_param('web.base.url')
+            file_url = f"/web/content/{attachment.id}?download=true"
+            download_url = werkzeug.urls.url_join(base_url, file_url)
+            
+            # 9. Return Success Response with download link
+            return request.make_response(
+                json.dumps({
+                    'status': 'success',
+                    'data': {
+                        'message': f'Aged Partner Balance report generated successfully',
+                        'report_type': result_selection,
+                        'analysis_date': date_from,
+                        'period_length': period_length,
+                        'download_url': download_url
+                    }
+                }),
+                headers=[('Content-Type', 'application/json')],
+                status=200
+            )
+            # return request.make_response(
+            #     pdf_content,
+            #     headers=[
+            #         ('Content-Type', 'application/pdf'),
+            #         ('Content-Disposition', f'attachment; filename="{attachment_name}"')
+            #     ]
+            # )
+            
+        except (ValueError, TypeError) as e:
+            return request.make_response(
+                json.dumps({
+                    'status': 'fail',
+                    'data': {'message': f'Invalid parameter format: {str(e)}'}
+                }),
+                headers=[('Content-Type', 'application/json')],
+                status=400
+            )
+            
+        except UserError as ue:
+            # Handle specific UserError exceptions from wizard validation
+            _logger.warning(f"UserError in aged partner balance: {str(ue)}")
+            return request.make_response(
+                json.dumps({
+                    'status': 'fail',
+                    'data': {'message': str(ue)}
+                }),
+                headers=[('Content-Type', 'application/json')],
+                status=400
+            )
+            
+        except Exception as e:
+            _logger.exception("Error generating Aged Partner Balance report")
             return request.make_response(
                 json.dumps({
                     'status': 'fail',
