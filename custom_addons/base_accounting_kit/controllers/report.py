@@ -947,27 +947,27 @@ class AccountReport(http.Controller):
             download_url = werkzeug.urls.url_join(base_url, file_url)
             
             # 9. Return Success Response with download link
-            return request.make_response(
-                json.dumps({
-                    'status': 'success',
-                    'data': {
-                        'message': f'Aged Partner Balance report generated successfully',
-                        'report_type': result_selection,
-                        'analysis_date': date_from,
-                        'period_length': period_length,
-                        'download_url': download_url
-                    }
-                }),
-                headers=[('Content-Type', 'application/json')],
-                status=200
-            )
             # return request.make_response(
-            #     pdf_content,
-            #     headers=[
-            #         ('Content-Type', 'application/pdf'),
-            #         ('Content-Disposition', f'attachment; filename="{attachment_name}"')
-            #     ]
+            #     json.dumps({
+            #         'status': 'success',
+            #         'data': {
+            #             'message': f'Aged Partner Balance report generated successfully',
+            #             'report_type': result_selection,
+            #             'analysis_date': date_from,
+            #             'period_length': period_length,
+            #             'download_url': download_url
+            #         }
+            #     }),
+            #     headers=[('Content-Type', 'application/json')],
+            #     status=200
             # )
+            return request.make_response(
+                pdf_content,
+                headers=[
+                    ('Content-Type', 'application/pdf'),
+                    ('Content-Disposition', f'attachment; filename="{attachment_name}"')
+                ]
+            )
             
         except (ValueError, TypeError) as e:
             return request.make_response(
