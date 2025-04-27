@@ -37,6 +37,7 @@ class AccountCommonAccountReport(models.TransientModel):
                                  default=lambda self: self.env.company)
 
     def _build_contexts(self, data):
+        print("data in build_contexts", data)
         result = {}
         result['journal_ids'] = 'journal_ids' in data['form'] and data['form'][
             'journal_ids'] or False

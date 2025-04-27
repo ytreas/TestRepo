@@ -74,7 +74,6 @@ class AccountingCommonPartnerReport(models.TransientModel):
             ['date_from', 'date_to','date_from_bs','date_to_bs', 'journal_ids', 'target_move',
              'company_id'])[0]
         used_context = self._build_contexts(data)
-        print("sshjdfbhjdsgfbdsjkfjkdshfjkdshfkhdsjkfhjkdshfjkdshfjkdhsjfkhdsjfhjkdshfjkdsfjkhdsjkfjkdshfjkdshfjkdhsjkfhdsjkfhjkdshfjkdshfjkhdsjk",used_context)
         data['form']['used_context'] = dict(used_context,
                                             lang=get_lang(self.env).code)
         return self.with_context(discard_logo_check=True)._print_report(data)

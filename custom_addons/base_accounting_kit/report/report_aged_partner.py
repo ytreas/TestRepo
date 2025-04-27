@@ -30,8 +30,12 @@ class ReportAgedPartnerBalance(models.AbstractModel):
         # 91 - 120 : 2018-11-09 - 2018-10-11
         # +120     : 2018-10-10
         periods = {}
-        start = datetime.strptime(date_from, "%Y-%m-%d")
-        date_from = datetime.strptime(date_from, "%Y-%m-%d").date()
+        if isinstance(date_from, str):
+            start = datetime.strptime(date_from, "%Y-%m-%d")
+        else:
+            start = date_from
+        if isinstance(date_from, str):
+            date_from = datetime.strptime(date_from, "%Y-%m-%d").date()
         for i in range(5)[::-1]:
             stop = start - relativedelta(days=period_length)
             period_name = str((5 - (i + 1)) * period_length + 1) + '-' + str(
@@ -70,7 +74,7 @@ class ReportAgedPartnerBalance(models.AbstractModel):
             arg_list += (tuple(reconciled_after_date),)
         arg_list += (date_from, tuple(company_ids))
         query = '''
-            SELECT DISTINCT l.partner_id, UPPER(res_partner.name)
+            SELECT DISTINCT l.partner_id, UPPER(res_partner.name::text)
             FROM account_move_line AS l left join res_partner on l.partner_id =
              res_partner.id, account_account, account_move am
             WHERE (l.account_id = account_account.id)
@@ -80,7 +84,7 @@ class ReportAgedPartnerBalance(models.AbstractModel):
                 AND ''' + reconciliation_clause + '''
                 AND (l.date <= %s)
                 AND l.company_id IN %s
-            ORDER BY UPPER(res_partner.name)'''
+            ORDER BY UPPER(res_partner.name::text)'''
         cr.execute(query, arg_list)
         partners = cr.dictfetchall()
         # put a total of 0
@@ -244,6 +248,7 @@ class ReportAgedPartnerBalance(models.AbstractModel):
 
     @api.model
     def _get_report_values(self, docids, data=None):
+        print("data in get_report_values", data)
         if not data.get('form') or not self.env.context.get(
                 'active_model') or not self.env.context.get('active_id'):
             raise UserError(
@@ -253,7 +258,6 @@ class ReportAgedPartnerBalance(models.AbstractModel):
 
         target_move = data['form'].get('target_move', 'all')
         date_from = data['form'].get('date_from', time.strftime('%Y-%m-%d'))
-
         if data['form']['result_selection'] == 'customer':
             account_type = ['asset_receivable']
         elif data['form']['result_selection'] == 'supplier':
@@ -267,7 +271,10 @@ class ReportAgedPartnerBalance(models.AbstractModel):
                                                                ['period_length']
                                                                )
         try:
-            ad_date_from_date = datetime.strptime(data['form']['date_from'], "%Y-%m-%d").date()
+            if isinstance(date_from, str):
+                ad_date_from_date = datetime.strptime(data['form']['date_from'], "%Y-%m-%d").date()
+            else:
+                ad_date_from_date = data['form']['date_from']
             from_bs_date = nepali_datetime.date.from_datetime_date(ad_date_from_date)
             
             data['form']['date_from']=from_bs_date
