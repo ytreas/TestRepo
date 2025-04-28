@@ -32,6 +32,8 @@ class Transaction(http.Controller):
             cheque_reference = kwargs.get('cheque_reference')
             company_id = kwargs.get('company_id')
             state = kwargs.get('state')
+            date_from = kwargs.get('date_from')
+            date_to = kwargs.get('date_to')  
             
             domain = []
 
@@ -55,6 +57,10 @@ class Transaction(http.Controller):
                 domain.append(('company_id.id', '=', company_id))
             if state:
                 domain.append(('state', '=', state))
+            if date_from:
+                domain.append(('order_date', '>=', date_from))
+            if date_to:
+                domain.append(('order_date', '<=', date_to))
 
 
             

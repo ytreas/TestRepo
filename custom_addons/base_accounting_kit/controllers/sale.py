@@ -83,6 +83,8 @@ class Sale(http.Controller):
             customer = kwargs.get('customer_id')
             company = kwargs.get('company_id')
             user = kwargs.get('buyer_id')
+            date_from = kwargs.get('date_from')
+            date_to = kwargs.get('date_to')  
 
             domain = []
             
@@ -94,6 +96,10 @@ class Sale(http.Controller):
                 domain.append(('company_id.id', '=', company))
             if user:
                 domain.append(('user_id.id', '=', user))
+            if date_from:
+                domain.append(('order_date', '>=', date_from))
+            if date_to:
+                domain.append(('order_date', '<=', date_to))
                 
             sale_orders = request.env['sale.order'].sudo().search(domain)
 
