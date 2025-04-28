@@ -58,9 +58,9 @@ class Transaction(http.Controller):
             if state:
                 domain.append(('state', '=', state))
             if date_from:
-                domain.append(('order_date', '>=', date_from))
+                domain.append(('date', '>=', date_from))
             if date_to:
-                domain.append(('order_date', '<=', date_to))
+                domain.append(('date', '<=', date_to))
 
 
             
