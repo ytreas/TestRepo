@@ -97,9 +97,9 @@ class Sale(http.Controller):
             if user:
                 domain.append(('user_id.id', '=', user))
             if date_from:
-                domain.append(('order_date', '>=', date_from))
+                domain.append(('date_order', '>=', date_from))
             if date_to:
-                domain.append(('order_date', '<=', date_to))
+                domain.append(('date_order', '<=', date_to))
                 
             sale_orders = request.env['sale.order'].sudo().search(domain)
 
