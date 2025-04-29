@@ -73,6 +73,7 @@ class Transaction(http.Controller):
                     'name': transaction.name,
                     'payment_type': transaction.payment_type,
                     'customer_id': transaction.partner_id.id if transaction.partner_id.id else None,
+                    'customer_name': transaction.partner_id.name if transaction.partner_id.name else None,
                     'date': transaction.date.strftime('%Y-%m-%d %H:%M:%S'),
                     'journal_id': transaction.journal_id.id,
                     'payment_method_id': transaction.payment_method_line_id.id,
