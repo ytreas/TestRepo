@@ -530,6 +530,8 @@ class Vendor(http.Controller):
             payables_per_vendor = defaultdict(lambda: {'vendor_name': '', 'total_payable': 0.0, 'bill_count': 0})
 
             for bill in unpaid_bills:
+                if not bill.partner_id.ref_company_ids:
+                    continue
                 payable_amount = abs(bill.amount_residual_signed)
                 total_payable += payable_amount
                 vendor_id = bill.partner_id.id
@@ -573,6 +575,8 @@ class Vendor(http.Controller):
             receivables_per_customer = defaultdict(lambda: {'customer_name': '', 'total_receivable': 0.0, 'invoice_count': 0})
 
             for invoice in unpaid_invoices:
+                if not invoice.partner_id.ref_company_ids:
+                    continue
                 receivable_amount = invoice.amount_residual_signed
                 total_receivable += receivable_amount
                 customer_id = invoice.partner_id.id
