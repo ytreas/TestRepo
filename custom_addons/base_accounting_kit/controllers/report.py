@@ -932,19 +932,19 @@ class AccountReport(http.Controller):
             # safe_date = date_from.strftime('%Y%m%d')
             attachment_name = f"aged_partner_balance_{result_selection}_{date_from}.pdf"
             
-            attachment = env['ir.attachment'].sudo().create({
-                'name': attachment_name,
-                'type': 'binary',
-                'datas': base64.b64encode(pdf_content),
-                'res_model': 'account.aged.trial.balance',
-                'res_id': wizard.id,
-                'mimetype': 'application/pdf',
-            })
+            # attachment = env['ir.attachment'].sudo().create({
+            #     'name': attachment_name,
+            #     'type': 'binary',
+            #     'datas': base64.b64encode(pdf_content),
+            #     'res_model': 'account.aged.trial.balance',
+            #     'res_id': wizard.id,
+            #     'mimetype': 'application/pdf',
+            # })
             
-            # 8. Generate Download URL
-            base_url = env['ir.config_parameter'].sudo().get_param('web.base.url')
-            file_url = f"/web/content/{attachment.id}?download=true"
-            download_url = werkzeug.urls.url_join(base_url, file_url)
+            # # 8. Generate Download URL
+            # base_url = env['ir.config_parameter'].sudo().get_param('web.base.url')
+            # file_url = f"/web/content/{attachment.id}?download=true"
+            # download_url = werkzeug.urls.url_join(base_url, file_url)
             
             # 9. Return Success Response with download link
             # return request.make_response(

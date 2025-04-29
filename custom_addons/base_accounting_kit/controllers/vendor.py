@@ -378,6 +378,8 @@ class Vendor(http.Controller):
             })
 
             for bill in unpaid_bills:
+                if not bill.partner_id.ref_company_ids:
+                    continue
                 payable_amount = abs(bill.amount_residual_signed)
                 total_payable += payable_amount
                 vendor_id = bill.partner_id.id
@@ -421,6 +423,8 @@ class Vendor(http.Controller):
             })
 
             for invoice in unpaid_invoices:
+                if not invoice.partner_id.ref_company_ids:
+                    continue
                 receivable_amount = invoice.amount_residual_signed
                 total_receivable += receivable_amount
                 customer_id = invoice.partner_id.id
