@@ -20,7 +20,7 @@ class ReportAgedPartnerBalance(models.AbstractModel):
         domain = [
             ('account_id.account_type', '=', account_type),
             ('parent_state', '=', target_move),
-            ('reconciled', '=', False),
+            # ('reconciled', '=', False),
             ('move_id.payment_state', 'in', ['not_paid', 'partial'])
         ]
         if account_type == 'customer':
