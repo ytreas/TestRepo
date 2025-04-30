@@ -47,7 +47,12 @@ class ReportAgedPartnerBalance(models.AbstractModel):
                 continue
             partner_id = partner.id
             due_date = line.date
-            amount = abs(line.amount_residual)
+            amount = line.amount_residual
+            if account_type == 'customer':
+                if amount > 0:
+                    amount = amount
+                else:
+                    amount = abs(amount)
 
             if not due_date:
                 continue
