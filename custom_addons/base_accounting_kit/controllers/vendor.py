@@ -532,7 +532,7 @@ class Vendor(http.Controller):
             for bill in unpaid_bills:
                 if not bill.partner_id.ref_company_ids:
                     continue
-                payable_amount = abs(bill.amount_residual_signed)
+                payable_amount = bill.amount_residual_signed
                 total_payable += payable_amount
                 vendor_id = bill.partner_id.id
                 vendor_name = bill.partner_id.display_name
