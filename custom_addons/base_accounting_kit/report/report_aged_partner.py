@@ -24,9 +24,9 @@ class ReportAgedPartnerBalance(models.AbstractModel):
             ('move_id.state', '=', 'posted'),
             ('move_id.payment_state', 'in', ['not_paid', 'partial'])
         ]
-        if account_type == 'customer':
+        if 'asset_receivable' in account_type:
             domain.append(('move_id.move_type', '=', 'out_invoice'))
-        elif account_type == 'supplier':
+        elif 'liability_payable' in account_type:
             domain.append(('move_id.move_type', '=', 'in_invoice'))
         move_lines = MoveLine.search(domain)
 
@@ -48,14 +48,17 @@ class ReportAgedPartnerBalance(models.AbstractModel):
             partner_id = partner.id
             due_date = line.date
             amount = line.amount_residual
-            if account_type == 'liability_payable':
+            if 'liability_payable' in account_type:
                 if amount > 0:
                     amount = -amount
                 else:
                     amount = abs(amount)
             if not due_date:
                 continue
-
+            if isinstance(date_from, str):
+                date_from = datetime.strptime(date_from, "%Y-%m-%d").date()
+            else:
+                date_from = date_from
             age_days = (date_from - due_date).days
             if age_days < 0:
                 continue  # skip not-yet-due lines
