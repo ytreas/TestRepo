@@ -47,14 +47,7 @@ class ReportAgedPartnerBalance(models.AbstractModel):
                 continue
             partner_id = partner.id
             due_date = line.date
-            amount = line.amount_residual
-            if 'liability_payable' in account_type:
-                if amount > 0:
-                    amount = -amount
-                else:
-                    amount = abs(amount)
-            if not due_date:
-                continue
+            amount = abs(line.amount_residual)
             if isinstance(date_from, str):
                 date_from = datetime.strptime(date_from, "%Y-%m-%d").date()
             else:
