@@ -50,7 +50,7 @@ class ReportAgedPartnerBalance(models.AbstractModel):
             amount = line.amount_residual
             if account_type == 'liability_payable':
                 if amount > 0:
-                    amount = amount
+                    amount = -amount
                 else:
                     amount = abs(amount)
             if not due_date:
