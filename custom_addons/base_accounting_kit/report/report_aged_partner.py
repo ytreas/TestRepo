@@ -21,6 +21,7 @@ class ReportAgedPartnerBalance(models.AbstractModel):
             ('account_id.account_type', '=', account_type),
             ('parent_state', '=', target_move),
             # ('reconciled', '=', False),
+            ('move_id.state', '=', 'posted'),
             ('move_id.payment_state', 'in', ['not_paid', 'partial'])
         ]
         if account_type == 'customer':
