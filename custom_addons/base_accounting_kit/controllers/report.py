@@ -27,7 +27,7 @@ class GeneralLedger(http.Controller):
     def get_account_general_ledger(self, **kw):
         try:
             # Extract the request host URL
-            hosturl = request.httprequest.environ.get("HTTP_REFERER", "n/a")
+            # hosturl = request.httprequest.environ.get("HTTP_REFERER", "n/a") # Not used
 
             # Authenticate the request using JWT (custom authentication logic)
             auth_status, status_code = jwt_token_auth.JWTAuth.authenticate_request(self, request)
@@ -40,138 +40,194 @@ class GeneralLedger(http.Controller):
                     ],
                     status=status_code
                 )
+
+            # Extract raw data from the request body
             raw_data = request.httprequest.data
-            json_data = json.loads(raw_data)
+            try:
+                json_data = json.loads(raw_data)
+            except (ValueError, UnicodeDecodeError):
+                 return request.make_response(
+                    json.dumps({
+                        'status': 'fail',
+                        'data': {'message': 'Invalid JSON data'}
+                    }),
+                    headers=[('Content-Type', 'application/json')],
+                    status=400
+                )
 
             company_id = json_data.get('company_id')
             print("=========================================",company_id)
-            if company_id:
-                company = request.env['res.company'].sudo().search([('id', '=', int(company_id))], limit=1)
-                if not company:
-                    return http.Response(
-                        status=404,
-                        response=json.dumps({
-                            "status": "fail", 
-                            "data":{
-                                "message": "Company not found"
-                            }}),
-                        headers=[
-                            ('Content-Type', 'application/json')
-                        ],
-                    )
-            
-            # Extract raw data from the request body
-    
+            if not company_id: # Check if company_id is provided
+                 return request.make_response(
+                    json.dumps({
+                        'status': 'fail',
+                        'data': {
+                            'message': 'Company ID is required'
+                        }
+                    }),
+                    headers=[('Content-Type', 'application/json')],
+                    status=400
+                )
 
-                # Get filters from the request data
-                filter_type = json_data.get('filter')  # 'daily', 'weekly', 'monthly', 'yearly', etc.
-                from_date = json_data.get('from_date')
-                to_date = json_data.get('to_date')
+            try:
+                company_id_int = int(company_id)
+                company = request.env['res.company'].sudo().browse(company_id_int)
+                if not company.exists():
+                    raise ValueError("Company not found")
+            except (ValueError, TypeError):
+                 return request.make_response(
+                    json.dumps({
+                        "status": "fail",
+                        "data":{
+                            "message": "Invalid Company ID provided"
+                        }}),
+                    headers=[('Content-Type', 'application/json')],
+                    status=400,
+                )
 
-                # Determine the date range based on the filter type
-                if from_date and to_date:
+            # Get filters from the request data
+            filter_type = json_data.get('filter')  # 'daily', 'weekly', 'monthly', 'yearly', etc.
+            from_date = json_data.get('from_date')
+            to_date = json_data.get('to_date')
+            vendor_id = json_data.get('vendor_id') # New filter: vendor_id
+            business_type_id = json_data.get('business_type_id') # New filter: business_type_id
+
+            # Determine the date range based on the filter type
+            date_from = None
+            date_to = None
+            if from_date and to_date:
+                try:
                     date_from = datetime.strptime(from_date, '%Y-%m-%d')
                     date_to = datetime.strptime(to_date, '%Y-%m-%d')
+                except ValueError:
+                     return request.make_response(
+                        json.dumps({
+                            'status': 'fail',
+                            'data': {'message': 'Invalid date format. Use YYYY-MM-DD'}
+                        }),
+                        headers=[('Content-Type', 'application/json')],
+                        status=400
+                    )
+            elif filter_type: # Only apply default range if filter_type is specified without dates
+                date_to_dt = datetime.now()
+                if filter_type == 'daily':
+                    date_from = date_to_dt - timedelta(days=1)
+                elif filter_type == 'weekly':
+                    date_from = date_to_dt - timedelta(weeks=1)
+                elif filter_type == 'monthly':
+                    date_from = date_to_dt - timedelta(days=30) # Approximation
+                elif filter_type == 'yearly':
+                    date_from = date_to_dt - timedelta(days=365) # Approximation
                 else:
-                    # Default to today if no date range is provided
-                    date_to = datetime.now()
-                    if filter_type == 'daily':
-                        date_from = date_to - timedelta(days=1)
-                    elif filter_type == 'weekly':
-                        date_from = date_to - timedelta(weeks=1)
-                    elif filter_type == 'monthly':
-                        date_from = date_to - timedelta(days=30)
-                    elif filter_type == 'yearly':
-                        date_from = date_to - timedelta(days=365)
-                    else:
-                        date_from = datetime.min  # No filtering, get all records
+                    # Handle unknown filter_type or default to no date filter if desired
+                    pass # date_from remains None
+                date_to = date_to_dt # Set date_to for filter types
 
-                # Convert dates to string format for Odoo queries
-                date_from_str = date_from.strftime('%Y-%m-%d') if date_from else None
-                date_to_str = date_to.strftime('%Y-%m-%d') if date_to else None
-                print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-                # Search for move lines within the date range
-                move_lines = request.env['account.move.line'].sudo().search([
-                    ('company_id', '=', company.id), 
-                    ('date', '>=', date_from_str),
-                    ('date', '<=', date_to_str),
-                ])
-            
-                # Group move lines by account_id
-                grouped_data = {}
-                for line in move_lines:
-                    account_id = line.account_id.id  # Group by account_id
-                    if account_id not in grouped_data:
-                        grouped_data[account_id] = {
-                            'account_id': line.account_id.name if line.account_id else None,
-                            'move_lines': []
-                        }
-                    move_line_dict = {
-                        'date': line.date.strftime('%Y-%m-%d') if line.date else None,
-                        'date_range_fy_id': line.date_range_fy_id.name if line.date_range_fy_id else None,
-                        'move_name': line.move_id.name if line.move_id else None,
-                        'partner_id': line.partner_id.name if line.partner_id else None,
-                        'name': line.name if line.name else None,
-                        'debit': line.debit if line.debit else None,
-                        'credit': line.credit if line.credit else None,
-                        'balance': line.balance if line.balance else None,
-                        'matching_number': line.matching_number if line.matching_number else None,
-                        'invoice_date': line.move_id.invoice_date.strftime('%Y-%m-%d') if line.move_id and line.move_id.invoice_date else None,
-                        'company_id': line.company_id.name if line.company_id else None,
-                        'journal_id': line.journal_id.name if line.journal_id else None,
-                        'account_id': line.account_id.name if line.account_id else None,
-                        'ref': line.ref if line.ref else None,
-                        'product_id': line.product_id.name if line.product_id else None,
-                        'tax_ids': [tax.name for tax in line.tax_ids] if line.tax_ids else None,
-                        'discount_date': line.discount_date.strftime('%Y-%m-%d') if line.discount_date else None,
-                        'discount_amount_currency': line.discount_amount_currency if line.discount_amount_currency else None,
-                        'tax_line_id': line.tax_line_id.name if line.tax_line_id else None,
-                        'date_maturity': line.date_maturity.strftime('%Y-%m-%d') if line.date_maturity else None,
-                        'amount_residual': line.amount_residual if line.amount_residual else None,
-                        'amount_residual_currency': line.amount_residual_currency if line.amount_residual_currency else None,
+            # Convert dates to string format for Odoo queries
+            date_from_str = date_from.strftime('%Y-%m-%d') if date_from else None
+            date_to_str = date_to.strftime('%Y-%m-%d') if date_to else None
+            # Build the search domain
+            domain = [('company_id', '=', company.id)]
+            if date_from_str:
+                domain.append(('date', '>=', date_from_str))
+            if date_to_str:
+                domain.append(('date', '<=', date_to_str))
+
+            # Add vendor filter
+            if vendor_id:
+                try:
+                    domain.append(('partner_id', '=', int(vendor_id)))
+                except (ValueError, TypeError):
+                    pass # Silently ignore invalid vendor_id for now
+
+            # Add business type filter
+            # Assuming 'business_type_id' is a field on 'account.move.line'
+            if business_type_id:
+                try:
+                    domain.append(('product_id.product_tmpl_id.company_category', 'in', [int(business_type_id)]))
+                except (ValueError, TypeError):
+                    print("Invalid business_type_id provided")
+                    # Optionally return error for invalid business_type_id
+                    pass # Silently ignore invalid business_type_id for now
+                
+            # Search for move lines based on the constructed domain
+            move_lines = request.env['account.move.line'].sudo().search(domain)
+
+            # Group move lines by account_id
+            grouped_data = {}
+            for line in move_lines:
+                account_id = line.account_id.id  # Group by account_id
+                if account_id not in grouped_data:
+                    grouped_data[account_id] = {
+                        'account_id': line.account_id.id, # Send ID
+                        'account_name': line.account_id.name if line.account_id else None, # Send Name
+                        'move_lines': []
                     }
-                    grouped_data[account_id]['move_lines'].append(move_line_dict)
+                move_line_dict = {
+                    'date': line.date.strftime('%Y-%m-%d') if line.date else None,
+                    'date_range_fy_id': line.date_range_fy_id.name if line.date_range_fy_id else None,
+                    'move_name': line.move_id.name if line.move_id else None,
+                    'partner_id': line.partner_id.id if line.partner_id else None, # Send ID
+                    'partner_name': line.partner_id.name if line.partner_id else None, # Send Name
+                    'name': line.name if line.name else None,
+                    'debit': line.debit if line.debit else 0.0, # Default to 0.0
+                    'credit': line.credit if line.credit else 0.0, # Default to 0.0
+                    'balance': line.balance if line.balance else 0.0, # Default to 0.0
+                    'matching_number': line.matching_number if line.matching_number else None,
+                    'invoice_date': line.move_id.invoice_date.strftime('%Y-%m-%d') if line.move_id and line.move_id.invoice_date else None,
+                    'company_id': line.company_id.id if line.company_id else None, # Send ID
+                    'company_name': line.company_id.name if line.company_id else None, # Send Name
+                    'journal_id': line.journal_id.id if line.journal_id else None, # Send ID
+                    'journal_name': line.journal_id.name if line.journal_id else None, # Send Name
+                    'account_id': line.account_id.id if line.account_id else None, # Send ID (redundant but maybe useful)
+                    'account_name_line': line.account_id.name if line.account_id else None, # Send Name (redundant but maybe useful)
+                    'ref': line.ref if line.ref else None,
+                    'product_id': line.product_id.id if line.product_id else None, # Send ID
+                    'product_name': line.product_id.name if line.product_id else None, # Send Name
+                    'tax_ids': [{'id': tax.id, 'name': tax.name} for tax in line.tax_ids] if line.tax_ids else [], # Send list of dicts
+                    'discount_date': line.discount_date.strftime('%Y-%m-%d') if line.discount_date else None,
+                    'discount_amount_currency': line.discount_amount_currency if line.discount_amount_currency else None,
+                    'tax_line_id': line.tax_line_id.id if line.tax_line_id else None, # Send ID
+                    'tax_line_name': line.tax_line_id.name if line.tax_line_id else None, # Send Name
+                    'date_maturity': line.date_maturity.strftime('%Y-%m-%d') if line.date_maturity else None,
+                    'amount_residual': line.amount_residual if line.amount_residual else 0.0, # Default to 0.0
+                    'amount_residual_currency': line.amount_residual_currency if line.amount_residual_currency else 0.0, # Default to 0.0
+                    # Add business_type_id if it exists on the model
+                    'business_type_id': line.business_type_id.id if hasattr(line, 'business_type_id') and line.business_type_id else None, # Send ID
+                    'business_type_name': line.business_type_id.name if hasattr(line, 'business_type_id') and line.business_type_id else None, # Send Name
+                }
+                grouped_data[account_id]['move_lines'].append(move_line_dict)
 
-                # Convert grouped data into a list format for response
-                final_data = list(grouped_data.values())
+            # Convert grouped data into a list format for response
+            final_data = list(grouped_data.values())
 
-
-
-                # Return the final response
-                return request.make_response(
-                    json.dumps({                    
-                    'status': 'success',
-                    'data': {
-                        'general_ledger': final_data,
-                        'filter_applied': {
-                            'filter_type': filter_type,
-                            'from_date': date_from_str,
-                            'to_date': date_to_str
-                        }
-                    }}),
-                    headers=[('Content-Type', 'application/json')]
-                )
-            else:
-                return request.make_response(
-                json.dumps({
-                    'status': 'fail',
-                    'data': {
-                        'message': 'Company required'
-                    }
-                }),
-                headers=[('Content-Type', 'application/json')],
-                status=400
-            )
-        except AccessError:
+            # Return the final response
             return request.make_response(
                 json.dumps({
+                'status': 'success',
+                'data': {
+                    'general_ledger': final_data,
+                    'filter_applied': {
+                        'filter_type': filter_type if filter_type else None,
+                        'from_date': date_from_str if date_from_str else None,
+                        'to_date': date_to_str if date_to_str else None,
+                        'company_id': company_id_int if company_id else None, # Include applied company filter
+                        'vendor_id': int(vendor_id) if vendor_id else None, # Include applied vendor filter
+                        'business_type_id': int(business_type_id) if business_type_id else None # Include applied business type filter
+                    }
+                }}),
+                headers=[('Content-Type', 'application/json')]
+            )
+        except ValueError as ve:
+             return request.make_response(
+                json.dumps({
                     'status': 'fail',
                     'data': {
-                        'message': 'Access Denied'
+                        'message': str(ve)
                     }
                 }),
                 headers=[('Content-Type', 'application/json')],
-                status=403
+                status=400 # Bad Request
             )
 
         except Exception as e:
