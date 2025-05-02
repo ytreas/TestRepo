@@ -91,6 +91,7 @@ class GeneralLedger(http.Controller):
             to_date = json_data.get('to_date')
             vendor_id = json_data.get('vendor_id') # New filter: vendor_id
             business_type_id = json_data.get('business_type_id') # New filter: business_type_id
+            journal_id = json_data.get('journal_id') # New filter: journal_id
 
             # Determine the date range based on the filter type
             date_from = None
@@ -149,7 +150,11 @@ class GeneralLedger(http.Controller):
                     print("Invalid business_type_id provided")
                     # Optionally return error for invalid business_type_id
                     pass # Silently ignore invalid business_type_id for now
-                
+            if journal_id:
+                try:
+                    domain.append(('journal_id', '=', int(journal_id)))
+                except (ValueError, TypeError):
+                    pass
             # Search for move lines based on the constructed domain
             move_lines = request.env['account.move.line'].sudo().search(domain)
 
