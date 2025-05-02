@@ -159,7 +159,7 @@ class GeneralLedger(http.Controller):
                 account_id = line.account_id.id  # Group by account_id
                 if account_id not in grouped_data:
                     grouped_data[account_id] = {
-                        'account_id': line.account_id.id, # Send ID
+                        'account_id': line.account_id.id if line.account_id.id else None, # Send ID
                         'account_name': line.account_id.name if line.account_id else None, # Send Name
                         'move_lines': []
                     }
