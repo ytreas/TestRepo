@@ -275,6 +275,8 @@ class ProfitLossController(http.Controller):
             from_date = json_data.get('from_date')
             to_date = json_data.get('to_date')
             company_id = json_data.get('company_id')  # Add company filtering
+            vendor_id = json_data.get('vendor_id') # New filter: vendor_id
+            journal_id = json_data.get('journal_id') # New filter: journal_id
             print(f"filter_type: {filter_type}")
 
             # Determine the date range based on filter type
@@ -303,6 +305,10 @@ class ProfitLossController(http.Controller):
             domain = [('date', '>=', date_from_str), ('date', '<=', date_to_str)]
             if company_id and company_id is not 1:
                 domain.append(('company_id.id', '=', company_id))
+            if vendor_id:
+                domain.append(('partner_id', '=', int(vendor_id)))
+            if journal_id:
+                domain.append(('journal_id', '=', int(journal_id)))
 
             # Fetch account moves
             moves = request.env['account.move'].sudo().search(domain)
@@ -445,6 +451,8 @@ class AccountReport(http.Controller):
             from_date = json_data.get('from_date')
             to_date = json_data.get('to_date')
             company_id = json_data.get('company_id')  # Get company ID for filtering
+            vendor_id = json_data.get('vendor_id') # New filter: vendor_id
+            journal_id = json_data.get('journal_id') # New filter: journal_id
 
             print(f"filter_type: {filter_type}")
 
@@ -474,6 +482,10 @@ class AccountReport(http.Controller):
             domain = [('date', '>=', date_from_str), ('date', '<=', date_to_str)]
             if company_id:
                 domain.append(('company_id.id', '=', company_id))
+            if vendor_id: 
+                domain.append(('partner_id', '=', int(vendor_id)))
+            if journal_id:
+                domain.append(('journal_id', '=', int(journal_id)))
 
             # Search for moves within the date range and company filter
             moves = request.env['account.move'].sudo().search(domain)
@@ -577,6 +589,8 @@ class AccountReport(http.Controller):
             from_date = json_data.get('from_date')
             to_date = json_data.get('to_date')
             company_id = json_data.get('company_id')  # Extract company ID for filtering
+            vendor_id = json_data.get('vendor_id') # New filter: vendor_id
+            journal_id = json_data.get('journal_id') # New filter: journal_id
 
             print(f"filter_type: {filter_type}")
 
@@ -605,7 +619,10 @@ class AccountReport(http.Controller):
             domain = [('date', '>=', date_from_str), ('date', '<=', date_to_str)]
             if company_id:
                 domain.append(('company_id.id', '=', company_id))
-
+            if vendor_id:
+                domain.append(('partner_id', '=', int(vendor_id)))
+            if journal_id:
+                domain.append(('journal_id', '=', int(journal_id)))    
             # Fetch day book data with company filtering
             moves = request.env['account.move'].sudo().search(domain)
 
@@ -701,6 +718,8 @@ class AccountReport(http.Controller):
             from_date = json_data.get('from_date')
             to_date = json_data.get('to_date')
             company_id = json_data.get('company_id')  # Get company ID for filtering (optional)
+            vendor_id = json_data.get('vendor_id') # New filter: vendor_id
+            journal_id = json_data.get('journal_id') # New filter: journal_id
             
             date_to = datetime.now()
             if from_date and to_date: 
@@ -734,7 +753,10 @@ class AccountReport(http.Controller):
                 ]
                 if company_id:
                     domain.append(('company_id', '=', company_id))
-                
+                if vendor_id:
+                    domain.append(('partner_id', '=', int(vendor_id)))
+                if journal_id:
+                    domain.append(('journal_id', '=', int(journal_id)))
                 move_lines = request.env['account.move.line'].sudo().search(domain)
                 debit = sum(move_line.debit for move_line in move_lines)
                 credit = sum(move_line.credit for move_line in move_lines)
@@ -745,6 +767,10 @@ class AccountReport(http.Controller):
             domain = []
             if company_id:
                 domain.append(('company_id', '=', company_id))
+            # if vendor_id:
+            #     domain.append(('partner_id', '=', int(vendor_id)))
+            # if journal_id:
+            #     domain.append(('journal_id', '=', int(journal_id)))
             
             accounts = request.env['account.account'].sudo().search(domain)
             account_dict = {}
