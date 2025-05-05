@@ -216,9 +216,14 @@ class GeneralLedger(http.Controller):
                         'filter_type': filter_type if filter_type else None,
                         'from_date': date_from_str if date_from_str else None,
                         'to_date': date_to_str if date_to_str else None,
-                        'company_id': company_id_int if company_id else None, # Include applied company filter
-                        'vendor_id': int(vendor_id) if vendor_id else None, # Include applied vendor filter
-                        'business_type_id': int(business_type_id) if business_type_id else None # Include applied business type filter
+                        'company_name': company.name if company else None,
+                        'company_id': company_id_int if company_id else None,
+                        'vendor_name': request.env['res.partner'].sudo().browse(int(vendor_id)).name if vendor_id and vendor_id.isdigit() else None,
+                        'vendor_id': int(vendor_id) if vendor_id else None,
+                        'business_type_name': request.env['company.category'].sudo().browse(int(business_type_id)).name if business_type_id and business_type_id.isdigit() else None,
+                        'business_type_id': int(business_type_id) if business_type_id else None,
+                        'journal_name': request.env['account.journal'].sudo().browse(int(journal_id)).name if journal_id and journal_id.isdigit() else None,
+                        'journal_id': int(journal_id) if journal_id else None,
                     }
                 }}),
                 headers=[('Content-Type', 'application/json')]
@@ -380,7 +385,17 @@ class ProfitLossController(http.Controller):
                     sum(info['credit'] - info['debit'] for account_id, info in accounts.items() if account_id in income_account_ids) -
                     sum(info['debit'] - info['credit'] for account_id, info in accounts.items() if account_id in expense_account_ids),
                     2
-                )
+                ),
+                'filter_applied': {
+                        'filter_type': filter_type if filter_type else None,
+                        'from_date': date_from_str if date_from_str else None,
+                        'to_date': date_to_str if date_to_str else None,
+                        # 'company_name': company.name if company else None,
+                        'vendor_name': request.env['res.partner'].sudo().browse(int(vendor_id)).name if vendor_id and vendor_id.isdigit() else None,
+                        'vendor_id': int(vendor_id) if vendor_id else None,
+                        'journal_name': request.env['account.journal'].sudo().browse(int(journal_id)).name if journal_id and journal_id.isdigit() else None,
+                        'journal_id': int(journal_id) if journal_id else None,
+                }
             }
 
             return request.make_response(
@@ -526,7 +541,17 @@ class AccountReport(http.Controller):
                             'balance': round(info['debit'] - info['credit'], 2)
                         }
                         for  info in trial_balance_data.values()
-                    ]
+                    ],
+                    'filter_applied': {
+                            'filter_type': filter_type if filter_type else None,
+                            'from_date': date_from_str if date_from_str else None,
+                            'to_date': date_to_str if date_to_str else None,
+                            # 'company_name': company.name if company else None,
+                            'vendor_name': request.env['res.partner'].sudo().browse(int(vendor_id)).name if vendor_id and vendor_id.isdigit() else None,
+                            'vendor_id': int(vendor_id) if vendor_id else None,
+                            'journal_name': request.env['account.journal'].sudo().browse(int(journal_id)).name if journal_id and journal_id.isdigit() else None,
+                            'journal_id': int(journal_id) if journal_id else None,
+                    }
                 }
 
             return request.make_response(
@@ -654,7 +679,17 @@ class AccountReport(http.Controller):
                     'day_book': [
                         {'date': date, 'entries': entries}
                         for date, entries in sorted(day_book_data.items())
-                    ]
+                    ],
+                    'filter_applied': {
+                            'filter_type': filter_type if filter_type else None,
+                            'from_date': date_from_str if date_from_str else None,
+                            'to_date': date_to_str if date_to_str else None,
+                            # 'company_name': company.name if company else None,
+                            'vendor_name': request.env['res.partner'].sudo().browse(int(vendor_id)).name if vendor_id and vendor_id.isdigit() else None,
+                            'vendor_id': int(vendor_id) if vendor_id else None,
+                            'journal_name': request.env['account.journal'].sudo().browse(int(journal_id)).name if journal_id and journal_id.isdigit() else None,
+                            'journal_id': int(journal_id) if journal_id else None,
+                    }
                 }
 
             return request.make_response(
@@ -807,7 +842,17 @@ class AccountReport(http.Controller):
 
             # Prepare formatted response
             formatted_balance_sheet = {
-                'balance_sheet': hierarchical_data
+                'balance_sheet': hierarchical_data,
+                'filter_applied': {
+                        'filter_type': filter_type if filter_type else None,
+                        'from_date': date_from_str if date_from_str else None,
+                        'to_date': date_to_str if date_to_str else None,
+                        # 'company_name': company.name if company else None,
+                        'vendor_name': request.env['res.partner'].sudo().browse(int(vendor_id)).name if vendor_id and vendor_id.isdigit() else None,
+                        'vendor_id': int(vendor_id) if vendor_id else None,
+                        'journal_name': request.env['account.journal'].sudo().browse(int(journal_id)).name if journal_id and journal_id.isdigit() else None,
+                        'journal_id': int(journal_id) if journal_id else None,
+                }
             }
             
             return request.make_response(
