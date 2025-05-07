@@ -135,10 +135,16 @@ class ReportPartnerLedger(models.AbstractModel):
         
         
         try:
-            ad_date_from_date = datetime.strptime(data['form']['date_from'], "%Y-%m-%d").date()
+            if isinstance(data['form']['date_from'], str):
+                ad_date_from_date = datetime.strptime(data['form']['date_from'], "%Y-%m-%d").date()
+            else:
+                ad_date_from_date = data['form']['date_from']
             from_bs_date = nepali_datetime.date.from_datetime_date(ad_date_from_date)
             
-            ad_date_to_date = datetime.strptime(data['form']['date_to'], "%Y-%m-%d").date()
+            if isinstance(data['form']['date_to'], str):
+                ad_date_to_date = datetime.strptime(data['form']['date_to'], "%Y-%m-%d").date()
+            else:
+                ad_date_to_date = data['form']['date_to']
             to_bs_date = nepali_datetime.date.from_datetime_date(ad_date_to_date)
             
             data['form']['date_from']=from_bs_date
