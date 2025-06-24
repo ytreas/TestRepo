@@ -29,6 +29,7 @@ access_service_execution_line,access_service_execution_line,model_service_execut
 access_parts_replaced,access_parts_replaced,model_parts_replaced,group_vehicle_admin,1,1,1,1
 
 access_driver_details,access_driver_details,model_driver_details,group_vehicle_admin,1,1,1,1
+access_helper_details,access_helper_details,model_helper_details,group_vehicle_admin,1,1,1,1
 access_duty_allocation,access_duty_allocation,model_duty_allocation,group_vehicle_admin,1,1,1,1
 access_driver_performance,access_driver_performance,model_driver_performance,group_vehicle_admin,1,1,1,1
 access_violations_type,access_violations_type,model_violations_type,group_vehicle_admin,1,1,1,1
@@ -65,6 +66,7 @@ access_ir_model_fields,access_ir_model_fields,model_ir_model_fields,group_vehicl
 access_fleet_route,access_fleet_route,model_fleet_route,group_vehicle_admin,1,1,1,1
 access_fleet_route_checkpoint,access_fleet_route_checkpoint,model_fleet_route_checkpoint,group_vehicle_admin,1,1,1,1
 access_data_route,access_data_route,model_data_route,group_vehicle_admin,1,1,1,1
+access_checkpoint_data,access_checkpoint_data,model_checkpoint_data,group_vehicle_admin,1,1,1,1
 access_fine_details,access_fine_details,model_fine_details,group_vehicle_admin,1,1,1,1
 access_service_execution_line,access_service_execution_line,model_service_execution_line,group_vehicle_admin,1,1,1,1
 
@@ -83,6 +85,8 @@ access_vehicle_number_wizard,access_vehicle_number_wizard,model_vehicle_number_w
 
 access_vehicle_brand,access_vehicle_brand,model_vehicle_brand,group_vehicle_admin,1,1,1,1
 access_vehicle_model,access_vehicle_model,model_vehicle_model,group_vehicle_admin,1,1,1,1
+
+access_sparrow_sms,access_sparrow_sms,model_sparrow_sms,group_vehicle_admin,1,1,1,1
 
 
 access_report_fuel_consumption,access.report.vehicle_management.fuel_consumption_report_template,model_report_vehicle_management_fuel_consumption_report_template,base.group_user,1,1,1,1

@@ -8,13 +8,16 @@
             <form string="Vehicle Company" class="my_wizard_custom_sizei">
             <sheet>
             
-                <!-- <group>
-                    <field name="vehicle_company"/>
-                    <field name="date"/>
-                </group> -->
+                <group>
+                    <field name="filter_on"/>
+                    <field name="date_from" invisible = "not filter_on"/>
+                    <field name="date_to" invisible = "not filter_on"/>
+                    <field name="filter_type" invisible = "not filter_on"/>
+                </group>
                 <p>Do you want to print vehicle information.</p>
                 <footer>
-                    <button string="Print" type="object" name="print_report" class="btn-primary"/>
+                    <button string="Print" type="object" name="print_report" class="btn-primary" invisible = "filter_on"/>
+                    <button string="View Record" type="object" name="view_report" class="btn-primary" invisible = "not filter_on"/>
                     <button string="Cancel" special="cancel" class="btn-secondary"/>
                 </footer>
             </sheet>

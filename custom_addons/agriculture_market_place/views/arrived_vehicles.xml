@@ -1,93 +1,10 @@
 <odoo>
-    <!-- Tree View -->
-    <record id="view_vehicle_number_tree" model="ir.ui.view">
-        <field name="name">vehicle.number.tree</field>
-        <field name="model">vehicle.number</field>
-        <field name="arch" type="xml">
-            <tree string="Arrived Vehicle's Numbers" default_order="create_date desc">
-                <field name="check_in_date_bs"/>
-                <field name="final_number"/>
-                <field name="duration" string="Duration in hours" optional="hide"/>
-                <field name="hours" optional="hide"/> 
-                <field name="minutes" optional="hide"/> 
-                <field name="seconds" optional="hide"/>
-
-                <field name="vehicle_classification" optional="hide"/> 
-
-                <field name="zonal_code" optional="hide"/> 
-                <field name="vehicle_type" optional="hide"/>
-                <field name="vehicle_number" optional="hide"/> 
-                <field name="custom_number" optional="hide"/>
-                <field name="lot_number" optional="hide"/>  
-                <field name="province" optional="hide"/>
-                <field name="province_number" optional="hide"/>
-
-                <field name="province_code" optional="hide"/>
-                <field name="vehicle_code" optional="hide"/>
-
-                <!-- <field name="two_wheeler" optional="hide"/>
-                <field name="four_wheeler" optional="hide"/>
-                <field name="heavy" optional="hide"/> -->
-            </tree>
-        </field>
-    </record>
-    <record id="view_vehicle_number_form" model="ir.ui.view">
-        <field name="name">vehicle.number.form</field>
-        <field name="model">vehicle.number</field>
-        <field name="arch" type="xml">
-            <form string="Arrived Vehicle's Numbers">
-            <group>
-            <group>
-                <field name="check_in_date" options="{'corresponding_field':'check_in_date_bs'}"/>
-                <field name="number"/>
-                <field name="duration" string="Duration in hours" optional="hide"/>
-                <field name="hours" optional="hide"/> 
-                <field name="minutes" optional="hide"/> 
-                <field name="seconds" optional="hide"/>
-            </group>
-            <group>
-                <field name="vehicle_classification" optional="hide"/> 
-                <field name="vehicle_system" optional="hide"/> 
-                <field name="zonal_code" optional="hide"/> 
-                <field name="vehicle_type" optional="hide"/>
-                <field name="vehicle_number" optional="hide"/> 
-                <field name="custom_number" optional="hide"/>
-                <field name="lot_number" optional="hide"/>  
-                <field name="province" optional="hide"/>
-                <field name="zonal_id" optional="hide"/>
-                <field name="province_number" optional="hide"/>
-                 <!-- <field name="mobile_number" optional="hide"/> -->
-            </group>
-            <group>
-                <field name="province_code" optional="hide"/>
-                <field name="vehicle_code" optional="hide"/>
-                <!-- <field name="two_wheeler" optional="hide"/>
-                <field name="four_wheeler" optional="hide"/>
-                <field name="heavy" optional="hide"/> -->
-            </group>
-            </group>
-            </form>
-        </field>
-    </record>
-
-    <!-- Search View -->
-    <record id="view_vehicle_number_search" model="ir.ui.view">
-        <field name="name">amp.vehicle.number.search</field>
-        <field name="model">vehicle.number</field>
-        <field name="arch" type="xml">
-            <search string="Search Vehicle Numbers">
-                <field name="check_in_date_bs"/>
-                <filter name="filter_today" string="Today's Vehicles" domain="[('check_in_date', '=', context_today())]"/>
-            </search>
-        </field>
-    </record>
-
     <!-- Action -->
     <record id="action_vehicle_number" model="ir.actions.act_window">
         <field name="name">AMP Arrived Vehicle Numbers</field>
         <field name="res_model">vehicle.number</field>
         <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="view_vehicle_number_tree"/>
+        <field name="view_id" ref="vehicle_management.view_vehicle_number_tree"/>
         <!-- <field name="domain">[('date', 'not in', [False,None])] </field>  -->
     </record>
 

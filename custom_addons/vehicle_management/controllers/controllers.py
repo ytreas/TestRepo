@@ -20,7 +20,7 @@
 #             'object': obj
 #         })
 
-from odoo import http
+from odoo import http, fields
 from odoo.http import request
 
 class CustomActions(http.Controller):
@@ -36,3 +36,32 @@ class CustomActions(http.Controller):
         # Redirect the user to the correct URL
         return request.redirect(action_url)
 
+class VehicleAPI(http.Controller):
+
+    @http.route('/api/update_vlaue', type='json', auth='user', methods=['POST'], csrf=False)
+    def update_location(self, **kwargs):
+        vehicle_id = kwargs.get('vehicle_id')
+        # lat = kwargs.get('latitude')
+        # lon = kwargs.get('longitude')
+        route_id = kwargs.get('route_id')
+        checkpoint_name = kwargs.get('check_point_name')
+        space_available = kwargs.get('space_available')
+        
+        route = request.env['fleet.route'].sudo().browse(route_id)
+        if not route:
+            return {'status': 'failed', 'message': 'Route not found'}
+        else:
+            checkpoint = request.env['fleet.route.checkpoint'].sudo().search([
+                ('route_id', '=', route.id),
+                ('name', '=', checkpoint_name)
+            ], limit=1)
+            if not checkpoint:
+                return {'status': 'error', 'message': 'Checkpoint not found'}
+
+ 
+            checkpoint.write({
+                'space_available': space_available,
+                'reached': True,
+                'date': fields.Datetime.now()
+            })
+            return {'status': 'success'}

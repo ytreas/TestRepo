@@ -16,7 +16,18 @@ class VehicleNumberWizard(models.TransientModel):
     vehicle_company = fields.Many2one('custom.vehicle.company', string='Vehicle Company')
     # new_number = fields.Char(string='New Vehicle Number', required=True)
     date = fields.Date(string="Date",default=fields.Date.today)
-
+    date_from = fields.Date(string="Date From")
+    date_to = fields.Date(string="Date To")
+    filter_type = fields.Selection([
+        ('all', 'All'),
+        ('bluebook', 'Bluebook'),
+        ('pollution', 'Pollution'),
+        ('permit', 'Permit'),
+        ('insurance', 'Insurance'),
+        ('service', 'Service'),
+    ], string="Filter Type", default='all')
+    
+    filter_on = fields.Boolean(string="Filter On", default=False)
     def print_report(self):
         # print("Full context in wizard:", self.env.context)
         selected_ids = self.env.context.get('default_selected_ids', [])
@@ -24,8 +35,6 @@ class VehicleNumberWizard(models.TransientModel):
         date_bs = nepali_datetime.date.from_datetime_date(self.date).strftime('%Y-%m-%d')
         company_name = self.env.user.company_id.name
         vehicle_company_name = self.vehicle_company.company_name
-
-        # print("#########################",company_name)
         prepared_data = {
             'two_wheeler': {},
             'four_wheeler': {},
@@ -329,3 +338,39 @@ class VehicleNumberWizard(models.TransientModel):
         #         'prepared_data': prepared_data,  # Pass the prepared data as context
         #     },
         # }
+    def view_report(self):
+        domain = []
+        if self.filter_type == 'bluebook' and self.date_from and self.date_to:
+            domain.append(('is_upcoming_expiry', '=', True))
+            domain.append(('bluebook_expiry_date_ad', '>=', self.date_from))
+            domain.append(('bluebook_expiry_date_ad', '<=', self.date_to))
+            
+        elif self.filter_type == 'pollution' and self.date_from and self.date_to:
+            domain.append(('upcoming_pollution_expiry', '=', True))
+            domain.append(('pollution_expiry_date_ad', '>=', self.date_from))
+            domain.append(('bluebook_expiry_date_ad', '<=', self.date_to))
+             
+        elif self.filter_type == 'permit' and self.date_from and self.date_to:
+            domain.append(('upcoming_permit_expiry', '=', True))
+            domain.append(('permit_expiry_date_ad', '>=', self.date_from))
+            domain.append(('permit_expiry_date_ad', '<=', self.date_to))
+            
+        elif self.filter_type == 'insurance' and self.date_from and self.date_to:
+            domain.append(('upcoming_insurance_expiry', '=', True))
+            domain.append(('insurance_expiry_date_ad', '>=', self.date_from))
+            domain.append(('insurance_expiry_date_ad', '<=', self.date_to))
+            
+        elif self.filter_type == 'service' and self.date_from and self.date_to: 
+            domain.append(('next_service_due_date', '>=', self.date_from))
+            domain.append(('next_service_due_date', '<=', self.date_to))
+            
+        else:
+            pass
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'vehicle.number',
+            'view_mode': 'tree,form',
+            'target': 'current',
+            'name' : (f"Filter View"),
+            'domain': domain,
+        }

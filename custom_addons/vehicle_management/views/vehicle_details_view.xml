@@ -325,6 +325,7 @@
     <menuitem id="menu_fleet_route" name="Route" parent="menu_route" action="action_fleet_route"/>
     <menuitem id="menu_checkpoints_route" name="Check Points" parent="menu_route" action="action_fleet_checkpoints"/>
     <menuitem id="menu_data_route" name="Route Data" parent="menu_route" action="action_data_route"/>
+    <menuitem id="menu_checkpoint_data" name="Check Point Data" parent="menu_route" action="action_checkpoint_data"/>
 
     <!-- Form and Tree Views for Vehicle Owner -->
     <record id="view_custom_vehicle_owner_form" model="ir.ui.view">
@@ -332,6 +333,9 @@
         <field name="model">custom.vehicle.owner</field>
         <field name="arch" type="xml">
             <form string="Vehicle Owner">
+            <Header>
+                <!-- <button name="action_send_sms" string="Send SMS" type="object" class="oe_highlight"/> -->
+            </Header>
                 <sheet>
                     <group>
                         <group>

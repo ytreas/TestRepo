@@ -56,6 +56,7 @@ class BaseVehicleDocument(models.AbstractModel):
 
     # Method to create due details
     def _create_due_details(self, document_type, extra_vals=None):
+        print("From Insurance")
         self.ensure_one()
         vals = {
             'company_id': self.company_id.id,
@@ -194,6 +195,7 @@ class CustomVehicleBluebook(models.Model):
 
     # Override write method to compute upcoming expiry and update due details
     def write(self, vals):
+
         success = super().write(vals)
         if not success:
             return False
@@ -259,7 +261,29 @@ class CustomVehiclePermit(models.Model):
             record.compute_is_upcoming_expiry()
             record._create_due_details('permit')
         return records
-
+    
+    def write(self, vals):
+       
+        success = super().write(vals)
+        if not success:
+            return False
+        for record in self:
+            due_details_record = self.env['vehicle.due.details'].search([
+                ('permit_id', '=', record.id)
+            ], limit=1)
+            if due_details_record:
+                due_details_record.write({
+                    'company_id': record.company_id.id,
+                    'vehicle_company_id': record.vehicle_company_id.id,
+                    'vehicle_number': record.vehicle_number.id,
+                    'expiry_date': record.expiry_date,
+                    'expiry_date_bs': record.expiry_date_bs,
+                    'renewal_date': record.last_renewal_date,
+                    'renewal_date_bs': record.last_renewal_date_bs,
+                    'due_status': 'completed' if record.renewed else 'due',
+                    'renewal_cost': record.renewal_cost,
+                })
+        return True
 # Custom Vehicle Pollution Model
 class CustomVehiclePollution(models.Model):
     _name = 'custom.vehicle.pollution'
@@ -305,6 +329,27 @@ class CustomVehiclePollution(models.Model):
             record._create_due_details('pollution')
         return records
 
+    def write(self, vals):
+        success = super().write(vals)
+        if not success:
+            return False
+        for record in self:
+            due_details_record = self.env['vehicle.due.details'].search([
+                ('pollution_id', '=', record.id)
+            ], limit=1)
+            if due_details_record:
+                due_details_record.write({
+                    'company_id': record.company_id.id,
+                    'vehicle_company_id': record.vehicle_company_id.id,
+                    'vehicle_number': record.vehicle_number.id,
+                    'expiry_date': record.expiry_date,
+                    'expiry_date_bs': record.expiry_date_bs,
+                    'renewal_date': record.last_renewal_date,
+                    'renewal_date_bs': record.last_renewal_date_bs,
+                    'due_status': 'completed' if record.renewed else 'due',
+                    'renewal_cost': record.renewal_cost,
+                })
+        return True
 # Custom Vehicle Insurance Model
 class CustomVehicleInsurance(models.Model):
     _name = 'custom.vehicle.insurance'
@@ -356,7 +401,29 @@ class CustomVehicleInsurance(models.Model):
             }
             record._create_due_details('insurance', extra_vals)
         return records
-
+    
+    def write(self, vals):
+        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+        success = super().write(vals)
+        if not success:
+            return False
+        for record in self:
+            due_details_record = self.env['vehicle.due.details'].search([
+                ('insurance_id', '=', record.id)
+            ], limit=1)
+            if due_details_record:
+                due_details_record.write({
+                    'company_id': record.company_id.id,
+                    'vehicle_company_id': record.vehicle_company_id.id,
+                    'vehicle_number': record.vehicle_number.id,
+                    'expiry_date': record.expiry_date,
+                    'expiry_date_bs': record.expiry_date_bs,
+                    'renewal_date': record.last_renewal_date,
+                    'renewal_date_bs': record.last_renewal_date_bs,
+                    'due_status': 'completed' if record.renewed else 'due',
+                    'renewal_cost': record.renewal_cost,
+                })
+        return True
 # Document Attachment Classes
 # Bluebook 
 class BluebookDocument(models.Model):
@@ -427,7 +494,16 @@ class CustomVehicleOwner(models.Model):
     phone = fields.Char(string='Phone Number', size=10)
     vehicle_number = fields.Many2many('vehicle.number', string='Vehicle IDs')
     email = fields.Char(string='Email')
-    
+
+    def action_send_sms(self):
+        # pass
+        sms_service = self.env['sparrow.sms']
+        print("Sending SMS...")
+        receiver = 9861973100
+        message = "Hello from Odoo via Sparrow!"
+        sms_service.send_sms(receiver, message)
+        print("SMS sent successfully.")
+
     # Method to check email format
     @api.constrains('email')
     def _check_email_format(self):

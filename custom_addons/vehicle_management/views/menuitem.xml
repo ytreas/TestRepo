@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-     <record id="action_to_do_service" model="ir.cron">
+    <record id="action_to_do_service" model="ir.cron">
         <field name="name">Action To Do Service</field>
         <field name="model_id" ref="model_vehicle_number"/>
         <field name="state">code</field>
@@ -10,6 +10,23 @@
         <field name="active">True</field>
         <!-- <field name="numbercall">-1</field> -->
     </record>
+    <record id="view_vehicle_number_kanban" model="ir.ui.view">
+        <field name="name">vehicle.number.kanban</field>
+        <field name="model">vehicle.number</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="final_number"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click o_kanban_record">
+                            <strong><field name="final_number"/></strong>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    
     <record id="view_vehicle_number_tree" model="ir.ui.view">
         <field name="name">vehicle.number.tree</field>
         <field name="model">vehicle.number</field>
@@ -19,6 +36,7 @@
                 <field name="final_number"/>
                 <field name="vehicle_system"/>
                 <field name="state"/>
+                <field name="check_in_date" />
                 <field name="check_in_date_bs" string="Check In Date (BS)"/>
                 <field name="check_out_date_bs" string="Check Out Date (BS)"/>
                 <field name="vehicle_owner" />
@@ -42,6 +60,28 @@
             <xpath expr="//tree" position="attributes">
                 <attribute name="js_class">custom_button</attribute>
             </xpath>
+             
+        </field>
+    </record>
+    <record id="view_vehicle_number_search" model="ir.ui.view">
+        <field name="name">vehicle.number.search</field>
+        <field name="model">vehicle.number</field>
+        <field name="arch" type="xml">
+            <search string="Search Vehicle Numbers">
+                <field name="check_in_date" string="From Date" filter_domain="[('check_in_date', '>=', self)]"/>
+                <field name="check_out_date" string="To Date" filter_domain="[('check_out_date', '=', self)]"/>
+
+                <filter name="filter_today" string="Today's Vehicles" domain="[('check_in_date', '=', context_today())]"/>
+                <filter string="Upcoming Bluebook Expiry" name="is_upcoming_expiry" domain="[('is_upcoming_expiry', '=', True)]"/>
+                <filter string="Upcoming Pollution Expiry" name="upcoming_pollution_expiry" domain="[('upcoming_pollution_expiry', '=', True)]"/>
+                <filter string="Upcoming Insurance Expiry" name="upcoming_insurance_expiry" domain="[('upcoming_insurance_expiry', '=', True)]"/>
+                <filter string="Upcoming Permit Expiry" name="upcoming_permit_expiry" domain="[('upcoming_permit_expiry', '=', True)]"/>
+
+                <group string="Date Range Filter">
+                    <field name="check_in_date" string="From Date"/>
+                    <field name="check_out_date" string="To Date"/>
+                </group>
+            </search>
         </field>
     </record>
     <!-- <record id="vehicle_number_view_search" model="ir.ui.view">
@@ -200,6 +240,7 @@
                         </group>
                          <group string="Assign Driver">
                             <field name="driver_id"/>
+                            <field name="helper_id"/>
                         </group>
                     </group>
                     <group>
@@ -212,12 +253,20 @@
                         </group>
                     </group>
                     <group>
-                        <group string="Monthly fuel details">
-                            <field name="fuel_consumed_display"/>
+                        <group>
+                            <group string="Monthly fuel details">
+                                <field name="fuel_consumed_display"/>
+                            </group>
+                            <group string="Mileage Information">
+                                <field name="efficiency_display"/>
+                            </group>
                         </group>
-                        <group string="Mileage Information">
-                            <field name="efficiency_display"/>
+                        <group>
+                            <group string="Available Information">
+                                <field name="available"/>
                         </group>
+                   </group>
+                     
                     </group>
                     <notebook>
                         <page string="Bluebook Renewal">
@@ -283,7 +332,7 @@
                                 </tree>
                             </field>
                         </page>
-                         <page string="Assign Route">
+                        <page string="Assign Route">
                             <field name="route_id">
                                 <tree string="Route Records">
                                     <field name="vehicle_number" />
@@ -326,8 +375,24 @@
                 <sheet>
                     <group>
                         <field name="name"/>
-                        <field name="source"/>
-                        <field name="destination"/>
+                    </group>
+                    <group>
+                        <group string="Source">
+                            <field name="source" />
+                            <field name="source_province"/>
+                            <field name="source_district"/>
+                            <field name="source_palika"/>
+                            <field name="source_ward"/>
+                        </group>
+                        <group string="Destination">
+                            <field name="destination" />
+                            <field name="destination_province"/>
+                            <field name="destination_district"/>
+                            <field name="destination_palika"/>
+                            <field name="destination_ward"/>
+                        </group>
+                    </group>
+                    <group>
                         <field name="route_length" />
                     </group>
                 </sheet>
@@ -343,7 +408,10 @@
                 <field name="name"/>
                 <field name="sequence"/>
                 <field name="route_id"/>
-                <field name="location"/>
+                <field name="checkpoint_province"/>
+                <field name="checkpoint_district"/>
+                <field name="checkpoint_palika"/>
+                <field name="checkpoint_ward"/>
                 <!-- Uncomment if needed: <field name="mobile_number"/> -->
             </tree>
         </field>
@@ -356,11 +424,25 @@
             <form>
                 <sheet>
                     <group>
-                        <field name="name"/>
-                        <field name="sequence"/>
-                        <field name="route_id"/>
-                        <field name="location"/>
-                        <!-- Uncomment if needed: <field name="mobile_number"/> -->
+                        <group>
+                            <field name="name"/>
+                            <field name="sequence"/>
+                            <!-- <field name="route_id"/> -->
+                        </group>
+                 
+                        <group name="location" string="Location">
+                            <field name="location_name"/>
+                            <field name="checkpoint_province"/>
+                            <field name="checkpoint_district"/>
+                            <field name="checkpoint_palika"/>
+                            <field name="checkpoint_ward"/> 
+                        </group>
+                        <group>
+                            <field name="planned_date" options="{'corresponding_field':'planned_date_bs'}" />
+                            <field name="date" options="{'corresponding_field' : 'date_bs'}"/>
+                            <field name="space_available" />
+                            <field name="reached" />
+                        </group>
                     </group>
                 </sheet>
             </form>
@@ -402,6 +484,9 @@
                         <field name="destination"/>
                         <field name="route_length"/>
                     </group>
+                    <group name="driver" string="Assign Driver">
+                        <field name="driver_id" />
+                    </group>
                 </group>
                 <group>
                     <group name="time" string="Time/day">
@@ -415,10 +500,10 @@
                         <field name="total_days"/>
                     </group>
                 </group>
-                    <group>
-                        <field name="purpose" />
-                        <field name="remarks" />
-                    </group>
+                <group>
+                    <field name="purpose" />
+                    <field name="remarks" />
+                </group>
                         <!-- <field name="mobile_number"/> -->  
                   
                     <notebook>
@@ -426,8 +511,9 @@
                             <field name="checkpoints">
                                 <tree string="Checkpoints">
                                     <field name="name" />
-                                    <field name="sequence" />
-                                    <field name="location" />
+                                    <field name="planned_date_bs"/>
+                                    <field name="date_bs"/>
+                                    <field name="space_available" />
                                 </tree>
                             </field>
                         </page>
@@ -436,7 +522,6 @@
             </form>
         </field>
     </record>
- 
     <record id="action_vehicle_numbers" model="ir.actions.act_window">
         <field name="name">Vehicle Numbers</field>
         <field name="res_model">vehicle.number</field>
@@ -455,7 +540,11 @@
     <record id="action_data_route" model="ir.actions.act_window">
         <field name="name">Route Data</field>
         <field name="res_model">data.route</field>
- 
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="action_checkpoint_data" model="ir.actions.act_window">
+        <field name="name">Check Point Data</field>
+        <field name="res_model">checkpoint.data</field>
         <field name="view_mode">tree,form</field>
     </record>
     <!-- 

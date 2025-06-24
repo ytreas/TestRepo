@@ -25,6 +25,18 @@ class AmpTrader(models.Model):
     commodity_id =fields.Many2many('amp.commodity.master',string='Commodity')
     collection_center = fields.Many2one('commodity.center', string="Collection Center")
 
+    trader_tole_name = fields.Char(string="Tole Name:")
+    trader_type = fields.Selection([
+        ('wholesaler', 'Wholesaler'),
+        ('retailer', 'Retailer'),
+        ('farmer', 'Farmer'),
+        ('other', 'Other'),
+    ], string='Trader Type', required=True)
+    trader_province = fields.Many2one('location.province',required=True,string="Province")
+    trader_district = fields.Many2one('location.district',required=True,string="District",   domain="[('province_name', '=', trader_province)]" )
+    trader_palika = fields.Many2one('location.palika', string="Palika", domain="[('district_name', '=', trader_district)]")
+    trader_ward = fields.Char(string="Ward No:")
+    
     @api.onchange('country_id')
     def _onchange_country_id(self):
         if self.country_id:

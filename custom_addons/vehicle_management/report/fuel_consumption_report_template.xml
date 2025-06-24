@@ -83,6 +83,8 @@
                     <t t-foreach="entries_by_vehicle.items()" t-as="vehicle_data">
                         <t t-set="vehicle_number" t-value="vehicle_data[0]"/>
                         <t t-set="vehicle_entries" t-value="vehicle_data[1]"/>
+                        <!-- Use the first record from this vehicle group for details -->
+                        <t t-set="first_record" t-value="vehicle_entries[0]"/>
                         
                         <!-- Vehicle Details -->
                         <div style="margin-bottom: 10px;">
@@ -91,40 +93,41 @@
                                 <tr>
                                     <td style="width: 50%; text-align: left; padding: 5px;">
                                         <strong>Vehicle Registration No:</strong>
-                                        <t t-esc="vehicle_number"/>
+                                        <t t-esc="first_record.get('vehicle_number', 'N/A')"/>
                                     </td>
                                     <td style="width: 50%; text-align: right; padding: 5px;">
                                         <strong>Vehicle Type:</strong>
-                                        <t t-esc="data.get('vehicle_type', 'N/A')"/>
+                                        <t t-esc="first_record.get('vehicle_type', 'N/A')"/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="text-align: left; padding: 5px;">
                                         <strong>Vehicle Model &amp; Make:</strong>
-                                        <t t-esc="data.get('vehicle_brand', 'N/A')"/>
+                                        <t t-esc="first_record.get('vehicle_brand', 'N/A')"/>
                                     </td>
                                     <td style="text-align: right; padding: 5px;">
                                         <strong>Engine Number:</strong>
-                                        <t t-esc="data.get('engine_number', 'N/A')"/>
+                                        <t t-esc="first_record.get('engine_number', 'N/A')"/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="text-align: left; padding: 5px;">
                                         <strong>Chassis Number:</strong>
-                                        <t t-esc="data.get('chassis_number', 'N/A')"/>
+                                        <t t-esc="first_record.get('chassis_number', 'N/A')"/>
                                     </td>
                                     <td style="text-align: right; padding: 5px;">
                                         <strong>Driver's Name:</strong>
-                                        <t t-esc="data.get('driver_name', 'N/A')"/>
+                                        <t t-esc="first_record.get('driver_name', 'N/A')"/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="text-align: left; padding: 5px;">
                                         <strong>Driver's License No:</strong>
-                                        <t t-esc="data.get('driver_license_number', 'N/A')"/>
+                                        <t t-esc="first_record.get('driver_license_number', 'N/A')"/>
                                     </td>
                                     <td style="text-align: right; padding: 5px;">
-                                        <!-- Empty cell or any other info if needed -->
+                                        <strong>Fuel Type:</strong>
+                                        <t t-esc="first_record.get('fuel_type', 'N/A')"/>
                                     </td>
                                 </tr>
                             </table>

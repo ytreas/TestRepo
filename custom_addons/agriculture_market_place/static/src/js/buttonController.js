@@ -122,7 +122,7 @@ registry.category("views").add("button_in_tree", {
    Controller: buttonController,
    buttonTemplate: "button_sale.ListView.Buttons",
 });
-registry.category("views").add("button_in_tree_b", {
+registry.category("views").add("button_in_tree_bs", {
    ...listView,
    Controller: buttonController,
    buttonTemplate: "button_sale.ListView.ButtonsB",

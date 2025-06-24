@@ -9,3 +9,5 @@ from . import fuel_consumption
 from . import maintenance_management
 from . import due_details
 from . import vehicle_models
+from . import sparrow_sms
+from . import mailsender

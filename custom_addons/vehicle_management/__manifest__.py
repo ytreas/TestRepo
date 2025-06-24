@@ -4,7 +4,7 @@
     "version": "17.0",
     "category": "",
     "application": True,
-    'depends': ['base','base_accounting_kit'],
+    'depends': ['base','base_accounting_kit','web','hr'],
     'data': [
         'security/vehicle_security.xml',
         'security/ir.model.access.csv',
@@ -36,9 +36,11 @@
     ],
     "assets": {
     "web.assets_backend": [
+        'vehicle_management/static/src/js/custom_date_filter.js',
         "vehicle_management/static/src/js/custom_button.js",
         "vehicle_management/static/src/xml/button.xml",
         'vehicle_management/static/src/css/custom_wizard.css',
+        'vehicle_management/static/src/xml/custom_date_filter.xml',
         ]
     },
 }

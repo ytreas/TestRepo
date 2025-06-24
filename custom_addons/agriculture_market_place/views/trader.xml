@@ -22,14 +22,24 @@
                 <form>
                     <sheet>
                         <group>
-                            <field name="name"/>
-                            <field name="trader_code"/>
-                            <field name="phone"/>
-                            <field name="email"/>
-                            <field name="country_id" options="{'no_create': True}"/>
-                            <field name="state_id" domain="[('country_id', '=', country_id)]"/>
-                            <field name="city"/>
-                            <field name="street"/>
+                            <group name="general" string="General Information">
+                                <field name="name"/>
+                                <field name="trader_code"/>
+                                <field name="trader_type" />
+                                <field name="phone"/>
+                                <field name="email"/>
+                                <field name="country_id" options="{'no_create': True}"/>
+                                <field name="state_id" domain="[('country_id', '=', country_id)]"/>
+                                <field name="city"/>
+                                <field name="street"/>
+                            </group>
+                            <group name="address" string="Details Address">
+                                <field name="trader_tole_name" />
+                                <field name="trader_province" />
+                                <field name="trader_district" />
+                                <field name="trader_palika" />
+                                <field name="trader_ward" />
+                            </group>
                         </group>
                         <notebook string="Commodity Details">
                             <page string="Commodity Details">

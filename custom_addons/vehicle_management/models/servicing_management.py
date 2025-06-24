@@ -1,4 +1,4 @@
-from odoo import models, fields, api
+from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 import nepali_datetime
 from datetime import datetime, timedelta
@@ -210,6 +210,34 @@ class ServiceScheduling(models.Model):
     is_today = fields.Boolean(string='Is Today', compute='_compute_date_filters', store=True)
     is_this_week = fields.Boolean(string='Is This Week', compute='_compute_date_filters', store=True)
     is_this_month = fields.Boolean(string='Is This Month', compute='_compute_date_filters', store=True)
+    create_date = fields.Datetime(readonly=True)
+    create_date_only = fields.Date(string="Create Date Only", compute='_compute_create_date_only', store=True)
+    execution_count = fields.Integer(
+        string='Execution Count', 
+        compute='_compute_execution_count', 
+        store=True
+    )
+
+    @api.depends('execution_ids')
+    def _compute_execution_count(self):
+        for record in self:
+            record.execution_count = len(record.execution_ids)
+
+    @api.constrains('execution_ids')
+    def _check_single_execution(self):
+        for record in self:
+            if record.execution_count > 1:
+                raise ValidationError(_(
+                    "Only one service execution is allowed per schedule. "
+                    "Schedule: %s already has an execution." % record.code
+                ))
+
+    def _compute_create_date_only(self):
+        for record in self:
+            if record.create_date:
+                record.create_date_only = record.create_date.date()
+            else:
+                record.create_date_only = False
                 
     # Method to compute date filters
     @api.depends('next_service_due_date')
@@ -249,19 +277,26 @@ class ServiceScheduling(models.Model):
             record.next_service_due_date_bs = convert_to_bs_date(record.next_service_due_date)
 
     # Method to validate service dates
-    @api.constrains('last_service_date', 'next_service_due_date')
-    def _check_service_dates(self):
-        for record in self:
-            if record.last_service_date and record.next_service_due_date:
-                if record.next_service_due_date <= record.last_service_date:
-                    raise ValidationError("Next Service Due Date must be after the Last Service Date.")
+    # @api.constrains('last_service_date', 'next_service_due_date')
+    # def _check_service_dates(self):
+    #     for record in self:
+    #         if record.last_service_date and record.next_service_due_date:
+    #             if record.next_service_due_date <= record.last_service_date:
+    #                 raise ValidationError("Next Service Due Date must be after the Last Service Date.")
 
     # Method to schedule service
+
     def action_schedule(self):
         self.ensure_one()
+        # Check if execution already exists
+        if self.execution_ids:
+            raise ValidationError(_(
+                "Cannot create new execution. Schedule %s already has "
+                "an execution record." % self.code
+            ))
         manager = ServiceSchedulingManager(self)
         return manager.schedule()
-
+    
     # Method to cancel service
     def action_cancel(self):
         self.ensure_one()
@@ -379,7 +414,19 @@ class ServiceExecution(models.Model):
     ], default='draft', tracking=True)
     date_bs = fields.Char(string='Service Date(BS)', compute='_compute_nepali_dates', store=True)
     company_id = fields.Many2one('res.company', string='Company', required=True, default=lambda self: self.env.company)
-
+    next_service_date = fields.Date(string='Next Service Date', tracking=True, store=True)
+    next_service_date_bs = fields.Char(string='Next Service Date(BS)', compute='_compute_nepali_dates', store=True)
+    invoice_no = fields.Char(string='Invoice No.', tracking=True)
+    
+    @api.constrains('start_time', 'end_time', 'next_service_date')
+    def _check_next_service_date(self):
+        for record in self:
+            if record.next_service_date:
+                if record.end_time and record.next_service_date <= record.end_time:
+                    raise ValidationError(_("Next Service Date must be after End Date."))
+                if record.start_time and record.next_service_date <= record.start_time:
+                    raise ValidationError(_("Next Service Date must be after Start Date."))
+                    
     # Method to compute total cost incurred
     @api.depends('execution_line_id.cost_per_service', 'parts_replaced_ids.cost')
     def _compute_total_cost_incurred(self):
@@ -402,12 +449,13 @@ class ServiceExecution(models.Model):
             )
 
     # Method to compute nepali dates
-    @api.depends('start_time', 'end_time')
+    @api.depends('start_time', 'end_time', 'next_service_date')
     def _compute_nepali_dates(self):
         for record in self:
             record.start_time_bs = convert_to_bs_date(record.start_time)
             record.service_date_bs = convert_to_bs_date(record.end_time)
             record.date_bs = convert_to_bs_date(record.end_time)
+            record.next_service_date_bs = convert_to_bs_date(record.next_service_date)
 
     # Method to check dates
     @api.constrains('start_time', 'end_time')

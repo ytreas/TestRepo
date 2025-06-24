@@ -3,6 +3,7 @@ import { ListController } from "@web/views/list/list_controller";
 import { registry } from '@web/core/registry';
 import { useService } from "@web/core/utils/hooks"; 
 import { listView } from '@web/views/list/list_view';
+import { useState } from "@odoo/owl";
 
 
 export class buttonController extends ListController {
@@ -11,6 +12,11 @@ export class buttonController extends ListController {
          this.rpc = useService("rpc");
          this.orm = useService("orm");
          this.actionService = useService("action");
+         this.state = useState({
+            fromDate: '',
+            toDate: '',
+            searchTerm: ''
+        });
          console.log('Context during setup', this.props.context);
          console.log('Selection during setup', this.props.selection);
       }

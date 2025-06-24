@@ -301,6 +301,8 @@
                             <field name="odometer_reading"/>
                             <field name="last_odometer_reading"/>
                             <field name="service_location"/>
+                            <field name="next_service_date" options="{'corresponding_field': 'next_service_date_bs'}"/>
+                            <field name="invoice_no"/>
                         </group>
                     </group>
                     <notebook>

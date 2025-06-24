@@ -81,27 +81,17 @@ export class OwlReportingDashboard extends Component {
             filtersReady: false,
         });
 
-
-        // this.stateChart2  = owl.useState({
-        //     fetchPriceData: { // State for chart data 2
-        //         labels: [''],
-        //         datasets: [{
-        //             label: ' Prices Arrivals',
-        //             data: [],
-        //             hoverOffset: 4,
-        //         }]
-        //     },
-        //     TestData: null,
-        //     namesprice: [],
-        //     // selectedCommodity: '',
-        //     selectedCommodityNameP : '',
-        //     dateStartPrice: '',
-        //     dateEndPrice: '',
-        //     filtersReadyprice: false,
-        // });
-
         this.orm = useService("orm");
         this.chartRef = useRef(null);
+
+        // this.chartData = {
+        //     labels: this.state.fetchData.labels,  // Common labels
+        //     datasets: [
+        //         ...this.state.fetchData.datasets,  // First dataset (Arrivals)
+        //         // ...this.state.fetchData2.datasets,  // Second dataset (Departures)
+        //     ]
+        // };
+
 
         onWillStart(async () => {
             await this.fetchNames();
@@ -152,7 +142,7 @@ export class OwlReportingDashboard extends Component {
                 [['id', 'in', commodityIds]], // Fetch all commodities in one query
                 ['id', 'name']
             );
-            console.log("Commodity Results:", commodityResults);
+            // console.log("Commodity Results:", commodityResults);
             // Use a Map to ensure uniqueness by commodity ID
             const uniqueCommodityMap = new Map();
             commodityResults.forEach(commodity => {
@@ -166,7 +156,7 @@ export class OwlReportingDashboard extends Component {
     
             // Convert the Map values to an array
             const uniqueCommodityNames = Array.from(uniqueCommodityMap.values());
-            console.log("uniqueCommodityNames",uniqueCommodityNames)
+            // console.log("uniqueCommodityNames",uniqueCommodityNames)
             // Assign the unique names to state.names
             this.state.names = uniqueCommodityNames;
     

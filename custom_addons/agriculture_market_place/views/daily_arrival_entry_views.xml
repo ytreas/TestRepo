@@ -122,7 +122,7 @@
             <field name="inherit_id" ref="agriculture_market_place.daily_arrival_entry_tree_view"/>
             <field name="arch" type="xml">
                 <xpath expr="//tree" position="attributes">
-                    <attribute name="js_class">button_in_tree_b</attribute>
+                    <attribute name="js_class">button_in_tree_bs</attribute>
                 </xpath>
             </field>
         </record>

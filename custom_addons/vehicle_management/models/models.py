@@ -16,7 +16,8 @@ from nepali_datetime import date as nepali_date
 from ..utils.dashboard_notification import Utilities 
 from ..models.maintenance_management import convert_to_bs_date
 from ..models.fuel_consumption import parse_nepali_date, gregorian_to_nepali
-
+import pytz
+from pytz import timezone
 # Vehicle Number Model
 class VehicleNumber(models.Model):
     _name = 'vehicle.number'
@@ -55,11 +56,12 @@ class VehicleNumber(models.Model):
     state = fields.Selection([('draft','Draft'),('check_in','Check In'),('check_out','Check Out'),('payment','Payment')],string='State',default='draft',tracking= True)
     
     vehicle_type = fields.Many2one('custom.vehicle.type', string='Vehicle Type')
-    volume = fields.Float(string='Volume', required=True, related='vehicle_type.max_weight')
+    volume = fields.Float(string='Volume', required=True)
     zonal_code = fields.Char(string = 'Zonal Code')
     vehicle_number = fields.Char(string='Vehicle Classification Code')
     driver_id = fields.Many2one('driver.details',string='Driver Name:')
-
+    helper_id = fields.Many2one('helper.details',string='Helper Name')
+    available = fields.Boolean("Available", default=True, tracking=True)
     lot_number = fields.Char(string = 'Lot Number',size=2)
     custom_number = fields.Char(string ='Custom Number',size = 5)
     
@@ -140,10 +142,10 @@ class VehicleNumber(models.Model):
     # paredesh_vehicle_code = fields.Char(string='Code')
 
 
-    bluebook_id = fields.One2many("custom.vehicle.bluebook", "vehicle_number", string="Bluebook")
-    vehicle_permit_id = fields.One2many("custom.vehicle.permit", "vehicle_number", string="Permit")
-    vehicle_pollution_id = fields.One2many("custom.vehicle.pollution", "vehicle_number", string="Pollution")
-    vehicle_insurance_id = fields.One2many("custom.vehicle.insurance", "vehicle_number", string="Insurance")
+    bluebook_id = fields.One2many("custom.vehicle.bluebook", "vehicle_number", string="Bluebook" , ondelete='cascade')
+    vehicle_permit_id = fields.One2many("custom.vehicle.permit", "vehicle_number", string="Permit", ondelete='cascade')
+    vehicle_pollution_id = fields.One2many("custom.vehicle.pollution", "vehicle_number", string="Pollution",ondelete='cascade')
+    vehicle_insurance_id = fields.One2many("custom.vehicle.insurance", "vehicle_number", string="Insurance",ondelete='cascade')
     seat_no = fields.Integer(string="Total Seat")
 
     fine_penalty_id = fields.One2many("custom.fine.penalty","vehicle_number",string="Fine and Penalty")
@@ -156,28 +158,31 @@ class VehicleNumber(models.Model):
     # plan_date = fields.Date(string="Planned Date")
     # plan_date_bs = fields.Char(string="Planned Date (BS)",compute='_compute_nepali_dates', store=True)
     
-    latest_bluebook_record = fields.Many2one('vehicle.due.details', string='Latest Bluebook Record',compute='_compute_latest_record')
-    latest_pollution_record = fields.Many2one('vehicle.due.details', string='Latest Pollution Record',compute='_compute_latest_record')
-    latest_insurance_record = fields.Many2one('vehicle.due.details', string='Latest Insurance Record',compute='_compute_latest_record')
-    latest_permit_record = fields.Many2one('vehicle.due.details', string='Latest Permit Record', compute='_compute_latest_record')
+    latest_bluebook_record = fields.Many2one('vehicle.due.details', string='Latest Bluebook Record',compute='_compute_latest_record',store=True)
+    latest_pollution_record = fields.Many2one('vehicle.due.details', string='Latest Pollution Record',compute='_compute_latest_record',store=True)
+    latest_insurance_record = fields.Many2one('vehicle.due.details', string='Latest Insurance Record',compute='_compute_latest_record',store=True)
+    latest_permit_record = fields.Many2one('vehicle.due.details', string='Latest Permit Record', compute='_compute_latest_record',store=True)
+    
+    bluebook_expiry_date_ad = fields.Date(string="Bluebook Expiry Date(AD)",related='latest_bluebook_record.expiry_date',store=True)
+    bluebook_expiry_date = fields.Char(string="Bluebook Expiry Date",related='latest_bluebook_record.expiry_date_bs',store=True)
+    bluebook_renewal_date = fields.Char(string="Bluebook Renewal Date",related='latest_bluebook_record.renewal_date_bs',store=True)
+    bluebook_renewal_cost = fields.Float(string="Bluebook Renewal Cost",related='latest_bluebook_record.renewal_cost' ,store=True)
 
-    bluebook_expiry_date = fields.Char(string="Bluebook Expiry Date",related='latest_bluebook_record.expiry_date_bs')
-    bluebook_renewal_date = fields.Char(string="Bluebook Renewal Date",related='latest_bluebook_record.renewal_date_bs')
-    bluebook_renewal_cost = fields.Float(string="Bluebook Renewal Cost",related='latest_bluebook_record.renewal_cost')
+    pollution_expiry_date_ad = fields.Date(string="Pollution Expiry Date(AD)",related='latest_pollution_record.expiry_date',store=True)
+    pollution_expiry_date = fields.Char(string="Pollution Expiry Date",related='latest_pollution_record.expiry_date_bs',store=True)
+    pollution_renewal_date = fields.Char(string="Pollution Renewal Date",related='latest_pollution_record.renewal_date_bs',store=True)
+    pollution_renewal_cost = fields.Float(string="Pollution Renewal Cost",related='latest_pollution_record.renewal_cost',store=True)
 
-    pollution_expiry_date = fields.Char(string="Pollution Expiry Date",related='latest_pollution_record.expiry_date_bs')
-    pollution_renewal_date = fields.Char(string="Pollution Renewal Date",related='latest_pollution_record.renewal_date_bs')
-    pollution_renewal_cost = fields.Float(string="Pollution Renewal Cosrt",related='latest_pollution_record.renewal_cost')
-
-    insurance_expiry_date = fields.Char(string="Insurance Expiry Date",related='latest_insurance_record.expiry_date_bs')
-    insurance_renewal_date = fields.Char(string="Insurance Renewal Date",related='latest_insurance_record.renewal_date_bs')
-    insurance_renewal_cost = fields.Float(string="Insurance Renewal Cost",related='latest_insurance_record.renewal_cost')
+    insurance_expiry_date_ad = fields.Date(string="Insurance Expiry Date(AD)",related='latest_insurance_record.expiry_date',store=True)
+    insurance_expiry_date = fields.Char(string="Insurance Expiry Date",related='latest_insurance_record.expiry_date_bs',store=True)
+    insurance_renewal_date = fields.Char(string="Insurance Renewal Date",related='latest_insurance_record.renewal_date_bs',store=True)
+    insurance_renewal_cost = fields.Float(string="Insurance Renewal Cost",related='latest_insurance_record.renewal_cost',store=True)
 
 
-    permit_expiry_date = fields.Char(string="Permit Expiry Date",related='latest_permit_record.expiry_date_bs')
-    permit_renewal_date = fields.Char(string="Permit Renewal Date",related='latest_permit_record.renewal_date_bs')
-    permit_renewal_cost = fields.Float(string="Permit Renewal Cost",related='latest_permit_record.renewal_cost')
-
+    permit_expiry_date_ad = fields.Date(string="Permit Expiry Date(AD)",related='latest_permit_record.expiry_date',store=True)
+    permit_expiry_date = fields.Char(string="Permit Expiry Date",related='latest_permit_record.expiry_date_bs',store=True)
+    permit_renewal_date = fields.Char(string="Permit Renewal Date",related='latest_permit_record.renewal_date_bs',store=True)
+    permit_renewal_cost = fields.Float(string="Permit Renewal Cost",related='latest_permit_record.renewal_cost',store=True)
     vehicle_image = fields.Binary(string="Image", attachment=True)
     image_preview = fields.Html(
         string="Image Preview", 
@@ -333,6 +338,12 @@ class VehicleNumber(models.Model):
         store=True
     )
     
+    # Automatically load the helper id on selecting the driver
+    @api.onchange('driver_id')
+    def _onchange_driver_id(self):
+        if self.driver_id:
+            self.helper_id = self.driver_id.helper_id
+            
     # Method to compute the last service odometer
     @api.depends('service_execution_ids.odometer_reading')
     def _compute_last_service_odometer(self):
@@ -342,7 +353,7 @@ class VehicleNumber(models.Model):
                 order='start_time desc', 
                 limit=1
             )
-            print("latest service odometer", latest_service.odometer_reading)
+            # print("latest service odometer", latest_service.odometer_reading)
             vehicle.last_service_odometer = latest_service.odometer_reading if latest_service else 0.0
 
     # Method to compute the total distance travelled
@@ -432,11 +443,29 @@ class VehicleNumber(models.Model):
     # Method to generate service requests
     def _generate_service_requests(self):
         for vehicle in self.search([]):
+            vehicle_on_route = self.env['fleet.route'].search(
+                [('vehicle_number', '=',vehicle.id)],
+                order= 'route_date_to_bs desc',limit=1
+            )
+            today_date = convert_to_bs_date(fields.Date.today())
+            print("Vehicle Available",vehicle.available)
+            if (vehicle_on_route.route_date_to_bs < today_date):
+                vehicle.available = True
+            else:
+                vehicle.available = False
+           
+            
             latest_service = self.env['service.execution'].search(
                 [('vehicle_id', '=', vehicle.id)],
                 order='start_time desc',
                 limit=1
             )
+            latest_service_notification = self.env['service.scheduling'].search(
+                [('vehicle_id', '=', vehicle.id)],
+                order='last_service_date desc',
+                limit=1
+            )
+            print("latest_service_notification", latest_service_notification.notification_mode_id.name)
     
             latest_bluebook = self.env['custom.vehicle.bluebook'].search([('vehicle_number.id', '=' ,vehicle.id)],limit=1)  
             if latest_bluebook.expiry_date:
@@ -516,67 +545,111 @@ class VehicleNumber(models.Model):
                 time_condition = fields.Date.today() >= next_service_date
         
                 service_type = vehicle.service_scheduling_ids.mapped('service_type_id')[:1]
+                service_type_value = service_type if service_type else False
+
                 distance_condition = total_distance_travelled  >= 5000
+
+                today = fields.Date.today()
        
-                # Check if a service request already exists but is not yet executed
-                existing_scheduled_service = self.env['service.scheduling'].search([
-                    ('vehicle_id', '=', vehicle.id),
-                    ('next_service_due_date', '=', latest_service.start_time),
-                    ('state', '=', 'draft')
-                ], limit=1)
-                print("Existing scheduled service:", existing_scheduled_service)
-                if not existing_scheduled_service and (time_condition or distance_condition):
-                    service = self.env['service.scheduling'].create({
+                latest_req = self.env['service.scheduling'].search(
+                    [('vehicle_id', '=', vehicle.id)],
+                    order='create_date_only desc',
+                    limit=1
+                )
+                print("latest_req", latest_req)
+                if not latest_req:
+                    # no prior request, nothing to check
+                    continue
+
+                execution = self.env['service.execution'].search([
+                    ('service_scheduling_id', '=', latest_req.id),
+                    ('state', '=', 'completed'),
+                ], order='start_time desc', limit=1)
+                print("execution", execution)
+ 
+                # If it's not executed, skip
+                if not execution:
+                    continue
+
+                # Now we know the last request was executed
+                if time_condition or distance_condition:
+                    new_req = self.env['service.scheduling'].create({
                         'vehicle_id': vehicle.id,
                         'last_service_date': latest_service.start_time,
                         'next_service_due_date': fields.Date.today(),
-                        'service_type_id': [(6, 0, [service_type.id])],
-                        'notification_mode_id': 1,
+                        'service_type_id': service_type_value,
+                        'notification_mode_id': latest_service_notification.notification_mode_id.id,
                     })
-                    if service:
-                        utilities = Utilities(self.env)
-                        expiry_date = latest_service.service_date_bs
-                        vehicle_number = latest_service.vehicle_id.final_number
-                        utilities.showNotificationDashboard(date = expiry_date, vehicle_number = vehicle_number,renewal_type = 'service', driver_name = None)
+                    print("Created new service scheduling request", new_req.id)
 
-                # Send email notification using the email template
-                # mail_template = self.env.ref('vehicle_management.email_template_service_scheduled')
-                # print("mail_template", mail_template)
+                    if new_req:
+                        if latest_service_notification.notification_mode_id.name == 'Dashboard Alert':
+                            utilities = Utilities(self.env)
+                            expiry_date = latest_service.service_date_bs
+                            # If expiry_date is False, set it to an empty string or a default date string.                                                  
+                            if not expiry_date:
+                                expiry_date = ''
+                            vehicle_number = latest_service.vehicle_id.final_number
+                            utilities.showNotificationDashboard(
+                                date=expiry_date,
+                                vehicle_number=vehicle_number,
+                                renewal_type='service',
+                                driver_name=None
+                            )
 
-                # if mail_template:
-                #     print("Email template found")
+                        # Send email notification using the email template
+                        # mail_template = self.env.ref('vehicle_management.email_template_service_scheduled')
+                        # print("mail_template", mail_template)
 
-                #     # Send mail
-                #     mail_template.send_mail(vehicle.id, force_send=True)
+                        # if mail_template:
+                        #     print("Email template found")
+                        #
+                        #     # Send mail
+                        #     mail_template.send_mail(vehicle.id, force_send=True)
+                        #
+                        #     # Generate email content
+                        #     email_values = mail_template.with_context(lang=self.env.user.lang).generate_email(vehicle.id)
+                        #     rendered_body = email_values.get('body_html', '')  # Safely retrieve body_html
+                        #     print("Rendered body:", rendered_body)
+                        #
+                        #     print("Email sent")
+                        # else:
+                        # Option 2: Alternatively, create and send a mail.mail record directly
+                        elif latest_service_notification.notification_mode_id.name == 'Email':
+                            mail_values = {
+                                'subject': 'Service Scheduled Notification',
+                                'body_html': (
+                                    f'<p>Dear {vehicle.vehicle_owner.name},</p>'
+                                    f'<p>Your service for the vehicle {vehicle.final_number} has been scheduled.</p>'
+                                    f'<p>Please check the service details in your portal.</p>'
+                                    f'<p>Thank you,</p>'
+                                    f'<p>{vehicle.company_id.name}</p>'
+                                ),
+                                'email_to': vehicle.vehicle_owner.email,
+                                'model': 'vehicle.number',
+                                'res_id': vehicle.id,
+                            }
+                            print("mail_values", mail_values)
 
-                #     # Generate email content
-                #     email_values = mail_template.with_context(lang=self.env.user.lang).generate_email(vehicle.id)
-                #     rendered_body = email_values.get('body_html', '')  # Safely retrieve body_html
-                #     print("Rendered body:", rendered_body)
+                            mail = self.env['mail.mail'].create(mail_values)
+                            print("mail", mail)
 
-                #     print("Email sent")
-                # else:
-                # Option 2: Alternatively, create and send a mail.mail record directly
-                    mail_values = {
-                        'subject': 'Service Scheduled Notification',
-                        'body_html': (
-                            f'<p>Dear {vehicle.vehicle_owner.name},</p>'
-                            f'<p>Your service for the vehicle {vehicle.final_number} has been scheduled.</p>'
-                            f'<p>Please check the service details in your portal.</p>'
-                            f'<p>Thank you,</p>'
-                            f'<p>{vehicle.company_id.name}</p>'
-                        ),
-                        'email_to': vehicle.vehicle_owner.email,
-                        'model': 'vehicle.number',
-                        'res_id': vehicle.id, 
-                    }
-                    print("mail_values", mail_values)
+                            mail.send()
 
-                    mail = self.env['mail.mail'].create(mail_values)
-                    print("mail", mail)
+                        # Sending SMS to vehicle owner
+                        elif latest_service_notification.notification_mode_id.name == 'SMS':
+                            sms_service = self.env['sparrow.sms']
+                            print("Sending SMS...")
+                            receiver = vehicle.vehicle_owner.phone
+                            message = (
+                                f"Dear {vehicle.vehicle_owner.name}, your vehicle ({vehicle.final_number}) "
+                                f"service has been scheduled. Please check your portal for details. "
+                                f"Thank you - {vehicle.company_id.name}"
+                            )
+                            sms_service.send_sms(receiver, message)
 
-                    mail.send()
-                    print("Email sent")
+                        else:
+                            print("Notification mode not found")
 
     # Compute latest mileage report
     @api.depends('mileage_report_ids')
@@ -620,36 +693,31 @@ class VehicleNumber(models.Model):
         if isinstance(today, str):
             today = datetime.strptime(today, "%Y-%m-%d").date()
         today_nepali_date = nepali_datetime.date.from_datetime_date(today)
-        # print(f"Today's Nepali Date: {today_nepali_date}")
+        print(f"Today's Nepali Date: {today_nepali_date}")
         start_of_month = today_nepali_date.replace(day=1)
-        # print(f"Start of Month: {start_of_month}")
+        print(f"Start of Month: {start_of_month}")
         start_of_month_nepali_tuple = gregorian_to_nepali(start_of_month)
         start_of_month_nepali = nepali_date(
             start_of_month_nepali_tuple[0],
             start_of_month_nepali_tuple[1],
             start_of_month_nepali_tuple[2]
         )
-        # print(f"Start of Month (Nepali): {start_of_month_nepali}")
+        print(f"Start of Month (Nepali): {start_of_month_nepali}")
         if today_nepali_date.month == 12:
             # For the last month of the year, set next month to the first month of next year
             next_month = today_nepali_date.replace(year=today_nepali_date.year + 1, month=1, day=1)
-            # print(f"Next Month: {next_month}")
+            print(f"Next Month: {next_month}")
         else:
             # Otherwise, just increment the month and set day=1
             next_month = today_nepali_date.replace(month=today_nepali_date.month + 1, day=1)
-            # print(f"Next Month: {next_month}")
+            print(f"Next Month: {next_month}")
         end_of_month = next_month - timedelta(days=1)
-        # print(f"End of Month: {end_of_month}")
-        first_day = start_of_month_nepali.strftime("%Y-%m-%d")
-        # print(f"First Day: {first_day}")
-        last_day = end_of_month.strftime("%Y-%m-%d")
-        # print(f"Last Day: {last_day}")
-        first_day_date = fields.Date.from_string(first_day)
-        # print(f"First Day Date: {first_day_date}")
-        last_day_date = fields.Date.from_string(last_day)
-        # print(f"Last Day Date: {last_day_date}")
-        # first_day = today.replace(day=1)
-        # last_day = today.replace(day=calendar.monthrange(today.year, today.month)[1])
+        print(f"End of Month: {end_of_month}")
+        # Use .to_datetime_date() to get a valid Python date object
+        first_day_date = start_of_month.to_datetime_date()
+        last_day_date = end_of_month.to_datetime_date()
+        print(f"First Day Date: {first_day_date}")
+        print(f"Last Day Date: {last_day_date}")
         for vehicle in self:
             monthly_total = 0.0
             entries = vehicle.fuel_entry_ids.filtered(
@@ -661,7 +729,7 @@ class VehicleNumber(models.Model):
                 else:
                     monthly_total += entry.quantity
             vehicle.monthly_fuel_consumed = monthly_total
-            # print(f"Monthly Fuel Consumed for {vehicle.final_number}: {monthly_total}")
+            print(f"Monthly Fuel Consumed for {vehicle.final_number}: {monthly_total}")
 
     # Method to compute the fuel unit
     @api.depends('fuel_entry_ids', 'fuel_type')
@@ -683,13 +751,13 @@ class VehicleNumber(models.Model):
     # Method to compute the latest maintenance date
     @api.depends('maintenance_request_ids.scheduled_start')
     def _compute_latest_maintenance_date(self):
-        print("inside the function")
+        # print("inside the function")
         for vehicle in self:
             latest_request = self.env['maintenance.request'].search([
                 ('vehicle_id', '=', vehicle.id),
                 ('scheduled_start', '!=', False)
             ], order='scheduled_start desc', limit=1)
-            print("latest request", latest_request.vehicle_id)
+            # print("latest request", latest_request.vehicle_id)
 
             if latest_request:
                 vehicle.latest_maintenance_date = latest_request.scheduled_start
@@ -749,14 +817,18 @@ class VehicleNumber(models.Model):
         return result
 
     # Method to compute the latest record
+    @api.depends('vehicle_pollution_id','vehicle_insurance_id','bluebook_id','vehicle_permit_id')
     def _compute_latest_record(self):
+        # print("Here inside the compute function")
         for record in self:
             due_details_model = self.env['vehicle.due.details']
+            print("Latest",due_details_model.get_latest_record(record.id, 'bluebook'))
             record.latest_bluebook_record = due_details_model.get_latest_record(record.id, 'bluebook')
             record.latest_pollution_record = due_details_model.get_latest_record(record.id, 'pollution')
             record.latest_insurance_record = due_details_model.get_latest_record(record.id, 'insurance')
             record.latest_permit_record = due_details_model.get_latest_record(record.id, 'permit')
-    
+            
+
 
     # Method to convert string to time
     def _str_to_time(self, time_str):
@@ -780,7 +852,6 @@ class VehicleNumber(models.Model):
                     vals['vehicle_image_filename'] = "image.png"
             except Exception:
                 vals['vehicle_image_filename'] = "image.png"
-
         # Create the record
         records = super(VehicleNumber, self).create(vals)
        
@@ -826,7 +897,6 @@ class VehicleNumber(models.Model):
                 vals['vehicle_image_filename'] = "image.png"
         
         result = super(VehicleNumber, self).write(vals)
-
         if 'vehicle_image' in vals:
             self._compute_image_preview()
 
@@ -984,23 +1054,8 @@ class VehicleNumber(models.Model):
     @api.depends('check_in_date', 'check_out_date')
     def _compute_nepali_dates(self):
         for record in self:
-            if record.check_in_date:
-                check_in_nepali_date = nepali_datetime.date.from_datetime_date(record.check_in_date)
-                record.check_in_date_bs = check_in_nepali_date.strftime('%Y-%m-%d')
-            else:
-                record.check_in_date_bs = False
-
-            if record.check_out_date:
-                check_out_nepali_date = nepali_datetime.date.from_datetime_date(record.check_out_date)
-                record.check_out_date_bs = check_out_nepali_date.strftime('%Y-%m-%d')
-            else:
-                record.check_out_date_bs = False
-
-            # if record.plan_date:
-            #     plan_date_nepali_date = nepali_datetime.date.from_datetime_date(record.plan_date)
-            #     record.plan_date_bs = plan_date_nepali_date.strftime('%Y-%m-%d')
-            # else:
-            #     record.plan_date_bs = False
+            record.check_in_date_bs = convert_to_bs_date(record.check_in_date)
+            record.check_out_date_bs = convert_to_bs_date(record.check_out_date)
 
     # Method to compute check in time
     @api.depends('check_in_time_unformatted')
@@ -1546,10 +1601,19 @@ class AssignRoute(models.Model):
     _description ='Route Data'
     _rec_name = 'name'
 
-    name = fields.Char('Route Name', required=True)
+    name = fields.Char(string="Route Name", required=True)
     source = fields.Char('Source Location', required=True)
+    source_province = fields.Many2one('location.province',required=True,string="Province")
+    source_district = fields.Many2one('location.district',required=True,string="District",   domain="[('province_name', '=', source_province)]" )
+    source_palika = fields.Many2one('location.palika', string="Palika", domain="[('district_name', '=', source_district)]")
+    source_ward = fields.Char(string="Ward No:")
+    
     destination = fields.Char('Destination Location', required=True)
-    route_length = fields.Float('Route Length (km)')
+    destination_province = fields.Many2one('location.province',required=True,string="Province")
+    destination_district = fields.Many2one('location.district',required=True,string="District",   domain="[('province_name', '=', destination_province)]" )
+    destination_palika = fields.Many2one('location.palika', string="Palika", domain="[('district_name', '=', destination_district)]")
+    destination_ward = fields.Char(string="Ward No:")
+    route_length = fields.Float(string="Route Length (km)")
     company_id = fields.Many2one('res.company', string='Company', required=True, default=lambda self: self.env.company)
 
 class InheritIrModel(models.Model):
@@ -1586,8 +1650,17 @@ class FleetRoute(models.Model):
     # estimated_time = fields.Float('Estimated Time (hours)')
 
     company_id = fields.Many2one('res.company', string='Company', required=True, default=lambda self: self.env.company)
-    
+    driver_id = fields.Many2one('driver.details',string="Driver", related = 'vehicle_number.driver_id', store=True, readonly=False,)
 
+    # source_province = fields.Many2one('location.province',related='name.source_province',required=True,string="Province")
+    # source_district = fields.Many2one('location.district',related='name.source_district',required=True,string="District",   domain="[('province_name', '=', source_province)]" )
+    # source_palika = fields.Many2one('location.palika',related='name.source_palika',string="Palika", domain="[('district_name', '=', source_district)]")
+    
+    # destination_province = fields.Many2one('location.province',related='name.destination_province',required=True,string="Province")
+    # destination_district = fields.Many2one('location.district',related='name.destination_district',required=True,string="District",   domain="[('province_name', '=', destination_province)]" )
+    # destination_palika = fields.Many2one('location.palika',related='name.destination_palika',string="Palika", domain="[('district_name', '=', destination_district)]")
+    
+    
     @api.depends('route_date', 'route_date_to')
     def _compute_total_days(self):
         for record in self:
@@ -1632,7 +1705,7 @@ class FleetRoute(models.Model):
             else:
                 record.total_hours = "00:00"
 
-    @api.depends('route_date')
+    @api.depends('route_date','route_date_to')
     def _compute_nepali_dates(self):
         for record in self:
             if record.route_date:
@@ -1640,13 +1713,99 @@ class FleetRoute(models.Model):
                 record.route_date_bs = route__nepali_date.strftime('%Y-%m-%d')
             else:
                 record.route_date_bs = False
-                
+            if record.route_date_to:
+                route_to_nepali_date = nepali_datetime.date.from_datetime_date(record.route_date_to)
+                record.route_date_to_bs = route_to_nepali_date.strftime('%Y-%m-%d')
+            else:
+                record.route_date_to_bs = False
+    
+    @api.model
+    def create(self, vals):
+        route = super(FleetRoute, self).create(vals)
+        if not self.env.context.get('skip_duty_allocation'):
+            route._create_duty_allocation()
+        return route       
+    
+    def _create_duty_allocation(self):
+        duty_vals = {
+            'duty_name': 'Transport Duty',
+            'driver_id': self.driver_id.id,
+            'vehicle_id': self.vehicle_number.id,
+            'route_name': self.id,
+            'from_date': self.route_date,
+            'to_date': self.route_date_to,
+            # 'pickup_location': assignment.order_id.pickup_location,
+            # 'pickup_address': assignment.order_id.pickup_address,
+            # 'delivery_location': assignment.order_id.delivery_location,
+            # 'delivery_address': assignment.order_id.delivery_address,
+
+            # 'customer_phone': assignment.order_id.customer_name.phone,
+            # 'transport_order': assignment.order_id.name,
+     
+        }
+        self.env['duty.allocation'].create(duty_vals)
+        
 class FleetRouteCheckpoint(models.Model):
     _name = 'fleet.route.checkpoint'
     _description = 'Route Checkpoint'
     
-    name = fields.Char('Checkpoint Name', required=True)
+    name = fields.Many2one('checkpoint.data', required=True)
     sequence = fields.Integer('Checkpoint Sequence', required=True)
     route_id = fields.Many2one('fleet.route', string='Route')
-    location = fields.Char('Location')
+    location_name = fields.Char(string="Address" , related='name.location_name' , readonly=False)
+    checkpoint_province = fields.Many2one('location.province',string="Province" ,related='name.checkpoint_province',readonly=False)
+    checkpoint_district = fields.Many2one('location.district',string="District",   domain="[('province_name', '=', checkpoint_province)]", related='name.checkpoint_district',readonly=False)
+    checkpoint_palika = fields.Many2one('location.palika', string="Palika", domain="[('district_name', '=', checkpoint_district)]",related = 'name.checkpoint_palika' , readonly = False)
+    checkpoint_ward = fields.Char(string="Ward No:", related='name.checkpoint_ward' ,readonly=False)
+    date = fields.Date(string="Actual Date",required=True)
+    date_bs = fields.Char(string=" Actual Date Bs",_compute = '_compute_nepali_dates',store=True) 
+    planned_date = fields.Date(string="Planned Date",required=True)
+    planned_date_bs = fields.Char(string="Planned Date Bs",_compute ='_compute_nepali_dates',store=True)
+    space_available = fields.Char(string="Space available")
+    company_id = fields.Many2one('res.company', string='Company', required=True, default=lambda self: self.env.company)
+    reached = fields.Boolean(string="Reached ?")
+
+    duty_id = fields.Many2one('duty.allocation',string="Duty Allocation Id:")
+    remarks = fields.Text(string="Remarks")
+    reached_at = fields.Char(string="Reached At:")
+    @api.depends('date','planned_date')
+    def _compute_nepali_dates(self):
+        for record in self:
+            if record.date:
+                nepali_date = nepali_datetime.date.from_datetime_date(record.date)
+                record.date_bs = nepali_date.strftime('%Y-%m-%d')
+            else:
+                record.date_bs = False
+            if record.planned_date:
+                planned_nepali_date = nepali_datetime.date.from_datetime_date(record.planned_date)
+                record.planned_date_bs = planned_nepali_date.strftime('%Y-%m-%d')
+            else:
+                record.planned_date_bs = False
+                
+    def write(self, vals):
+        if 'reached' in vals:
+            for rec in self:
+                if vals['reached'] and not rec.reached_at:
+                    kathmandu_tz = pytz.timezone('Asia/Kathmandu')
+                    now_nep = datetime.now(kathmandu_tz)
+                    now_nep = now_nep.replace(microsecond=0)
+                    if now_nep.tzinfo is not None:
+                        now_nep = now_nep.replace(tzinfo=None)
+                    date = now_nep.date()
+                    nepali_date = nepali_datetime.date.from_datetime_date(date).strftime('%Y-%m-%d')
+                    chekpoint_datetime = datetime.combine(datetime.strptime(nepali_date, '%Y-%m-%d').date(), now_nep.time())
+                    vals['reached_at'] = chekpoint_datetime
+        return super().write(vals)
+
+
+class CheckPointsData(models.Model):
+    _name = 'checkpoint.data'
+    _description = 'Check Points  Data Description'
+
+    name = fields.Char('Check Point Name')
+    location_name = fields.Char(string="Address")
+    checkpoint_province = fields.Many2one('location.province',required=True,string="Province")
+    checkpoint_district = fields.Many2one('location.district',required=True,string="District",   domain="[('province_name', '=', checkpoint_province)]" )
+    checkpoint_palika = fields.Many2one('location.palika', string="Palika", domain="[('district_name', '=', checkpoint_district)]")
+    checkpoint_ward = fields.Char(string="Ward No:")
     company_id = fields.Many2one('res.company', string='Company', required=True, default=lambda self: self.env.company)

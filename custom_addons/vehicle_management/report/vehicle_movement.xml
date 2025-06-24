@@ -165,6 +165,9 @@
                             <div class="footer-item">
                                 <strong>Driver’s License No:</strong> <t t-esc="driver_license_number or 'N/A'"/>
                             </div>
+                            <div class="footer-item">
+                                <strong>Fuel Type:</strong> <t t-esc="fuel_type or 'N/A'"/>
+                            </div>
                         </div>
                     </div>
 

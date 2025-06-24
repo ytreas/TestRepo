@@ -60,12 +60,14 @@ class CustomVehicleDueDetails(models.Model):
 
     @api.model
     def get_latest_record(self, vehicle_number, due_details_name):
+
         """Retrieve the latest record based on vehicle_number and due_details_name."""
         latest_record = self.search([
             ('vehicle_number', '=', vehicle_number),
             ('due_details_name', '=', due_details_name)
         ], order='expiry_date desc', limit=1)
         # print("44444444444444444444",latest_record.vehicle_number.final_number)
+        # print("Latest Record",latest_record.expiry_date_bs)
         return latest_record
 
     def name_get(self):

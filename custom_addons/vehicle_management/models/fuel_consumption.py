@@ -1,4 +1,4 @@
-from odoo import models, fields, api
+from odoo import models, fields, api, _
 import calendar
 from datetime import datetime, timedelta
 import nepali_datetime
@@ -176,6 +176,30 @@ class FuelEntry(models.Model):
     # -------------------------------------------------------------------------
     # Helper Methods
     # -------------------------------------------------------------------------
+    
+    # Method to ensure that the current odometer is greater than the last recorded odometer
+    @api.constrains('current_odometer', 'vehicle_id')
+    def _check_odometer_value(self):
+        """
+        Ensure that the current_odometer value is greater than the previous odometer value
+        for the same vehicle.
+        """
+        for record in self:
+            if record.vehicle_id:
+                # Search for the latest fuel entry for the same vehicle with a lower odometer reading
+                previous_entry = self.search([
+                    ('vehicle_id', '=', record.vehicle_id.id),
+                    ('id', '!=', record.id)  # Exclude the current record
+                ], order='current_odometer DESC', limit=1)
+
+                if previous_entry and record.current_odometer <= previous_entry.current_odometer:
+                    raise ValidationError(
+                        _(
+                            "The current odometer reading (%s) must be greater than the previous odometer reading (%s) "
+                            "for the same vehicle (%s)."
+                        ) % (record.current_odometer, previous_entry.current_odometer, record.vehicle_id.display_name)
+                    )
+                
     # Method to set receipt filename
     def _set_receipt_filename(self, vals):
         """
@@ -246,6 +270,11 @@ class FuelEntry(models.Model):
                 record.is_today = False
                 record.is_this_week = False
                 record.is_this_month = False
+    def recompute_date_filters(self):
+        """Force recomputation of date filters on all records."""
+        records = self.search([])
+        for rec in records:
+            rec.write({'date': rec.date})
 
     # Method to compute receipt preview
     @api.depends('receipt_upload', 'receipt_upload_filename')

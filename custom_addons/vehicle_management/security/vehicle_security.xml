@@ -325,6 +325,13 @@
             <field name="global" eval="True"/> 
             <field name="groups" eval="[(4, ref('vehicle_management.group_vehicle_admin'))]"/>
         </record>
+        <record id="record_user_checkpoint_data" model="ir.rule">
+            <field name="name">Check Point Data</field>
+            <field name="model_id" ref="model_checkpoint_data"/> 
+            <field name="domain_force">[('company_id', '=', user.company_id.id)]</field> 
+            <field name="global" eval="True"/> 
+            <field name="groups" eval="[(4, ref('vehicle_management.group_vehicle_admin'))]"/>
+        </record>
           <record id="record_user_thirtyfive" model="ir.rule">
             <field name="name">Fine Details</field>
             <field name="model_id" ref="model_fine_details"/> 
@@ -681,7 +688,16 @@
             <field name="global" eval="True"/> 
             <field name="groups" eval="[(4, ref('base.group_system'))]"/>
         </record>
-          <record id="record_user_seventy_nine" model="ir.rule">
+
+         <record id="record_base_checkpoint_data" model="ir.rule">
+            <field name="name">Base Check Point</field>
+            <field name="model_id" ref="model_checkpoint_data"/> 
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="global" eval="True"/> 
+            <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+        </record>
+
+        <record id="record_user_seventy_nine" model="ir.rule">
             <field name="name">Fine Details</field>
             <field name="model_id" ref="model_fine_details"/> 
             <field name="domain_force">[(1,'=',1)]</field>
