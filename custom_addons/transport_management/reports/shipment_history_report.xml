@@ -1,0 +1,229 @@
+<odoo>
+    <data>
+        <template id="shipment_history_template">
+            <t t-call="web.basic_layout">
+                <div class="page">
+                    <!-- Styles -->
+                    <style>
+                        /* Fonts */
+                        @font-face {
+                            font-family: 'kalimatiregular';
+                            src: url('/agriculture_market_place/static/src/font/kalimati regular/Kalimati Regular.otf');
+                        }
+
+                        /* Global Styles */
+                        .page {
+                            font-family: 'kalimatiregular', sans-serif;
+                            line-height: 1.6;
+                            color: #333;
+                            margin: 0 auto;
+                            padding: 20px;
+                        }
+
+                        /* Company Header */
+                        .company-header {
+                            background-color: #f9f9f9;
+                            padding: 15px 25px;
+                            border-bottom: 2px solid #ddd;
+                            text-align: center;
+                            margin-bottom: 20px;
+                            border-radius: 5px;
+                            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                        }
+
+                        .company-logo {
+                            margin-bottom: 15px;
+                        }
+
+                        .company-logo img {
+                            height: 90px;
+                            width: auto;
+                            object-fit: contain;
+                        }
+
+                        .company-info h2 {
+                            font-size: 20px;
+                            font-weight: bold;
+                            margin: 0 0 10px 0;
+                            color: #2c3e50;
+                        }
+
+                        .company-info p {
+                            margin: 2px 0;
+                            color: #555;
+                        }
+
+                        /* Report Header */
+                        .report-header {
+                            background-color: #fff;
+                            padding: 15px;
+                            margin-bottom: 25px;
+                            border-radius: 5px;
+                            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+                        }
+
+                        .report-title {
+                            text-align: center;
+                            color: #2c3e50;
+                        }
+
+                        /* Shipment Card */
+                        .shipment-card {
+                            background-color: #fff;
+                            border: 1px solid #e0e0e0;
+                            border-radius: 5px;
+                            padding: 20px;
+                            margin-bottom: 20px;
+                            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                        }
+
+                        .shipment-card h3 {
+                            color: #2c3e50;
+                            margin-bottom: 15px;
+                            padding-bottom: 10px;
+                            border-bottom: 1px solid #eee;
+                        }
+
+                        .shipment-details p {
+                            margin: 8px 0;
+                            color: #555;
+                        }
+
+                        .shipment-details strong {
+                            color: #34495e;
+                            font-weight: 600;
+                        }
+
+                        /* Checkpoint Table */
+                        .checkpoint-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            margin-top: 15px;
+                        }
+
+                        .checkpoint-table th {
+                            background-color: #f5f5f5;
+                            color: #2c3e50;
+                            padding: 12px;
+                            text-align: left;
+                            border: 1px solid #ddd;
+                            font-weight: 600;
+                        }
+
+                        .checkpoint-table td {
+                            padding: 10px 12px;
+                            border: 1px solid #ddd;
+                            color: #555;
+                        }
+
+                        .checkpoint-table tr:nth-child(even) {
+                            background-color: #fafafa;
+                        }
+
+                        .status-label {
+                            display: inline-block;
+                            padding: 4px 8px;
+                            border-radius: 3px;
+                            background-color: #e3f2fd;
+                            color: #1565c0;
+                            font-size: 0.9em;
+                        }
+                    </style>
+
+                    <!-- Company Header -->
+                    <div class="company-header">
+                        <t t-set="current_company" t-value="env.user.company_id"/>
+                        <t t-if="current_company.parent_id">
+                            <t t-set="display_company" t-value="current_company.parent_id"/>
+                        </t>
+                        <t t-else="">
+                            <t t-set="display_company" t-value="current_company"/>
+                        </t>
+
+                        <div class="company-info">
+                            <div class="company-logo">
+                                <img src="../agriculture_market_place/static/src/img/logo.png" alt="Company Logo"/>
+                            </div>
+                            
+                            <h2 t-field="display_company.name"/>
+                            <p t-if="display_company.street">
+                                <t t-esc="display_company.street"/>
+                                <t t-if="display_company.street2">, <t t-esc="display_company.street2"/></t>
+                            </p>
+                            <p t-if="display_company.city or display_company.state_id or display_company.zip">
+                                <t t-if="display_company.city"><t t-esc="display_company.city"/></t>
+                                <t t-if="display_company.state_id">, <t t-esc="display_company.state_id.name"/></t>
+                                <t t-if="display_company.zip"> - <t t-esc="display_company.zip"/></t>
+                            </p>
+                            <p t-if="display_company.country_id">
+                                <t t-esc="display_company.country_id.name"/>
+                            </p>
+                            <p t-if="display_company.phone">फोन: <t t-esc="display_company.phone"/></p>
+                            <p t-if="display_company.email">इमेल: <t t-esc="display_company.email"/></p>
+                        </div>
+                    </div>
+
+                    <!-- Report Header -->
+                    <div class="report-header">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div class="report-title" style="flex: 1; text-align: center;">
+                                <h3 style="margin: 0;">Shipment History Report</h3>
+                                <p style="margin: 5px 0;">
+                                    मिति दायरा: <t t-esc="date_from"/> – बाट: <t t-esc="date_to"/> सम्म
+                                </p>
+                            </div>
+                            <div style="flex: 1; text-align: right;">
+                                <p style="margin: 0;">रिपोर्ट मिति: <t t-esc="today_date"/></p>
+                            </div>
+                        </div>
+                    </div>
+                    <t t-foreach="prepared_data" t-as="group">
+                        <table class="table table-sm table-bordered" style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr>
+                                    <th style="border: 1px solid #000;">Customer Name</th>
+                                    <th style="border: 1px solid #000;">Tracking Number</th>
+                                    <th style="border: 1px solid #000;">Shipment Date</th>
+                                    <th style="border: 1px solid #000;">Delivery Date</th>
+                                    <th style="border: 1px solid #000;">Status</th>
+                                    <th style="border: 1px solid #000;">Total Weight(kg)</th>
+                                    <th style="border: 1px solid #000;">Charges (NPR)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <t t-foreach="group['records']" t-as="line">
+                                <tr>
+                                    <th colspan="8" style="border: 1px solid #000; background-color: #f0f0f0; text-align: center;">
+                                        Date: <t t-esc="group['shipping_date']"/>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #000;"><t t-esc="line['customer_name']"/></td>
+                                    <td style="border: 1px solid #000;"><t t-esc="line['tracking_number']"/></td>
+                                    <td style="border: 1px solid #000;"><t t-esc="line['shipment_date']"/></td>
+                                    <td style="border: 1px solid #000;"><t t-esc="line['delivery_date']"/></td>
+                                    <td style="border: 1px solid #000;"><t t-esc="line['status']"/></td>
+                                    <td style="border: 1px solid #000;"><t t-esc="line['total_weight']"/></td>
+                                    <td style="border: 1px solid #000;"><t t-esc="line['charges']"/></td>
+                                </tr>
+                            </t>
+                            </tbody>
+                        </table>
+                        <br/>
+                        </t>
+                </div>
+            </t>
+        </template>
+
+        <!-- Report Action -->
+        <record id="action_shipment_history_report" model="ir.actions.report">
+            <field name="name">Shipment History Report</field>
+            <field name="model">report.wizard</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">transport_management.shipment_history_template</field>
+            <field name="print_report_name">Shipment History Report</field>
+            <field name="binding_model_id" ref="model_report_wizard"/>
+            <field name="binding_type">report</field>
+            </record>
+    </data>
+</odoo>

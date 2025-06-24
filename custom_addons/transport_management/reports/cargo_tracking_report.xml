@@ -1,0 +1,249 @@
+<odoo>
+    <data>
+        <template id="cargo_report_template">
+            <t t-call="web.basic_layout">
+                <div class="page">
+                    <!-- Styles -->
+                    <style>
+                        /* Fonts */
+                        @font-face {
+                            font-family: 'kalimatiregular';
+                            src: url('/agriculture_market_place/static/src/font/kalimati regular/Kalimati Regular.otf');
+                        }
+
+                        /* Global Styles */
+                        .page {
+                            font-family: 'kalimatiregular', sans-serif;
+                            line-height: 1.6;
+                            color: #333;
+                            margin: 0 auto;
+                            padding: 20px;
+                        }
+
+                        /* Company Header */
+                        .company-header {
+                            background-color: #f9f9f9;
+                            padding: 15px 25px;
+                            border-bottom: 2px solid #ddd;
+                            text-align: center;
+                            margin-bottom: 20px;
+                            border-radius: 5px;
+                            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                        }
+
+                        .company-logo {
+                            margin-bottom: 15px;
+                        }
+
+                        .company-logo img {
+                            height: 90px;
+                            width: auto;
+                            object-fit: contain;
+                        }
+
+                        .company-info h2 {
+                            font-size: 20px;
+                            font-weight: bold;
+                            margin: 0 0 10px 0;
+                            color: #2c3e50;
+                        }
+
+                        .company-info p {
+                            margin: 2px 0;
+                            color: #555;
+                        }
+
+                        /* Report Header */
+                        .report-header {
+                            background-color: #fff;
+                            padding: 15px;
+                            margin-bottom: 25px;
+                            border-radius: 5px;
+                            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+                        }
+
+                        .report-title {
+                            text-align: center;
+                            color: #2c3e50;
+                        }
+
+                        /* Shipment Card */
+                        .shipment-card {
+                            background-color: #fff;
+                            border: 1px solid #e0e0e0;
+                            border-radius: 5px;
+                            padding: 20px;
+                            margin-bottom: 20px;
+                            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                        }
+
+                        .shipment-card h3 {
+                            color: #2c3e50;
+                            margin-bottom: 15px;
+                            padding-bottom: 10px;
+                            border-bottom: 1px solid #eee;
+                        }
+
+                        .shipment-details p {
+                            margin: 8px 0;
+                            color: #555;
+                        }
+
+                        .shipment-details strong {
+                            color: #34495e;
+                            font-weight: 600;
+                        }
+
+                        /* Checkpoint Table */
+                        .checkpoint-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            margin-top: 15px;
+                        }
+
+                        .checkpoint-table th {
+                            background-color: #f5f5f5;
+                            color: #2c3e50;
+                            padding: 12px;
+                            text-align: left;
+                            border: 1px solid #ddd;
+                            font-weight: 600;
+                        }
+
+                        .checkpoint-table td {
+                            padding: 10px 12px;
+                            border: 1px solid #ddd;
+                            color: #555;
+                        }
+
+                        .checkpoint-table tr:nth-child(even) {
+                            background-color: #fafafa;
+                        }
+
+                        .status-label {
+                            display: inline-block;
+                            padding: 4px 8px;
+                            border-radius: 3px;
+                            background-color: #e3f2fd;
+                            color: #1565c0;
+                            font-size: 0.9em;
+                        }
+                    </style>
+
+                    <!-- Company Header -->
+                    <div class="company-header">
+                        <t t-set="current_company" t-value="env.user.company_id"/>
+                        <t t-if="current_company.parent_id">
+                            <t t-set="display_company" t-value="current_company.parent_id"/>
+                        </t>
+                        <t t-else="">
+                            <t t-set="display_company" t-value="current_company"/>
+                        </t>
+
+                        <div class="company-info">
+                            <div class="company-logo">
+                                <img src="../agriculture_market_place/static/src/img/logo.png" alt="Company Logo"/>
+                            </div>
+                            
+                            <h2 t-field="display_company.name"/>
+                            <p t-if="display_company.street">
+                                <t t-esc="display_company.street"/>
+                                <t t-if="display_company.street2">, <t t-esc="display_company.street2"/></t>
+                            </p>
+                            <p t-if="display_company.city or display_company.state_id or display_company.zip">
+                                <t t-if="display_company.city"><t t-esc="display_company.city"/></t>
+                                <t t-if="display_company.state_id">, <t t-esc="display_company.state_id.name"/></t>
+                                <t t-if="display_company.zip"> - <t t-esc="display_company.zip"/></t>
+                            </p>
+                            <p t-if="display_company.country_id">
+                                <t t-esc="display_company.country_id.name"/>
+                            </p>
+                            <p t-if="display_company.phone">फोन: <t t-esc="display_company.phone"/></p>
+                            <p t-if="display_company.email">इमेल: <t t-esc="display_company.email"/></p>
+                        </div>
+                    </div>
+
+                    <!-- Report Header -->
+                    <div class="report-header">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div class="report-title" style="flex: 1; text-align: center;">
+                                <h3 style="margin: 0;">Cargo Tracking Report</h3>
+                                <p style="margin: 5px 0;">
+                                    मिति दायरा: <t t-esc="date_from"/> – बाट: <t t-esc="date_to"/> सम्म
+                                </p>
+                            </div>
+                            <div style="flex: 1; text-align: right;">
+                                <p style="margin: 0;">रिपोर्ट मिति: <t t-esc="today_date"/></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Shipment Details -->
+                    <t t-foreach="prepared_data" t-as="shipment">
+                        <div class="shipment-card">
+                            <h3>Tracking No: <t t-esc="shipment['tracking_no']"/></h3>
+                            <div class="shipment-details">
+                                <p><strong>Shipment Date:</strong> <t t-esc="shipment['dispatch_datetime']"/></p>
+                                <p><strong>Delivery Date:</strong> <t t-esc="shipment['delivery_datetime']"/></p>
+                                <p><strong>Origin:</strong> <t t-esc="shipment['origin']"/></p>
+                                <p><strong>Destination:</strong> <t t-esc="shipment['destination']"/></p>
+                                <p><strong>Status:</strong> <span class="status-label"><t t-esc="shipment['status']"/></span></p>
+                                <p><strong>Mode of Transport:</strong> <span><t t-esc="shipment['mode_of_transport']"/></span></p>
+                                <p><strong>Last Updated:</strong> <t t-esc="shipment['last_updated']"/></p>
+                            </div>
+
+                            <div style="margin-top:20px;">
+                                <h4 style="color: #2c3e50; margin-bottom: 15px;">Checkpoint Details:</h4>
+                                <table class="checkpoint-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Location</th>
+                                            <th>Date/Time</th>
+                                            <th>Status</th>
+                                            <th>Remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><t t-esc="shipment['origin']"/></td>
+                                            <td><t t-esc="shipment['dispatch_datetime']"/></td>
+                                            <td>Dispatched</td>
+                                            <td><t t-esc="shipment['dispatch_remarks']"/></td>
+                                        </tr>
+                                        <t t-foreach="shipment['checkpoint_details']" t-as="checkpoint">
+                                            <tr>
+                                                <td><t t-esc="checkpoint['transit_name']"/></td>
+                                                <td><t t-esc="checkpoint['transit_time']"/></td>
+                                                <td><t t-esc="checkpoint['transit_status']"/></td>
+                                                <td><t t-esc="checkpoint['transit_remarks']"/></td>
+                                            </tr>
+                                        </t>
+                                        <t t-if="shipment['status'] == 'Delivered'">
+                                            <tr>
+                                                <td><t t-esc="shipment['destination']"/></td>
+                                                <td><t t-esc="shipment['delivery_datetime']"/></td>
+                                                <td>Delivered</td>
+                                                <td><t t-esc="shipment['delivery_remarks']"/></td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </t>
+        </template>
+
+        <!-- Report Action -->
+        <record id="action_cargo_report" model="ir.actions.report">
+            <field name="name">Cargo Tracking Report</field>
+            <field name="model">cargo.tracking.report.wizard</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">transport_management.cargo_report_template</field>
+            <field name="print_report_name">'Cargo Tracking Report'</field>
+            <field name="binding_model_id" ref="model_cargo_tracking_report_wizard"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,51 @@
+<odoo>
+  <record id="view_service_execution_report_wizard_form" model="ir.ui.view">
+    <field name="name">service.execution.report.wizard.form</field>
+    <field name="model">service.execution.report.wizard</field>
+    <field name="arch" type="xml">
+      <form string="Service Execution Report">
+        <sheet>
+          <group col="1">
+            <!-- filter selector -->
+            <group>            
+                <field name="filter_by"/>
+            </group>
+
+            <!-- Date range -->
+            <group invisible="filter_by != 'date'">
+              <field name="date_from" options="{'corresponding_field': 'date_from_bs'}"/>
+              <field name="date_to"   options="{'corresponding_field': 'date_to_bs'}"/>
+            </group>
+
+            <!-- Vehicle -->
+            <group invisible="filter_by != 'vehicle'">
+              <field name="vehicle_id"/>
+            </group>
+
+            <!-- Service Type -->
+            <group invisible="filter_by != 'service_type'">
+              <field name="service_type"/>
+            </group>
+
+            <!-- Service Provider -->
+            <group invisible="filter_by != 'provider'">
+              <field name="service_provider"/>
+            </group>
+          </group>
+          <footer>
+            <button string="Generate Pdf Report"
+                    type="object" name="print_report"
+                    class="btn-primary"/>
+            <button string="Generate Excel Report" 
+                    type="object" 
+                    name="export_to_excel"
+                    class="btn-info"/>
+            <button string="Cancel"
+                    class="btn-secondary"
+                    special="cancel"/>
+          </footer>
+        </sheet>
+      </form>
+    </field>
+  </record>
+</odoo>

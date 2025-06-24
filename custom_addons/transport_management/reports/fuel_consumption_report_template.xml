@@ -1,0 +1,147 @@
+<odoo>
+  <data>
+    <!-- Fuel Consumption Report Template -->
+    <template id="fuel_consumption_report_template">
+      <t t-call="web.basic_layout">
+        <div class="page" style="margin:0 auto;">
+
+          <!-- Styles -->
+          <style>
+            @font-face {
+              font-family: 'kalimatiregular';
+              src: url('/agriculture_market_place/static/src/font/kalimati regular/Kalimati Regular.otf');
+            }
+            body {
+              font-family: 'kalimatiregular', sans-serif;
+            }
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              border: 1px solid #ddd;
+              padding: 8px;
+              text-align: center;
+            }
+            th {
+              background-color: #f0f0f0;
+            }
+          </style>
+
+            <div style="font-size: 13px;
+                line-height: 1.6;
+                background-color: #f9f9f9;
+                padding: 10px 20px 20px 20px;
+                border-bottom: 2px solid #ddd;
+                text-align: center;
+                margin-top: 0 !important;">
+                  
+                  <t t-set="current_company" t-value="env.user.company_id"/>
+                  <t t-if="current_company.parent_id">
+                      <t t-set="display_company" t-value="current_company.parent_id"/>
+                  </t>
+                  <t t-else="">
+                      <t t-set="display_company" t-value="current_company"/>
+                  </t>
+
+                  <!-- Company Header Centered -->
+                  <div style="display: inline-block; text-align: center;">
+                      <!-- Logo -->
+                      <div style="margin-bottom: 10px;">
+                          <img src="../agriculture_market_place/static/src/img/logo.png"
+                              alt="Company Logo"
+                              style="height: 90px; width: auto; object-fit: contain;" />
+                      </div>
+
+                      <!-- Company Info -->
+                      <h2 style="margin: 0; font-size: 20px; font-weight: bold;" t-field="display_company.name"/>
+                      
+                      <p style="margin: 2px 0;" t-if="display_company.street">
+                          <t t-esc="display_company.street"/>
+                          <t t-if="display_company.street2">, <t t-esc="display_company.street2"/></t>
+                      </p>
+                      <p style="margin: 2px 0;" t-if="display_company.city or display_company.state_id or display_company.zip">
+                          <t t-if="display_company.city"><t t-esc="display_company.city"/></t>
+                          <t t-if="display_company.state_id">, <t t-esc="display_company.state_id.name"/></t>
+                          <t t-if="display_company.zip"> - <t t-esc="display_company.zip"/></t>
+                      </p>
+                      <p style="margin: 2px 0;" t-if="display_company.country_id">
+                          <t t-esc="display_company.country_id.name"/>
+                      </p>
+                      <p style="margin: 2px 0;" t-if="display_company.phone">फोन: <t t-esc="display_company.phone"/></p>
+                      <p style="margin: 2px 0;" t-if="display_company.email">इमेल: <t t-esc="display_company.email"/></p>
+                      <!-- <p style="margin: 2px 0;" t-if="display_company.website">Website: <t t-esc="display_company.website"/></p> -->
+                  </div>
+            </div>
+
+          <!-- Header -->
+          <div style="text-align:center; margin-bottom:20px;">
+            <h4>इन्धन खपत रिपोर्ट</h4>
+            <p>
+              <t t-if="docs and docs[0].env.context.get('date_from') and docs[0].env.context.get('date_to')">
+                मिति दायरा: <t t-esc="docs[0].env.context.get('date_from')"/> - <t t-esc="docs[0].env.context.get('date_to')"/>
+              </t>
+            </p>
+          </div>
+
+          <!-- Main Table -->
+          <main>
+            <table>
+              <thead>
+                <tr>
+                  <th>मिति (Date)</th>
+                  <th>ट्रक नं. (Truck No.)</th>
+                  <th>सुरु किमी (Opening KM)</th>
+                  <th>अन्त्य किमी (Closing KM)</th>
+                  <th>दूरी (Distance in km)</th>
+                  <th>ईन्धनको किसिम (Fuel Type)</th>
+                  <th>ईन्धन भरेको मात्रा (Fuel Filled in Litres)</th>
+                  <th>औसत माइलेज (KM/Litre)</th>
+                  <th>कैफियत (Remarks)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- pull data from context -->
+                <t t-set="lines" t-value="docs[0].env.context.get('fuel_report_data', [])"/>
+                <t t-if="lines">
+                  <t t-foreach="lines" t-as="line">
+                    <tr>
+                      <td><t t-esc="line['date'] or '-'"/></td>
+                      <td><t t-esc="line['truck_no'] or '-'"/></td>
+                      <td><t t-esc="line['opening_km'] or 0.0"/></td>
+                      <td><t t-esc="line['closing_km'] or 0.0"/></td>
+                      <td><t t-esc="line['distance'] or 0.0"/></td>
+                      <td><t t-esc="line['fuel_type'] or '-'"/></td>
+                      <td><t t-esc="line['fuel_filled'] or 0.0"/></td>
+                      <td><t t-esc="line['mileage'] or 0.0"/></td>
+                      <td><t t-esc="line['remarks'] or '-'"/></td>
+                    </tr>
+                  </t>
+                </t>
+                <t t-else="">
+                  <tr>
+                    <td colspan="9" style="text-align:center; color:#999;">
+                      चयन गरिएका मापदण्डहरूको लागि कुनै रेकर्ड फेला परेन।
+                    </td>
+                  </tr>
+                </t>
+              </tbody>
+            </table>
+          </main>
+
+        </div>
+      </t>
+    </template>
+
+    <!-- Report Action -->
+    <record id="action_report_fuel_consumption" model="ir.actions.report">
+      <field name="name">Fuel Consumption Report</field>
+      <field name="model">fuel.consumption.report.wizard</field>
+      <field name="report_type">qweb-pdf</field>
+      <field name="report_name">transport_management.fuel_consumption_report_template</field>
+      <field name="print_report_name">'Fuel_Consumption_Report'</field>
+      <field name="binding_model_id" ref="model_fuel_consumption_report_wizard"/>
+      <field name="binding_type">report</field>
+    </record>
+  </data>
+</odoo>

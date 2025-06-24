@@ -1,0 +1,55 @@
+<!-- views/transport_billing_rule_views.xml -->
+<odoo>
+  <record id="action_transport_billing_rule" model="ir.actions.act_window">
+    <field name="name">Billing Rules</field>
+    <field name="res_model">transport.billing.rule</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+  <menuitem id="menu_transport_billing"
+      name="Billing"
+      parent="menu_transport_root"
+      sequence="4"/>
+  <menuitem id="menu_transport_billing_rule"
+            name="Billing Rules"
+            parent="menu_transport_billing"
+            action="action_transport_billing_rule"
+            sequence="1"/>
+  <menuitem id="menu_transport_invoice"
+            name="Invoice"
+            parent="menu_transport_billing"
+            action="account.action_move_out_invoice_type"
+            sequence="2"/>
+  <record id="view_transport_billing_rule_tree" model="ir.ui.view">
+    <field name="name">transport.billing.rule.tree</field>
+    <field name="model">transport.billing.rule</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="name"/>
+        <field name="rate_type"/>
+        <field name="unit_price"/>
+      </tree>
+    </field>
+  </record>
+  <record id="view_transport_billing_rule_form" model="ir.ui.view">
+    <field name="name">transport.billing.rule.form</field>
+    <field name="model">transport.billing.rule</field>
+    <field name="arch" type="xml">
+      <form>
+        <sheet>
+          <group>
+            <group>
+              <field name="name"/>
+              <field name="rate_type"/>
+            </group>
+          </group>
+          <group>
+            <group>
+              <field name="unit_price"/>
+              <field name="currency_id"/>
+            </group>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+</odoo>

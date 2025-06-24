@@ -1,0 +1,68 @@
+<odoo>
+    <record id="view_trip_sheet_wizard_form" model="ir.ui.view">
+        <field name="name">Report</field>
+        <field name="model">report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Report Wizard">
+                <group>
+                    <!-- <field name="date_from"/>
+                    <field name="date_to"/> -->
+                    <!-- <field name="invoice_id" /> -->
+                    <field name="vehicle_id" invisible="action_domain != 'trip_sheet'"/>
+                    <field name="driver_id" invisible="action_domain != 'trip_sheet'"/>
+                    <field name="commodity" invisible="action_domain != 'trip_sheet'"/>
+                    <field name="action_domain"  invisible='0'/>
+                </group>
+                <group name="dispatch" invisible="action_domain != 'daily_dispatch'">
+                    <field name="dispatch_filter_selection" />
+                    <field name="date_from" invisible="dispatch_filter_selection != 'date_range'"/>
+                    <field name="date_to" invisible="dispatch_filter_selection != 'date_range'"/>
+                    <field name="dispatch_date_from" invisible="dispatch_filter_selection != 'dispatch_date'"/>
+                    <field name="dispatch_date_to" invisible="dispatch_filter_selection != 'dispatch_date'"/>
+                    <field name="customer" invisible="dispatch_filter_selection != 'customer'"/>
+                    <field name="tracking_number"  invisible="dispatch_filter_selection != 'tracking_number'"/>
+                    <field name="destination"  invisible="dispatch_filter_selection != 'destination'"/>
+                    <field name="dispatch_mode"  invisible="dispatch_filter_selection != 'mode'"/>
+                    <field name="dispatch_status"  invisible="dispatch_filter_selection != 'status'"/>
+                </group>
+
+                <group name="delivery" invisible="action_domain != 'delivery_performance'">
+                    <field name="delivery_filter_selection" />
+                    <field name="date_from" invisible="delivery_filter_selection != 'date_range'"/>
+                    <field name="date_to" invisible="delivery_filter_selection != 'date_range'"/>
+                    <field name="origin" invisible="delivery_filter_selection != 'origin'"/>
+                    <field name="tracking_number"  invisible="delivery_filter_selection != 'tracking_number'"/>
+                    <field name="destination"  invisible="delivery_filter_selection != 'destination'"/>
+                    <field name="schedule_date_from" invisible="delivery_filter_selection != 'schedule_date'"/>
+                    <field name="schedule_date_to" invisible="delivery_filter_selection != 'schedule_date'"/>
+                    <field name="actual_date_from" invisible="delivery_filter_selection != 'actual_date'"/>
+                    <field name="actual_date_to" invisible="delivery_filter_selection != 'actual_date'"/>
+                    <field name="delivery_status"  invisible="delivery_filter_selection != 'status'"/>
+                    <field name="delay_range"  invisible="delivery_filter_selection != 'delay'"/>
+                    <field name="early_range"  invisible="delivery_filter_selection != 'early'"/>
+                </group>
+
+                <group name="shipment" invisible="action_domain != 'shipment_history'">
+                    <field name="shipment_filter_selection" />
+                    <field name="date_from" invisible="shipment_filter_selection != 'date_range'"/>
+                    <field name="date_to" invisible="shipment_filter_selection != 'date_range'"/>
+                    <field name="tracking_number"  invisible="shipment_filter_selection != 'tracking_number'"/>
+                    <field name="destination"  invisible="shipment_filter_selection != 'destination'"/>
+                    <field name="schedule_date_from" invisible="shipment_filter_selection != 'shipment_date'"/>
+                    <field name="schedule_date_to" invisible="shipment_filter_selection != 'shipment_date'"/>
+                    <field name="actual_date_from" invisible="shipment_filter_selection != 'delivery_date'"/>
+                    <field name="actual_date_to" invisible="shipment_filter_selection != 'delivery_date'"/>
+                    <field name="weight_range" invisible="shipment_filter_selection != 'weights'" />
+                    <field name="charge_range" invisible="shipment_filter_selection != 'charge'" />
+                    <field name="shipment_status"  invisible="shipment_filter_selection != 'status'"/>
+                </group>
+
+                <footer>
+                    <button string="Generate Report" type="object" name="print"   context="{'button_type': 'pdf'}" class="btn-primary"/>
+                    <button string="Generate Excel Report" type="object" name="print"  context="{'button_type': 'excel'}" class="btn-primary"  /> <!--invisible="action_domain not in ('trip_sheet','transport_invoice','daily_dispatch')"-->
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>  
+</odoo>

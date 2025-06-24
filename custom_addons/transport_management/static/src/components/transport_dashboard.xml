@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="owl.OwlTransportDashboard" owl="1">
+        <t t-javascript="https://nepalidatepicker.sajanmaharjan.com.np/nepali.datepicker/js/nepali.datepicker.v4.0.5.min.js" />
+        <t t-link="https://nepalidatepicker.sajanmaharjan.com.np/nepali.datepicker/css/nepali.datepicker.v4.0.5.min.css" />
+        
+        <div class="vh-100 overflow-auto bg-muted">
+            <div class="row m-3">
+                <div class="col m-0 p-0">
+                    <div class="shadow-sm border m-2 p-4 bg-white">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <h1 class="text-primary fw-bold">Transport Dashboard</h1>
+                            <div>
+                                <!-- Toggle Buttons -->
+                                <div class="btn-group mb-2" style="display: flex; gap: 0.5rem;">
+                                    <button type="button" class="btn btn-outline-primary"
+                                            t-att-class="{ 'active': state.selection_mode === 'custom' }"
+                                            t-on-click="() => setSelectionMode('custom')">
+                                        Custom Date Range
+                                    </button>
+                                    <button type="button" class="btn btn-outline-primary"
+                                            t-att-class="{ 'active': state.selection_mode === 'quick' }"
+                                            t-on-click="() => setSelectionMode('quick')">
+                                        Quick Period
+                                    </button>
+                                </div>
+
+                                <!-- Custom Date Range Picker -->
+                         
+                                <div t-if="state.selection_mode === 'custom'" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+                                    <div style="display: flex; align-items: center; gap: 0.25rem;">
+                                        <label for="custom_start_date" style="min-width: 40px;">Start:</label>
+                                        <input id="custom_start_date" class="form-control nepali-datepicker" type="text"
+                                            t-att-value="state.startDate"
+                                            t-on-change="(ev) => onCustomDateChange('custom_start_date', ev)"
+                                            style="max-width: 200px;" />
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 0.25rem;">
+                                        <label for="custom_end_date" style="min-width: 40px;">End:</label>
+                                        <input id="custom_end_date" class="form-control nepali-datepicker" type="text"
+                                            t-att-value="state.endDate"
+                                            t-on-change="(ev) => onCustomDateChange('custom_end_date', ev)"
+                                            style="max-width: 200px;" />
+                                    </div>
+                                   
+                                </div>
+                                <!-- Quick Period Selector -->
+                                <div t-if="state.selection_mode === 'quick'" style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                    <label for="quick_range" style="min-width: 100px;">Quick Range:</label>
+                                    <!-- t-model automatically Bind to the period state -->
+                                    <!--t-att-value update input change based on logic handel in t-on-change-->
+                                    <select id="quick_range" class="form-select" 
+                                        t-model="state.period"
+                                        t-on-change="onChangePeriod"
+                                        style="max-width: 200px;">
+                                        <option value="0">Select Period</option>
+                                        <option value="7">Last 7 Days</option>
+                                        <option value="30">Last 30 Days</option>
+                                        <option value="90">Last 90 Days</option>
+                                        <option value="365">Last 365 Days</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-3">
+                <div class="col-lg-7 " style="display:flex;flex-direction:column;justify-content:space-between;">
+                    <div class="--uwyw5qww" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0.8em;align-content:stretch;">
+                        <TransportKpiCard name="'Total Orders'" value="state.total_orders.value" percentage="state.total_orders.percentage"/>
+                        <TransportKpiCard name="'In Transit'" value="state.transit.value" percentage="state.transit.percentage" onClick="() => viewStateOrder('in_transit')"/>
+                        <TransportKpiCard name="'Delivered'" value="state.delivered_orders.value" percentage="state.delivered_orders.percentage" onClick="() => viewStateOrder('delivered')"/>
+                        <TransportKpiCard name="'Delayed Shipments'" value="state.delayed_orders.value" percentage="state.delayed_orders.percentage" onClick="() => viewStateOrder('delayed')"/>
+                        <TransportKpiCard name="'Total Vehicle In Use'" value="state.vehicle_use.value" percentage="state.vehicle_use.percentage"/>
+                        <TransportKpiCard name="'Avg Delivery Time (hrs)'" value="state.average_delivered.value" percentage="state.average_delivered.percentage"/>
+                    </div>
+                    <div class="row mt-auto">
+                        <div class="col-lg-12 m-0 p-0">
+                            <div class="shadow-sm border m-2 p-4 bg-white">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <h3 class="text-primary fw-bold">Shipments Over Time</h3>
+                                    <!-- <div class="px-3 py-1 bg-primary cursor-pointer">
+                                        <span class="fa fa-arrow-right text-white"/>
+                                    </div> -->
+                                </div>
+                               <TransportChartRenderer type="'line'" title="'Shipments Over Time'" 
+                                    config="state.shipmentData"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 mt-auto" style="display:flex;flex-direction:column;justify-content:space-between;">
+                    <div class="row mt-auto">
+                        <div class="col m-0 p-0">
+                            <div class="shadow-sm border m-2 bg-white">
+                                <div class="d-flex align-items-center justify-content-between mb-3"></div>
+                                    <span><h3 class="text-primary fw-bold text-center mb-3">Delay Reason</h3></span>
+                                <PieChart type="'pie'" title="'Delay Reason'" config="state.delayData" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col m-0 p-0">
+                            <div class="shadow-sm border m-2 p-4 bg-white">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <h3 class="text-primary fw-bold">Shipment Status</h3>
+                                    <!-- <div class="px-3 py-1 bg-primary cursor-pointer">
+                                        <span class="fa fa-arrow-right text-white"></span>
+                                    </div> -->
+                                </div>
+                                <!-- Table Starts -->
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped mb-0">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Status</th>
+                                                <th>Count</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-set="total_count" t-value="0"/>
+                                            <t t-foreach="state.ShipMentCount" t-as="shipment" t-key="shipment.id">
+                                                <t t-set="total_count" t-value="total_count + shipment.count"/>
+                                                <tr>
+                                                    <td><t t-esc="shipment.status" /></td>
+                                                    <td><t t-esc="shipment.count" /></td>
+                                                </tr>
+                                            </t>
+                                            <tr>
+                                                <td><strong>Total</strong></td>
+                                                <td><t t-esc="total_count" /></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          <!-- Full-width row for the table after the dashboard -->
+            <div class="row mt-4">
+                <div class="col">
+                    <div class="shadow-sm border m-2 p-4 bg-white">
+                    <h4 class="text-primary fw-bold mb-3">Latest Shipments</h4>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Tracking Number</th>
+                                <th>Customer</th>
+                                <th>Origin</th>
+                                <th>Destination</th>
+                                <th>Status</th>
+                                <th>Last Update</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="state.latestOrder" t-as="order" t-key="order.id">
+                                <tr>
+                                    <th scope="row">
+                                        <t t-esc="order.tracking_number || 'N/A'" />
+                                    </th>
+                                    <td>
+                                        <t t-esc="order.customer_name[1] || 'N/A'" />
+                                    </td>
+                                    <td>
+                                        <t t-esc="order.pickup_location || 'N/A'" />
+                                    </td>
+                                    <td>
+                                        <t t-esc="order.delivery_location || 'N/A'" />
+                                    </td>
+                                    <td>
+                                        <t t-esc="order.state" />
+                                    </td>
+                                    <td>
+                                        <t t-esc="order.update_period || 'N/A'" />
+                                    </td>
+                                </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                        <div class="pagination-controls">
+                            <button class="btn btn-primary" t-on-click="prevPage" t-att-disabled="state.currentPage == 1 ? 'disabled' : null">
+                                Previous
+                            </button>
+                            <span>Page <t t-esc="state.currentPage" /> of <t t-esc="state.totalPages" /></span>
+                            <button class="btn btn-primary" t-on-click="nextPage" t-att-disabled="state.currentPage == state.totalPages ? 'disabled' : null">
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

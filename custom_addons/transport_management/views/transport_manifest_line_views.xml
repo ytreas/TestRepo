@@ -1,0 +1,48 @@
+<!-- views/transport_manifest_line_views.xml -->
+<odoo>
+  <record id="action_transport_manifest_line" model="ir.actions.act_window">
+    <field name="name">Manifest Lines</field>
+    <field name="res_model">transport.manifest.line</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+  <menuitem id="menu_transport_manifest_line"
+            name="Manifest Lines"
+            parent="menu_transport_manifest"
+            action="action_transport_manifest_line"
+            sequence="2"/>
+  <record id="view_transport_manifest_line_tree" model="ir.ui.view">
+    <field name="name">transport.manifest.line.tree</field>
+    <field name="model">transport.manifest.line</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="manifest_id"/>
+        <field name="sequence"/>
+        <field name="description"/>
+      </tree>
+    </field>
+  </record>
+  <record id="view_transport_manifest_line_form" model="ir.ui.view">
+    <field name="name">transport.manifest.line.form</field>
+    <field name="model">transport.manifest.line</field>
+    <field name="arch" type="xml">
+      <form>
+        <sheet>
+          <group>
+            <group>
+              <field name="manifest_id"/>
+              <field name="sequence"/>
+            </group>
+          </group>
+          <group>
+            <group>
+              <field name="description"/>
+              <field name="cargo_weight"/>
+              <field name="cargo_qty"/>
+              <field name="eta" options="{'corresponding_field': 'eta_bs'}"/>
+            </group>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+</odoo>

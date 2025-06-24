@@ -1,0 +1,144 @@
+<odoo>
+  <data>
+    <!-- Service Execution Report Template -->
+    <template id="service_execution_report_template">
+      <t t-call="web.basic_layout">
+        <div class="page" style="margin: 0 auto;">
+          <style>
+            @font-face {
+              font-family: 'kalimatiregular';
+              src: url('/agriculture_market_place/static/src/font/kalimati regular/Kalimati Regular.otf');
+            }
+            body {
+              font-family: 'kalimatiregular', sans-serif;
+            }
+          </style>
+
+            <div style="font-size: 13px;
+                line-height: 1.6;
+                background-color: #f9f9f9;
+                padding: 10px 20px 20px 20px;
+                border-bottom: 2px solid #ddd;
+                text-align: center;
+                margin-top: 0 !important;">
+                  
+                  <t t-set="current_company" t-value="env.user.company_id"/>
+                  <t t-if="current_company.parent_id">
+                      <t t-set="display_company" t-value="current_company.parent_id"/>
+                  </t>
+                  <t t-else="">
+                      <t t-set="display_company" t-value="current_company"/>
+                  </t>
+
+                  <!-- Company Header Centered -->
+                  <div style="display: inline-block; text-align: center;">
+                      <!-- Logo -->
+                      <div style="margin-bottom: 10px;">
+                          <img src="../agriculture_market_place/static/src/img/logo.png"
+                              alt="Company Logo"
+                              style="height: 90px; width: auto; object-fit: contain;" />
+                      </div>
+
+                      <!-- Company Info -->
+                      <h2 style="margin: 0; font-size: 20px; font-weight: bold;" t-field="display_company.name"/>
+                      
+                      <p style="margin: 2px 0;" t-if="display_company.street">
+                          <t t-esc="display_company.street"/>
+                          <t t-if="display_company.street2">, <t t-esc="display_company.street2"/></t>
+                      </p>
+                      <p style="margin: 2px 0;" t-if="display_company.city or display_company.state_id or display_company.zip">
+                          <t t-if="display_company.city"><t t-esc="display_company.city"/></t>
+                          <t t-if="display_company.state_id">, <t t-esc="display_company.state_id.name"/></t>
+                          <t t-if="display_company.zip"> - <t t-esc="display_company.zip"/></t>
+                      </p>
+                      <p style="margin: 2px 0;" t-if="display_company.country_id">
+                          <t t-esc="display_company.country_id.name"/>
+                      </p>
+                      <p style="margin: 2px 0;" t-if="display_company.phone">फोन: <t t-esc="display_company.phone"/></p>
+                      <p style="margin: 2px 0;" t-if="display_company.email">इमेल: <t t-esc="display_company.email"/></p>
+                      <!-- <p style="margin: 2px 0;" t-if="display_company.website">Website: <t t-esc="display_company.website"/></p> -->
+                  </div>
+            </div>
+
+          <!-- Header -->
+          <div style="text-align:center; margin-bottom:20px;">
+            <h4>सेवा कार्यान्वयन प्रतिवेदन</h4>
+            <p>
+              <t t-foreach="docs" t-as="o">
+                <t t-if="o.env.context.get('date_from') and o.env.context.get('date_to')">
+                  मिति दायरा: <t t-esc="o.env.context.get('date_from')"/> - <t t-esc="o.env.context.get('date_to')"/>
+                </t>
+              </t>
+            </p>
+          </div>
+
+          <!-- Main table -->
+          <main>
+            <table class="table table-sm" style="width:100%; border:1px solid #ddd; border-collapse: collapse;">
+              <thead>
+                <tr style="background-color:#f0f0f0;">
+                  <th style="border:1px solid #ddd; padding:8px;">मिति (Date)</th>
+                  <th style="border:1px solid #ddd; padding:8px;">ट्रक नं. (Truck No.).</th>
+                  <th style="border:1px solid #ddd; padding:8px;">सम्भार प्रकार (Service Type)</th>
+                  <th style="border:1px solid #ddd; padding:8px;">सेवा प्रदायक (Service Provider)</th>
+                  <th style="border:1px solid #ddd; padding:8px;">बील नं. (Invoice No.)</th>
+                  <th style="border:1px solid #ddd; padding:8px;">रकम (Amount रु)</th>
+                  <th style="border:1px solid #ddd; padding:8px;">अर्को सेवा मिति (Next Service Date)</th>
+                  <th style="border:1px solid #ddd; padding:8px;">कैफियत (Remarks)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <t t-foreach="docs" t-as="o">
+                  <t t-set="rows" t-value="o.env.context.get('records', [])"/>
+                  <t t-if="rows">
+                    <!-- iterate each row -->
+                    <t t-foreach="rows" t-as="row">
+                      <tr>
+                        <td style="border:1px solid #ddd; padding:8px;"><t t-esc="row['date'] or '-'"/></td>
+                        <td style="border:1px solid #ddd; padding:8px;"><t t-esc="row['truck_no'] or '-'"/></td>
+                        <td style="border:1px solid #ddd; padding:8px;"><t t-esc="row['service_type'] or '-'"/></td>
+                        <td style="border:1px solid #ddd; padding:8px;"><t t-esc="row['provider'] or '-'"/></td>
+                        <td style="border:1px solid #ddd; padding:8px;"><t t-esc="row['invoice_no'] or '-'"/></td>
+                        <td style="border:1px solid #ddd; padding:8px; text-align:right;"><t t-esc="row['amount'] or 0.0"/></td>
+                        <td style="border:1px solid #ddd; padding:8px;"><t t-esc="row['next_service'] or '-'"/></td>
+                        <td style="border:1px solid #ddd; padding:8px;"><t t-esc="row['remarks'] or '-'"/></td>
+                      </tr>
+                    </t>
+                    <!-- total row -->
+                    <tr style="font-weight:bold; background-color:#fafafa;">
+                      <td colspan="5" style="border:1px solid #ddd; padding:8px; text-align:left;">Total</td>
+                      <td style="border:1px solid #ddd; padding:8px; text-align:center;">
+                        <t t-esc="sum([ row['amount'] or 0.0 for row in rows ])"/>
+                      </td>
+                      <!-- two empty cells to complete 8 columns -->
+                      <td colspan="2" style="border:1px solid #ddd; padding:8px;"></td>
+                    </tr>
+                  </t>
+                  <t t-else="">
+                    <tr>
+                      <td colspan="8" style="text-align:center; padding:12px; color:#999;">
+                        चयन गरिएका मापदण्डहरूको लागि कुनै रेकर्ड फेला परेन।
+                      </td>
+                    </tr>
+                  </t>
+                </t>
+              </tbody>
+            </table>
+          </main>
+
+        </div>
+      </t>
+    </template>
+
+    <!-- Report Action -->
+    <record id="action_report_service_execution" model="ir.actions.report">
+      <field name="name">Service Execution Report</field>
+      <field name="model">service.execution.report.wizard</field>
+      <field name="report_type">qweb-pdf</field>
+      <field name="report_name">transport_management.service_execution_report_template</field>
+      <field name="print_report_name">'Service_Execution_Report'</field>
+      <field name="binding_model_id" ref="model_service_execution_report_wizard"/>
+      <field name="binding_type">report</field>
+    </record>
+  </data>
+</odoo>

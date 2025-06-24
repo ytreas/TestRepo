@@ -1,0 +1,42 @@
+<odoo>
+  <record id="view_fuel_consumption_report_wizard_form" model="ir.ui.view">
+    <field name="name">fuel.consumption.report.wizard.form</field>
+    <field name="model">fuel.consumption.report.wizard</field>
+    <field name="arch" type="xml">
+      <form string="Fuel Consumption Report">
+        <sheet>
+          <group col="1">
+            <group>
+                <field name="filter_by"/>
+            </group>
+            <!-- only one of these shows based on filter_by -->
+            <group invisible="filter_by != 'date'">
+              <field name="date_from" options="{'corresponding_field': 'date_from_bs'}"/>
+              <field name="date_to" options="{'corresponding_field': 'date_to_bs'}"/>
+            </group>
+            <group invisible="filter_by != 'vehicle'">
+              <field name="vehicle_id"/>
+            </group>
+            <group invisible="filter_by != 'fuel_type'">
+              <field name="fuel_type_id"/>
+            </group>
+          </group>
+          <footer>
+            <button string="Generate Pdf Report"
+                    type="object"
+                    name="print_report"
+                    class="btn-primary"/>
+            <button string="Generate Excel Report"
+                    type="object"
+                    name="export_to_excel"
+                    class="btn-info"/>
+            <button string="Cancel"
+                    class="btn-secondary"
+                    special="cancel"/>
+          </footer>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+</odoo>

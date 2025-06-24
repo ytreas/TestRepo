@@ -1,0 +1,48 @@
+<odoo>
+    <record id="action_vehicle_utilization_report_wizard_form" model="ir.ui.view">
+        <field name="name">Vehicle Utilization Report</field>
+        <field name="model">vehicle.utilization.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Vehicle Utilization Report">
+                <sheet>
+                    <group col="1">
+                        <group>
+                            <field name="filter_by"/>
+                        </group>
+                        <group invisible="filter_by in ['vehicle', 'vehicle_type', 'utilization']">
+                            <field name="date_from" options="{'corresponding_field': 'date_from_bs'}" 
+                                   required="filter_by in ['date', 'both']"/>
+                            <field name="date_to" options="{'corresponding_field': 'date_to_bs'}"
+                                   required="filter_by in ['date', 'both']"/>
+                        </group>
+                        <group invisible="filter_by in ['date', 'vehicle_type', 'utilization']">
+                            <field name="vehicle_id" required="filter_by in ['vehicle', 'both']"/>
+                        </group>
+                        <group invisible="filter_by in ['date','vehicle', 'both', 'utilization']">
+                            <field name="vehicle_system"/>
+                            <!-- Old System -->
+                            <field name="old_vehicle_type"
+                                    invisible="vehicle_system == 'new'" 
+                                    required="filter_by == 'vehicle_type' and vehicle_system == 'old'"/>
+                            <!-- New System -->
+                            <field name="two_wheeler" 
+                                invisible="vehicle_system in ['old', 'pradesh'] or four_wheeler or heavy"/>
+                            <field name="four_wheeler" 
+                                invisible="vehicle_system in ['old', 'pradesh'] or two_wheeler or heavy"/>
+                            <field name="heavy" 
+                                invisible="vehicle_system in ['old', 'pradesh'] or two_wheeler or four_wheeler"/>
+                        </group>
+                        <group invisible="filter_by in ['date','vehicle', 'both', 'vehicle_type']">
+                            <field name="utilization_range" required="filter_by == 'utilization'"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="print_report" string="Generate Pdf Report" type="object" class="btn-primary"/>
+                        <button name="export_to_excel" string="Generate Excel Report" type="object" class="btn-info"/>
+                        <button string="Cancel" special="cancel" class="btn-secondary"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,55 @@
+<!-- views/transport_manifest_views.xml -->
+<odoo>
+  <record id="action_transport_manifest" model="ir.actions.act_window">
+    <field name="name">Manifests</field>
+    <field name="res_model">transport.manifest</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+  <menuitem id="menu_transport_manifest"
+            name="Manifests"
+            parent="menu_transport_root"
+            sequence="5"/>
+  <menuitem id="menu_transport_manifests"
+            name="Manifests"
+            parent="menu_transport_manifest"
+            action="action_transport_manifest"
+            sequence="1"/>
+  <record id="view_transport_manifest_tree" model="ir.ui.view">
+    <field name="name">transport.manifest.tree</field>
+    <field name="model">transport.manifest</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="order_id"/>
+        <field name="generated_date" string="Generated Date"/>
+      </tree>
+    </field>
+  </record>
+  <record id="view_transport_manifest_form" model="ir.ui.view">
+    <field name="name">transport.manifest.form</field>
+    <field name="model">transport.manifest</field>
+    <field name="arch" type="xml">
+      <form>
+        <sheet>
+          <group>
+            <group>
+              <field name="code"/>
+              <field name="order_id"/>
+              <field name="assignment_id"/>
+              <field name="generated_date" options="{'corresponding_field': 'generated_date_bs'}"/>
+            </group>
+          </group>
+          <field name="line_ids">
+            <tree>
+              <field name="sequence"/>
+              <field name="description"/>
+              <field name="cargo_weight"/>
+              <field name="cargo_qty"/>
+              <field name="eta"/>
+            </tree>
+          </field>
+          <field name="attachment_id" widget="binary"/>
+        </sheet>
+      </form>
+    </field>
+  </record>
+</odoo>

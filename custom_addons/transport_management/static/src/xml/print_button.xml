@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+    <t t-name="button_print.ListView.Buttons" t-inherit="web.ListView.Buttons">
+        <xpath expr="//div[hasclass('o_list_buttons')]" position="after">
+            <div class="custom-filters-container d-flex align-items-center gap-2" >
+                <button type="button" class="btn btn-primary btn-sm o_print_button" t-on-click="OnPrintClick" style="padding: 0.25rem 0.5rem;">
+                    <i class="fa fa-print me-1"></i>Print
+                </button>  
+            </div>
+        </xpath>
+    </t>
+</templates>

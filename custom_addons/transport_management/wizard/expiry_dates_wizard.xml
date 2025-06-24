@@ -1,0 +1,44 @@
+<odoo>
+  <record id="view_expiry_dates_wizard_form" model="ir.ui.view">
+    <field name="name">expiry.dates.wizard.form</field>
+    <field name="model">expiry.dates.wizard</field>
+    <field name="arch" type="xml">
+      <form string="Expiry Dates Wizard">
+        <sheet>
+          <!-- Single column group -->
+          <group col="1">
+            <!-- Filter selector -->
+            <group>
+                <field name="filter_by"/>        
+            </group>
+            
+            <!-- Vehicle filter: shown only when filter_by = 'vehicle' -->
+            <group invisible="filter_by != 'vehicle'">
+              <field name="vehicle_id"/>
+            </group>
+
+            <!-- Date filter: shown only when filter_by = 'date' -->
+            <group invisible="filter_by != 'date'">
+              <field name="date_from" options="{'corresponding_field': 'date_from_bs'}"/>
+              <field name="date_to"   options="{'corresponding_field': 'date_to_bs'}"/>
+            </group>
+          </group>
+
+          <footer>
+            <button string="Generate Pdf Report"
+                    type="object"
+                    name="print"
+                    class="btn-primary"/>
+            <button string="Generate Excel Report"
+                type="object"
+                name="export_to_excel"
+                class="btn-info"/>
+            <button string="Cancel"
+                    class="btn-secondary"
+                    special="cancel"/>
+          </footer>
+        </sheet>
+      </form>
+    </field>
+  </record>
+</odoo>
