@@ -25,6 +25,7 @@ export const MyOrders = publicWidget.Widget.extend({
 
         this.rpc = this.bindService("rpc");
         this.selected_option = 'all';
+        
 
         loadJS('https://cdn.jsdelivr.net/npm/sweetalert2@11');
 

@@ -392,6 +392,8 @@ class AddToCartWishlist(http.Controller):
 
             total_items = 0
             total_items_price = 0
+            items=[]
+            related_companies=[]
 
             if kwargs.get("type") == "cart":
                 my_orders = json.loads(my_orders_str)

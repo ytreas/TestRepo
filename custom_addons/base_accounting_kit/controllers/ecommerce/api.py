@@ -841,7 +841,7 @@ class APIMain(http.Controller):
                 "max_quantity": main_product.max_qty,
                 "attributes": self.get_product_attributes(main_product),
                 "thumbnail_image_uri": self.get_thumbnail_uri(main_product.id),
-                "description": main_product.product_description,
+                "description": main_product.product_description or main_product.product_id.description or '--No description for this product--',
                 "featured_image_uri": self.get_featured_images(main_product.id, 512),
                 "rating": {
                     "rating_count": main_product.rating_count,
@@ -1437,6 +1437,7 @@ class APIMain(http.Controller):
                         "product_name": w.product_id.product_id.name,
                         "product_status": w.product_id.saleable_qty > 0,
                         "per_unit_price": w.product_id.price_sell,
+                        "thumbnail":self.get_thumbnail_uri(w.product_id.id),
                         "product_url": f"{ECOMMERCE_MAIN_DOMAIN}api/v1/products/{w.product_id.product_id.id}/{w.product_id.company_id.id}",
                         "attributes": self.get_wishlist_product_attributes(w.id),
                     }

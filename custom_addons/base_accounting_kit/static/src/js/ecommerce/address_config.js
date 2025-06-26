@@ -152,7 +152,7 @@ export const AddressConfig = publicWidget.Widget.extend({
         this.type = this.$('#type').val();
         this.latitude = this.$('#address_latitude').val();
         this.longitude = this.$('#address_longitude').val();
-
+        
         if (!this.fullname) {
             this.__Msg(_t("Full name cannot be empty."), 'error');
             return;
