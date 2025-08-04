@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<odoo>
-    <data noupdate="1">
-        <record id="translation_np_true" model="translation.service.mixin">
-            <field name="translation_enabled">True</field>
-        </record>
-    </data>
-</odoo>
