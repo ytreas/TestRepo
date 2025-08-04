@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_pricing_2" name="Pricing - 2">
+        <section class="s_pricing_2 pb16 pt16">
+            <div class="container">
+                <div class="row s_col_no_bgcolor">
+                    <div class="col-md-6 col-lg-4 py-3">
+                        <div class="card dr-animation-lift h-100">
+                            <header class="p-4 text-center bg-alpha">
+                                <h5 class="text-white">Beginner</h5>
+                                <div>Morbi tincidunt ultrices</div>
+                            </header>
+                            <img src="/web/image/droggol_theme_common.image_content_01" class="w-100" alt="Pricing Image 01"/>
+                            <div class="py-4 px-4 py-lg-5 px-lg-5 text-center">
+                                <p>From</p>
+                                <h2 class="mt-3 text-primary">$330.00</h2>
+                                <p class="mt-3">Morbi tincidunt ultrices fermentum. Suspendisse egestas ipsum eu.</p>
+                                <div class="s_btn pt-4 text-center" data-name="Buttons">
+                                    <a href="#" class="btn btn-outline-primary btn-block">Order Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 py-3">
+                        <div class="card dr-animation-lift h-100">
+                            <header class="p-4 text-center bg-alpha">
+                                <h5 class="text-white">Professional</h5>
+                                <div>Morbi tincidunt ultrices</div>
+                            </header>
+                            <img src="/web/image/droggol_theme_common.image_content_02" class="w-100" alt="Pricing Image 02"/>
+                            <div class="py-4 px-4 py-lg-5 px-lg-5 text-center">
+                                <p>From</p>
+                                <h2 class="mt-3 text-primary">$430.00</h2>
+                                <p class="mt-3">Morbi tincidunt ultrices fermentum. Suspendisse egestas ipsum eu.</p>
+                                <div class="s_btn pt-4 text-center" data-name="Buttons">
+                                    <a href="#" class="btn btn-outline-primary btn-block">Order Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 py-3">
+                        <div class="card dr-animation-lift h-100">
+                            <header class="p-4 text-center bg-alpha">
+                                <h5 class="text-white">Expert</h5>
+                                <div>Morbi tincidunt ultrices</div>
+                            </header>
+                            <img src="/web/image/droggol_theme_common.image_content_03" class="w-100" alt="Pricing Image 03"/>
+                            <div class="py-4 px-4 py-lg-5 px-lg-5 text-center">
+                                <p>From</p>
+                                <h2 class="mt-3 text-primary">$530.00</h2>
+                                <p class="mt-3">Morbi tincidunt ultrices fermentum. Suspendisse egestas ipsum eu.</p>
+                                <div class="s_btn pt-4 text-center" data-name="Buttons">
+                                    <a href="#" class="btn btn-outline-primary btn-block">Order Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="s_pricing_2_options" inherit_id="website.snippet_options">
+        <xpath expr="." position="inside">
+            <div data-js="colorpicker" data-selector=".s_pricing_2 header">
+                <we-collapse-area>
+                    <we-toggler><i class="fa fa-fw fa-eyedropper"/> Background Color</we-toggler>
+                    <we-collapse/>
+                </we-collapse-area>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

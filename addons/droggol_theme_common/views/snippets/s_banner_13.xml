@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_banner_13" name="Banner - 13">
+        <section class="s_banner_13 parallax s_parallax_is_fixed bg-black-50 pt96 pb96" data-scroll-background-ratio="1">
+            <span class="s_parallax_bg oe_img_bg oe_custom_bg" style="background-image: url('/web/image/website.s_cover_default_image'); background-position: 50% 0;"/>
+            <div class="container">
+                <div class="row s_nb_column_fixed">
+                    <div class="col-lg-7 align-self-center order-lg-1 order-12">
+                        <span class="badge badge-danger mb-3">
+                            <i class="fa fa-star pr-1"></i> UP TO 50% OFF
+                        </span>
+                        <h2 class="h1 mb-4 text-uppercase">Premium Collection</h2>
+                        <p class="lead">
+                            We are the creative team of theme prime. No one actually read this so let me write any thing here until it paragraph breaks into to multiple lines. Thanks for reading this.
+                        </p>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <p class="mb-2">
+                                    <i class="lnr lnr-checkmark-circle"/> 24x7 customer support
+                                </p>
+                                <p class="mb-2">
+                                    <i class="lnr lnr-checkmark-circle"/> Cash on delivery
+                                </p>
+                                <p class="mb-2">
+                                    <i class="lnr lnr-checkmark-circle"/> 30 days replacement
+                                </p>
+                                <p class="mb-2">
+                                    <i class="lnr lnr-checkmark-circle"/> Fast delivery
+                                </p>
+                            </div>
+                            <div class="col-sm-4">
+                                <p class="mb-2">
+                                    <i class="lnr lnr-checkmark-circle"/> 12k+ happy customers
+                                </p>
+                                <p class="mb-2">
+                                    <i class="lnr lnr-checkmark-circle"/> 100% secure payment
+                                </p>
+                                <p class="mb-2">
+                                    <i class="lnr lnr-checkmark-circle"/> Quality products
+                                </p>
+                                <p class="mb-2">
+                                    <i class="lnr lnr-checkmark-circle"/> Easy returns
+                                </p>
+                            </div>
+                        </div>
+                        <a class="btn btn-outline-beta mt-3" href="#">
+                            <i class="fa fa-shopping-cart"></i>
+                            Shop Now
+                        </a>
+                    </div>
+                    <div class="col-lg-5 position-relative my-4 order-1 order-lg-12">
+                        <div class="d-flex dr_offer_block h-100 align-items-center justify-content-center">
+                            <p class="mr-2 mb-0 dr_offer_lable_lg">50</p>
+                            <p class="mt-5">
+                                <span class="mb-0 dr_offer_lable_md">%</span>
+                                <span class="d-block text-uppercase mb-0 dr_offer_lable_sm">off</span>
+                            </p>
+                        </div>
+                        <div class="rounded-circle bg-alpha dr_badge_container">
+                            <div class="text-center dr_badge">
+                                <p class="mb-0 font-weight-bold">NEW</p>
+                                <p class="mb-0">Products</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+</odoo>

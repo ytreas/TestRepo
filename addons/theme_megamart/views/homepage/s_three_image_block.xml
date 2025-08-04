@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="s_three_image_block" name="Three Image Block">
+        <section class="s_three_image_block s_three_columns o_colored_level pb72 o_cc o_cc2 pt80" data-vxml="001" data-vcss="001" data-snippet="s_three_columns" data-name="Columns" style="background-color: rgb(255, 255, 255);">
+            <div class="container">
+                <div class="row d-flex align-items-stretch">
+                    <div data-name="Card" class="pt16 pb16 col-lg-3">
+                        <div class="s_card card h-100 my-0 o_colored_level o_cc o_cc1 border o_card_img_top" data-vxml="001" data-snippet="s_card" data-name="Card" style="background-color: rgba(255, 0, 0, 0); border-width: 0px !important; --card-img-ratio-align: 63%;">
+                            <figure class="o_card_img_wrapper mb-0 o_card_img_adjust_v">
+                                <img src="/theme_megamart/static/src/img/Wallet_rafiki.png" alt="" class="o_card_img img img-fluid o_we_custom_image card-img-top" data-mimetype="image/png" data-original-id="1305" data-original-src="/theme_megamart/static/src/img/Wallet_rafiki.png" data-mimetype-before-conversion="image/png" data-resize-width="540" loading="lazy"/>
+                            </figure>
+                            <div class="card-body">
+                                <h5 class="card-title" style="text-align: center;">
+                                    <strong>Quality assurance</strong>
+                                </h5>
+                                <p class="card-text" style="text-align: center;">Lorem ipsum dolor sit amet consectetur. Id eget condimentum elementum </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-name="Card" class="pt16 pb16 col-lg-3 offset-lg-1">
+                        <div class="s_card card h-100 my-0 o_colored_level o_cc o_cc1 border o_card_img_top" data-vxml="001" data-snippet="s_card" data-name="Card" style="background-color: rgba(255, 0, 0, 0); border-width: 0px !important; --card-img-ratio-align: 30%;">
+                            <figure class="o_card_img_wrapper mb-0 o_card_img_adjust_v">
+                                <img src="/theme_megamart/static/src/img/Delivery_cuate.png" alt="" class="o_card_img img img-fluid o_we_custom_image card-img-top" data-mimetype="image/webp" data-original-id="1306" data-original-src="/theme_megamart/static/src/img/Delivery_cuate.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/>
+                            </figure>
+                            <div class="card-body">
+                                <h5 class="card-title" style="text-align: center;">
+                                    <strong>Delivery from 2-4 hour</strong>
+                                </h5>
+                                <p class="card-text" style="text-align: center;">Lorem ipsum dolor sit amet consectetur. Id eget condimentum elementum </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-name="Card" class="pt16 pb16 col-lg-3 offset-lg-1">
+                        <div class="s_card card h-100 my-0 o_colored_level o_cc o_cc1 border o_card_img_top" data-vxml="001" data-snippet="s_card" data-name="Card" style="background-color: rgba(255, 255, 255, 0); border-width: 0px !important;">
+                            <figure class="o_card_img_wrapper mb-0">
+                                <img src="/theme_megamart/static/src/img/Wallet_rafiki.png" alt="" class="o_card_img img img-fluid o_we_custom_image card-img-top" data-mimetype="image/webp" data-original-id="1305" data-original-src="/theme_megamart/static/src/img/Wallet_rafiki.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/>
+                            </figure>
+                            <div class="card-body">
+                                <h5 class="card-title" style="text-align: center;">
+                                    <strong>   
+                                        <span class="o_animated_text o_animate o_anim_fade_in o_visible" style="">Pay after receiving products</span>
+                                    </strong>
+                                </h5>
+                                <p class="card-text" style="text-align: center;">Lorem ipsum dolor sit amet consectetur. Id eget condimentum elementum </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+</odoo>

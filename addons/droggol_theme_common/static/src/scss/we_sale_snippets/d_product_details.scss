@@ -1,0 +1,125 @@
+$dr_facebook_color: #3b5998;
+$dr_twitter_color: #00acee;
+$dr_envelope_color: theme-color('primary');
+section#product_detail.d_website_sale {
+    .tp-off-percentage {
+        display: none;
+    }
+    ol.carousel-indicators li {
+       border-radius: 3px;
+       border-color: gray('500');
+       &.active {
+           border-color: theme-color('primary');
+       }
+    }
+    .d_share_on .d_social_icon {
+        transition: color 0.25s ease-in-out,background-color 0.25s ease-in-out;
+        &.fa {
+            width: 2.2rem;
+            height: 2.2rem;
+            line-height: 2.2rem;
+        }
+        &.fa-facebook {
+            color: $dr_facebook_color;
+            background-color: rgba($dr_facebook_color, 0.1);
+        }
+        &.fa-twitter {
+            color: $dr_twitter_color;
+            background-color: rgba($dr_twitter_color, 0.1);
+        }
+        &.fa-envelope {
+            color: $dr_envelope_color;
+            background-color: rgba($dr_envelope_color, 0.1);
+        }
+        &:hover {
+            &.fa {
+                color: white;
+            }
+            &.fa-facebook {
+                background-color: $dr_facebook_color;
+            }
+            &.fa-twitter {
+                background-color: $dr_twitter_color;
+            }
+            &.fa-envelope {
+                background-color: $dr_envelope_color;
+            }
+        }
+    }
+}
+
+.s_d_single_product_snippet_wrapper {
+    .d_single_product_continer {
+        @include media-breakpoint-up(md) {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0px auto;
+        }
+        @include media-breakpoint-down(md) {
+            margin-left: 5%;
+            margin-right: 5%;
+        }
+    }
+    .d_single_product_body {
+        box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+    }
+    section#product_detail.d_website_sale {
+        #o-carousel-product, .d_shop_product_details_carousel {
+            @include media-breakpoint-only(xs) {
+            .carousel-outer {
+                height: 355px;
+                }
+            }
+            @include media-breakpoint-up(lg) {
+                .carousel-outer {
+                    height: 580px;
+                }
+            }
+        }
+        // fix for owl libray
+        .owl-carousel .owl-item img {
+            width: auto;
+        }
+    }
+}
+
+// FUCK THIS BELOW SHIT copy from odoo
+
+.d_shop_product_details_carousel {
+    .carousel-control-prev, .carousel-control-next {
+        top: 15%;
+        opacity: 0.5;
+        cursor: pointer;
+        &:focus {
+            opacity: 0.65;
+        }
+        &:hover {
+            opacity: 0.8;
+        }
+        > span {
+            background: rgba(0, 0, 0, 0.8);
+        }
+    }
+
+    .carousel-indicators {
+        li {
+            width: 64px;
+            height: 64px;
+            text-indent: unset;
+            border: 1px solid gray('600');
+            opacity: 0.5;
+            position: relative;
+            border-radius: $border-radius !important;
+
+            .o_product_video_thumb {
+                @include o-position-absolute($top: 50%, $left: 50%);
+                transform: translate(-50%, -50%);
+                color: gray('400');
+            }
+            &.active {
+                opacity: 1;
+                border: 1px solid theme-color('primary');
+            }
+        }
+    }
+}

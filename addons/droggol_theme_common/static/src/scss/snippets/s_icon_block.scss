@@ -1,0 +1,50 @@
+.s_icon_block_3 .icon.fa-2x {
+    @include dr-icon-center(3rem);
+}
+.s_icon_block_4 .icon.fa-2x {
+    @include dr-icon-center(3rem);
+}
+.s_info_block_5 {
+    .dr-animation-scale {
+        .img {
+            max-height: 600px;
+        }
+    }
+}
+.s_icon_block_8 .card {
+    border-style: dashed;
+}
+.s_icon_block_9 .icon.fa-2x {
+    @include dr-icon-center(3.5rem);
+}
+.s_icon_block_10 {
+    @include media-breakpoint-up(md) {
+        .icon-block:not(:last-child) {
+            border-right: 1px solid gray('300');
+        }
+    }
+}
+.s_icon_block_11 {
+    @include media-breakpoint-down(lg) {
+        .icon-block .icon {
+            border-right-width: 0px;
+        }
+    }
+    @include media-breakpoint-up(xl) {
+        .icon-block:not(:last-child) .icon {
+            border-right: 1px solid gray('300');
+        }
+    }
+}
+.s_icon_block_12 {
+    @include media-breakpoint-down(md) {
+        .icon-block {
+            border-right-width: 0px;
+        }
+    }
+    @include media-breakpoint-up(lg) {
+        .icon-block:not(:last-child) {
+            border-right: 1px solid gray('300');
+        }
+    }
+}

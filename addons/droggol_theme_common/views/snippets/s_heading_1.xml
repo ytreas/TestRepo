@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_heading_1" name="Heading - 1">
+        <section class="s_heading_1 pt32 pb32">
+            <div class="container">
+                <div class="row s_nb_column_fixed s_col_no_bgcolor">
+                    <div class="col-12 heading-container text-center line-thickness-normal line-width-normal line-bottom">
+                        <h2>Access wide range of products</h2>
+                        <p class="lead mb-0">Quality products from shop prime.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="s_heading_1_options" inherit_id="website.snippet_options">
+        <xpath expr="." position="inside">
+            <div data-selector=".s_heading_1" data-target=".heading-container">
+                <we-collapse-area>
+                    <we-toggler><i class="fa fa-fw fa-arrows-v"/> Line Position</we-toggler>
+                    <we-collapse>
+                        <we-button data-select-class="line-top">Top</we-button>
+                        <we-button data-select-class="line-bottom">Bottom</we-button>
+                    </we-collapse>
+                </we-collapse-area>
+                <we-collapse-area>
+                    <we-toggler><i class="fa fa-fw fa-align-left"/> Alignment</we-toggler>
+                    <we-collapse>
+                        <we-button data-select-class="text-left">Left</we-button>
+                        <we-button data-select-class="text-center">Center</we-button>
+                        <we-button data-select-class="text-right">Right</we-button>
+                    </we-collapse>
+                </we-collapse-area>
+                <we-collapse-area>
+                    <we-toggler><i class="fa fa-fw fa-minus"/> Line Thickness</we-toggler>
+                    <we-collapse>
+                        <we-button data-select-class="line-thickness-light">Light</we-button>
+                        <we-button data-select-class="line-thickness-normal">Normal</we-button>
+                        <we-button data-select-class="line-thickness-bold">Bold</we-button>
+                    </we-collapse>
+                </we-collapse-area>
+                <we-collapse-area>
+                    <we-toggler><i class="fa fa-fw fa-arrows-h"/> Line Width</we-toggler>
+                    <we-collapse>
+                        <we-button data-select-class="line-width-short">Short</we-button>
+                        <we-button data-select-class="line-width-normal">Normal</we-button>
+                        <we-button data-select-class="line-width-long">Long</we-button>
+                    </we-collapse>
+                </we-collapse-area>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

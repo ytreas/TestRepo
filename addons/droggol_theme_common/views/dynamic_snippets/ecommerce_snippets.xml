@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Product snippet -->
+    <template id="s_d_products_snippet" name="Products Cards">
+        <section class="droggol_product_snippet s_d_products_snippet_wrapper pt64 pb64 text-center bg-100" data-ds-id="d_products_snippet">
+            <section>
+                <small class="text-center mb-1">SHOP NOW</small>
+                <h2 class="text-center font-weight-bold"><span class="text-primary">OUR</span> PRODUCTS</h2>
+                <p class="dr_strike_line"><span class="lnr lnr-star"></span></p>
+            </section>
+            <div class="s_d_products_snippet o_not_editable"/>
+        </section>
+    </template>
+    <!-- Product Category Snippet -->
+    <template id="s_d_category_snippet" name="Product Category Tabs">
+        <section class="droggol_product_snippet s_d_category_snippet_wrapper text-center pt64 pb64 bg-100" data-ds-id="d_category_snippet">
+            <section>
+                <small class="text-center mb-1">CHECK OUT WHAT'S NEW</small>
+                <h2 class="text-center font-weight-bold"><span class="text-primary">FEATURED</span> PRODUCTS</h2>
+                <p class="dr_strike_line"><span class="lnr lnr-star"></span></p>
+            </section>
+            <div class="s_d_category_snippet o_not_editable"/>
+        </section>
+    </template>
+
+    <!-- Single Category Snippet -->
+    <template id="s_d_single_category_snippet" name="Featured Category">
+        <section class="droggol_product_snippet s_d_single_category_snippet_wrapper pt64 pb64 bg-100" data-ds-id="d_single_category_snippet">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 p-4 d-none d-md-block position-relative d_enable_bg_img d_category_image_block shadow" style="background-image:url('/web/image/droggol_theme_common.s_info_block_5_2');">
+                        <div class="banner-text text-center p-3">
+                            <h4 class="font-weight-bold">For Women</h4>
+                            <p class="mb-0">Starting at $24</p>
+                            <div class="mt-2">
+                                <a href="/shop" class="btn btn-primary">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8 s_d_single_category_snippet o_not_editable"/>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <!-- Single Product Snippet -->
+    <template id="s_d_single_product_snippet" name="Full Products">
+        <section class="s_d_single_product_snippet_wrapper droggol_product_snippet pt32 pb32" data-ds-id="d_single_product_snippet">
+            <div class="d_single_product_continer o_not_editable mb-4"/>
+        </section>
+    </template>
+    <!-- Single Product Cover Snippet -->
+    <template id="s_d_single_product_cover_snippet" name="Full Products + Cover">
+        <section class="s_d_single_product_cover_snippet_wrapper droggol_product_snippet pb64 pt64" data-ds-id="s_d_single_product_cover_snippet">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="order-lg-2 mb-4 mb-lg-0 col-lg-7 offset-lg-1">
+                        <img class="img img-fluid" src="/droggol_theme_common/static/src/img/s_d_single_product_cover_snippet.png" alt="Cover Image 01"></img>
+                    </div>
+                    <div class="order-lg-1 col-lg-4">
+                        <div class="s_d_single_product_cover_snippet border shadow-lg p-3 p-md-5 bg-white"/>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <!-- Products Collection -->
+    <template id="s_d_products_collection" name="Products Collection Lists">
+        <section class="s_d_products_collection droggol_product_snippet pt32 pb32" data-ds-id="d_products_collection"/>
+    </template>
+
+    <!-- Top Categories -->
+    <template id="s_d_top_categories" name="Top Categories">
+        <section class="s_d_top_categories droggol_product_snippet pt32 pb32" data-ds-id="d_top_categories"/>
+    </template>
+    <!-- Custom Collection -->
+    <template id="s_d_custom_collection" name="Product Collection Tabs">
+        <section class="s_d_custom_collection droggol_product_snippet pt32 pb32" data-ds-id="d_custom_collection"/>
+    </template>
+    <!-- Custom Collection -->
+    <template id="s_d_brand_snippet" name="Brands">
+        <section class="s_d_brand_snippet_wrapper dr_grid_mode pt32 pb32">
+            <div class="container position-relative">
+                <h3 class="tp_underline_title pb-3">Shop by brand</h3>
+                <div class="s_d_brand_snippet mt-4"/>
+                <a class="btn btn-outline-primary d_all_brands_btn" href="/shop/all_brands">View All Brands</a>
+            </div>
+        </section>
+    </template>
+
+    <template id="s_d_2_column_snippet" name="2 Column Deals">
+        <section class="s_d_2_column_snippet pt32 pb32">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="mt-4">
+                            <h3 class="s_d_full_title">
+                                <span class="s_d_title_text"><p class="mb-0 d-inline-block"> Super Deal</p></span>
+                            </h3>
+                        </div>
+                        <div class="s_d_product_count_down droggol_product_snippet" data-ds-id="s_d_product_count_down"/>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="mt-4">
+                            <h3 class="s_d_full_title">
+                                <span class="s_d_title_text"><p class="mb-0 d-inline-block"> Featured Products</p></span>
+                            </h3>
+                        </div>
+                        <div class="s_d_product_small_block droggol_product_snippet" data-ds-id="s_d_product_small_block"/>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="s_d_image_products_block" name="Image + Products Cards">
+        <section class="droggol_product_snippet s_d_image_products_block_wrapper pt64 pb64" data-ds-id="s_d_image_products_block">
+            <div class="container">
+                <div class="row s_animation_block_2">
+                    <div class="col-md-3 d_snippet_grid_col position-relative">
+                        <div class="d_bg_img_block_wrapper h-100">
+                            <div class="d_enable_bg_img d_bg_img_block position-relative h-100" style="background-image: url('/web/image/droggol_theme_common.tp_animation_block_2')">
+                                <div class="d_text_container h-100 w-100">
+                                    <h2 class="s_d_title text-center w-100">New Arrival</h2>
+                                    <div class="s_d_subtitle text-center w-100">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.</p>
+                                        <a href="/shop" class="btn btn-primary">Shop Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <h3 class="s_d_full_title mt-2">
+                            <span class="s_d_title_text px-2">
+                                <p class="mb-0 d-inline-block o_default_snippet_text"> Super Deal</p>
+                            </span>
+                        </h3>
+                        <div class="s_d_image_products_block"/>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="s_d_single_product_count_down" name="Product Countdown Slider">
+        <section class="s_d_single_product_count_down droggol_product_snippet pt32 pb32" data-ds-id="s_d_single_product_count_down"/>
+    </template>
+
+    <template id="s_d_single_category_snippet_options" inherit_id="website.snippet_options">
+        <xpath expr="//div[@data-js='background']" position="attributes">
+            <attribute name="data-selector" add=".d_enable_bg_img"/>
+        </xpath>
+        <xpath expr="//div[@data-js='background_position']" position="attributes">
+            <attribute name="data-selector" add=".d_enable_bg_img"/>
+        </xpath>
+        <xpath expr="//div[@data-js='layout_column']" position="before">
+            <div data-selector=".s_d_brand_snippet_wrapper" data-js="dr_brand_snippet_option">
+                <we-collapse-area>
+                    <we-toggler><i class="fa fa-fw fa-th-large"/> Layout Type</we-toggler>
+                    <we-collapse>
+                        <we-button data-select-class="dr_grid_mode">Grid</we-button>
+                        <we-button data-select-class="dr_slider_mode">Slider</we-button>
+                    </we-collapse>
+                </we-collapse-area>
+                <we-collapse-area>
+                    <we-toggler><i class="fa fa-fw fa-columns"/> Number of brands</we-toggler>
+                    <we-collapse data-no-preview="true">
+                        <we-button data-brand-count="4">4</we-button>
+                        <we-button data-brand-count="8">8</we-button>
+                        <we-button data-brand-count="12">12</we-button>
+                        <we-button data-brand-count="16">16</we-button>
+                    </we-collapse>
+                </we-collapse-area>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="dr_blog_snippet_1" name="Blog - 1">
+        <section class="dr_blog_snippet_1 dr_blog_snippet s_latest_posts_big_picture pt16 pb16">
+            <div class="container">
+                <h2 class="text-center my-4">Latest Posts</h2>
+                <div class="row s_col_no_bgcolor s_nb_column_fixed js_get_posts"
+                    data-loading="true"
+                    data-template="droggol_theme_common.dr_blog_snippet_1_template"/>
+            </div>
+        </section>
+    </template>
+
+    <template id="dr_blog_snippet_2" name="Blog - 2">
+        <section class="dr_blog_snippet_2 dr_blog_snippet s_latest_posts_big_picture pt16 pb16">
+            <div class="container">
+                <div class="row align-items-center mb-5">
+                    <div class="col-12 col-md">
+                        <h3 class="mb-0">Latest Posts</h3>
+                        <p class="mb-0 text-muted">
+                            Here’s what we've been up to recently.
+                        </p>
+                    </div>
+                    <div class="col-12 col-md-auto">
+                        <a href="/blog" class="btn btn-outline-alpha d-none d-md-inline">
+                            View all
+                        </a>
+                    </div>
+                </div>
+                <div class="row s_col_no_bgcolor s_nb_column_fixed js_get_posts"
+                    data-loading="true"
+                    data-template="droggol_theme_common.dr_blog_snippet_2_template"/>
+            </div>
+        </section>
+    </template>
+
+    <template id="dr_blog_snippet_3" name="Blog - 3">
+        <section class="dr_blog_snippet_3 dr_blog_snippet s_latest_posts_big_picture pt16 pb16">
+            <div class="container">
+                <div class="row align-items-center mb-5">
+                    <div class="col-12 col-md">
+                        <h3 class="mb-0">Latest Posts</h3>
+                        <p class="mb-0 text-muted">
+                            Here’s what we've been up to recently.
+                        </p>
+                    </div>
+                    <div class="col-12 col-md-auto">
+                        <a href="/blog" class="btn btn-outline-alpha d-none d-md-inline">
+                            View all
+                        </a>
+                    </div>
+                </div>
+                <div class="row s_col_no_bgcolor s_nb_column_fixed js_get_posts"
+                    data-loading="true"
+                    data-template="droggol_theme_common.dr_blog_snippet_3_template"/>
+            </div>
+        </section>
+    </template>
+
+    <template id="dr_blog_snippet_1_template">
+        <figure t-foreach="posts" t-as="post" class="col-12 col-md-6 col-xl-4 my-3 s_latest_posts_post">
+            <div class="shadow-sm dr_blog_snippet_1_container border">
+                <t t-set="_cp" t-value="json.loads(post.cover_properties)"/>
+                <div class="o_record_cover_component o_record_cover_image" t-attf-style="background-image: #{_cp.get('background-image')};">
+                    <div t-if="len(post.tag_ids)" class="p-3">
+                        <span class="text-uppercase font-weight-bold bg-alpha px-2 py-1" t-esc="post.tag_ids[0].name"/>
+                    </div>
+                </div>
+                <figcaption class="text-center w-100 h-100 p-3 d-flex flex-column flex-grow-1">
+                    <h3 class="dr_hover_color_primary text-truncate s_latest_posts_post_title mt-3">
+                        <a t-attf-href="/blog/#{post.blog_id.id}/post/#{post.id}"><t t-esc="post.name"/></a>
+                    </h3>
+                    <div class="d-flex align-items-center my-2 justify-content-center">
+                        <i class="fa fa-calendar mr-2"></i>
+                        <small t-field="post.post_date" t-options='{"format": "d MMMM, yyyy"}'/>
+                        <span class="mx-2">|</span>
+                        <span t-field="post.author_avatar" t-options='{"widget": "image", "class": "rounded-circle dr_blog_author_avatar"}'/>
+                        <span class="mx-1">Posted by</span>
+                        <span t-field="post.author_id" t-options='{"widget": "contact", "class": "font-weight-bold", "fields": ["name"]}'/>
+                    </div>
+                    <p t-esc="post.teaser"></p>
+                    <h6 class="mb-3">
+                        <a t-attf-href="/blog/#{post.blog_id.id}/post/#{post.id}">Continue reading ...</a>
+                    </h6>
+                </figcaption>
+            </div>
+        </figure>
+    </template>
+
+    <template id="dr_blog_snippet_2_template">
+        <div t-foreach="posts" t-as="post" class="col-12 col-md-6 col-lg-4 d-flex s_latest_posts_post">
+            <a t-attf-href="/blog/#{post.blog_id.id}/post/#{post.id}" class="card mb-2 dr_blog_snippet_2_container dr_blog_hover_effect">
+                <t t-set="_cp" t-value="json.loads(post.cover_properties)"/>
+                <div class="card-img-top">
+                    <div class="o_record_cover_component o_record_cover_image" t-attf-style="background-image: #{_cp.get('background-image')};"/>
+                    <div class="position-relative">
+                        <div class="dr_svg_block">
+                            <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="140px" viewBox="20 -20 300 100" style="top: -70%;">
+                                <path d="M30.913,43.944c0,0,42.911-34.464,87.51-14.191c77.31,35.14,113.304-1.952,146.638-4.729 c48.654-4.056,69.94,16.218,69.94,16.218v54.396H30.913V43.944z" opacity="0.4" fill="#f0f1f3"></path>
+                                <path d="M-35.667,44.628c0,0,42.91-34.463,87.51-14.191c77.31,35.141,113.304-1.952,146.639-4.729 c48.653-4.055,69.939,16.218,69.939,16.218v54.396H-35.667V44.628z" opacity="0.4" fill="#f0f1f3"></path>
+                                <path d="M43.415,98.342c0,0,48.283-68.927,109.133-68.927c65.886,0,97.983,67.914,97.983,67.914v3.716 H42.401L43.415,98.342z" opacity="0" fill="#fff"></path>
+                                <path d="M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428 c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z" fill="#fff"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body px-4 py-1">
+                    <h3 class="dr_hover_color_primary text-truncate mt-3 mb-2">
+                        <t t-esc="post.name"/>
+                    </h3>
+                    <p class="text-muted" t-esc="post.teaser"></p>
+                    <hr class="my-2" />
+                    <div class="align-items-center justify-content-between d-flex position-relative w-100 o_not_editable pb-2">
+                        <div class="align-items-center d-flex">
+                            <span t-field="post.author_avatar" t-options='{"widget": "image", "class": "rounded-circle mr-2 dr_blog_author_avatar"}'/>
+                            <small class="text-uppercase" t-field="post.author_id" t-options='{"widget": "contact", "fields": ["name"]}'/>
+                        </div>
+                        <div>
+                            <small t-field="post.post_date" class="text-uppercase" t-options='{"format": "d MMMM, yyyy"}'/>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </template>
+
+    <template id="dr_blog_snippet_3_template">
+        <div t-foreach="posts" t-as="post" class="col-12 col-md-6 col-lg-4 s_latest_posts_post">
+            <a t-attf-href="/blog/#{post.blog_id.id}/post/#{post.id}" class="card mb-2 dr_blog_snippet_3_container dr_blog_hover_effect">
+                <t t-set="_cp" t-value="json.loads(post.cover_properties)"/>
+                <div class="card-img-top">
+                    <div class="o_record_cover_component o_record_cover_image" t-attf-style="background-image: #{_cp.get('background-image')};"/>
+                </div>
+                <div class="card-body">
+                    <h3 class="dr_hover_color_primary text-truncate">
+                        <t t-esc="post.name"/>
+                    </h3>
+                    <p t-esc="post.teaser"></p>
+                    <div t-if="len(post.tag_ids)">
+                        <t t-foreach="post.tag_ids" t-as="tag">
+                            <span class="badge text-uppercase badge-beta" t-esc="tag.name"/>
+                        </t>
+                    </div>
+                </div>
+                <div class="card-footer d-flex align-items-center">
+                    <div class="d-flex align-items-center">
+                        <span t-field="post.author_avatar" t-options='{"widget": "image", "class": "rounded-circle mr-2 dr_blog_author_avatar"}'/>
+                        <small class="text-uppercase" t-field="post.author_id" t-options='{"widget": "contact", "fields": ["name"]}'/>
+                    </div>
+                    <div class="ml-auto">
+                        <small t-field="post.post_date" class="text-uppercase" t-options='{"format": "d MMMM, yyyy"}'/>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </template>
+
+    <!-- Image Collection -->
+    <template id="s_d_img_collection" name="Image + Collection">
+        <section class="s_d_img_collection_wrapper pt64 pb64 bg-100" data-ds-id="s_d_img_collection">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 d-block d-sm-none oe_img_bg oe_custom_bg d-md-block mb-3 text-center pt40 d_enable_bg_img" style="background-image: url('/web/image/droggol_theme_common.s_hood');">
+                        <h5 class="font-weight-light mb-2">Hurry up! Limited time offer</h5>
+                        <h6 class="mb-3 font-weight-bold">New Hoodie Collection</h6>
+                        <a class="btn btn-primary" href="#">Shop now</a>
+                    </div>
+                    <div class="col-md-8 s_d_products_collection droggol_product_snippet dr_as_inner_block pt16 pb32" data-ds-id="d_products_collection"/>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="droggol_product_snippet_options" inherit_id="website.snippet_options">
+        <xpath expr="//div[@data-js='layout_column']" position="attributes">
+            <attribute name="data-exclude" add=".droggol_product_snippet" separator=","/>
+        </xpath>
+    </template>
+
+</odoo>

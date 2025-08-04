@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_pricing_1" name="Pricing - 1">
+        <section class="s_pricing_1 pb16 pt16 bg-100">
+            <div class="container">
+                <div class="row s_col_no_bgcolor">
+                    <div class="col-md-6 col-lg-3 py-3">
+                        <div class="card dr-animation-lift h-100">
+                            <img src="/web/image/droggol_theme_common.image_content_01" class="card-img-top" alt="Pricing Image 01"/>
+                            <div class="p-4">
+                                <h5 class="card-title mt-4 text-center">Beginner</h5>
+                                <p class="card-text mt-4 text-center">Morbi tincidunt ultrices.</p>
+                                <h2 class="card-title my-4 text-center">$9.99</h2>
+                                <ul class="list-group list-group-flush mt-4">
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <span class="p-1 lnr lnr-checkmark-circle"></span> Cras justo odio
+                                    </li>
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <span class="p-1 lnr lnr-checkmark-circle"></span> Dapibus ac facilisis
+                                    </li>
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <span class="p-1 lnr lnr-checkmark-circle"></span> Vestibulum at eros
+                                    </li>
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <span class="p-1 lnr lnr-checkmark-circle"></span> Cras justo odio
+                                    </li>
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <span class="p-1 lnr lnr-cross-circle"></span> Dapibus ac facilisis
+                                    </li>
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <span class="p-1 lnr lnr-cross-circle"></span> Vestibulum at eros
+                                    </li>
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <span class="p-1 lnr lnr-cross-circle"></span> Cras justo odio
+                                    </li>
+                                </ul>
+                                <div class="s_btn pt-3 text-center" data-name="Buttons">
+                                    <a href="#" class="btn btn-primary btn-block">Order Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 py-3">
+                        <div class="card dr-animation-lift h-100">
+                            <img src="/web/image/droggol_theme_common.image_content_02" class="card-img-top" alt="Pricing Image 02"/>
+                            <div class="p-4">
+                                <h5 class="card-title mt-4 text-center">Professional</h5>
+                                <p class="card-text mt-4 text-center">Suspendisse egestas ipsum eu.</p>
+                                <h2 class="card-title my-4 text-center">$20.50</h2>
+                                <ul class="list-group list-group-flush mt-4">
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <span class="p-1 lnr lnr-checkmark-circle"></span> Cras justo odio
+                                    </li>
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <span class="p-1 lnr lnr-checkmark-circle"></span> Dapibus ac facilisis
+                                    </li>
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <span class="p-1 lnr lnr-checkmark-circle"></span> Vestibulum at eros
+                                    </li>
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <span class="p-1 lnr lnr-checkmark-circle"></span> Cras justo odio
+                                    </li>
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <span class="p-1 lnr lnr-checkmark-circle"></span> Dapibus ac facilisis
+                                    </li>
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <span class="p-1 lnr lnr-cross-circle"></span> Vestibulum at eros
+                                    </li>
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <span class="p-1 lnr lnr-cross-circle"></span> Cras justo odio
+                                    </li>
+                                </ul>
+                                <div class="s_btn pt-3 text-center" data-name="Buttons">
+                                    <a href="#" class="btn btn-primary btn-block">Order Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 py-3">
+                        <div class="card dr-animation-lift h-100">
+                            <img src="/web/image/droggol_theme_common.image_content_03" class="card-img-top" alt="Pricing Image 03"/>
+                            <div class="p-4">
+                                <h5 class="card-title mt-4 text-center">Expert</h5>
+                                <p class="card-text mt-4 text-center">Ut efficitur sem sed.</p>
+                                <h2 class="card-title my-4 text-center">$35.00</h2>
+                                <ul class="list-group list-group-flush mt-4">
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <span class="p-1 lnr lnr-checkmark-circle"></span> Cras justo odio
+                                    </li>
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <span class="p-1 lnr lnr-checkmark-circle"></span> Dapibus ac facilisis
+                                    </li>
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <span class="p-1 lnr lnr-checkmark-circle"></span> Vestibulum at eros
+                                    </li>
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <span class="p-1 lnr lnr-checkmark-circle"></span> Cras justo odio
+                                    </li>
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <span class="p-1 lnr lnr-checkmark-circle"></span> Dapibus ac facilisis
+                                    </li>
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <span class="p-1 lnr lnr-checkmark-circle"></span> Vestibulum at eros
+                                    </li>
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <span class="p-1 lnr lnr-cross-circle"></span> Cras justo odio
+                                    </li>
+                                </ul>
+                                <div class="s_btn pt-3 text-center" data-name="Buttons">
+                                    <a href="#" class="btn btn-primary btn-block">Order Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 py-3">
+                        <div class="card dr-animation-lift h-100">
+                            <img src="/web/image/droggol_theme_common.image_content_04" class="card-img-top" alt="Pricing Image 04"/>
+                            <div class="p-4">
+                                <h5 class="card-title mt-4 text-center">Advanced</h5>
+                                <p class="card-text mt-4 text-center">Dapibus ac facilisis.</p>
+                                <h2 class="card-title my-4 text-center">$42.00</h2>
+                                <ul class="list-group list-group-flush mt-4">
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <span class="p-1 lnr lnr-checkmark-circle"></span> Cras justo odio
+                                    </li>
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <span class="p-1 lnr lnr-checkmark-circle"></span> Dapibus ac facilisis
+                                    </li>
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <span class="p-1 lnr lnr-checkmark-circle"></span> Vestibulum at eros
+                                    </li>
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <span class="p-1 lnr lnr-checkmark-circle"></span> Cras justo odio
+                                    </li>
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <span class="p-1 lnr lnr-checkmark-circle"></span> Dapibus ac facilisis
+                                    </li>
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <span class="p-1 lnr lnr-checkmark-circle"></span> Vestibulum at eros
+                                    </li>
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <span class="p-1 lnr lnr-checkmark-circle"></span> Cras justo odio
+                                    </li>
+                                </ul>
+                                <div class="s_btn pt-3 text-center" data-name="Buttons">
+                                    <a href="#" class="btn btn-primary btn-block">Order Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="s_pricing_1_options" inherit_id="website.snippet_options">
+        <xpath expr="." position="inside">
+            <div data-js="colorpicker" data-selector=".s_pricing_1 .card">
+                <we-collapse-area>
+                    <we-toggler><i class="fa fa-fw fa-eyedropper"/> Background Color</we-toggler>
+                    <we-collapse/>
+                </we-collapse-area>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

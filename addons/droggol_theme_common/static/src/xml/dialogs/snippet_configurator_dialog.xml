@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<templates>
+    <div t-name="droggol_theme_common.dialog.snippet_configurator_dialog">
+        <div class="container p-0">
+            <div class="row no-gutters">
+                  <div class="col-md-2 border-right">
+                      <ul class="nav nav-pills flex-column" id="myTab" role="tablist">
+                          <t t-foreach="widget.tabs" t-as="tab">
+                              <li class="nav-item border-bottom">
+                                  <a t-attf-class="font-weight-bold rounded-0 bg-white text-body nav-link p-3 #{tab_index === 0 ? 'active' : ''}" data-toggle="tab" t-attf-href="#{'#'+tab.name}" role="tab" aria-selected="true">
+                                      <i t-att-class="tab.icon"/> <t t-esc="tab.label"/>
+                                  </a>
+                              </li>
+                          </t>
+                      </ul>
+                  </div>
+                  <div class="col-md-10 p-3">
+                      <div class="tab-content" id="myTabContent">
+                          <t t-foreach="widget.tabs" t-as="tab">
+                              <div t-attf-class="tab-pane fade  #{tab_index === 0 ? 'show active' : ''}" t-att-id="tab.name" role="tabpanel"/>
+                          </t>
+                      </div>
+                  </div>
+              </div>
+          </div>
+    </div>
+
+</templates>

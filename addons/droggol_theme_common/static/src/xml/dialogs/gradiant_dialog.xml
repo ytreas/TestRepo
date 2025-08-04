@@ -1,0 +1,46 @@
+<?xml version="1.0" ?>
+<templates>
+    <div t-name="droggol_theme_common.gradiant_dialog">
+        <div class="container p-0 d_gradiant_dialog_container">
+            <div class="row">
+                <div class="col-12" >
+                    <div class="drgl-gradiant-image-preview" t-attf-style="background-image: url(#{widget.image});"/>
+                </div>
+                <div class="col-12">
+                    <div class="position-relative drg-gradient-selector">
+                    </div>
+                </div>
+            </div>
+            <div class="row p-3 border-top">
+                <div class="col-6 border-right">
+                    <h6 class="my-2"> <i class="fa fa-arrows-alt text-primary"></i> Gradiant direction</h6>
+                    <input type="range" class="gradiant-range-input custom-range w-75" min="0" max="360" id="rangeGrad"/>
+                    <span class="badge badge-primary float-right drg-range-preview"> 90deg</span>
+                    <h6 class="my-2"> <i class="fa fa-object-group text-primary"></i> Gradient Type</h6>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="grd_linear" name="gradient_type" value="linear-gradient" class="custom-control-input drg-gradient-type" checked="checked"/>
+                        <label class="custom-control-label" for="grd_linear">Linear</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="grd_redial" name="gradient_type" value="radial-gradient" class="custom-control-input drg-gradient-type"/>
+                        <label class="custom-control-label" for="grd_redial">Radial</label>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <h6 class="my-2"> <i class="fa fa-object-group text-primary"></i> Ready Gradiant</h6>
+                    <t t-foreach="widget.inbuiltGrediant" t-as="data">
+                        <span class="drg-inbuilt-gradient" t-att-key="data" t-attf-style="background-image: #{widget._inbuiltGradientToStr(widget.inbuiltGrediant[data])}"/>
+                    </t>
+                </div>
+            </div>
+        </div>
+    </div>
+    <t t-name="droggol_theme_common.gradiant_dialog_dot">
+        <div class="drg-gradient-dot position-absolute h-100" t-attf-style="left: #{percentage}%;" t-att-percentage="percentage">
+            <div class="drg-gradient-dot-visual" t-attf-style="background: #{color};"></div>
+            <span class="fa fa-trash drg-gradient-dot-delete"></span>
+            <span class="fa fa-pencil drg-gradient-dot-edit" t-att-color="color"></span>
+        </div>
+    </t>
+
+</templates>

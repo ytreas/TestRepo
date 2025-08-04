@@ -1,0 +1,53 @@
+<?xml version="1.0" ?>
+<templates>
+    <t t-name="s_single_category_snippet">
+        <t t-if="data.length">
+            <div class="p-3 mb-0 bg-white border d_category_name">
+                <h4 class="m-0" t-esc="widget.categoryName"></h4>
+            </div>
+            <div class="owl-carousel droggol_product_category_slider o_not_editable">
+                <t t-foreach="data" t-as="products">
+                    <div class="row no-gutters">
+                        <t t-foreach="products" t-as="product">
+                            <div class="col-lg-3 col-6 mt-3 px-2">
+                                <div class="card s_dr_product_category_card">
+                                    <div class="d_products_cover">
+                                        <button t-att-data-product-product-id="product.product_variant_id" data-toggle="tooltip" data-placement="bottom" class="btn btn-light text-center border rounded-circle d_action_btn d_add_to_cart_btn" title="Add to Cart">
+                                            <i class="d_action_btn_icon lnr lnr-cart"></i>
+                                        </button>
+                                        <div class="d_img_block">
+                                            <a t-att-href="product.website_url">
+                                                <img t-att-src="product.img_medium" class="card-img-top d-product-img"/>
+                                            </a>
+                                            <!-- LABEL -->
+                                            <span t-if="product.label" t-attf-class="badge dr-product-label dr-product-label-color-#{product.label_color}">
+                                                <div class="corner"/>
+                                                <t t-esc="product.label"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="card-body p-2 px-3">
+                                        <h6 class="text-left text-truncate d-product-name">
+                                            <a t-att-href="product.website_url"><t t-esc="product.name"/></a>
+                                        </h6>
+                                        <div class="row">
+                                            <div class="col-6 d-product-price">
+                                                <p class="text-primary mb-1 d-inline-block font-weight-bold" t-raw="product.price"/>
+                                            </div>
+                                            <div class="d-star-rating col-6 p-0 d-flex justify-content-center">
+                                                <t t-raw="product.rating"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </t>
+            </div>
+        </t>
+        <t t-elif="widget.noDataTemplate">
+            <t t-call="#{widget.noDataTemplate}"></t>
+        </t>
+    </t>
+</templates>

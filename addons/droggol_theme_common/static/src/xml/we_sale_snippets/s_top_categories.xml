@@ -1,0 +1,39 @@
+<?xml version="1.0" ?>
+<templates>
+
+    <div class="container" t-name="s_top_categories_snippet">
+        <div class="row">
+            <t t-if="data.length">
+                <t t-foreach="data" t-as="category">
+                    <div class="col-12 col-md-4 my-2" t-if="category.productIDs.length">
+                        <div class="card h-100 d-flex">
+                            <a t-att-href="category.website_url" class="d-flex align-items-center" style="flex-grow:1;">
+                                <div class="pr-1" style="width: 67%;">
+                                    <img style="max-height: 376px; object-fit:contain;" t-attf-src="/web/image/product.template/#{category.productIDs[0]}/image_512" class="d-block w-100"/>
+                                </div>
+                                <div class="pl-1" style="width: 33%;">
+                                    <img style="max-height: 188px; object-fit:contain;" t-attf-src="/web/image/product.template/#{category.productIDs[1]}/image_512" class="d-block w-100 pb-2"/>
+                                    <img style="max-height: 188px; object-fit:contain;" t-attf-src="/web/image/product.template/#{category.productIDs[2]}/image_512" class="d-block w-100"/>
+                                </div>
+                            </a>
+                            <div class="card-body p-4" style="flex-grow:0;">
+                                <h4 class="text-center" t-esc="category.name"/>
+                                <p t-if="category.min_price" class="text-center">Starting from <t t-raw="category.min_price"></t></p>
+                                <div class="text-center">
+                                    <a class="btn btn-outline-primary rounded-circle" t-att-href="category.website_url">View Products</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+            <t t-elif="widget.noDataTemplate">
+                <!-- V14 we need to render noDataTemplate if all categories dont have products -->
+                <div class="col-12">
+                    <t t-call="#{widget.noDataTemplate}"></t>
+                </div>
+            </t>
+        </div>
+    </div>
+
+</templates>

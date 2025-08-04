@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates id="template">
+
+    <t t-extend="wysiwyg.widgets.font-icons.icons">
+        <t t-jquery="span" t-operation="before">
+            <h4 class="mt-5 mb-0 bg-100 border p-3 shadow-sm" t-if="data.base === 'lnr'">Icon pack 3</h4>
+            <h4 class="mt-5 mb-0 bg-100 border p-3 shadow-sm" t-if="data.base === 'lni'">Icons pack 2</h4>
+            <h4 class="mb-0 bg-100 border p-3 shadow-sm" t-if="data.base === 'ri'">Icons Pack 1</h4>
+            <h4 class="mt-5 mb-0 bg-100 border p-3 shadow-sm" t-if="data.base === 'fa'">FontAwesome Icons (Odoo Default)</h4>
+        </t>
+    </t>
+
+</templates>

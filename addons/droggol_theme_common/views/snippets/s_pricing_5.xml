@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_pricing_5" name="Pricing - 5">
+        <section class="s_pricing_5 pb16 pt16">
+            <div class="container">
+                <div class="row s_nb_column_fixed s_col_no_bgcolor">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th> </th>
+                                        <th class="text-center">Small</th>
+                                        <th class="text-center">Standard</th>
+                                        <th class="text-center">Maximum</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Traffic</td>
+                                        <td class="text-center">
+                                            <span class="p-1 lnr lnr-cross-circle"></span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="p-1 lnr lnr-cross-circle"></span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="p-1 lnr lnr-checkmark-circle"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Storage</td>
+                                        <td class="text-center">5 GB
+                                        </td>
+                                        <td class="text-center">15 GB
+                                        </td>
+                                        <td class="text-center">50 GB
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bandwidth</td>
+                                        <td class="text-center">10
+                                        </td>
+                                        <td class="text-center">50
+                                        </td>
+                                        <td class="text-center">100
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Custom Domain</td>
+                                        <td class="text-center">
+                                            <span class="p-1 lnr lnr-checkmark-circle"></span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="p-1 lnr lnr-checkmark-circle"></span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="p-1 lnr lnr-checkmark-circle"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>24/7 Support</td>
+                                        <td class="text-center">
+                                            <span class="p-1 lnr lnr-checkmark-circle"></span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="p-1 lnr lnr-checkmark-circle"></span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="p-1 lnr lnr-checkmark-circle"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>SSL Certificate</td>
+                                        <td class="text-center">$25
+                                        </td>
+                                        <td class="text-center">$75
+                                        </td>
+                                        <td class="text-center">$250
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Backend Rights</td>
+                                        <td class="text-center">
+                                            <span class="p-1 lnr lnr-cross-circle"></span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="p-1 lnr lnr-cross-circle"></span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="p-1 lnr lnr-checkmark-circle"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Hosting</td>
+                                        <td class="text-center">
+                                            <span class="p-1 lnr lnr-checkmark-circle"></span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="p-1 lnr lnr-checkmark-circle"></span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="p-1 lnr lnr-checkmark-circle"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Pay Monthly</strong></td>
+                                        <td class="text-center"><strong>$9.99</strong></td>
+                                        <td class="text-center"><strong>$19.99</strong></td>
+                                        <td class="text-center"><strong>$29.99</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td class="text-center">
+                                            <a href="#" class="btn btn-outline-primary">Purchase</a>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="#" class="btn btn-outline-primary">Purchase</a>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="#" class="btn btn-outline-primary">Purchase</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+</odoo>

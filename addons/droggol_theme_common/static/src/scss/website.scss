@@ -1,0 +1,164 @@
+.lnr {
+    font-family: "Linearicons-Free" !important;
+    display: inline-block;
+    $size: 3rem;
+
+    &.rounded-circle,
+    &.rounded,
+    &.rounded-0,
+    &.rounded-leaf,
+    &.img-thumbnail,
+    &.shadow {
+        display: inline-block;
+        vertical-align: middle;
+        text-align: center;
+        // fa-1x is not ouput
+        @include size($size);
+        line-height: $size;
+        @for $i from 2 through 5 {
+            &.fa-#{$i}x {
+                @include size($size + $i);
+                line-height: $size + $i;
+            }
+        }
+        // Default, if no background-color already selected
+        background-color: $gray-100;
+    }
+    &.img-thumbnail {
+        padding: 0;
+    }
+    &.rounded-leaf {
+        border-top-left-radius: $size;
+        border-bottom-right-radius: $size;
+    }
+}
+
+.lni {
+    $size: 3rem;
+
+    &.rounded-circle,
+    &.rounded,
+    &.rounded-0,
+    &.rounded-leaf,
+    &.img-thumbnail,
+    &.shadow {
+        display: inline-block;
+        vertical-align: middle;
+        text-align: center;
+        // fa-1x is not ouput
+        @include size($size);
+        line-height: $size;
+        @for $i from 2 through 5 {
+            &.fa-#{$i}x {
+                @include size($size + $i);
+                line-height: $size + $i;
+            }
+        }
+        // Default, if no background-color already selected
+        background-color: $gray-100;
+    }
+    &.img-thumbnail {
+        padding: 0;
+    }
+    &.rounded-leaf {
+        border-top-left-radius: $size;
+        border-bottom-right-radius: $size;
+    }
+    @for $i from 2 through 5 {
+        &.fa-#{$i}x {
+            font-size: #{$i}em;
+        }
+    }
+}
+
+.ri {
+    $size: 3rem;
+
+    &.rounded-circle,
+    &.rounded,
+    &.rounded-0,
+    &.rounded-leaf,
+    &.img-thumbnail,
+    &.shadow {
+        display: inline-block;
+        vertical-align: middle;
+        text-align: center;
+        // fa-1x is not ouput
+        @include size($size);
+        line-height: $size;
+        @for $i from 2 through 5 {
+            &.fa-#{$i}x {
+                @include size($size + $i);
+                line-height: $size + $i;
+            }
+        }
+        // Default, if no background-color already selected
+        background-color: $gray-100;
+    }
+    &.img-thumbnail {
+        padding: 0;
+    }
+    &.rounded-leaf {
+        border-top-left-radius: $size;
+        border-bottom-right-radius: $size;
+    }
+}
+
+
+.droggol_dynamic_svg {
+    svg {
+        width: 100%;
+        height: auto;
+    }
+    path[fill="#6c63ff"], path[fill="#6c63ff"], polygon[fill="#6c63ff"], ellipse[fill="#6c63ff"]  {
+        fill: theme-color('primary') !important;
+    }
+}
+.owl-dots {
+    text-align: center;
+    .owl-dot {
+        &.active {
+            transform: scale(1.5);
+            opacity: 1;
+        }
+        outline: none;
+        display: inline-block;
+        width: .5rem;
+        height: .5rem;
+        margin: 0 .4rem;
+        -webkit-transition: all .25s;
+        transition: all .25s;
+        border-radius: 50%;
+        background-color: theme-color('primary') !important;
+        opacity: .5;
+        vertical-align: middle;
+    }
+}
+.owl-next, .owl-prev {
+    &:focus {
+        outline: none !important;
+    }
+}
+
+.dr-pwa-ios-popup {
+    position: fixed;
+    bottom: 100px;
+    background: rgba(white, 0.8);
+    z-index: $zindex-fixed;
+    border-radius: 0.4rem;
+    left: 3%;
+    margin-right: 3%;
+    backdrop-filter: blur(8px);
+    @supports not ((-webkit-backdrop-filter: blur(8px)) or (backdrop-filter: blur(8px))) {
+        background:white;
+    }
+    color: black;
+    .logo {
+        max-height: 40px;
+        max-width: 40px;
+    }
+    .icon {
+        max-height: 20px;
+        display: inline-block;
+    }
+}

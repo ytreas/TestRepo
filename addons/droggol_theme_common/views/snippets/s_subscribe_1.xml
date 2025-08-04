@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_subscribe_1" name="Subscribe - 1">
+        <section class="s_subscribe_1 pt16 pb16">
+            <div class="container">
+                <div class="row justify-content-center o_not_editable s_nb_column_fixed s_col_no_bgcolor">
+                    <div class="col-12 text-center">
+                        <div class="text-muted">|</div>
+                        <span class="lnr lnr-arrow-down fa-2x text-muted"/>
+                    </div>
+                </div>
+                <div class="row justify-content-center s_nb_column_fixed s_col_no_bgcolor">
+                    <div class="col-12 text-center">
+                        <h3>Subscribe</h3>
+                    </div>
+                    <div class="col-lg-5 mt-4">
+                        <div class="input-group input-group-lg js_subscribe shadow-lg" data-list-id="0">
+                            <input type="email" name="email" class="js_subscribe_email form-control" placeholder="Your Email..."/>
+                            <span class="input-group-append">
+                                <a role="button" href="#" class="btn btn-primary js_subscribe_btn" aria-label="Send"><i class="fa fa-send-o"/></a>
+                                <a role="button" href="#" class="btn btn-success js_subscribed_btn d-none" disabled="disabled">Thanks</a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 text-center mt64">
+                        <ul class="list-inline mb-0">
+                            <li class="list-inline-item">
+                                <a href="#"><span class="fa fa-facebook p-2"/></a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#"><span class="fa fa-twitter p-2"/></a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#"><span class="fa fa-instagram p-2"/></a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#"><span class="fa fa-linkedin p-2"/></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+</odoo>

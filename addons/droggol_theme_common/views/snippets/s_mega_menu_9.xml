@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_mega_menu_9" name="Mega Menu - 9">
+        <section class="s_mega_menu_9">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 pt24 pb24 col-lg-3">
+                        <div class="position-relative d_enable_bg_img oe_img_bg" style="background-image: url('/web/image/droggol_theme_common.s_banner_4_1');">
+                            <div class="banner-text">
+                                <h5 class="mb-0 font-weight-bold">For Men</h5>
+                                <small class="mb-0">Starting at $21</small>
+                                <div class="s_btn pt4" data-name="Buttons">
+                                    <a href="/shop" class="btn btn-primary btn-sm">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 pt24 pb24 col-lg-6">
+                        <div class="row">
+                            <div class="col-12 col-lg-4">
+                                <h5 class="pb-2 border-bottom">
+                                    Clothing
+                                </h5>
+                                <ul class="list-unstyled list-hover-primary">
+                                    <li><a href="#">New in</a></li>
+                                    <li><a href="#">Coats &amp; Jackets</a></li>
+                                    <li><a href="#">Jeans</a></li>
+                                    <li><a href="#">Dresses</a></li>
+                                    <li><a href="#">Shorts</a></li>
+                                    <li><a href="#">Skirts</a></li>
+                                    <li><a href="#">Donec non</a></li>
+                                    <li><a href="#">T-Shirts</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-lg-4">
+                                <h5 class="pb-2 border-bottom">
+                                    Shoes
+                                </h5>
+                                <ul class="list-unstyled list-hover-primary">
+                                    <li><a href="#">Boots</a></li>
+                                    <li><a href="#">Flats</a></li>
+                                    <li><a href="#">Heels</a></li>
+                                    <li><a href="#">Donec ultrices</a></li>
+                                    <li><a href="#">Sandals</a></li>
+                                    <li><a href="#">Slippers</a></li>
+                                    <li><a href="#">Socks</a></li>
+                                    <li><a href="#">Sports</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-lg-4">
+                                <h5 class="pb-2 border-bottom">
+                                    Accessories
+                                </h5>
+                                <ul class="list-unstyled list-hover-primary">
+                                    <li><a href="#">Bags &amp; Purses</a></li>
+                                    <li><a href="#">Aenean</a></li>
+                                    <li><a href="#">Vivamus</a></li>
+                                    <li><a href="#">Scarves &amp; Hats</a></li>
+                                    <li><a href="#">Etiam</a></li>
+                                    <li><a href="#">Jewelry</a></li>
+                                    <li><a href="#">Donec non</a></li>
+                                    <li><a href="#">Fragrance &amp; Beauty</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-12 mt-2">
+                                <img class="img img-fluid" src="/web/image/droggol_theme_common.s_mega_menu_offer"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 pt24 pb24 col-lg-3">
+                        <div class="position-relative d_enable_bg_img oe_img_bg" style="background-image: url('/web/image/droggol_theme_common.s_banner_4_2');">
+                            <div class="banner-text">
+                                <h5 class="mb-0 font-weight-bold">For Women</h5>
+                                <small class="mb-0">Starting at $24</small>
+                                <div class="s_btn pt4" data-name="Buttons">
+                                    <a href="/shop" class="btn btn-primary btn-sm">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+</odoo>

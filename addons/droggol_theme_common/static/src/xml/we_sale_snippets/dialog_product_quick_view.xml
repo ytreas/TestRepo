@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<templates>
+    <div t-name="droggol_theme_common.product_quick_view">
+        <div class="d_product_quick_view_wrapper">
+            <div class="d_product_quick_view_loader d-flex align-items-center justify-content-center">
+                <div class="spinner-grow text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div class="spinner-grow text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div class="spinner-grow text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</templates>

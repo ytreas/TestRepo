@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_info_block_5" name="Info Block - 5">
+        <section class="s_info_block_5 pt16 pb16">
+            <div class="container-fluid">
+                <div class="row align-items-center s_nb_column_fixed s_col_no_bgcolor">
+                    <div class="col-12 offset-lg-1 col-lg-5 order-2 order-lg-0">
+                        <div class="s_title" data-name="Title">
+                            <h5 class="s_title_default">Latest Trend</h5>
+                        </div>
+                        <div class="s_title" data-name="Title">
+                            <h2 class="s_title_default h1">FANCY COLLECTION</h2>
+                        </div>
+                        <p>Vestibulum id laoreet sapien. Aliquam porttitor neque ut urna efficitur, eget tincidunt diam convallis. Vestibulum molestie nunc consectetur cursus tincidunt. Aenean interdum justo a tellus condimentum gravida.</p>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <p class="mb-2">
+                                    <i class="lnr text-primary lnr-checkmark-circle"></i> 24x7 customer support
+                                </p>
+                                <p class="mb-2">
+                                    <i class="lnr text-primary lnr-checkmark-circle"></i> Cash on delivery
+                                </p>
+                                <p class="mb-2">
+                                    <i class="lnr text-primary lnr-checkmark-circle"></i> 30 days replacement
+                                </p>
+                                <p class="mb-2">
+                                    <i class="lnr text-primary lnr-checkmark-circle"></i> Fast delivery
+                                </p>
+                            </div>
+                            <div class="col-sm-4">
+                                <p class="mb-2">
+                                    <i class="lnr text-primary lnr-checkmark-circle"></i> 12k+ happy customers
+                                </p>
+                                <p class="mb-2">
+                                    <i class="lnr text-primary lnr-checkmark-circle"></i> 100% secure payment
+                                </p>
+                                <p class="mb-2">
+                                    <i class="lnr text-primary lnr-checkmark-circle"></i> Quality products
+                                </p>
+                                <p class="mb-2">
+                                    <i class="lnr text-primary lnr-checkmark-circle"></i> Easy returns
+                                </p>
+                            </div>
+                        </div>
+                        <div class="s_btn text-left pt16 pb16" data-name="Buttons">
+                            <a href="#" class="btn btn-alpha">Shop Now</a>
+                            <a href="#" class="btn btn-light">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 mb-4 mb-lg-0 order-0 order-lg-1">
+                        <div class="dr-animation-scale d-flex align-items-center justify-content-center">
+                            <img src="/web/image/droggol_theme_common.s_info_block_5_1" class="img img-fluid" alt="Info Block Image 01"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+</odoo>

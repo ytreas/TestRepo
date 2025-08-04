@@ -1,0 +1,74 @@
+body:not(.editor_enable) {
+    .s_coming_soon {
+        @include o-position-absolute($top:0px, $right: 0px, $bottom: 0px, $left: 0px);
+        z-index: $zindex-modal-backdrop - 1;
+        background-color: white;
+    }
+}
+// HIDE SNIPPET in snippet debug page
+.o_panel {
+    .s_coming_soon {
+        display: none;
+    }
+}
+
+// HIDE SNIPPET in snippet debug page
+html[data-view-xmlid="website.snippets_debug_page_view"] {
+    body {
+        overflow: auto !important;
+    }
+}
+.s_coming_soon {
+    .js_subscribe {
+        max-width: 370px;
+    }
+}
+.s_coming_soon_1 {
+    .d_block_container {
+        min-height: 100vh;
+        .s_countdown {
+            &.d_text_white {
+                .countdown {
+                    h1 {
+                        color: white;
+                    }
+                    .dr_countdown_lable {
+                        color: white;
+                    }
+                }
+            }
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            min-height: 300px;
+            .countdown {
+                max-width: 380px;
+                h1 {
+                    font-size: 3rem;
+                }
+            }
+        }
+        .d_right_block {
+            .d_coming_soon_title {
+                font-size: 3rem;
+            }
+            .js_subscribe {
+                max-width: 370px;
+            }
+            .d_stay_tuned {
+                letter-spacing: 10px;
+            }
+            .d_social_link_icon {
+                @include dr-icon-center(40px);
+                border-radius: 50%;
+                border: 1px solid $card-border-color;
+                cursor: pointer;
+                display: block;
+                &:hover {
+                    background-color: gray('300');
+                }
+            }
+        }
+    }
+}

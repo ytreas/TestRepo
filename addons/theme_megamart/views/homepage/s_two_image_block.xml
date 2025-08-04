@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="s_two_image_block" name="Two Image Block">
+        <section class="s_image_block pt48 pb48 custom_padding_top custom_padding_bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 mb-3">
+                        <div class="block-hover-effect">
+                            <img src="/theme_megamart/static/src/img/Offer1.jpg" class="img img-fluid w-100 rounded-4" />
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 mb-3">
+                        <div class="block-hover-effect">
+                            <img src="/theme_megamart/static/src/img/Offer2.jpg" class="img img-fluid w-100 rounded-4" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+</odoo>

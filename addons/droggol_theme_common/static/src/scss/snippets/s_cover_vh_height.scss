@@ -1,0 +1,26 @@
+.dr-custom-carousel {
+    &.dr-full-height{
+        .carousel-item {
+            height: calc(100vh - #{$dr-header-height} - #{$dr-pre-header-height} + 1px) !important;
+            @include media-breakpoint-down(md) {
+                height: calc(100vh - 82px - #{$dr-pre-header-height} - #{$dr-mobile-bottom-cart}) !important;
+            }
+            > .container, .container-fluid {
+                height: 100% !important;
+                > .row {
+                    height: 100% !important;
+                    align-items: center;
+                }
+            }
+        }
+    }
+}
+
+.s_cover_4,.s_cover_5 {
+    &.dr-full-height{
+        height: calc(100vh - #{$dr-header-height} - #{$dr-pre-header-height} + 2px) !important;
+        @include media-breakpoint-down(md) {
+            height: calc(100vh - 82px - #{$dr-pre-header-height} - #{$dr-mobile-bottom-cart}) !important;
+        }
+    }
+}

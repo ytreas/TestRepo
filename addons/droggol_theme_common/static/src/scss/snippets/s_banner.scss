@@ -1,0 +1,75 @@
+.s_banner_1 {
+    .banner-text {
+        @include o-position-absolute($top: 50%, $left: 15%);
+        transform: translate(-50% , -50%);
+        -webkit-transform: translate(-15%, -50%);
+        z-index: 2;
+    }
+}
+.s_banner_2 {
+    .banner-text {
+        @include o-position-absolute($top: 50%, $left: 52%);
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        -o-transform: translateY(-50%);
+        transform: translateY(-50%);
+        width: 40%;
+    }
+}
+.s_banner_4 {
+    @include media-breakpoint-up(md) {
+        .banner-text {
+            margin: -50px 50px 0px 50px;
+        }
+    }
+}
+.s_banner_7 {
+    .banner-text {
+        &.w-75 {
+            left: 13%;
+        }
+        @include o-position-absolute($bottom: 5px, $left: 25%);
+        transform: translateY(-15%);
+        background: white;
+        padding: 15px;
+    }
+}
+.s_banner_9 {
+    .banner-text {
+        @include o-position-absolute($top: 50%, $left: 50%);
+        transform: translate(-50% , -50%);
+        -webkit-transform: translate(-50%, -50%);
+        padding: 0.8rem;
+        min-width: 40%;
+        z-index: 2;
+    }
+}
+.s_banner_10 {
+    .banner-text {
+        @include o-position-absolute($bottom: 3rem, $left: 3.5rem);
+        z-index: 2;
+    }
+}
+.s_banner_13 {
+    .dr_offer_block {
+        .dr_offer_lable_lg {
+            line-height: 210px;
+            font-size: 14.2rem;
+        }
+        .dr_offer_lable_md {
+            line-height: 70px;
+            font-size: 5rem;
+        }
+        .dr_offer_lable_sm {
+            font-size: 2.8rem;
+        }
+    }
+    .dr_badge_container {
+        height: 85px;
+        width: 85px;
+        @include o-position-absolute($right: 0.7rem, $top: -2.1rem);
+    }
+    .dr_badge {
+        @include o-position-absolute($left: 17%, $top: 24%);
+    }
+}

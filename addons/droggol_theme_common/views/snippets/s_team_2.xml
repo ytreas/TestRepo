@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_team_2" name="Team - 2">
+        <section class="s_team_2 pb16 pt16">
+            <div class="container">
+                <div class="row s_col_no_bgcolor">
+                    <div class="col-12 col-sm-6 col-lg-3 py-3">
+                        <div class="card border-0 h-100">
+                            <img src="/web/image/droggol_theme_common.image_team_01" class="card-img-top" alt="Team Image 01"/>
+                            <div class="py-4">
+                                <div class="text-alpha text-uppercase small">
+                                    Partner
+                                </div>
+                                <h5 class="card-title mt-1 mb-0">Jane Doe</h5>
+                                <p class="mt-1">Praesent ornare mi quis</p>
+                                <div class="s_hr pt4 pb4 text-300" data-name="Separator">
+                                    <hr class="s_hr_1px s_hr_solid w-100 mx-auto"/>
+                                </div>
+                                <ul class="list-unstyled mb-0 mt-3">
+                                    <li class="list-item"><span class="lnr lnr-envelope p-1"/> information@mail.com</li>
+                                    <li class="list-item"><span class="lnr lnr-phone-handset p-1"/> +12 345 6789 101</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3 py-3">
+                        <div class="card border-0 h-100">
+                            <img src="/web/image/droggol_theme_common.image_team_02" class="card-img-top" alt="Team Image 02"/>
+                            <div class="py-4">
+                                <div class="text-alpha text-uppercase small">
+                                    Office manager
+                                </div>
+                                <h5 class="card-title mt-1 mb-0">Jane Doe</h5>
+                                <p class="mt-1">Praesent ornare mi quis</p>
+                                <div class="s_hr pt4 pb4 text-300" data-name="Separator">
+                                    <hr class="s_hr_1px s_hr_solid w-100 mx-auto"/>
+                                </div>
+                                <ul class="list-unstyled mb-0 mt-3">
+                                    <li class="list-item"><span class="lnr lnr-envelope p-1"/> information@mail.com</li>
+                                    <li class="list-item"><span class="lnr lnr-phone-handset p-1"/> +12 345 6789 101</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3 py-3">
+                        <div class="card border-0 h-100">
+                            <img src="/web/image/droggol_theme_common.image_team_03" class="card-img-top" alt="Team Image 03"/>
+                            <div class="py-4">
+                                <div class="text-alpha text-uppercase small">
+                                    Partner
+                                </div>
+                                <h5 class="card-title mt-1 mb-0">John Doe</h5>
+                                <p class="mt-1">Praesent ornare mi quis</p>
+                                <div class="s_hr pt4 pb4 text-300" data-name="Separator">
+                                    <hr class="s_hr_1px s_hr_solid w-100 mx-auto"/>
+                                </div>
+                                <ul class="list-unstyled mb-0 mt-3">
+                                    <li class="list-item"><span class="lnr lnr-envelope p-1"/> information@mail.com</li>
+                                    <li class="list-item"><span class="lnr lnr-phone-handset p-1"/> +12 345 6789 101</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3 py-3">
+                        <div class="card border-0 h-100">
+                            <img src="/web/image/droggol_theme_common.image_team_04" class="card-img-top" alt="Team Image 04"/>
+                            <div class="py-4">
+                                <div class="text-alpha text-uppercase small">
+                                    Receptionist
+                                </div>
+                                <h5 class="card-title mt-1 mb-0">Jane Doe</h5>
+                                <p class="mt-1">Praesent ornare mi quis</p>
+                                <div class="s_hr pt4 pb4 text-300" data-name="Separator">
+                                    <hr class="s_hr_1px s_hr_solid w-100 mx-auto"/>
+                                </div>
+                                <ul class="list-unstyled mb-0 mt-3">
+                                    <li class="list-item"><span class="lnr lnr-envelope p-1"/> information@mail.com</li>
+                                    <li class="list-item"><span class="lnr lnr-phone-handset p-1"/> +12 345 6789 101</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="s_team_2_options" inherit_id="website.snippet_options">
+        <xpath expr="." position="inside">
+            <div data-js="colorpicker" data-selector=".s_team_2 .card">
+                <we-collapse-area>
+                    <we-toggler><i class="fa fa-fw fa-eyedropper"/> Background Color</we-toggler>
+                    <we-collapse/>
+                </we-collapse-area>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

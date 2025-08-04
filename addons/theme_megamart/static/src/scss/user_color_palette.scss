@@ -1,0 +1,4 @@
+$o-user-color-palette: map-merge($o-user-color-palette, o-map-omit((
+    'o-color-1': #FFB22C,
+    'o-color-2': #1B1C1F,
+)));

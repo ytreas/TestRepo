@@ -1,0 +1,47 @@
+.dr-list-variant-radio-circle {
+    .radio_input_value {
+        margin-right: 0.4rem;
+        .dr-variant-radio-circle {
+            @include dr-icon-center(38px);
+            background-color: gray('white');
+            border: 1px solid gray('300');
+            border-radius: 50%;
+            transition: 0.2s;
+            font-weight: $font-weight-normal;
+            cursor: pointer;
+            &:hover {
+                border-color: theme-color('primary');
+                color: theme-color('primary');
+            }
+        }
+    }
+    input:checked ~ .radio_input_value .dr-variant-radio-circle {
+        background-color: theme-color('primary');
+        border-color: theme-color('primary');
+        color: color-yiq(theme-color('primary'));
+    }
+}
+
+.dr-list-variant-radio-square {
+    .radio_input_value {
+        margin-right: 0.4rem;
+        .dr-variant-radio-square {
+            padding: 4px 8px;
+            background-color: gray('white');
+            border: 1px solid gray('300');
+            border-radius: $border-radius;
+            transition: 0.2s;
+            font-weight: $font-weight-normal;
+            cursor: pointer;
+            &:hover {
+                border-color: theme-color('primary');
+                color: theme-color('primary');
+            }
+        }
+    }
+    input:checked ~ .radio_input_value .dr-variant-radio-square {
+        background-color: theme-color('primary');
+        border-color: theme-color('primary');
+        color: color-yiq(theme-color('primary'));
+    }
+}

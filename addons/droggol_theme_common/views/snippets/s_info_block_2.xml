@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_info_block_2" name="Info Block - 2">
+        <section class="s_info_block_2">
+            <div class="container-fluid px-0">
+                <div class="row no-gutters align-items-center s_nb_column_fixed s_col_no_bgcolor">
+                    <div class="col-lg-6">
+                        <img src="/web/image/droggol_theme_common.image_content_02" class="img img-fluid" alt="Info Block Image 01"/>
+                    </div>
+                    <div class="col-lg-4 offset-lg-1 p-4">
+                        <h2>Cras in feugiat eros</h2>
+                        <p>Suspendisse est nunc, laoreet eget odio id, finibus convallis ipsum. Praesent eu nisi egestas.</p>
+                        <p>Vestibulum id laoreet sapien. Aliquam porttitor neque ut urna efficitur, eget tincidunt diam convallis. Vestibulum molestie nunc consectetur cursus tincidunt. Aenean interdum justo a tellus condimentum gravida.</p>
+                        <div class="s_btn text-left pt16 pb16" data-name="Buttons">
+                            <a href="#" class="btn btn-alpha">Shop Now</a>
+                            <a href="#" class="btn btn-light">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+</odoo>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<template id="theme_megamart_snippets" inherit_id="website.snippets">
+		 <xpath expr="//snippets[@id='snippet_structure']" position="after">
+		 	<snippets class="o_panel_body" string="Homepage Snippets">
+				<t t-snippet="theme_megamart.s_home_banner" t-thumbnail="/theme_megamart/static/description/icon.png" />
+				<t t-snippet="theme_megamart.s_product_list" t-thumbnail="/theme_megamart/static/description/icon.png" />
+				<t t-snippet="theme_megamart.s_dynamic_snippet_one" t-thumbnail="/theme_megamart/static/description/icon.png" />
+				<t t-snippet="theme_megamart.s_image_block" t-thumbnail="/theme_megamart/static/description/icon.png" />
+				<t t-snippet="theme_megamart.s_dynamic_snippet_two" t-thumbnail="/theme_megamart/static/description/icon.png" />
+				<t t-snippet="theme_megamart.s_image_text" t-thumbnail="/theme_megamart/static/description/icon.png" />
+				<t t-snippet="theme_megamart.s_dynamic_snippet_three" t-thumbnail="/theme_megamart/static/description/icon.png" />
+				<t t-snippet="theme_megamart.s_three_image_block" t-thumbnail="/theme_megamart/static/description/icon.png" />
+				<t t-snippet="theme_megamart.s_two_image_block" t-thumbnail="/theme_megamart/static/description/icon.png" />
+				<t t-snippet="theme_megamart.s_references" t-thumbnail="/theme_megamart/static/description/icon.png" />
+			</snippets>
+		</xpath>
+	</template>
+</odoo>

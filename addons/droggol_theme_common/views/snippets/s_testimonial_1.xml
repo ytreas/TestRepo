@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_testimonial_1" name="Testimonial - 1">
+        <section class="s_testimonial_1 pb16 pt16">
+            <div class="container">
+                <div class="row s_nb_column_fixed s_col_no_bgcolor">
+                    <div class="col-md-6 col-lg-4 py-3">
+                        <div class="testimonial-block h-100 p-4 text-center">
+                            <blockquote class="lead font-weight-light font-italic mb-5">
+                                "Proin a nisi id turpis pharetra fermentum ac eu sem. Morbi ullamcorper mi quis porttitor interdum. Maecenas luctus varius interdum. Duis commodo tincidunt velit non bibendum. Phasellus placerat sodales nunc."
+                            </blockquote>
+                            <img src="/web/image/droggol_theme_common.image_author_01" class="img-thumbnail rounded-circle author-image" alt="Author Image 01"/>
+                            <h5 class="mt-4 mb-0">John Doe</h5>
+                            <span>Droggol</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 py-3">
+                        <div class="testimonial-block h-100 p-4 text-center">
+                            <blockquote class="lead font-weight-light font-italic mb-5">
+                                "Fusce sagittis ac orci sed tristique. Suspendisse a lobortis augue. Maecenas scelerisque varius mattis. Sed auctor fermentum libero, sed ullamcorper elit laoreet venenatis. Cras ac ex enim. Suspendisse sodales."
+                            </blockquote>
+                            <img src="/web/image/droggol_theme_common.image_author_02" class="img-thumbnail rounded-circle author-image" alt="Author Image 02"/>
+                            <h5 class="mt-4 mb-0">Vivamus Tem</h5>
+                            <span>Google Inc.</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 py-3">
+                        <div class="testimonial-block h-100 p-4 text-center">
+                            <blockquote class="lead font-weight-light font-italic mb-5">
+                                "Etiam semper molestie sapien a egestas. In consequat venenatis ex, sit amet ultrices ante pretium et. Suspendisse nec hendrerit nulla, vitae convallis risus. Morbi quis tincidunt magna. Sed nec libero."
+                            </blockquote>
+                            <img src="/web/image/droggol_theme_common.image_author_03" class="img-thumbnail rounded-circle author-image" alt="Author Image 03"/>
+                            <h5 class="mt-4 mb-0">Donec Int</h5>
+                            <span>Apple Ltd.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="s_testimonial_1_options" inherit_id="website.snippet_options">
+        <xpath expr="." position="inside">
+            <div data-js="colorpicker" data-selector=".s_testimonial_1 .testimonial-block">
+                <we-collapse-area>
+                    <we-toggler><i class="fa fa-fw fa-eyedropper"/> Background Color</we-toggler>
+                    <we-collapse/>
+                </we-collapse-area>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

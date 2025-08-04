@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_banner_10" name="Banner - 10">
+        <section class="s_banner_10 pt16 pb16">
+            <div class="container">
+                <div class="row s_col_no_bgcolor">
+                    <div class="col-12 col-lg-4 py-3">
+                        <div class="dr-animation-layla">
+                            <a href="#">
+                                <img src="/web/image/droggol_theme_common.s_banner_10_1" class="w-100" alt="Banner Image 01"/>
+                            </a>
+                            <div class="banner-text">
+                                <h6>Collections</h6>
+                                <h2>Women</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 py-3">
+                        <div class="dr-animation-layla">
+                            <a href="#">
+                                <img src="/web/image/droggol_theme_common.s_banner_10_2" class="w-100" alt="Banner Image 02"/>
+                            </a>
+                            <div class="banner-text">
+                                <h6>Collections</h6>
+                                <h2>Children</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 py-3">
+                        <div class="dr-animation-layla">
+                            <a href="#">
+                                <img src="/web/image/droggol_theme_common.s_banner_10_3" class="w-100" alt="Banner Image 03"/>
+                            </a>
+                            <div class="banner-text">
+                                <h6>Collections</h6>
+                                <h2>Men</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+</odoo>

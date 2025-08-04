@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_clients_4" name="Clients - 4">
+        <section class="s_clients_4 pt32 pb32 bg-200">
+            <div class="container">
+                <div class="row s_nb_column_fixed s_col_no_bgcolor">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 py-3">
+                        <div class="client-item py-4 text-center">
+                            <img class="img img-fluid client-image" src="/web/image/droggol_theme_common.image_client_01" alt="Client Image 01"/>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 py-3">
+                        <div class="client-item py-4 text-center">
+                            <img class="img img-fluid client-image" src="/web/image/droggol_theme_common.image_client_02" alt="Client Image 02"/>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 py-3">
+                        <div class="client-item py-4 text-center">
+                            <img class="img img-fluid client-image" src="/web/image/droggol_theme_common.image_client_03" alt="Client Image 03"/>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 py-3">
+                        <div class="client-item py-4 text-center">
+                            <img class="img img-fluid client-image" src="/web/image/droggol_theme_common.image_client_04" alt="Client Image 04"/>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 py-3">
+                        <div class="client-item py-4 text-center">
+                            <img class="img img-fluid client-image" src="/web/image/droggol_theme_common.image_client_05" alt="Client Image 05"/>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 py-3">
+                        <div class="client-item py-4 text-center">
+                            <img class="img img-fluid client-image" src="/web/image/droggol_theme_common.image_client_06" alt="Client Image 06"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="s_clients_4_options" inherit_id="website.snippet_options">
+        <xpath expr="." position="inside">
+            <div data-js="colorpicker" data-selector=".s_clients_4 .client-item">
+                <we-collapse-area>
+                    <we-toggler><i class="fa fa-fw fa-eyedropper"/> Background Color</we-toggler>
+                    <we-collapse/>
+                </we-collapse-area>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

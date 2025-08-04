@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+
+    <div t-name="droggol_theme_common.s_countdown_dialog">
+        <div class="form-group">
+            <div class="input-group" id="due_date" data-target-input="nearest">
+                <input type="text" class="form-control datetimepicker-input dr-due-date" data-target="#due_date"/>
+                <div class="input-group-append" data-target="#due_date" data-toggle="datetimepicker">
+                    <button class="btn btn-primary btn-sm px-3" type="button"><i class="fa fa-clock-o"/></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</templates>

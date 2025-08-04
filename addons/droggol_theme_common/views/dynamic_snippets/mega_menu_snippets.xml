@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Dynamic Mega Menu -->
+    <template id="s_d_category_mega_menu_1" name="Category Menu - 1">
+        <section class="s_d_category_mega_menu_1 dr_category_mega_menu droggol_product_snippet" data-ds-id="s_d_category_mega_menu_1"/>
+    </template>
+    <!-- Dynamic Mega Menu -->
+    <template id="s_d_category_mega_menu_2" name="Category Menu - 2">
+        <section class="s_d_category_mega_menu_2 dr_category_mega_menu droggol_product_snippet" data-ds-id="s_d_category_mega_menu_2"/>
+    </template>
+    <!-- Dynamic Mega Menu -->
+    <template id="s_d_category_mega_menu_3" name="Category Menu - 3">
+        <section class="s_d_category_mega_menu_3 droggol_category_mega_menu_snippet"/>
+    </template>
+</odoo>

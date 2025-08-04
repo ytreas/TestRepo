@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Website Config -->
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.droggol.theme.common</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="website.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='website_logo_setting']" position="after">
+                <div class="col-12 col-lg-6 o_setting_box" id="website_logo_footer_setting">
+                    <div class="o_setting_right_pane">
+                        <label for="website_logo_footer"/>
+                        <span class="fa fa-lg fa-globe" title="Values set here are website-specific." groups="website.group_multi_website"/>
+                        <div class="text-muted">
+                            Display this logo on the website footer.
+                        </div>
+                        <field name="website_logo_footer" widget="image" class="w-25 mt-2"/>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 o_setting_box" id="zoom_factor_setting">
+                    <div class="o_setting_right_pane">
+                        <label for="zoom_factor"/>
+                        <span class="fa fa-lg fa-globe" title="Values set here are website-specific." groups="website.group_multi_website"/>
+                        <div class="text-muted">
+                            Set zoom factor for product image.
+                        </div>
+                        <field name="zoom_factor"/>
+                    </div>
+                </div>
+            </xpath>
+            <div id="webmaster_settings" position="after">
+                <h2>Progressive Web Apps (PWA)</h2>
+                <div class="row mt16 o_settings_container" id="pwa_settings">
+                    <div class="col-12 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="website_has_pwa"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label string="Enable Progressive Web Apps" for="website_has_pwa"/>
+                            <span class="fa fa-lg fa-globe" title="Values set here are website-specific." groups="website.group_multi_website"/>
+                            <div class="text-muted">
+                                Allows users to install your website as an application on mobile and desktop.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 o_setting_box" id="website_pwa_name_setting" attrs="{'invisible': [('website_has_pwa', '=', False)]}">
+                        <div class="o_setting_right_pane">
+                            <label string="Name" for="website_pwa_name"/>
+                            <span class="fa fa-lg fa-globe" title="Values set here are website-specific." groups="website.group_multi_website"/>
+                            <div class="text-muted">
+                                Used in the app install prompt.
+                            </div>
+                            <field name="website_pwa_name" class="mt-2" attrs="{'required': [('website_has_pwa', '=', True)]}"/>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 o_setting_box" id="website_pwa_short_name_setting" attrs="{'invisible': [('website_has_pwa', '=', False)]}">
+                        <div class="o_setting_right_pane">
+                            <label string="Short Name" for="website_pwa_short_name"/>
+                            <span class="fa fa-lg fa-globe" title="Values set here are website-specific." groups="website.group_multi_website"/>
+                            <div class="text-muted">
+                                Used on the user's home screen, launcher, or other places.
+                            </div>
+                            <field name="website_pwa_short_name" class="mt-2" attrs="{'required': [('website_has_pwa', '=', True)]}"/>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 o_setting_box" id="website_pwa_background_color_setting" attrs="{'invisible': [('website_has_pwa', '=', False)]}">
+                        <div class="o_setting_right_pane">
+                            <label string="Background Color" for="website_pwa_background_color"/>
+                            <span class="fa fa-lg fa-globe" title="Values set here are website-specific." groups="website.group_multi_website"/>
+                            <div class="text-muted">
+                                Used on the splash screen when the application is first launched.
+                            </div>
+                            <field name="website_pwa_background_color" widget="color" class="mt-2" attrs="{'required': [('website_has_pwa', '=', True)]}"/>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 o_setting_box" id="website_pwa_theme_color_setting" attrs="{'invisible': [('website_has_pwa', '=', False)]}">
+                        <div class="o_setting_right_pane">
+                            <label string="Theme Color" for="website_pwa_theme_color"/>
+                            <span class="fa fa-lg fa-globe" title="Values set here are website-specific." groups="website.group_multi_website"/>
+                            <div class="text-muted">
+                                Used on toolbar, and may be in the app's preview in task switchers.
+                            </div>
+                            <field name="website_pwa_theme_color" widget="color" class="mt-2" attrs="{'required': [('website_has_pwa', '=', True)]}"/>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 o_setting_box" id="website_pwa_icon_192_setting" attrs="{'invisible': [('website_has_pwa', '=', False)]}">
+                        <div class="o_setting_right_pane">
+                            <label string="Icon (192x192)" for="website_pwa_icon_192"/>
+                            <span class="fa fa-lg fa-globe" title="Values set here are website-specific." groups="website.group_multi_website"/>
+                            <div class="text-muted">
+                                These icons are used in places like the home screen, app launcher, task switcher, splash screen, etc.
+                            </div>
+                            <field name="website_pwa_icon_192" widget="image" class="w-25 mt-2" attrs="{'required': [('website_has_pwa', '=', True)]}"/>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 o_setting_box" id="website_pwa_icon_512_setting" attrs="{'invisible': [('website_has_pwa', '=', False)]}">
+                        <div class="o_setting_right_pane">
+                            <label string="Icon (512x512)" for="website_pwa_icon_512"/>
+                            <span class="fa fa-lg fa-globe" title="Values set here are website-specific." groups="website.group_multi_website"/>
+                            <div class="text-muted">
+                                These icons are used in places like the home screen, app launcher, task switcher, splash screen, etc.
+                            </div>
+                            <field name="website_pwa_icon_512" widget="image" class="w-25 mt-2" attrs="{'required': [('website_has_pwa', '=', True)]}"/>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 o_setting_box" id="website_pwa_start_url_setting" attrs="{'invisible': [('website_has_pwa', '=', False)]}">
+                        <div class="o_setting_right_pane">
+                            <label string="Start URL" for="website_pwa_start_url"/>
+                            <span class="fa fa-lg fa-globe" title="Values set here are website-specific." groups="website.group_multi_website"/>
+                            <div class="text-muted">
+                                Your application will start from this URL when it is launched.
+                            </div>
+                            <field name="website_pwa_start_url" class="mt-2" attrs="{'required': [('website_has_pwa', '=', True)]}"/>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 o_setting_box" id="website_pwa_offline_page_setting" attrs="{'invisible': [('website_has_pwa', '=', False)]}">
+                        <div class="o_setting_left_pane">
+                            <field name="website_pwa_offline_page" class="mt-2"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label string="Enable Offline Page" for="website_pwa_offline_page"/>
+                            <span class="fa fa-lg fa-globe" title="Values set here are website-specific." groups="website.group_multi_website"/>
+                            <div class="text-muted">
+                                Show offline page when there is no internet.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h2> eCommerce </h2>
+                <div class="row mt16 o_settings_container" id="dr_ecommerce_settings">
+                    <div class="col-12 o_setting_box">
+                        <div class="o_setting_right_pane">
+                            <label for="dr_cart_flow"/>
+                            <span title="Values set here are website-specific."/>
+                            <div class="text-muted">
+                                Change the behaviour after product is added to the cart.
+                            </div>
+                            <field name="dr_cart_flow" class="w-25" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </field>
+    </record>
+
+    <!-- Product Brand -->
+    <record id="dr_product_brand_view_form" model="ir.ui.view">
+        <field name="name">dr.product.brand.view.form</field>
+        <field name="model">dr.product.brand</field>
+        <field name="arch" type="xml">
+            <form string="Brand">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object" name="action_open_products" icon="fa-cubes" attrs="{'invisible': [('product_count', '=', 0)]}">
+                            <field string="Products" name="product_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <field name="image" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="description" widget="text"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="website_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="products" string="Products">
+                            <field name="product_ids" string="Products" mode="kanban" options="{'create_text':'Add a Product'}" context="{'default_dr_brand_id': active_id, 'default_website_id': website_id}"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="dr_product_brand_view_tree" model="ir.ui.view">
+        <field name="name">dr.product.brand.view.tree</field>
+        <field name="model">dr.product.brand</field>
+        <field name="arch" type="xml">
+            <tree string="Brands">
+                <field name="name"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="dr_product_brand_view_kanban" model="ir.ui.view">
+        <field name="name">dr.product.brand.view.kanban</field>
+        <field name="model">dr.product.brand</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="id"/>
+                <field name="name"/>
+                <field name="description"/>
+                <field name="product_count"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <div class="o_kanban_image mr-3">
+                                <img t-att-src="kanban_image('dr.product.brand', 'image', record.id.raw_value)" alt="Product" class="o_image_64_contain"/>
+                            </div>
+                            <div class="oe_kanban_details">
+                                <h4 class="font-weight-bold">
+                                    <field name="name"/>
+                                </h4>
+                                <p t-esc="record.description.value"/>
+                                <h6 class="font-weight-bold">
+                                    <i class="fa fa-cubes"/> <span t-esc="record.product_count.value"/> Products
+                                </h6>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="dr_product_brand_view_search" model="ir.ui.view">
+        <field name="name">dr.product.brand.view.search</field>
+        <field name="model">dr.product.brand</field>
+        <field name="arch" type="xml">
+            <search string="Product Brand">
+                <field name="name"/>
+                <separator/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="dr_product_brand_action" model="ir.actions.act_window">
+        <field name="name">Brands</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dr.product.brand</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <menuitem id="menu_dr_product_brand"
+        action="dr_product_brand_action"
+        parent="website_sale.menu_product_settings" sequence="4"/>
+
+    <!-- Product Label -->
+    <record id="dr_product_label_view_form" model="ir.ui.view">
+        <field name="name">dr.product.label.view.form</field>
+        <field name="model">dr.product.label</field>
+        <field name="arch" type="xml">
+            <form string="Label">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object" name="action_open_products" icon="fa-cubes" attrs="{'invisible': [('product_count', '=', 0)]}">
+                            <field string="Products" name="product_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="color"/>
+                        </group>
+                        <group>
+                            <field name="website_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="products" string="Products">
+                            <field name="product_ids" string="Products" mode="kanban" options="{'create_text':'Add a Product'}" context="{'default_dr_label_id': active_id, 'default_website_id': website_id}"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="dr_product_label_view_tree" model="ir.ui.view">
+        <field name="name">dr.product.label.view.tree</field>
+        <field name="model">dr.product.label</field>
+        <field name="arch" type="xml">
+            <tree string="Labels">
+                <field name="name"/>
+                <field name="color"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="dr_product_label_action" model="ir.actions.act_window">
+        <field name="name">Labels</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dr.product.label</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_dr_product_label"
+        action="dr_product_label_action"
+        parent="website_sale.menu_product_settings" sequence="4"/>
+
+    <record id="product_template_form_view_inherit_droggol_theme_common" model="ir.ui.view">
+        <field name="name">product.template.form.inherit.droggol.theme.common</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="website_sale.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='website_style_ids']" position="after">
+                <field name="dr_brand_id" context="{'default_website_id': website_id}" domain="[('website_id', 'in', (False, website_id))]"/>
+                <field name="dr_label_id" context="{'default_website_id': website_id}" domain="[('website_id', 'in', (False, website_id))]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Website Menu Label -->
+    <record id="dr_website_menu_label_view_form" model="ir.ui.view">
+        <field name="name">dr.website.menu.label.view.form</field>
+        <field name="model">dr.website.menu.label</field>
+        <field name="arch" type="xml">
+            <form string="Label">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object" name="action_open_menus" icon="fa-bars" attrs="{'invisible': [('menu_count', '=', 0)]}">
+                            <field string="Menus" name="menu_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="color"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="dr_website_menu_label_view_tree" model="ir.ui.view">
+        <field name="name">dr.website.menu.label.view.tree</field>
+        <field name="model">dr.website.menu.label</field>
+        <field name="arch" type="xml">
+            <tree string="Labels">
+                <field name="name"/>
+                <field name="color"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="dr_website_menu_label_action" model="ir.actions.act_window">
+        <field name="name">Menu Labels</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dr.website.menu.label</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Menu Labels"
+            id="menu_dr_website_menu_label"
+            action="dr_website_menu_label_action"
+            parent="website.menu_website_global_configuration"
+            sequence="46"
+            groups="base.group_no_one"/>
+
+    <record id="menu_tree_inherit_droggol_theme_common" model="ir.ui.view">
+        <field name="name">website.menu.tree.inherit.droggol.theme.common</field>
+        <field name="model">website.menu</field>
+        <field name="inherit_id" ref="website.menu_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='url']" position="after">
+                <field name="dr_menu_label_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_attribute_view_form_inherit_droggol_theme_common" model="ir.ui.view">
+        <field name="name">product.attribute.view.form.inherit</field>
+        <field name="model">product.attribute</field>
+        <field name="inherit_id" ref="product.product_attribute_view_form"/>
+        <field name="arch" type="xml">
+            <field name="create_variant" position="after">
+                <field name="dr_is_enable_shop_filter"/>
+                <field name="dr_is_enable_shop_search"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Pricelist Timer -->
+    <record id="product_pricelist_item_form_view_inherit_droggol_theme_common" model="ir.ui.view">
+        <field name="name">product.pricelist.item.form.inherit.droggol.theme.common</field>
+        <field name="model">product.pricelist.item</field>
+        <field name="inherit_id" ref="product.product_pricelist_item_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date_end']" position="after">
+                <field name="offer_msg" attrs="{'invisible': [('date_end', '=', False)], 'required': [('date_end', '!=', False)]}"/>
+                <field name="offer_finish_msg" attrs="{'invisible': [('date_end', '=', False)], 'required': [('date_end', '!=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_pricelist_view_inherit_droggol_theme_common" model="ir.ui.view">
+        <field name="name">product.pricelist.form.inherit.droggol.theme.common</field>
+        <field name="model">product.pricelist</field>
+        <field name="inherit_id" ref="product.product_pricelist_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='item_ids']/tree/field[@name='date_end']" position="after">
+                <field name="offer_msg" attrs="{'invisible': [('date_end', '=', False)], 'required': [('date_end', '!=', False)]}"/>
+                <field name="offer_finish_msg" attrs="{'invisible': [('date_end', '=', False)], 'required': [('date_end', '!=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

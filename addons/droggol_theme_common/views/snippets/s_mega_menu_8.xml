@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_mega_menu_8" name="Mega Menu - 8">
+        <section class="s_mega_menu_8">
+            <div class="container">
+                <div class="row s_nb_column_fixed s_col_no_bgcolor">
+                    <div class="col-lg-2 col-md-4 col-sm-6 py-3">
+                        <div class="dr_mega_menu_img_container d_enable_bg_img px-3 py-4 mb-3 text-center" style="background-image: url(/web/image/droggol_theme_common.tp_animation_block_1);">
+                            <h5 class="my-3 text-white font-weight-bold">Apparel</h5>
+                        </div>
+                        <div>
+                            <ul class="list-unstyled list-hover-primary">
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Sunglasses
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Accessories
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Handbags
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Backpacks
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Clothing
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Watches
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 py-3">
+                        <div class="dr_mega_menu_img_container d_enable_bg_img px-3 py-4 mb-3 text-center" style="background-image: url(/web/image/droggol_theme_common.tp_animation_block_2);">
+                            <h5 class="text-white font-weight-bold my-3">Apparel</h5>
+                        </div>
+                        <div>
+                            <ul class="list-unstyled list-hover-primary">
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Sunglasses
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Accessories
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Handbags
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Backpacks
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Clothing
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Watches
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 py-3">
+                        <div class="dr_mega_menu_img_container d_enable_bg_img px-3 py-4 mb-3 text-center" style="background-image: url(/web/image/droggol_theme_common.tp_animation_block_3);">
+                            <h5 class="text-white font-weight-bold my-3">Apparel</h5>
+                        </div>
+                        <div>
+                            <ul class="list-unstyled list-hover-primary">
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Proin lobortis
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Aenean
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Vivamus
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Donec ultrices
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Etiam
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Nullam sed
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 py-3">
+                        <div class="dr_mega_menu_img_container d_enable_bg_img px-3 py-4 mb-3 text-center" style="background-image: url(/web/image/droggol_theme_common.tp_animation_block_2);">
+                            <h5 class="text-white font-weight-bold my-3">Apparel</h5>
+                        </div>
+                        <div>
+                            <ul class="list-unstyled list-hover-primary">
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Proin lobortis
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Aenean
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Vivamus
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Donec ultrices
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Etiam
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Nullam sed
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 py-3">
+                        <div class="dr_mega_menu_img_container d_enable_bg_img px-3 py-4 mb-3 text-center" style="background-image: url(/web/image/droggol_theme_common.tp_animation_block_1);">
+                            <h5 class="text-white font-weight-bold my-3">Apparel</h5>
+                        </div>
+                        <div>
+                            <ul class="list-unstyled list-hover-primary">
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Sunglasses
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Accessories
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Handbags
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Backpacks
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Clothing
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Watches
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-6 py-3">
+                        <div class="dr_mega_menu_img_container d_enable_bg_img px-3 py-4 mb-3 text-center" style="background-image: url(/web/image/droggol_theme_common.tp_animation_block_3);">
+                            <h5 class="text-white font-weight-bold my-3">Apparel</h5>
+                        </div>
+                        <div>
+                            <ul class="list-unstyled list-hover-primary">
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Proin lobortis
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Aenean
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Vivamus
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Donec ultrices
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Etiam
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="lni lni-chevron-right"></i> Nullam sed
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+</odoo>

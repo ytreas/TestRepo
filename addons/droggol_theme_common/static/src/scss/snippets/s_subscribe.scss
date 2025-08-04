@@ -1,0 +1,12 @@
+.s_subscribe_3, .s_subscribe_4{
+    .d_social_link_icon {
+        @include dr-icon-center(40px);
+        border-radius: 50%;
+        border: 1px solid $card-border-color;
+        cursor: pointer;
+        display: block;
+        &:hover {
+            background-color: gray('300');
+        }
+    }
+}

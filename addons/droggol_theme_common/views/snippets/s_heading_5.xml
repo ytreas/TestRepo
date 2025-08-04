@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_heading_5" name="Heading - 5">
+        <section class="s_heading_5 pt32 pb32">
+            <div class="container">
+                <div class="row justify-content-center s_nb_column_fixed s_col_no_bgcolor">
+                    <div class="col-12 col-lg-8 text-center">
+                        <div class="s_title" data-name="Title">
+                            <h2 class="s_title_default">New Arrivals</h2>
+                        </div>
+                        <p class="lead">We are the creative team of theme prime. No one actually read this so let me write any thing here.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+</odoo>

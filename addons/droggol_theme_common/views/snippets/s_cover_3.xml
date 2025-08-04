@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_cover_3" name="Hero - 3">
+        <div id="s_cover_3" class="dr-custom-carousel carousel slide s_carousel_rounded s_cover_3" data-interval="10000">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#s_cover_3" data-slide-to="0" class="active"/>
+                <li data-target="#s_cover_3" data-slide-to="1"/>
+            </ol>
+            <!-- Content -->
+            <div class="carousel-inner">
+                <!-- #01 -->
+                <div class="carousel-item active oe_custom_bg oe_img_bg pt256 pb256" style="background-image: url('/web/image/droggol_theme_common.s_cover_3_1');" data-name="Slide">
+                    <div class="container">
+                        <div class="row content">
+                            <div class="carousel-content col-lg-5">
+                                <div class="s_title pb8" data-name="Title">
+                                    <h3 class="s_title_default">Flat <span class="text-alpha">20%</span> off</h3>
+                                </div>
+                                <div class="s_title pb8" data-name="Title">
+                                    <h2 class="s_title_default"><font style="font-size: 48px;">Summer Collection</font></h2>
+                                </div>
+                                <p class="lead text-dark font-weight-light"><font style="font-size: 24px;">Get 20% off on any purchase over 200$</font></p>
+                                <div class="s_btn text-left pt16 pb16" data-name="Buttons">
+                                    <a href="/shop" class="btn btn-primary">Shop Now</a>
+                                    <a href="/shop" class="btn btn-dark">View Collection</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- #02 -->
+                <div class="carousel-item oe_custom_bg oe_img_bg pt256 pb256" style="background-image: url('/web/image/droggol_theme_common.s_cover_3_2');" data-name="Slide">
+                    <div class="container">
+                        <div class="row content">
+                            <div class="carousel-content col-lg-5">
+                                <div class="s_title pb8" data-name="Title">
+                                    <h3 class="s_title_default">Has Just Arrived!</h3>
+                                </div>
+                                <div class="s_title pb8" data-name="Title">
+                                    <h2 class="s_title_default"><font style="font-size: 48px;">High Quality Collection</font></h2>
+                                </div>
+                                <p class="lead text-dark font-weight-light"><font style="font-size: 24px;">Stylish collections for the best</font></p>
+                                <div class="s_btn text-left pt16 pb16" data-name="Buttons">
+                                    <a href="/shop" class="btn btn-primary">Shop Now</a>
+                                    <a href="/contactus" class="btn btn-dark">Contact Us</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Controls -->
+            <div class="carousel-control-prev" data-target="#s_cover_3" data-slide="prev" role="img" aria-label="Previous" title="Previous">
+                <span class="lnr font-weight-bold lnr-arrow-left"></span>
+            </div>
+            <div class="carousel-control-next" data-target="#s_cover_3" data-slide="next" role="img" aria-label="Next" title="Next">
+                <span class="lnr font-weight-bold lnr-arrow-right"></span>
+            </div>
+        </div>
+    </template>
+
+</odoo>

@@ -1,0 +1,164 @@
+@mixin dr-s-animation_1-hover-effect() {
+    .d_text_container {
+        &:before {
+            opacity: 1;
+            -webkit-transform: translate3d(0,0,0);
+            transform: translate3d(0,0,0);
+        }
+        .s_d_title {
+            -webkit-transform: translate3d(0,-50%,0) translate3d(0,-45px,0);
+            transform: translate3d(0,-50%,0) translate3d(0,-45px,0);
+        }
+        .s_d_subtitle {
+            color: white;
+            opacity: 1;
+            -webkit-transform: translate3d(0,0,0);
+            transform: translate3d(0,0,0)
+        }
+    }
+}
+@mixin dr-s-animation_2-hover-effect() {
+    .d_bg_img_block_wrapper .d_bg_img_block {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        .d_text_container {
+            &:before {
+                opacity: 1;
+                -webkit-transform: scale(1);
+                transform: scale(1);
+            }
+            .s_d_title {
+                -webkit-transform: translate3d(0,-50%,0) translate3d(0,-35px,0);
+                transform: translate3d(0,-50%,0) translate3d(0,-35px,0);
+            }
+            .s_d_subtitle {
+                opacity: 1;
+                -webkit-transform: scale(1);
+                transform: scale(1);
+            }
+        }
+    }
+}
+
+body.editor_enable {
+    // Animation BLOCK - 1
+    .s_animation_block_1 {
+        .d_snippet_grid_col {
+            .d_bg_img_block {
+                @include dr-s-animation_1-hover-effect();
+            }
+        }
+    }
+    .s_animation_block_2 {
+        .d_snippet_grid_col {
+            @include dr-s-animation_2-hover-effect();
+        }
+    }
+}
+
+.s_animation_block_1 {
+    .d_snippet_grid_col {
+        .d_bg_img_block {
+            min-height: 250px;
+            background-position: center;
+            background-size: cover;
+            overflow: hidden;
+            .d_text_container {
+                @include o-position-absolute($top: 0, $left: 0);
+                padding: 2rem;
+                backface-visibility:hidden;
+                .s_d_title {
+                    @include o-position-absolute($top: 50%, $left: 0);
+                    color: white;
+                    -webkit-transition: -webkit-transform 0.35s, color 0.35s;
+                    transition: transform 0.35s, color 0.35s;
+                    -webkit-transform: translate3d(0,-50%,0);
+                    transform: translate3d(0,-50%,0);
+                    background: rgba(232, 227, 227, 0.21);
+                    text-shadow: 1px 1px 1px rgba(17, 17, 17, 0.32);
+                    padding: 10px;
+                }
+                .s_d_subtitle {
+                    @include o-position-absolute($bottom: 0, $left: 0);
+                    padding: 1.7rem;
+                    opacity: 0;
+                    -webkit-transform: translate3d(0,10px,0);
+                    transform: translate3d(0,10px,0);
+                    -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+                    transition: opacity 0.35s, transform 0.35s;
+                }
+                &:before {
+                    @include o-position-absolute($top: 0, $left: 0);
+                    width: 100%;
+                    height: 100%;
+                    background: -webkit-linear-gradient(to bottom, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.52) 58%);
+                    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0.52) 58%);
+                    content: '';
+                    opacity: 0;
+                    -webkit-transform: translate3d(0,50%,0);
+                    transform: translate3d(0,50%,0);
+                }
+            }
+            @include media-breakpoint-down(md) {
+                @include dr-s-animation_1-hover-effect();
+            }
+            &:hover {
+                @include dr-s-animation_1-hover-effect();
+            }
+        }
+    }
+}
+
+.s_animation_block_2 {
+    .d_snippet_grid_col {
+        .d_bg_img_block_wrapper {
+            overflow: hidden;
+            .d_bg_img_block {
+                min-height: 260px;
+                background-position: center;
+                background-size: cover;
+                transform: scale(1.1);
+                -webkit-transform: scale(1.1);
+                -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+                transition: opacity 0.35s, transform 0.35s;
+                .d_text_container {
+                    @include o-position-absolute($top: 0, $left: 0);
+                    padding: 1.1rem;
+                    backface-visibility:hidden;
+                    .s_d_title {
+                        @include o-position-absolute($top: 45%, $left: 0);
+                        color: white;
+                        transition: transform 0.35s, color 0.35s;
+                    }
+                    .s_d_subtitle {
+                        @include o-position-absolute($bottom: 20px, $left: 0);
+                        padding: 1.6rem;
+                        color: white;
+                        margin: 0 auto;
+                        -webkit-transform: scale(1.3);
+                        transform: scale(1.3);
+                        opacity: 0;
+                        -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+                        transition: opacity 0.35s, transform 0.35s;
+                    }
+                    &:before {
+                        @include o-position-absolute($top: 20px, $left: 20px, $bottom: 20px,$right: 20px);
+                        border: 1px solid #fff;
+                        background-color: rgba(255,255,255,0.2);
+                        content: '';
+                        opacity: 0;
+                        -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+                        -webkit-transform: scale(1.1);
+                        transform: scale(1.1);
+                    }
+                }
+            }
+        }
+        @include media-breakpoint-down(md) {
+            @include dr-s-animation_2-hover-effect();
+        }
+        &:hover {
+            @include dr-s-animation_2-hover-effect();
+        }
+    }
+}

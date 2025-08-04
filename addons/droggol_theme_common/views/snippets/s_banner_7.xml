@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_banner_7" name="Banner - 7">
+        <section class="s_banner_7 pt16 pb16">
+            <div class="container">
+                <div class="row no-gutters s_nb_column_fixed s_col_no_bgcolor">
+                    <div class="col-12 col-lg-6 p-1">
+                        <div class="position-relative dr-animation-scale">
+                            <img src="/web/image/droggol_theme_common.s_banner_7_1" class="w-100" alt="Banner Image 01"/>
+                            <div class="banner-text text-center w-50">
+                                <h5 class="mb-0">WOMEN TOPS</h5>
+                                <p class="d-block my-1">Up to 70% off on selected item </p>
+                                <a href="#" class="mt-2 btn btn-dark">DISCOVER NOW</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <div class="row no-gutters">
+                            <div class="col-lg-12 p-1">
+                                <div class="position-relative dr-animation-scale">
+                                    <img src="/web/image/droggol_theme_common.s_banner_7_2" class="w-100" alt="Banner Image 02"/>
+                                    <div class="banner-text text-center w-50">
+                                        <h5 class="mb-0">ACCESSORIES</h5>
+                                        <p class="d-block my-1">Add finishing touch to your outfit</p>
+                                        <a href="#" class="mt-2 btn btn-dark">SHOP NOW</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="row no-gutters">
+                                    <div class="col-lg-6 p-1">
+                                        <div class="position-relative dr-animation-scale">
+                                            <img src="/web/image/droggol_theme_common.s_banner_7_3" class="w-100" alt="Banner Image 03"/>
+                                            <div class="banner-text text-center w-75">
+                                                <h5 class="mb-0">DENIM</h5>
+                                                <p class="d-block my-1">Find your perfect outfit</p>
+                                                <a href="#" class="mt-2 btn btn-dark">SHOP NOW</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 p-1">
+                                        <div class="position-relative dr-animation-scale">
+                                            <img src="/web/image/droggol_theme_common.s_banner_7_4" class="w-100" alt="Banner Image 04"/>
+                                            <div class="banner-text text-center w-75">
+                                                <h5 class="mb-0">HOT COLLECTION</h5>
+                                                <p class="d-block my-1">From world's top designer</p>
+                                                <a href="#" class="mt-2 btn btn-dark">SHOP NOW</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+</odoo>

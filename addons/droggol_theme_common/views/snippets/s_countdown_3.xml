@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_countdown_3" name="Countdown - 3">
+        <section class="s_countdown_3 s_countdown pt32 pb32">
+            <div class="container">
+                <div class="row s_nb_column_fixed align-items-center">
+                    <div class="col-lg-6 pt16 pb16 order-2 order-lg-1">
+                        <h4 class="text-alpha">Hurry Up!</h4>
+                        <div class="s_title" data-name="Title">
+                            <h2 class="s_title_default">
+                                <font style="font-size: 36px;">
+                                    Summer Special Sale!
+                                </font>
+                            </h2>
+                        </div>
+                        <p class="lead">
+                            We are the creative team of theme prime. No one actually read this so let me write any thing here until it paragraph breaks into to multiple lines.
+                        </p>
+                        <div class="s_btn pt16" data-name="Buttons">
+                            <a href="#" class="btn btn-alpha">Shop Now</a>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-lg-6">
+                                <div class="o_not_editable d-flex justify-content-between text-center pt40" t-ignore="True">
+                                    <div>
+                                        <b class="countdown_days">
+                                            00
+                                        </b>
+                                        <div class="small">
+                                            DAYS
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <b>:</b>
+                                    </div>
+                                    <div>
+                                        <b class="countdown_hours">
+                                            00
+                                        </b>
+                                        <div class="small">
+                                            HOURS
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <b>:</b>
+                                    </div>
+                                    <div>
+                                        <b class="countdown_minutes">
+                                            00
+                                        </b>
+                                        <div class="small">
+                                            MINUTES
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <b>:</b>
+                                    </div>
+                                    <div>
+                                        <b class="countdown_seconds">
+                                            00
+                                        </b>
+                                        <div class="small">
+                                            SECONDS
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row pt16 end_msg_container css_non_editable_mode_hidden">
+                            <div class="col-12">
+                                <div class="text-center alert alert-info css_non_editable_mode_hidden o_not_editable" t-ignore="True" role="status">
+                                    The following message will become visible <strong>only</strong> once the countdown ends.
+                                </div>
+                                <div class="oe_structure">
+                                    <section class="s_picture">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <h6>Times Up!</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 pt16 pb16 order-1 order-lg-2">
+                        <img src="/web/image/droggol_theme_common.s_countdown_3_1" class="img img-fluid mx-auto" alt="Countdown Image 01"/>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+</odoo>

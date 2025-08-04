@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_heading_2" name="Heading - 2">
+        <section class="s_heading_2 pt32 pb32">
+            <div class="container">
+                <div class="row s_nb_column_fixed s_col_no_bgcolor">
+                    <div class="col-12 heading-container text-center line-bottom">
+                        <h6 class="text-uppercase text-primary font-weight-bold mb-3">NEW PRODUCTS EVERY DAY</h6>
+                        <h2 class="text-uppercase font-weight-bold">EXPLORE GREAT RANGE OF PRODUCTS</h2>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="s_heading_2_options" inherit_id="website.snippet_options">
+        <xpath expr="." position="inside">
+            <div data-selector=".s_heading_2" data-target=".heading-container">
+                <we-collapse-area>
+                    <we-toggler><i class="fa fa-fw fa-arrows-v"/> Dot Position</we-toggler>
+                    <we-collapse>
+                        <we-button data-select-class="line-top">Top</we-button>
+                        <we-button data-select-class="line-bottom">Bottom</we-button>
+                    </we-collapse>
+                </we-collapse-area>
+                <we-collapse-area>
+                    <we-toggler><i class="fa fa-fw fa-align-left"/> Alignment</we-toggler>
+                    <we-collapse>
+                        <we-button data-select-class="text-left">Left</we-button>
+                        <we-button data-select-class="text-center">Center</we-button>
+                        <we-button data-select-class="text-right">Right</we-button>
+                    </we-collapse>
+                </we-collapse-area>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

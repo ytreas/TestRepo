@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+    <t t-name="droggol_small_loader">
+        <div class="d_spinner_loader dr_small_loader">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+        </div>
+    </t>
+
+    <t t-name="dr_all_products_loaded">
+        <div class="text-center my-3">
+            <i>All products are loaded.</i>
+        </div>
+    </t>
+</template>

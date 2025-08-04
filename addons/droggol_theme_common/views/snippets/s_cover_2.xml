@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_cover_2" name="Hero - 2">
+        <div id="s_cover_2" class="s_cover_2 dr-custom-carousel s_carousel_rounded carousel slide" data-interval="10000">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#s_cover_2" data-slide-to="0" class="active"/>
+                <li data-target="#s_cover_2" data-slide-to="1"/>
+            </ol>
+            <!-- Content -->
+            <div class="carousel-inner">
+                <!-- #01 -->
+                <div class="carousel-item active bg-200" data-name="Slide">
+                    <div class="container-fluid px-0">
+                        <div class="row no-gutters align-items-center content s_nb_column_fixed">
+                            <div class="order-2 order-lg-1 jumbotron rounded px-4 offset-lg-1 col-lg-4 pt24 pb24 bg-white shadow-sm" data-name="Box">
+                                <div class="row">
+                                    <div class="col-lg-12 pb8">
+                                        <img class="img img-fluid" src="/web/image/droggol_theme_common.image_brand_01" style="width: 25%;" alt="Cover Brand Image 01"></img>
+                                    </div>
+                                    <div class="col-lg-12 s_title s_col_no_bgcolor pt8" data-name="Title">
+                                        <h2 class="s_title_default"><font style="font-size: 36px;">Special Collection</font></h2>
+                                    </div>
+                                    <div class="col-lg-12 pb0">
+                                        <p class="lead lead font-weight-light text-dark"><font style="font-size: 24px;">Starting at $120.00</font></p>
+                                    </div>
+                                    <div class="col-lg-12 s_btn text-left pt0 pb0" data-name="Buttons">
+                                        <a href="/shop" class="btn btn-lg btn-primary">Shop Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="order-1 order-lg-2 offset-lg-1 col-lg-6">
+                                <img class="img img-fluid" src="/web/image/droggol_theme_common.s_cover_2_1" alt="Cover Image 01"></img>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- #02 -->
+                <div class="carousel-item bg-200" data-name="Slide">
+                    <div class="container-fluid px-0">
+                        <div class="row no-gutters align-items-center content s_nb_column_fixed">
+                            <div class="order-2 order-lg-1 jumbotron rounded px-4 offset-lg-1 col-lg-4 pt24 pb24 bg-white shadow-sm" data-name="Box">
+                                <div class="row">
+                                    <div class="col-lg-12 pb8">
+                                        <img class="img img-fluid" src="/web/image/droggol_theme_common.image_brand_02" style="width: 25%;" alt="Cover Brand Image 01"></img>
+                                    </div>
+                                    <div class="col-lg-12 s_title s_col_no_bgcolor pt8" data-name="Title">
+                                        <h2 class="s_title_default">
+                                            <font style="font-size: 36px;">Special Collection</font>
+                                        </h2>
+                                    </div>
+                                    <div class="col-lg-12 pb0">
+                                        <p class="lead lead font-weight-light text-dark">
+                                            <font style="font-size: 24px;">Starting at $35.00</font>
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-12 s_btn text-left pt0 pb0" data-name="Buttons">
+                                        <a href="/shop" class="btn btn-lg btn-primary">Shop Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="order-1 order-lg-2 offset-lg-1 col-lg-6">
+                                <img class="img img-fluid" src="/web/image/droggol_theme_common.s_cover_2_2" alt="Cover Image 02"></img>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Controls -->
+            <div class="carousel-control-prev" data-target="#s_cover_2" data-slide="prev" role="img" aria-label="Previous" title="Previous">
+                <span class="lnr font-weight-bold lnr-arrow-left"></span>
+            </div>
+            <div class="carousel-control-next" data-target="#s_cover_2" data-slide="next" role="img" aria-label="Next" title="Next">
+                <span class="lnr font-weight-bold lnr-arrow-right"></span>
+            </div>
+        </div>
+    </template>
+
+    <template id="s_cover_2_options" inherit_id="website.snippet_options">
+        <xpath expr="//div[@id='so_main_colorpicker']" position="attributes">
+            <attribute name="data-selector" add=".s_cover_2 .jumbotron" separator=","/>
+        </xpath>
+    </template>
+
+</odoo>

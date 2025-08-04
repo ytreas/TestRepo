@@ -1,0 +1,41 @@
+.s_countdown_1 {
+    .counter-block {
+        padding: 16px 22px;
+        flex: 1;
+        border-radius: $border-radius;
+        min-width: 90px;
+    }
+    &.light {
+        .counter-block {
+            background: gray('white');
+            .counter-number {
+                color: theme-color('alpha');
+            }
+            .counter-title {
+                color: gray('800');
+            }
+            hr {
+                border-color: gray('200');
+            }
+        }
+    }
+    &.dark {
+        .counter-block {
+            background: gray('800');
+            .counter-number, .counter-title {
+                color: gray('white');
+            }
+            hr {
+                border-color: rgba(gray('white'), 0.5);
+            }
+        }
+    }
+}
+.s_countdown_4 {
+    .countdown_days, .countdown_hours, .countdown_minutes, .countdown_seconds {
+        min-width: 65px;
+         @include media-breakpoint-down(md) {
+            min-width: 30px;
+        }
+    }
+}

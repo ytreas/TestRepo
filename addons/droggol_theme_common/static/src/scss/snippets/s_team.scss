@@ -1,0 +1,42 @@
+.s_team_3 {
+    .team-avatar {
+        height: 100px;
+        width: 100px;
+    }
+}
+.s_team_4 {
+    .card-img-top {
+        height: 150px;
+        width: 150px;
+    }
+    .team-social-icon {
+        @include dr-icon-center(40px);
+        border-radius: 50%;
+        border: 1px solid $card-border-color;
+        cursor: pointer;
+        display: block;
+        &:hover {
+            background-color: gray('300');
+        }
+    }
+}
+.s_team_5 {
+    .team-card {
+        margin-top: 3rem;
+    }
+    .team-avatar {
+        height: 96px;
+        width: 96px;
+        margin-top: -3rem;
+    }
+    .team-social-icon {
+        @include dr-icon-center(40px);
+        border-radius: 50%;
+        border: 1px solid $card-border-color;
+        cursor: pointer;
+        display: block;
+        &:hover {
+            background-color: gray('300');
+        }
+    }
+}

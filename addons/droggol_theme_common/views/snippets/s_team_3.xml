@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_team_3" name="Team - 3">
+        <section class="s_team_3 pb16 pt16">
+            <div class="container">
+                <div class="row s_nb_column_fixed s_col_no_bgcolor">
+                    <div class="col-lg-4 py-3">
+                        <div class="card h-100">
+                            <div class="row s_col_no_bgcolor">
+                                <div class="col-12">
+                                    <div class="media p-2">
+                                        <img src="/web/image/droggol_theme_common.image_team_square_01" class="img img-fluid team-avatar mr-3" alt="Team Image 01"/>
+                                        <div class="media-body">
+                                            <h5 class="card-title mb-0">Jane Doe</h5>
+                                            <div class="text-alpha">
+                                                Partner
+                                            </div>
+                                            <ul class="list-unstyled mt-2 mb-0">
+                                                <li class="list-item"><span class="lnr lnr-envelope mr-1"></span> information@mail.com</li>
+                                                <li class="list-item"><span class="lnr lnr-phone-handset mr-1"></span> +12 345 6789 101</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 py-3">
+                        <div class="card h-100">
+                            <div class="row s_col_no_bgcolor">
+                                <div class="col-12">
+                                    <div class="media p-2">
+                                        <img src="/web/image/droggol_theme_common.image_team_square_02" class="img img-fluid team-avatar mr-3" alt="Team Image 02"/>
+                                        <div class="media-body">
+                                            <h5 class="card-title mb-0">Jane Doe</h5>
+                                            <div class="text-alpha">
+                                                Office manager
+                                            </div>
+                                            <ul class="list-unstyled mt-2 mb-0">
+                                                <li class="list-item"><span class="lnr lnr-envelope mr-1"></span> information@mail.com</li>
+                                                <li class="list-item"><span class="lnr lnr-phone-handset mr-1"></span> +12 345 6789 101</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 py-3">
+                        <div class="card h-100">
+                            <div class="row s_col_no_bgcolor">
+                                <div class="col-12">
+                                    <div class="media p-2">
+                                        <img src="/web/image/droggol_theme_common.image_team_square_03" class="img img-fluid team-avatar mr-3" alt="Team Image 03"/>
+                                        <div class="media-body">
+                                            <h5 class="card-title mb-0">Jane Doe</h5>
+                                            <div class="text-alpha">
+                                                Receptionist
+                                            </div>
+                                            <ul class="list-unstyled mt-2 mb-0">
+                                                <li class="list-item"><span class="lnr lnr-envelope mr-2"></span> information@mail.com</li>
+                                                <li class="list-item"><span class="lnr lnr-phone-handset mr-2"></span> +12 345 6789 101</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="s_team_3_options" inherit_id="website.snippet_options">
+        <xpath expr="." position="inside">
+            <div data-js="colorpicker" data-selector=".s_team_3 .card">
+                <we-collapse-area>
+                    <we-toggler><i class="fa fa-fw fa-eyedropper"/> Background Color</we-toggler>
+                    <we-collapse/>
+                </we-collapse-area>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

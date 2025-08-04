@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_category_4" name="Category - 4">
+        <section class="s_category_4 oe_img_bg oe_custom_bg" style="background-image: url('/web/image/droggol_theme_common.s_category_4_1');">
+            <div class="container">
+                <div class="row align-items-center s_nb_column_fixed s_col_no_bgcolor category_row">
+                    <div class="col-12 col-md-10 col-lg-8 col-xl-6">
+                        <div class="py-5 px-4 px-md-5">
+                            <div class="s_title" data-name="Title">
+                                <h2 class="s_title_default mb-4">
+                                    Get -50% from Summer Collection
+                                </h2>
+                            </div>
+                            <div class="s_title" data-name="Title">
+                                <h5 class="s_title_default">
+                                    Appear, dry there darkness they're seas.
+                                </h5>
+                            </div>
+                            <h6 class="text-primary">Use code 4GF5SD</h6>
+                            <div class="s_btn pt16" data-name="Buttons">
+                                <a href="/shop" class="btn btn-alpha">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+</odoo>

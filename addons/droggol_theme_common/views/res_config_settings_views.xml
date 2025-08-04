@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_inh" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.droggol</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="website_theme_install.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='install_theme_on_current_website']" position="after">
+                <button name="show_theme_custom_modules" type="object" string="Theme Customizations" class="ml-2 btn btn-info" 
+                    icon="fa-cog" attrs="{'invisible': [('dr_has_custom_module', '=', False)]}"/>
+                <field name="dr_has_custom_module" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

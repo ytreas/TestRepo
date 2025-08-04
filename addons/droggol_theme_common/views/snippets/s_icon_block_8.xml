@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_icon_block_8" name="Icon Block - 8">
+        <section class="s_icon_block_8 pt32 pb32">
+            <div class="container">
+                <div class="row s_nb_column_fixed s_col_no_bgcolor">
+                    <div class="col-12 col-md-6 col-lg-4 py-3">
+                        <div class="card p-4 h-100">
+                            <span class="lnr lnr-rocket fa-3x text-alpha mb-4"/>
+                            <h5>Creative ideas</h5>
+                            <p>Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Orci varius natoque penatibus et magnis. nascetur ridiculus mus.</p>
+                            <a href="#">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4 py-3">
+                        <div class="card p-4 h-100">
+                            <span class="lnr lnr-magic-wand fa-3x text-alpha mb-4"/>
+                            <h5>Excellent features</h5>
+                            <p>Suspendisse potenti. Cras a dui et nisl egestas ornare eu quis odio. Sed bibendum in ante. Suspendisse potenti. Cras a dui et nisl. Sed bibendum in ante.</p>
+                            <a href="#">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4 py-3">
+                        <div class="card p-4 h-100">
+                            <span class="lnr lnr-screen fa-3x text-alpha mb-4"/>
+                            <h5>Fully responsive</h5>
+                            <p>In hac habitasse platea dictumst. Praesent cursus congue felis, nec pellentesque nulla ornare sed. In hac habitasse platea dictumst. pellentesque nulla ornare sed.</p>
+                            <a href="#">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="s_icon_block_8_options" inherit_id="website.snippet_options">
+        <xpath expr="." position="inside">
+            <div data-js="colorpicker" data-selector=".s_icon_block_8 .card">
+                <we-collapse-area>
+                    <we-toggler><i class="fa fa-fw fa-eyedropper"/> Background Color</we-toggler>
+                    <we-collapse/>
+                </we-collapse-area>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

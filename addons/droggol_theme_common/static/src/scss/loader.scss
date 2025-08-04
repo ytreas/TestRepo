@@ -1,0 +1,43 @@
+.d_spinner_loader {
+    display: flex;
+    min-height: 300px;
+    &.dr_small_loader {
+        min-height: 150px;
+    }
+    align-items: center;
+    justify-content: center;
+    > div {
+        width: 18px;
+        height: 18px;
+        background-color: theme-color('primary');
+        border-radius: 100%;
+        margin-right: 5px;
+        display: inline-block;
+        -webkit-animation: dr-bouncedelay 1.4s infinite ease-in-out both;
+        animation: dr-bouncedelay 1.4s infinite ease-in-out both;
+    }
+    .bounce1 {
+        -webkit-animation-delay: -0.32s;
+        animation-delay: -0.32s;
+    }
+    .bounce2 {
+        -webkit-animation-delay: -0.16s;
+        animation-delay: -0.16s;
+    }
+}
+
+
+@-webkit-keyframes dr-bouncedelay {
+  0%, 80%, 100% { -webkit-transform: scale(0) }
+  40% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes dr-bouncedelay {
+  0%, 80%, 100% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 40% {
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+  }
+}

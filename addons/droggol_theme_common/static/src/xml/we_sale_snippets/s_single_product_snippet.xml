@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+<templates>
+    <t t-name="s_d_single_product_cover_snippet">
+        <t t-if="_.isArray(data)">
+            <t t-if="widget.noDataTemplate">
+                <div class="py-4">
+                    <t t-call="#{widget.noDataTemplate}"/>
+                </div>
+            </t>
+        </t>
+        <t t-else="">
+            <t t-raw="data"/>
+        </t>
+    </t>
+
+    <t t-name="s_single_product_snippet">
+        <div class="owl-carousel droggol_product_slider o_not_editable">
+            <t t-foreach="widget.productIDs" t-as="productID">
+                <div class="d_single_product_body m-1 bg-white" t-att-data-product-id="productID" t-att-data-index="productID_index">
+                    <t t-if="productID_index === 0">
+                        <t t-if="_.isArray(data)">
+                            <t t-if="widget.noDataTemplate">
+                                <div class="py-4">
+                                    <t t-call="#{widget.noDataTemplate}"/>
+                                </div>
+                            </t>
+                        </t>
+                        <t t-else="">
+                            <t t-raw="data"/>
+                        </t>
+                    </t>
+                </div>
+            </t>
+        </div>
+    </t>
+</templates>

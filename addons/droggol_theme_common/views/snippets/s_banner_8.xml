@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_banner_8" name="Banner - 8">
+        <section class="s_banner_8 pt8 pb8 bg-alpha text-center">
+            <div class="container">
+                <div class="row s_nb_column_fixed s_col_no_bgcolor">
+                    <div class="col-md-4 col-lg-4 col-12">
+                        <h6 class="font-weight-bold mb-0 text-white">
+                            <i class="fa pr-2 fa-exchange"></i> FREE RETURNS
+                        </h6>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-12">
+                        <h6 class="font-weight-bold mb-0 text-white">
+                            <i class="fa pr-2 fa-truck"></i> FREE SHIPPING FOR ORDER OVER $200
+                        </h6>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-12">
+                        <h6 class="font-weight-bold mb-0 text-white">
+                            <i class="fa pr-2 fa-life-ring"></i> FREE SUPPORT
+                        </h6>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+</odoo>

@@ -1,0 +1,35 @@
+.d_s_cards_collection_wrapper {
+    .media-body {
+        overflow: hidden;
+    }
+}
+
+// === Style 1 ===
+.d_card_collection_style_1 {
+    .d_collection_title {
+        &:after {
+            display: block;
+            @include o-position-absolute($bottom: -1px, $left: 0px);
+            width: 90px;
+            height: 2px;
+            background-color: theme-color('primary');
+            content: '';
+        }
+    }
+}
+.d_card_collection_style_3 {
+    .d_add_to_cart_btn {
+        @include o-position-absolute($top: 7px, $right: 10px);
+        color: gray('600');
+        height: 2.2rem;
+        width: 2.2rem;
+        border-radius: 100%;
+        border: 1px solid gray('300');
+        line-height: 2.2rem;
+        background-color: #f3f5f9;
+        padding: 0;
+        &:hover {
+            color: theme-color('primary');
+        }
+    }
+}

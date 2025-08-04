@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_counters_4" name="Counters - 4">
+        <section class="s_counters_4 pt32 pb32">
+            <div class="container">
+                <div class="row text-center s_col_no_bgcolor">
+                    <div class="col-12 col-sm-6 col-md-3 py-3 d-flex justify-content-center">
+                        <div class="d-flex justify-content-center bg-alpha border-alpha circle-block position-relative rounded">
+                            <div class="align-self-center">
+                                <h2 class="text-white">1200</h2>
+                                <h5 class="text-white">Customers</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-3 py-3 d-flex justify-content-center">
+                        <div class="d-flex justify-content-center bg-alpha border-alpha circle-block position-relative rounded">
+                            <div class="align-self-center">
+                                <h2 class="text-white">237</h2>
+                                <h5 class="text-white">New Ideas</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-3 py-3 d-flex justify-content-center">
+                        <div class="d-flex justify-content-center bg-alpha border-alpha circle-block position-relative rounded">
+                            <div class="align-self-center">
+                                <h2 class="text-white">1340</h2>
+                                <h5 class="text-white">Happy Clients</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-3 py-3 d-flex justify-content-center">
+                        <div class="d-flex justify-content-center bg-alpha border-alpha circle-block position-relative rounded">
+                            <div class="align-self-center">
+                                <h2 class="text-white">8000</h2>
+                                <h5 class="text-white">Products</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="s_counters_4_options" inherit_id="website.snippet_options">
+        <xpath expr="//div[@data-js='background']" position="before">
+            <div data-js="colorpicker"
+                data-selector=".s_counters_4 .circle-block"
+                data-color-prefix="bg-"
+                data-palette-exclude="common"
+                data-palette-title="Background Color">
+                <we-collapse-area>
+                    <we-toggler><i class="fa fa-fw fa-eyedropper"/> Background Color</we-toggler>
+                    <we-collapse/>
+                </we-collapse-area>
+            </div>
+            <div data-js="colorpicker"
+                data-selector=".s_counters_4 .circle-block"
+                data-color-prefix="border-"
+                data-palette-exclude="transparent_grayscale, common"
+                data-palette-title="Border Color">
+                <we-collapse-area>
+                    <we-toggler><i class="fa fa-fw fa-eyedropper"/> Border Color</we-toggler>
+                    <we-collapse/>
+                </we-collapse-area>
+            </div>
+            <div data-selector=".s_counters_4 .circle-block">
+                <we-collapse-area>
+                    <we-toggler><i class="fa fa-fw fa-circle-o"/> Layout</we-toggler>
+                    <we-collapse>
+                        <we-button data-select-class="rounded-circle">Rounded</we-button>
+                        <we-button data-select-class="rounded">Square</we-button>
+                    </we-collapse>
+                </we-collapse-area>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

@@ -1,0 +1,17 @@
+%o-we-selected-image {
+    $o-selected-image-color: rgba(150, 150, 220, 0.3);
+    background: $o-selected-image-color;
+    outline: 3px solid $o-selected-image-color;
+}
+
+.lnr.o_we_selected_image::before {
+    @extend %o-we-selected-image;
+}
+
+.lni.o_we_selected_image::before {
+    @extend %o-we-selected-image;
+}
+
+.ri.o_we_selected_image::before {
+    @extend %o-we-selected-image;
+}

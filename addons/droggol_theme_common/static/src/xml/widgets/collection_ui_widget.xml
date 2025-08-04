@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+<templates>
+
+    <div class="d_collection_ui_widget" t-name="collection_ui_widget">
+        <div class="collection_ui_widget">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <div class="form-group">
+                            <label for="d_collection_style_select" class="h6">Style</label>
+                            <select id="d_collection_style_select" class="d-inline-block form-control">
+                                <t t-foreach="widget.allStyles" t-as="style">
+                                    <option t-att-value="style" t-att-selected="style === widget.SelectedStyle ? 'selected' : undefined">
+                                        Style <t t-esc="style_index + 1"/>
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 border-left">
+                        <h6 class="text-center">Tab Preview</h6>
+                        <small class="d-block text-center mb-3">(Hover tabs to see effects)</small>
+                        <div class="d_collection_style_preview p-4 bg-100 w-75 mx-auto"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <t t-name="d_collection_style_preview">
+        <div class="d-collection-filter-preview p-3 bg-white shadow-sm">
+            <t t-call="#{widget.SelectedStyle}">
+                <t t-set="collection" t-value="widget.demoData"/>
+            </t>
+        </div>
+    </t>
+
+</templates>

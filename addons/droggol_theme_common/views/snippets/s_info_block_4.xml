@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_info_block_4" name="Info Block - 4">
+        <section class="s_info_block_4 pt16 pb16">
+            <div class="container-fluid">
+                <div class="row align-items-center s_nb_column_fixed s_col_no_bgcolor">
+                    <div class="col-6 col-lg-3 mb-4 mb-lg-0">
+                        <div class="dr-animation-scale">
+                            <img src="/web/image/droggol_theme_common.s_info_block_4_1" class="img img-fluid" alt="Info Block Image 01"/>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-3 mb-4 mb-lg-0">
+                        <div class="dr-animation-scale">
+                            <img src="/web/image/droggol_theme_common.s_info_block_4_2" class="img img-fluid" alt="Info Block Image 02"/>
+                        </div>
+                    </div>
+                    <div class="col-12 offset-lg-1 col-lg-4">
+                        <div class="s_title" data-name="Title">
+                            <h5 class="s_title_default">New Arrivals</h5>
+                        </div>
+                        <div class="s_title" data-name="Title">
+                            <h2 class="s_title_default h1">Coming Soon</h2>
+                        </div>
+                        <p>Vestibulum id laoreet sapien. Aliquam porttitor neque ut urna efficitur, eget tincidunt diam convallis. Vestibulum molestie nunc consectetur cursus tincidunt. Aenean interdum justo a tellus condimentum gravida.</p>
+                        <div class="s_btn text-left pt16 pb16" data-name="Buttons">
+                            <a href="#" class="btn btn-alpha">Shop Now</a>
+                            <a href="#" class="btn btn-light">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+</odoo>

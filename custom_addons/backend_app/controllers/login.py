@@ -1,0 +1,667 @@
+import email
+from httplib2 import Credentials
+from . import jwt_token_auth
+from odoo.http import request,Response
+from odoo import http,api,SUPERUSER_ID
+from odoo.exceptions import AccessDenied
+import datetime
+import jwt
+from odoo.exceptions import AccessError
+from datetime import date
+import logging
+import json
+from werkzeug.exceptions import BadRequest
+import datetime
+
+_logger = logging.getLogger(__name__)
+
+from dotenv import load_dotenv
+import os
+load_dotenv()
+SECRET_KEY = os.getenv("JWT_SECRET_KEY")
+REFRESH_SECRET_KEY = os.getenv("JWT_REFRESH_SECRET_KEY")
+REFRESH_TOKEN_EXPIRY = datetime.timedelta(
+    days=int(os.getenv("JWT_REFRESH_TOKEN_EXPIRY_days", 30))
+)
+ACCESS_TOKEN_EXPIRY = datetime.timedelta(
+    days=int(os.getenv("JWT_ACCESS_TOKEN_EXPIRY_days", 7))
+)
+class AuthAPI(http.Controller):
+
+    def handle_error(self, exception):
+        if isinstance(exception, AccessError):
+            return http.Response(
+                status=403,
+                response=json.dumps({"status": "fail", "message": "Access Denied"}),
+                content_type="application/json"
+            )
+
+    @http.route('/api/login', type='http', auth='public', csrf=False, cors="*", methods=['POST'])
+    def login(self, **kw):
+        raw_data = request.httprequest.data
+        json_data = json.loads(raw_data)
+        
+        login = json_data.get('email')
+        password = json_data.get('password')
+        try:
+            print("db is", request.db)
+            credentials = {
+                'login': login,
+                'type': 'password',
+                'password': password
+            }
+            uid = request.env['res.users'].sudo().authenticate(
+                request.db,
+                credentials,
+                user_agent_env=request.env
+            )
+            print("the uid is", uid)
+            if uid:
+                user = request.env['res.users'].sudo().browse(uid['uid'])
+                verified = user.is_register_validated
+                if not verified:
+                    return request.make_response(
+                        json.dumps({
+                            'status': 'fail',
+                            'data': {
+                                'message': 'User is not verified yet. Please verify your account.'
+                            }
+                        }),
+                        headers=[('Content-Type', 'application/json')],
+                        status=403
+                    )
+                for group in user.groups_id:
+                    if group.name == 'Settings':
+                        role = 'admin'
+                        break
+                    else:
+                        role = 'user'
+                # Check if this is the first login
+                # is_first_login = user.is_first_login
+                
+                # If it's the first login, update the flag
+                # if is_first_login:
+                #     user.sudo().write({'is_first_login': False})        
+                # Generate access token
+                access_payload = {
+                    'user_id': user.id,
+                    'exp': datetime.datetime.now(datetime.timezone.utc) + ACCESS_TOKEN_EXPIRY,
+                    'email': login,
+                    'mobile': user.mobile,
+                    'gems': user.gems,
+                    'name': user.name,
+                    "register_validated": user.is_register_validated,
+                    # 'password': password,
+                    'role': role,
+                    'company_id': user.company_id.id,
+                }
+                access_token = jwt.encode(access_payload, SECRET_KEY, algorithm='HS256')
+
+                # Generate refresh token
+                refresh_payload = {
+                    'user_id': user.id,
+                    'exp': datetime.datetime.now(datetime.timezone.utc) + REFRESH_TOKEN_EXPIRY
+                }
+                refresh_token = jwt.encode(refresh_payload, REFRESH_SECRET_KEY, algorithm='HS256')
+
+                return request.make_response(
+                    json.dumps({
+                        'status': 'success',
+                        'data': {
+                            'access_token': access_token,
+                            'role': role,
+                            'company_id': user.company_id.id,
+                            'refresh_token': refresh_token,
+                            # 'is_first_login': is_first_login
+                        }
+                    }),
+                    headers=[
+                        ('Content-Type', 'application/json')
+                        ],
+                    status=200
+                )
+        
+        except AccessDenied:
+            return request.make_response(
+                json.dumps({
+                    'status': 'fail',
+                    'data': {
+                        'message': 'Invalid Credentials'
+                    }
+                }),
+                headers=[   
+                    ('Content-Type', 'application/json')],
+                status=400
+            )
+    
+    @http.route('/trading/api/refresh_token', type='http',auth='public',cors="*", csrf=False, methods=['GET'])
+    def refresh_token(self, **kw):
+        try:
+            # Get the refresh token from the request headers
+            refresh_token = request.httprequest.headers.get("Refresh-Token")
+            print("here", refresh_token)
+            
+            if not refresh_token:
+                return http.Response(
+                    status=400,
+                    response=json.dumps({
+                        "status": "fail",
+                        "data": {
+                            "message": "Refresh token required"
+                        }
+                    }),
+                    content_type="application/json"
+                )
+
+            # Validate the refresh token
+            refresh_status, status_code = jwt_token_auth.JWTAuth.validate_refresh_token(self, refresh_token)
+
+            if refresh_status['status'] == 'success':
+                user_id = refresh_status['data']['user_id']
+                email = refresh_status['data']['email']
+                role = refresh_status['data']['role']
+                company_id = refresh_status['data']['company_id']
+                print("the company_id is", company_id)
+                # Generate a new access token
+                new_access_token = jwt_token_auth.JWTAuth.generate_new_access_token(self, user_id, email, role, company_id)
+                refresh_payload = {
+                    'user_id': user_id,
+                    'exp': datetime.datetime.now(datetime.timezone.utc) + REFRESH_TOKEN_EXPIRY
+                }
+                new_refresh_token = jwt.encode(refresh_payload, REFRESH_SECRET_KEY, algorithm='HS256')
+
+                return request.make_response(
+                    json.dumps({
+                        'status': 'success',
+                        'data': {
+                            'access_token': new_access_token,
+                            'refresh_token': new_refresh_token
+                        }
+                    }),
+                    headers=[('Content-Type', 'application/json')],
+                    status=200
+                )
+            else:
+                return request.make_response(
+                    json.dumps({
+                        'status': 'fail',
+                        'data': {
+                            'message': refresh_status['data']['message']
+                        }
+                    }),
+                    headers=[('Content-Type', 'application/json')],
+                    status=status_code
+                )
+
+        except Exception as e:
+            return http.Response(
+                status=500,
+                response=json.dumps({
+                    "status": "fail",
+                    "data": {
+                        "message": str(e)
+                    }
+                }),
+                content_type="application/json"
+            )
+
+
+    # @http.route('/api/get_user_details', type='http', auth='public', csrf=False, cors="*", methods=['GET'])
+    # def get_user_details(self, **kw):
+    #     try:
+    #         auth_status, status_code = jwt_token_auth.JWTAuth.authenticate_request(self, request)
+    #         if auth_status['status'] == 'fail':
+    #             return request.make_response(
+    #                 json.dumps(auth_status),
+    #                 headers=[
+    #                     ('Content-Type', 'application/json')
+    #                 ],
+    #                 status=status_code
+    #             )
+            
+    #         token = request.httprequest.headers.get("Authorization")       
+    #         if token and token.startswith("Bearer "):
+    #             bearer_token = token[len("Bearer "):]
+    #         else:
+    #             return http.Response(
+    #                 status=400,
+    #                 response=json.dumps({
+    #                     "status": "fail",
+    #                     "data": {
+    #                         "message": "No Authorization token provided"
+    #                     }
+    #                 }),
+    #                 content_type="application/json"
+    #             )
+    #         payload = jwt.decode(bearer_token, SECRET_KEY, algorithms=['HS256'])
+    #         email = payload.get('email')
+    #         password = payload.get('password')     
+    #         credentials = {
+    #             'login': email,
+    #             'type': 'password',
+    #             'password': password
+    #         }
+    #         uid = request.env['res.users'].sudo().authenticate(
+    #             request.db,
+    #             credentials,
+    #             user_agent_env=request.env
+    #         )
+    #         if not uid:
+    #             return http.Response(
+    #                 status=400,
+    #                 response=json.dumps({
+    #                     "status": "fail",
+    #                     "data": {
+    #                         "message": "Invalid access token"
+    #                     }
+    #                 }),
+    #                 content_type="application/json"
+    #             )
+    #         user = request.env['res.users'].sudo().browse(uid)
+    #         user_details = []
+    #         user_details.append({
+    #                     'name': user.name if user.name else None,
+    #                     # 'name_np': user.name_np if user.name_np else None,
+    #                     'email': user.email if user.email else None,
+    #                     'mobile': user.mobile if user.mobile else None,
+    #                     'gems': user.gems if user.gems else 0,
+    #                     # 'contact': user.contact if user.contact else None,
+    #                     # 'pan_vat': user.pan_vat if user.pan_vat else None,
+    #                     # 'national_id': user.national_id if user.national_id else None,
+    #                     # 'address': user.address if user.address else None,
+    #                     # 'company': user.company_id.name if user.company_id.name else None,
+    #                     # 'company_id' : user.company_id.id if user.company_id.id else None,
+    #         })
+    #         return request.make_response(
+    #                 json.dumps({
+    #                     'status': 'success',
+    #                     'data':{
+    #                             'message': user_details
+    #                            }
+    #                 }),
+    #                 headers=[('Content-Type', 'application/json')],
+    #                 status= 200
+    #             )
+    #     except Exception as e:
+    #         return request.make_response(
+    #             json.dumps({
+    #                 'status': 'fail',
+    #                 'data': {
+    #                     'message': 'Internal server error',
+    #                     'details': str(e)
+    #                 }
+    #             }),
+    #             headers=[('Content-Type', 'application/json')],
+    #             status=500
+    #         )
+
+    # @http.route('/trading/api/logout', type='json', auth='public', csrf=False, methods=['POST'])
+    # def logout(self, **kwargs):
+    #     token = request.httprequest.headers.get('Authorization')
+    #     user = ProtectedController.validate_token(token)
+        
+    #     if user:
+    #         user.sudo().write({'token': False})
+    #         return {'success': 'Logout successful'}
+    #     return {'error': 'Invalid token'}, 401
+
+
+# class ProductController(http.Controller):
+#     @http.route("/trading/api/get_products", type="http", methods=["GET"], csrf=False)
+#     def get_product(self, **kw):
+#         try:
+#             hosturl = request.httprequest.environ.get("HTTP_REFERER", "n/a")
+#             _logger.info(f"Received request from: {hosturl}")
+
+#             company_id = kw.get('company_id')
+#             if not company_id:
+#                 return {"status": "error", "message": "company_id is required"}
+
+#             company = request.env['res.company'].sudo().search([('id', '=', int(company_id))], limit=1)
+#             if not company:
+#                 return {"status": "error", "message": "Company not found"}
+
+#             _logger.info(f"Company: {company.name}")
+
+#             products = request.env["product.template"].sudo().search([('company_id', '=', int(company_id))])
+#             data = []
+#             for product in products:
+#                 # category_names = [cat.name for cat in product.categ_id]
+#                 data.append(
+#                     {
+#                         "id": product.id,
+#                         "name": product.name,
+#                         'cost_price': product.standard_price,
+#                         'sales_price': product.list_price,
+#                         # "category": category_names,
+#                     }
+#                 )
+#             return request.make_response(
+#                 json.dumps({"status": "success", "data": data}),
+#                 headers=[("Content-Type", "application/json")]
+#             )
+#         except Exception as e:
+#             _logger.error(f"Error: {str(e)}")
+#             return {"status": "error", "message": str(e)}
+
+    @http.route('/yatroo/api/login', type='http', auth='public', csrf=False, cors="*", methods=['POST'])
+    def yatrooLogin(self):
+        raw_data = request.httprequest.data
+        json_data = json.loads(raw_data)
+        
+        # Get mobile and password from the request data
+        mobile = json_data.get('mobile')
+        password = json_data.get('password')
+        
+        try:
+            # Search for user by mobile number
+            user = request.env['res.users'].sudo().search([('mobile', '=', mobile)], limit=1)
+            if user:
+                # Authenticate using the user's login (username) and password
+                uid = request.session.authenticate(request.db, user.login, password)
+                if uid:
+                    role = 'none'
+                    for group in user.groups_id:
+                        if group.name == 'Trade Admin Access':
+                            role = 'admin'
+                            break
+                        elif group.name == 'Trade User Access':
+                            role = 'user'
+                            break
+                        
+                    # Generate access token
+                    access_payload = {
+                        'user_id': user.id,
+                        'exp': datetime.datetime.now(datetime.timezone.utc) + ACCESS_TOKEN_EXPIRY,
+                        'mobile': mobile,
+                        'role': role,
+                        'company_id': user.company_id.id
+                    }
+                    access_token = jwt.encode(access_payload, SECRET_KEY, algorithm='HS256')
+    
+                    # Generate refresh token
+                    refresh_payload = {
+                        'user_id': user.id,
+                        'exp': datetime.datetime.now(datetime.timezone.utc) + REFRESH_TOKEN_EXPIRY
+                    }
+                    refresh_token = jwt.encode(refresh_payload, REFRESH_SECRET_KEY, algorithm='HS256')
+    
+                    return request.make_response(
+                        json.dumps({
+                            'status': 'success',
+                            'data': {
+                                'access_token': access_token,
+                                'role': role,
+                                'refresh_token': refresh_token
+                            }
+                        }),
+                        headers=[('Content-Type', 'application/json')],
+                        status=200
+                    )
+                else:
+                    # Invalid password or authentication failure
+                    return request.make_response(
+                        json.dumps({
+                            'status': 'fail',
+                            'data': {
+                                'message': 'Invalid Credentials'
+                            }
+                        }),
+                        headers=[('Content-Type', 'application/json')],
+                        status=401
+                    ) 
+            else:
+                # User not found with the given mobile number
+                return request.make_response(
+                    json.dumps({
+                        'status': 'fail',
+                        'data': {
+                            'message': 'User not found with the given mobile number'
+                        }
+                    }),
+                    headers=[('Content-Type', 'application/json')],
+                    status=404
+                )
+    
+        except Exception as e:
+            return request.make_response(
+                json.dumps({
+                    'status': 'error',
+                    'message': 'An error occurred during authentication',
+                    'details': str(e)
+                }),
+                headers=[('Content-Type', 'application/json')],
+                status=500
+            )
+
+class PublicReportController(http.Controller):
+
+    @http.route('/report/public/pdf/<string:report_name>/<int:order_id>', type='http', auth="public")
+    def public_pdf_report(self, report_name, order_id, **kwargs):
+        try:
+            # Debugging log
+            _logger.info(f"Fetching report: {report_name} for order ID: {order_id}")
+
+            # Ensure `report_name` is valid
+            report = request.env['ir.actions.report'].sudo().search(
+                [('report_name', '=', report_name)], limit=1
+            )
+            if not report:
+                return request.not_found()
+
+            # Generate the PDF (Ensure order_id is passed as a list)
+            pdf, _ = report._render_qweb_pdf(report,[order_id])  # Ensure list format
+
+            # Create response with proper headers
+            pdfhttpheaders = [
+                ('Content-Type', 'application/pdf'),
+                ('Content-Length', str(len(pdf))),
+                ('Content-Disposition', f'inline; filename="{report_name}.pdf"')
+            ]
+            return request.make_response(pdf, headers=pdfhttpheaders)
+
+        except Exception as e:
+            _logger.error(f"Error generating PDF for {report_name}: {str(e)}")
+            return request.make_response(
+                str(e), headers=[('Content-Type', 'text/plain')], status=500
+            )
+
+
+    @http.route('/api/change_password', type='http', auth='public', csrf=False, cors="*", methods=['POST'])
+    def change_password(self, **kw):
+        try:
+            # Authenticate the request using JWT token
+            auth_status, status_code = jwt_token_auth.JWTAuth.authenticate_request(self, request)
+            if auth_status['status'] == 'fail':
+                return request.make_response(
+                    json.dumps(auth_status),
+                    headers=[('Content-Type', 'application/json')],
+                    status=status_code
+                )
+            
+            # Parse request data
+            raw_data = request.httprequest.data
+            json_data = json.loads(raw_data)
+            
+            current_password = json_data.get('current_password')
+            new_password = json_data.get('new_password')
+            retype_password = json_data.get('retype_password')
+            
+            # Validate required fields
+            if not all([current_password, new_password, retype_password]):
+                return http.Response(
+                    status=400,
+                    response=json.dumps({
+                        "status": "fail",
+                        "data": {
+                            "message": "Current password, new password, and retyped password are required"
+                        }
+                    }),
+                    content_type="application/json"
+                )
+            
+            # Validate new password matches retyped password
+            if new_password != retype_password:
+                return http.Response(
+                    status=400,
+                    response=json.dumps({
+                        "status": "fail",
+                        "data": {
+                            "message": "New password and retyped password do not match"
+                        }
+                    }),
+                    content_type="application/json"
+                )
+            
+            # Enforce password policy
+            if len(new_password) < 8:
+                return http.Response(
+                    status=400,
+                    response=json.dumps({
+                        "status": "fail",
+                        "data": {
+                            "message": "Password must be at least 8 characters long"
+                        }
+                    }),
+                    content_type="application/json"
+                )
+            
+            # Get user ID from token
+            token = request.httprequest.headers.get("Authorization")       
+            if token and token.startswith("Bearer "):
+                bearer_token = token[len("Bearer "):]
+            else:
+                return http.Response(
+                    status=400,
+                    response=json.dumps({
+                        "status": "fail",
+                        "data": {
+                            "message": "No Authorization token provided"
+                        }
+                    }),
+                    content_type="application/json"
+                )
+            
+            payload = jwt.decode(bearer_token, SECRET_KEY, algorithms=['HS256'])
+            user_id = payload.get('user_id')
+            email = payload.get('email')
+            
+            # Get user record
+            user = request.env['res.users'].sudo().browse(user_id)
+            if not user:
+                return http.Response(
+                    status=404,
+                    response=json.dumps({
+                        "status": "fail",
+                        "data": {
+                            "message": "User not found"
+                        }
+                    }),
+                    content_type="application/json"
+                )
+            
+            # Verify current password
+            try:
+                # Check if the credentials are valid
+                credentials = {
+                    'login': email,
+                    'type': 'password',
+                    'password': current_password
+                }
+                uid = request.env['res.users'].sudo().authenticate(
+                    request.db,
+                    credentials,
+                    user_agent_env=request.env
+                )
+                print("the uid is", uid.get('uid') if uid else None)
+                print("the user_id is", user_id)
+                if not uid or uid.get('uid') != user_id:
+                    return http.Response(
+                        status=400,
+                        response=json.dumps({
+                            "status": "fail",
+                            "data": {
+                                "message": "Current password is incorrect"
+                            }
+                        }),
+                        content_type="application/json"
+                    )
+            except AccessDenied:
+                return http.Response(
+                    status=400,
+                    response=json.dumps({
+                        "status": "fail",
+                        "data": {
+                            "message": "Current password is incorrect"
+                        }
+                    }),
+                    content_type="application/json"
+                )
+            
+            # Change the password
+            user.sudo().write({'password': new_password})
+            
+            # Optionally, invalidate old tokens or sessions for security
+            # (this would require additional implementation)
+            
+            return http.Response(
+                status=200,
+                response=json.dumps({
+                    "status": "success",
+                    "data": {
+                        "message": "Password has been successfully changed"
+                    }
+                }),
+                content_type="application/json"
+            )
+        
+        except Exception as e:
+            _logger.error(f"Error in change_password: {str(e)}")
+            return http.Response(
+                status=500,
+                response=json.dumps({
+                    "status": "fail",
+                    "data": {
+                        "message": str(e)
+                    }
+                }),
+                content_type="application/json"
+            )
+
+    @http.route('/api/logout', type='http', auth='public', csrf=False, cors="*", methods=['POST'])
+    def logout_user(self, **kw):
+        try:
+            # Authenticate the JWT token
+            auth_status, status_code = jwt_token_auth.JWTAuth.authenticate_request(self, request)
+            if auth_status['status'] == 'fail':
+                return request.make_response(
+                    json.dumps(auth_status),
+                    headers=[('Content-Type', 'application/json')],
+                    status=status_code
+                )
+
+            # request.session.logout()
+
+            return request.make_response(
+                json.dumps({
+                    'status': 'success',
+                    'data': {
+                        'message': 'User successfully logged out.'
+                    }
+                }),
+                headers=[('Content-Type', 'application/json')],
+                status=200
+            )
+
+        except Exception as e:
+            return request.make_response(
+                json.dumps({
+                    'status': 'fail',
+                    'data': {
+                        'message': 'Internal server error',
+                        'details': str(e)
+                    }
+                }),
+                headers=[('Content-Type', 'application/json')],
+                status=500
+            )

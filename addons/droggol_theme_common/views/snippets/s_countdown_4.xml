@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_countdown_4" name="Countdown - 4">
+        <section class="s_countdown_4 s_countdown container-fluid oe_img_bg oe_custom_bg pt32 pb32" style="background-image: url('/theme_prime/static/src/img/content/s_cover_3_2.jpg');">
+            <div class="row py-lg-4">
+                <div class="col-lg-5 col-md-8 offset-lg-1">
+                    <div class="px-3 px-lg-0">
+                        <span class="badge badge-danger mb-2">
+                            <i class="fa fa-star pr-1"></i> UP TO 50% OFF
+                        </span>
+                        <h3 class="font-weight-light">It has just arrived!</h3>
+                        <h2 class="h1 mb-4">Backpacks for your next adventure</h2>
+                        <h4 class="mb-3 font-weight-light">Hurry up! Limited time offer.</h4>
+                        <!-- Countdown here -->
+                        <div class="d-table o_not_editable bg-white pt-4 p-3 mb-4" style="border-radius:5px;">
+                            <div class="countdown-item mb-1 mr-3 d-inline-block">
+                                <div class="text-center d-inline-block h1 countdown_days">0</div>
+                                <div class="h6 text-muted d-inline-block">d</div>
+                            </div>
+                            <div class="countdown-item mb-1 mr-3 d-inline-block">
+                                <div class="text-center d-inline-block h1 countdown_hours">0</div>
+                                <div class="h6 text-muted d-inline-block">h</div>
+                            </div>
+                            <div class="countdown-item mb-1 mr-3 d-inline-block">
+                                <div class="text-center d-inline-block countdown_minutes h1">0</div>
+                                <div class="h6 text-muted d-inline-block">m</div>
+                            </div>
+                            <div class="countdown-item mb-1 d-inline-block">
+                                <div class="text-center d-inline-block countdown_seconds h1">0</div>
+                                <div class="h6 text-muted d-inline-block">s</div>
+                            </div>
+                        </div>
+                        <div class="row pt16 end_msg_container css_non_editable_mode_hidden">
+                            <div class="col-12">
+                                <div class="text-center alert alert-info css_non_editable_mode_hidden o_not_editable" t-ignore="True" role="status">
+                                    The following message will become visible <strong>only</strong> once the countdown ends.
+                                </div>
+                                <div class="oe_structure">
+                                    <section class="s_picture">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <h6>Times Up!</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="btn btn-primary" href="#">Shop now <i class="lnr lnr-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+</odoo>

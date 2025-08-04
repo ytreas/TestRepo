@@ -1,0 +1,39 @@
+.editor_enable {
+    .droggol_product_snippet {
+        &:empty {
+            padding: 4rem;
+            border: 2px dashed #ccc;
+            margin: 20px;
+            text-align: center;
+            &:before {
+                content: attr(data-empty-message);
+                display: block;
+                font-size: 20px;
+            }
+            &:after {
+                content: attr(data-sub-message);
+                display: block;
+                font-size: 15px;
+            }
+        }
+    }
+}
+
+.droggol_technical_modal {
+    // apply theme style (colors) in dialog
+    z-index: $zindex-modal !important;
+    .modal-footer {
+        flex-direction: row-reverse;
+        .btn {
+            margin-left: 3px;
+            margin-right: 3px;
+        }
+    }
+}
+// Customize select2 UI
+.d-select2-dropdown {
+    .select2-highlighted {
+        padding: 0px;
+        background: #f1f3fb;
+    }
+}

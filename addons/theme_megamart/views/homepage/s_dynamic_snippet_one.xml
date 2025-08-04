@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="s_dynamic_snippet_one" name="Dynamic Snippet One">
+        <section class="s_dynamic_snippet_one">
+            <section class="s_title o_colored_level pt56 pb24" data-vcss="001" data-snippet="s_title" data-name="Title">
+                <div class="container s_allow_columns">
+                    <h2 style="text-align: center;">Popular Product<span class="h1-fs">​</span></h2>
+                </div>
+            </section>
+            <section data-snippet="s_dynamic_snippet_products" class="s_dynamic_snippet_products s_dynamic s_dynamic_empty pb32 o_colored_level o_cc o_cc1 pt0 s_product_product_view_detail o_dynamic_snippet_empty" data-custom-template-data="{}" data-name="Products" data-product-category-id="2" data-show-variants="true" data-number-of-records="8" data-filter-id="1" data-template-key="website_sale.dynamic_filter_template_product_product_view_detail" data-carousel-interval="5000" data-product-names="" data-number-of-elements="3">
+                <div class="container">
+                    <div class="row s_nb_column_fixed">
+                        <section class="s_dynamic_snippet_title oe_unremovable oe_unmovable d-flex flex-column flex-md-row mb-lg-0 pb-3 pb-md-0 o_colored_level d-none">
+                            <div>
+                                <h4 class="o_default_snippet_text">Our latest content</h4>
+                                <p class="lead o_default_snippet_text">Check out what's new in our company !</p>
+                            </div>
+                            <div>
+                                <a title="See All" class="s_dynamic_snippet_main_page_url o_default_snippet_text" href="/shop">See all <i class="fa fa-long-arrow-right ms-2"/></a>
+                            </div>
+                        </section>
+                        <section class="s_dynamic_snippet_content oe_unremovable oe_unmovable o_not_editable col o_colored_level">
+                            <div class="css_non_editable_mode_hidden">
+                                <div class="missing_option_warning alert alert-info fade show d-none d-print-none rounded-0 o_default_snippet_text">
+                                    Your Dynamic Snippet will be displayed here... This message is displayed because you did not provide both a filter and a template to use.<br/>
+                                </div>
+                            </div>
+                            <div class="dynamic_snippet_template"/>
+                        </section>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </template>
+</odoo>

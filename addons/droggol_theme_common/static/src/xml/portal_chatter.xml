@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+    <t t-extend="portal.chatter_messages">
+        <t t-jquery=".o_portal_chatter_message_title > h5" t-operation="replace">
+            <h6 class='mb-1'>
+                <t t-esc="message.author_id[1]"/>
+                <t t-if="message['rating_value'] and message['is_varified_rating']">
+                    <span class="dr_varified_purchase_badge my-2">
+                        <i class="fa fa-check-circle"></i> Verified purchase
+                    </span>
+                </t>
+            </h6>
+        </t>
+    </t>
+</template>

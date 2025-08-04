@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_icon_block_4" name="Icon Block - 4">
+        <section class="s_icon_block_4 pt32 pb32">
+            <div class="container">
+                <div class="row s_col_no_bgcolor">
+                    <div class="col-12 col-lg-4 py-3">
+                        <span class="lnr lnr-rocket fa-2x rounded bg-alpha icon"/>
+                        <h5 class="mt-4">Creative ideas</h5>
+                        <p>Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                    </div>
+                    <div class="col-12 col-lg-4 py-3">
+                        <span class="lnr lnr-magic-wand fa-2x rounded bg-alpha icon"/>
+                        <h5 class="mt-4">Excellent features</h5>
+                        <p>Suspendisse potenti. Cras a dui et nisl egestas ornare eu quis odio. Sed bibendum in ante vel accumsan.</p>
+                    </div>
+                    <div class="col-12 col-lg-4 py-3">
+                        <span class="lnr lnr-screen fa-2x rounded bg-alpha icon"/>
+                        <h5 class="mt-4">Fully responsive</h5>
+                        <p>In hac habitasse platea dictumst. Praesent cursus congue felis, nec pellentesque nulla ornare sed.</p>
+                    </div>
+                    <div class="col-12 col-lg-4 py-3">
+                        <span class="lnr lnr-book fa-2x rounded bg-alpha icon"/>
+                        <h5 class="mt-4">Extensive documentation</h5>
+                        <p>Aenean varius ligula vel augue condimentum scelerisque. In a urna at tortor tincidunt gravida sit.</p>
+                    </div>
+                    <div class="col-12 col-lg-4 py-3">
+                        <span class="lnr lnr-leaf fa-2x rounded bg-alpha icon"/>
+                        <h5 class="mt-4">Modern design</h5>
+                        <p>Proin purus dui, feugiat id ipsum eu, varius ornare ex. Mauris elit dolor, consectetur ac accumsan eu.</p>
+                    </div>
+                    <div class="col-12 col-lg-4 py-3">
+                        <span class="lnr lnr-code fa-2x rounded bg-alpha icon"/>
+                        <h5 class="mt-4">Clean code</h5>
+                        <p>Nam blandit arcu vel mi mollis faucibus. Nam justo velit, maximus viverra volutpat eu, hendrerit et velit.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+</odoo>

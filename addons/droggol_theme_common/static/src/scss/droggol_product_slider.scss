@@ -1,0 +1,62 @@
+.droggol_product_slider {
+    .owl-stage {
+        display: flex;
+        align-items: stretch;
+        margin-bottom: 1rem;
+    }
+    .owl-nav {
+        .fa,.lnr {
+            font-size: 1rem;
+        }
+    }
+    .owl-prev, .owl-next {
+        @include d-owl-btn-style();
+    }
+    .owl-prev {
+        @include media-breakpoint-down(md) {
+            left: -15px;
+        }
+        @include o-position-absolute($bottom: 50%, $left: -45px);
+    }
+    .owl-next {
+        @include media-breakpoint-down(md) {
+            right: -15px;
+        }
+        @include o-position-absolute($bottom: 50%, $right: -45px);
+    }
+}
+// =========== Sliders Style ============= //
+
+.droggol_product_slider_single_product {
+    .owl-prev, .owl-next {
+        @include d-owl-btn-style();
+        @include media-breakpoint-up(xl) {
+            height: 55px;
+            width: 55px;
+            .lnr {
+                line-height: 55px;
+                font-size: 18px;
+            }
+        }
+    }
+    .dr_product_img {
+        max-height: 500px;
+        object-fit: contain;
+    }
+    .owl-prev {
+        @include o-position-absolute($top: 50%, $left: 15px);
+    }
+    .owl-next {
+        @include o-position-absolute($top: 50%, $right: 15px);
+    }
+}
+
+.droggol_product_slider_top {
+    .owl-nav {
+        display: inline-flex;
+        position: absolute;
+        right: 0;
+        top: 0;
+        margin-top: -55px;
+    }
+}

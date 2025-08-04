@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_cover_1" name="Hero - 1">
+        <div id="s_cover_1" class="dr-custom-carousel s_carousel_rounded carousel slide s_cover_1" data-interval="10000">
+            <!-- Indicators -->
+            <ol class="carousel-indicators light-pill">
+                <li data-target="#s_cover_1" data-slide-to="0" class="active"/>
+                <li data-target="#s_cover_1" data-slide-to="1"/>
+                <li data-target="#s_cover_1" data-slide-to="2"/>
+            </ol>
+            <!-- Content -->
+            <div class="carousel-inner">
+                <!-- #01 -->
+                <div class="carousel-item active oe_custom_bg oe_img_bg pt184 pb184" style="background-image: url('/web/image/droggol_theme_common.s_cover_1_1');" data-name="Slide">
+                    <div class="container">
+                        <div class="row content">
+                            <div class="carousel-content offset-lg-1 col-lg-5 text-center bg-white-25 pt40 pb40 px-4 dr-mobile-center" data-name="Box">
+                                <div class="s_title pb8" data-name="Title">
+                                    <h4 class="s_title_lines text-dark">Up to 50% off</h4>
+                                </div>
+                                <div class="s_title pb8" data-name="Title">
+                                    <h2 class="s_title_default"><font style="font-size: 48px;">Finding your Perfect Collection</font></h2>
+                                </div>
+                                <p class="lead"><font style="font-size: 24px;" class="text-dark">Use coupon code #SHOP50</font></p>
+                                <div class="s_btn text-center" data-name="Buttons">
+                                    <a href="/shop" class="btn btn-dark">Shop Now</a>
+                                    <a href="/contactus" class="btn btn-outline-dark">Contact us</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- #02 -->
+                <div class="carousel-item oe_custom_bg oe_img_bg pt184 pb184" style="background-image: url('/web/image/droggol_theme_common.s_cover_1_2');" data-name="Slide">
+                    <div class="container">
+                        <div class="row content">
+                            <div class="carousel-content col-lg-6 offset-lg-1 pt40 p32 dr-mobile-center"  data-name="Box">
+                                <div class="s_title pb8" data-name="Title">
+                                    <h4 class="s_title_default">Flat <b>20%</b> off</h4>
+                                </div>
+                                <div class="s_title pb8" data-name="Title">
+                                    <h2 class="s_title_default"><font style="font-size: 48px;">Summer Collection</font></h2>
+                                </div>
+                                <p class="lead"><font style="font-size: 24px;" class="font-weight-light text-dark">Get 20% off on any purchase over 200$</font></p>
+                                <div class="s_btn" data-name="Buttons">
+                                    <a href="/shop" class="btn btn-dark">Shop Now</a>
+                                    <a href="/contactus" class="btn btn-outline-dark">Contact us</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- #03 -->
+                <div class="carousel-item oe_custom_bg oe_img_bg pt184 pb184" style="background-image: url('/web/image/droggol_theme_common.s_cover_1_3');" data-name="Slide">
+                    <div class="container">
+                        <div class="row content">
+                            <div class="carousel-content col-lg-6 offset-lg-5 text-right pb32 pt48 px-4 dr-mobile-center" data-name="Box">
+                                <div class="s_title pb8" data-name="Title">
+                                    <h4 class="s_title_default">Has Just Arrived!</h4>
+                                </div>
+                                <div class="s_title pb8" data-name="Title">
+                                    <h2 class="s_title_default"><font style="font-size: 48px;">High Quality Collection</font></h2>
+                                </div>
+                                <p class="lead"><font style="font-size: 24px;" class="font-weight-light text-dark">Stylish collections for the best</font></p>
+                                <div class="s_btn" data-name="Buttons">
+                                    <a href="/shop" class="btn btn-dark">Shop Now</a>
+                                    <a href="#" class="btn btn-outline-dark">View Collection</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Controls -->
+            <div class="carousel-control-prev" data-target="#s_cover_1" data-slide="prev" role="img" aria-label="Previous" title="Previous">
+                <span class="lnr font-weight-bold lnr-arrow-left"></span>
+            </div>
+            <div class="carousel-control-next" data-target="#s_cover_1" data-slide="next" role="img" aria-label="Next" title="Next">
+                <span class="lnr font-weight-bold lnr-arrow-right"></span>
+            </div>
+        </div>
+    </template>
+
+    <template id="s_cover_1_options" inherit_id="website.snippet_options">
+        <xpath expr="//div[@id='so_main_colorpicker']" position="attributes">
+            <attribute name="data-selector" add=".s_cover_1 .carousel-content" separator=","/>
+        </xpath>
+        <xpath expr="//div[@data-js='layout_column']" position="before">
+            <div data-selector=".dr-custom-carousel,.s_cover_4,.s_cover_5">
+                <we-collapse-area>
+                    <we-toggler>
+                        <i class="fa fa-fw fa-arrows-v"/> Dynamic Height </we-toggler>
+                    <we-collapse>
+                        <we-button data-select-class="">Default</we-button>
+                        <we-button data-select-class="dr-full-height">Full height</we-button>
+                    </we-collapse>
+                </we-collapse-area>
+            </div>
+        </xpath>
+    </template>
+
+
+</odoo>

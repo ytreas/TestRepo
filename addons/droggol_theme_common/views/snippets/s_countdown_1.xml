@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_countdown_1" name="Countdown - 1">
+        <section class="s_countdown_1 s_countdown pt16 pb16 light">
+            <div class="container">
+                <div class="row s_nb_column_fixed s_col_no_bgcolor">
+                    <div class="col-12">
+                        <div class="o_not_editable text-center d-flex flex-row flex-wrap d-sm-block" t-ignore="True">
+                            <div class="d-inline-block counter-block mr-1 mr-sm-4 my-1">
+                                <h2 class="counter-number">
+                                    <span class="countdown_days">00</span>
+                                </h2>
+                                <hr class="mt-0 mb-2"/>
+                                <small class="counter-title">DAYS</small>
+                            </div>
+                            <div class="d-inline-block counter-block mr-1 mr-sm-4 my-1">
+                                <h2 class="counter-number">
+                                    <span class="countdown_hours">00</span>
+                                </h2>
+                                <hr class="mt-0 mb-2"/>
+                                <small class="counter-title">HOURS</small>
+                            </div>
+                            <div class="d-inline-block counter-block mr-1 mr-sm-4 my-1">
+                                <h2 class="counter-number">
+                                    <span class="countdown_minutes">00</span>
+                                </h2>
+                                <hr class="mt-0 mb-2"/>
+                                <small class="counter-title">MINUTES</small>
+                            </div>
+                            <div class="d-inline-block counter-block mr-1 mr-sm-4 my-1">
+                                <h2 class="counter-number">
+                                    <span class="countdown_seconds">00</span>
+                                </h2>
+                                <hr class="mt-0 mb-2"/>
+                                <small class="counter-title">SECONDS</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row pt16 end_msg_container css_non_editable_mode_hidden s_nb_column_fixed s_col_no_bgcolor">
+                    <div class="col-12">
+                        <div class="text-center alert alert-info css_non_editable_mode_hidden o_not_editable" t-ignore="True" role="status">
+                            The following message will become visible <strong>only</strong> once the countdown ends.
+                        </div>
+                        <div class="oe_structure">
+                            <section class="s_picture">
+                                <div class="container">
+                                    <div class="row s_nb_column_fixed">
+                                        <div class="col-12">
+                                            <h2>Happy Shopping!</h2>
+                                            <p>As promised, we will offer surprise coupon for our next sale.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <!-- Generic option for all countdown snippets -->
+    <template id="s_countdown_options" inherit_id="website.snippet_options">
+        <xpath expr="//div[@data-js='layout_column']" position="before">
+            <div data-js="s_countdown" data-selector=".s_countdown">
+                <we-button data-due-date="" data-no-preview="true"><i class="fa fa-fw fa-clock-o"/> Set a Due Date</we-button>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="s_countdown_1_options" inherit_id="website.snippet_options">
+        <xpath expr="//*[@id='so_content_addition']" position="attributes">
+            <attribute name="data-selector" add=".s_countdown_1" separator=","/>
+            <attribute name="data-drop-near" add=".s_countdown_1" separator=","/>
+        </xpath>
+        <xpath expr="//div[@data-js='layout_column']" position="before">
+            <div data-selector=".s_countdown_1">
+                <we-collapse-area>
+                    <we-toggler><i class="fa fa-fw fa-adjust"/> Theme</we-toggler>
+                    <we-collapse>
+                        <we-button data-select-class="">None</we-button>
+                        <we-button data-select-class="light">Light</we-button>
+                        <we-button data-select-class="dark">Dark</we-button>
+                    </we-collapse>
+                </we-collapse-area>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

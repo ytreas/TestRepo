@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_video_1" name="Video">
+        <section class="s_video_1 o_background_video">
+            <div class="o_bg_video_container">
+                <iframe id="o_bg_video_iframe_1" class="o_bg_video_iframe fade show" frameborder="0"></iframe>
+            </div>
+            <div class="container-fluid px-0">
+                <div class="row no-gutters s_col_no_bgcolor s_col_no_resize s_nb_column_fixed">
+                    <div class="col-12 s_video_fake_container"/>
+                </div>
+            </div>
+        </section>
+    </template>
+
+</odoo>

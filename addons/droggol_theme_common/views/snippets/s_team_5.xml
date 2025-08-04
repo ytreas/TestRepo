@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_team_5" name="Team - 5">
+        <section class="s_team_5 pb16 pt16">
+            <div class="container">
+                <div class="row s_nb_column_fixed s_col_no_bgcolor">
+                    <div class="col-12 col-sm-6 col-lg-3 py-3">
+                        <div class="card team-card">
+                            <img src="/web/image/droggol_theme_common.image_team_square_01" class="team-avatar bg-white img-thumbnail rounded-circle mx-auto" alt="Team Image 01"/>
+                            <div class="p-4 text-center">
+                                <h4 class="card-title mb-0">Jane Doe</h4>
+                                <p class="mt-1 mb-0">
+                                    Accountant at Company Ltd.
+                                </p>
+                                <ul class="list-unstyled mt-3 mb-0">
+                                    <li class="list-item"><span class="lnr lnr-phone-handset p-2"/> +12 345 6789 101</li>
+                                    <li class="list-item"><span class="lnr lnr-envelope p-2"/> information@mail.com</li>
+                                </ul>
+                                <ul class="list-inline mt-3 mb-0">
+                                    <li class="list-inline-item">
+                                        <a href="#"><span class="team-social-icon fa fa-facebook"/></a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="#"><span class="team-social-icon fa fa-twitter"/></a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="#"><span class="team-social-icon fa fa-pinterest"/></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3 py-3">
+                        <div class="card team-card">
+                            <img src="/web/image/droggol_theme_common.image_team_square_02" class="team-avatar bg-white img-thumbnail rounded-circle mx-auto" alt="Team Image 02"/>
+                            <div class="p-4 text-center">
+                                <h4 class="card-title mb-0">Jane Doe</h4>
+                                <p class="mt-1 mb-0">
+                                    Founder at Company Ltd.
+                                </p>
+                                <ul class="list-unstyled mt-3 mb-0">
+                                    <li class="list-item"><span class="lnr lnr-phone-handset p-2"/> +12 345 6789 101</li>
+                                    <li class="list-item"><span class="lnr lnr-envelope p-2"/> information@mail.com</li>
+                                </ul>
+                                <ul class="list-inline mt-3 mb-0">
+                                    <li class="list-inline-item">
+                                        <a href="#"><span class="team-social-icon fa fa-facebook"/></a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="#"><span class="team-social-icon fa fa-twitter"/></a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="#"><span class="team-social-icon fa fa-pinterest"/></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3 py-3">
+                        <div class="card team-card">
+                            <img src="/web/image/droggol_theme_common.image_team_square_03" class="team-avatar bg-white img-thumbnail rounded-circle mx-auto" alt="Team Image 03"/>
+                            <div class="p-4 text-center">
+                                <h4 class="card-title mb-0">John Doe</h4>
+                                <p class="mt-1 mb-0">
+                                    CTO at Company Ltd.
+                                </p>
+                                <ul class="list-unstyled mt-3 mb-0">
+                                    <li class="list-item"><span class="lnr lnr-phone-handset p-2"/> +12 345 6789 101</li>
+                                    <li class="list-item"><span class="lnr lnr-envelope p-2"/> information@mail.com</li>
+                                </ul>
+                                <ul class="list-inline mt-3 mb-0">
+                                    <li class="list-inline-item">
+                                        <a href="#"><span class="team-social-icon fa fa-facebook"/></a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="#"><span class="team-social-icon fa fa-twitter"/></a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="#"><span class="team-social-icon fa fa-pinterest"/></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3 py-3">
+                        <div class="card team-card">
+                            <img src="/web/image/droggol_theme_common.image_team_square_04" class="team-avatar bg-white img-thumbnail rounded-circle mx-auto" alt="Team Image 04"/>
+                            <div class="p-4 text-center">
+                                <h4 class="card-title mb-0">Jane Doe</h4>
+                                <p class="mt-1 mb-0">
+                                    Founder at Company Ltd.
+                                </p>
+                                <ul class="list-unstyled mt-3 mb-0">
+                                    <li class="list-item"><span class="lnr lnr-phone-handset p-2"/> +12 345 6789 101</li>
+                                    <li class="list-item"><span class="lnr lnr-envelope p-2"/> information@mail.com</li>
+                                </ul>
+                                <ul class="list-inline mt-3 mb-0">
+                                    <li class="list-inline-item">
+                                        <a href="#"><span class="team-social-icon fa fa-facebook"/></a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="#"><span class="team-social-icon fa fa-twitter"/></a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="#"><span class="team-social-icon fa fa-pinterest"/></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="s_team_5_options" inherit_id="website.snippet_options">
+        <xpath expr="." position="inside">
+            <div data-js="colorpicker" data-selector=".s_team_5 .card">
+                <we-collapse-area>
+                    <we-toggler><i class="fa fa-fw fa-eyedropper"/> Background Color</we-toggler>
+                    <we-collapse/>
+                </we-collapse-area>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

@@ -1,0 +1,7 @@
+$o-user-website-values: map-merge($o-user-website-values, o-map-omit((
+    'headings-font': 'Playfair Display',
+    'google-fonts': ('Playfair Display'),
+    'google-local-fonts': null,
+    'uploaded-local-fonts': null,
+    'logo-height': 3.75rem,
+)));

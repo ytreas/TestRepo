@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates id="template">
+
+    <t t-extend="wysiwyg.widgets.link">
+        <t t-jquery=".o_link_dialog_color > t" t-operation="attributes">
+            <attribute name="t-foreach" value="['alpha', 'beta', 'gamma', 'delta', 'epsilon', 'primary', 'secondary', 'success', 'info', 'warning', 'danger', 'dark', 'light']"/>
+        </t>
+    </t>
+
+</templates>

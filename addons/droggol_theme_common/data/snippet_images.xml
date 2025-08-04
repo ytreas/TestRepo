@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Banners -->
+    <record id="s_banner_1_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_banner_1_1</field>
+        <field name="name">droggol_theme_common.s_banner_1_1</field>
+    </record>
+    <record id="s_banner_1_2" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_banner_1_2</field>
+        <field name="name">droggol_theme_common.s_banner_1_2</field>
+    </record>
+    <record id="s_banner_2_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_banner_2_1</field>
+        <field name="name">droggol_theme_common.s_banner_2_1</field>
+    </record>
+    <record id="s_banner_2_2" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_banner_2_2</field>
+        <field name="name">droggol_theme_common.s_banner_2_2</field>
+    </record>
+    <record id="s_banner_2_3" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_banner_2_3</field>
+        <field name="name">droggol_theme_common.s_banner_2_3</field>
+    </record>
+    <record id="s_banner_3_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_banner_3_1</field>
+        <field name="name">droggol_theme_common.s_banner_3_1</field>
+    </record>
+    <record id="s_banner_4_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_banner_4_1</field>
+        <field name="name">droggol_theme_common.s_banner_4_1</field>
+    </record>
+    <record id="s_banner_4_2" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_banner_4_2</field>
+        <field name="name">droggol_theme_common.s_banner_4_2</field>
+    </record>
+    <record id="s_banner_4_3" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_banner_4_3</field>
+        <field name="name">droggol_theme_common.s_banner_4_3</field>
+    </record>
+    <record id="s_banner_5_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_banner_5_1</field>
+        <field name="name">droggol_theme_common.s_banner_5_1</field>
+    </record>
+    <record id="s_banner_6_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_banner_6_1</field>
+        <field name="name">droggol_theme_common.s_banner_6_1</field>
+    </record>
+    <record id="s_banner_6_2" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_banner_6_2</field>
+        <field name="name">droggol_theme_common.s_banner_6_2</field>
+    </record>
+    <record id="s_banner_7_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_banner_7_1</field>
+        <field name="name">droggol_theme_common.s_banner_7_1</field>
+    </record>
+    <record id="s_banner_7_2" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_banner_7_2</field>
+        <field name="name">droggol_theme_common.s_banner_7_2</field>
+    </record>
+    <record id="s_banner_7_3" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_banner_7_3</field>
+        <field name="name">droggol_theme_common.s_banner_7_3</field>
+    </record>
+    <record id="s_banner_7_4" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_banner_7_4</field>
+        <field name="name">droggol_theme_common.s_banner_7_4</field>
+    </record>
+    <record id="s_banner_9_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_banner_9_1</field>
+        <field name="name">droggol_theme_common.s_banner_9_1</field>
+    </record>
+    <record id="s_banner_9_2" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_banner_9_2</field>
+        <field name="name">droggol_theme_common.s_banner_9_2</field>
+    </record>
+    <record id="s_banner_9_3" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_banner_9_3</field>
+        <field name="name">droggol_theme_common.s_banner_9_3</field>
+    </record>
+    <record id="s_banner_10_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_banner_10_1</field>
+        <field name="name">droggol_theme_common.s_banner_10_1</field>
+    </record>
+    <record id="s_banner_10_2" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_banner_10_2</field>
+        <field name="name">droggol_theme_common.s_banner_10_2</field>
+    </record>
+    <record id="s_banner_10_3" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_banner_10_3</field>
+        <field name="name">droggol_theme_common.s_banner_10_3</field>
+    </record>
+    <record id="s_banner_11_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_banner_11_1</field>
+        <field name="name">droggol_theme_common.s_banner_11_1</field>
+    </record>
+    <record id="s_banner_12_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_banner_12_1</field>
+        <field name="name">droggol_theme_common.s_banner_12_1</field>
+    </record>
+    <record id="s_banner_12_2" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_banner_12_2</field>
+        <field name="name">droggol_theme_common.s_banner_12_2</field>
+    </record>
+
+    <!-- Hood -->
+    <record id="s_hood" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_hood</field>
+        <field name="name">droggol_theme_common.s_hood</field>
+    </record>
+
+    <!-- Countdown -->
+    <record id="s_countdown_3_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_countdown_3_1</field>
+        <field name="name">droggol_theme_common.s_countdown_3_1</field>
+    </record>
+
+    <!-- Countdown -->
+    <record id="s_subscribe_4_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_subscribe_4_1</field>
+        <field name="name">droggol_theme_common.s_subscribe_4_1</field>
+    </record>
+
+    <!-- Mega Menu Images -->
+    <record id="s_mega_menu_3_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_mega_menu_3_1</field>
+        <field name="name">droggol_theme_common.s_mega_menu_3_1</field>
+    </record>
+    <record id="s_mega_menu_4_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_mega_menu_4_1</field>
+        <field name="name">droggol_theme_common.s_mega_menu_4_1</field>
+    </record>
+    <record id="s_mega_menu_5_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_mega_menu_5_1</field>
+        <field name="name">droggol_theme_common.s_mega_menu_5_1</field>
+    </record>
+    <record id="s_mega_menu_7_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_mega_menu_7_1</field>
+        <field name="name">droggol_theme_common.s_mega_menu_7_1</field>
+    </record>
+    <record id="s_mega_menu_7_2" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_mega_menu_7_2</field>
+        <field name="name">droggol_theme_common.s_mega_menu_7_2</field>
+    </record>
+    <record id="s_mega_menu_7_3" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_mega_menu_7_3</field>
+        <field name="name">droggol_theme_common.s_mega_menu_7_3</field>
+    </record>
+
+    <!-- Content images -->
+    <record id="image_content_01" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_content_01</field>
+        <field name="name">droggol_theme_common.image_content_01</field>
+    </record>
+    <record id="image_content_02" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_content_02</field>
+        <field name="name">droggol_theme_common.image_content_02</field>
+    </record>
+    <record id="image_content_03" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_content_03</field>
+        <field name="name">droggol_theme_common.image_content_03</field>
+    </record>
+    <record id="image_content_04" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_content_04</field>
+        <field name="name">droggol_theme_common.image_content_04</field>
+    </record>
+    <record id="image_content_05" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_content_05</field>
+        <field name="name">droggol_theme_common.image_content_05</field>
+    </record>
+    <record id="image_content_06" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_content_06</field>
+        <field name="name">droggol_theme_common.image_content_06</field>
+    </record>
+    <record id="image_content_07" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_content_07</field>
+        <field name="name">droggol_theme_common.image_content_07</field>
+    </record>
+    <record id="image_content_08" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_content_08</field>
+        <field name="name">droggol_theme_common.image_content_08</field>
+    </record>
+    <record id="image_content_09" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_content_09</field>
+        <field name="name">droggol_theme_common.image_content_09</field>
+    </record>
+    <record id="image_content_10" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_content_10</field>
+        <field name="name">droggol_theme_common.image_content_10</field>
+    </record>
+    <record id="image_content_11" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_content_11</field>
+        <field name="name">droggol_theme_common.image_content_11</field>
+    </record>
+    <record id="image_content_12" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_content_12</field>
+        <field name="name">droggol_theme_common.image_content_12</field>
+    </record>
+
+    <!-- Cover images -->
+    <record id="s_cover_1_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_cover_1_1</field>
+        <field name="name">droggol_theme_common.s_cover_1_1</field>
+    </record>
+    <record id="s_cover_1_2" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_cover_1_2</field>
+        <field name="name">droggol_theme_common.s_cover_1_2</field>
+    </record>
+    <record id="s_cover_1_3" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_cover_1_3</field>
+        <field name="name">droggol_theme_common.s_cover_1_3</field>
+    </record>
+    <record id="s_cover_2_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_cover_2_1</field>
+        <field name="name">droggol_theme_common.s_cover_2_1</field>
+    </record>
+    <record id="s_cover_2_2" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_cover_2_2</field>
+        <field name="name">droggol_theme_common.s_cover_2_2</field>
+    </record>
+    <record id="s_cover_3_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_cover_3_1</field>
+        <field name="name">droggol_theme_common.s_cover_3_1</field>
+    </record>
+    <record id="s_cover_3_2" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_cover_3_2</field>
+        <field name="name">droggol_theme_common.s_cover_3_2</field>
+    </record>
+    <record id="s_cover_4_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_cover_4_1</field>
+        <field name="name">droggol_theme_common.s_cover_4_1</field>
+    </record>
+    <record id="s_cover_5_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_cover_5_1</field>
+        <field name="name">droggol_theme_common.s_cover_5_1</field>
+    </record>
+    <record id="s_cover_5_2" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_cover_5_2</field>
+        <field name="name">droggol_theme_common.s_cover_5_2</field>
+    </record>
+    <record id="s_cover_5_3" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_cover_5_3</field>
+        <field name="name">droggol_theme_common.s_cover_5_3</field>
+    </record>
+    <record id="s_cover_5_4" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_cover_5_4</field>
+        <field name="name">droggol_theme_common.s_cover_5_4</field>
+    </record>
+
+    <!-- Info block images -->
+    <record id="s_info_block_4_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_info_block_4_1</field>
+        <field name="name">droggol_theme_common.s_info_block_4_1</field>
+    </record>
+    <record id="s_info_block_4_2" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_info_block_4_2</field>
+        <field name="name">droggol_theme_common.s_info_block_4_2</field>
+    </record>
+    <record id="s_info_block_5_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_info_block_5_1</field>
+        <field name="name">droggol_theme_common.s_info_block_5_1</field>
+    </record>
+    <record id="s_info_block_5_2" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_info_block_5_2</field>
+        <field name="name">droggol_theme_common.s_info_block_5_2</field>
+    </record>
+    <record id="s_info_block_6_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_info_block_6_1</field>
+        <field name="name">droggol_theme_common.s_info_block_6_1</field>
+    </record>
+    <record id="s_info_block_6_2" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_info_block_6_2</field>
+        <field name="name">droggol_theme_common.s_info_block_6_2</field>
+    </record>
+
+    <!-- Offer images -->
+    <record id="s_offer_1_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_offer_1_1</field>
+        <field name="name">droggol_theme_common.s_offer_1_1</field>
+    </record>
+    <record id="s_offer_2_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_offer_2_1</field>
+        <field name="name">droggol_theme_common.s_offer_2_1</field>
+    </record>
+    <record id="s_offer_3_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_offer_3_1</field>
+        <field name="name">droggol_theme_common.s_offer_3_1</field>
+    </record>
+    <record id="s_offer_4_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_offer_4_1</field>
+        <field name="name">droggol_theme_common.s_offer_4_1</field>
+    </record>
+
+    <!-- Category images -->
+    <record id="s_category_1_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_category_1_1</field>
+        <field name="name">droggol_theme_common.s_category_1_1</field>
+    </record>
+    <record id="s_category_2_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_category_2_1</field>
+        <field name="name">droggol_theme_common.s_category_2_1</field>
+    </record>
+    <record id="s_category_3_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_category_3_1</field>
+        <field name="name">droggol_theme_common.s_category_3_1</field>
+    </record>
+    <record id="s_category_4_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_category_4_1</field>
+        <field name="name">droggol_theme_common.s_category_4_1</field>
+    </record>
+
+    <!-- Client images -->
+    <record id="image_client_01" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_client_01</field>
+        <field name="name">droggol_theme_common.image_client_01</field>
+    </record>
+    <record id="image_client_02" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_client_02</field>
+        <field name="name">droggol_theme_common.image_client_02</field>
+    </record>
+    <record id="image_client_03" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_client_03</field>
+        <field name="name">droggol_theme_common.image_client_03</field>
+    </record>
+    <record id="image_client_04" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_client_04</field>
+        <field name="name">droggol_theme_common.image_client_04</field>
+    </record>
+    <record id="image_client_05" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_client_05</field>
+        <field name="name">droggol_theme_common.image_client_05</field>
+    </record>
+    <record id="image_client_06" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_client_06</field>
+        <field name="name">droggol_theme_common.image_client_06</field>
+    </record>
+    <record id="image_client_07" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_client_07</field>
+        <field name="name">droggol_theme_common.image_client_07</field>
+    </record>
+    <record id="image_client_08" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_client_08</field>
+        <field name="name">droggol_theme_common.image_client_08</field>
+    </record>
+    <record id="image_client_09" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_client_09</field>
+        <field name="name">droggol_theme_common.image_client_09</field>
+    </record>
+    <record id="image_client_10" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_client_10</field>
+        <field name="name">droggol_theme_common.image_client_10</field>
+    </record>
+    <record id="image_client_11" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_client_11</field>
+        <field name="name">droggol_theme_common.image_client_11</field>
+    </record>
+    <record id="image_client_12" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_client_12</field>
+        <field name="name">droggol_theme_common.image_client_12</field>
+    </record>
+
+    <!-- Brand images -->
+    <record id="image_brand_01" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_brand_01</field>
+        <field name="name">droggol_theme_common.image_brand_01</field>
+    </record>
+    <record id="image_brand_02" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_brand_02</field>
+        <field name="name">droggol_theme_common.image_brand_02</field>
+    </record>
+    <record id="image_brand_03" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_brand_03</field>
+        <field name="name">droggol_theme_common.image_brand_03</field>
+    </record>
+
+    <!-- Team images -->
+    <record id="image_team_01" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_team_01</field>
+        <field name="name">droggol_theme_common.image_team_01</field>
+    </record>
+    <record id="image_team_02" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_team_02</field>
+        <field name="name">droggol_theme_common.image_team_02</field>
+    </record>
+    <record id="image_team_03" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_team_03</field>
+        <field name="name">droggol_theme_common.image_team_03</field>
+    </record>
+    <record id="image_team_04" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_team_04</field>
+        <field name="name">droggol_theme_common.image_team_04</field>
+    </record>
+
+    <record id="image_team_square_01" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_team_square_01</field>
+        <field name="name">droggol_theme_common.image_team_square_01</field>
+    </record>
+    <record id="image_team_square_02" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_team_square_02</field>
+        <field name="name">droggol_theme_common.image_team_square_02</field>
+    </record>
+    <record id="image_team_square_03" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_team_square_03</field>
+        <field name="name">droggol_theme_common.image_team_square_03</field>
+    </record>
+    <record id="image_team_square_04" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_team_square_04</field>
+        <field name="name">droggol_theme_common.image_team_square_04</field>
+    </record>
+
+    <!-- Author images -->
+    <record id="image_author_01" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_author_01</field>
+        <field name="name">droggol_theme_common.image_author_01</field>
+    </record>
+    <record id="image_author_02" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_author_02</field>
+        <field name="name">droggol_theme_common.image_author_02</field>
+    </record>
+    <record id="image_author_03" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.image_author_03</field>
+        <field name="name">droggol_theme_common.image_author_03</field>
+    </record>
+
+    <!-- Animation Block -->
+    <record id="tp_animation_block_1_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.tp_animation_block_1</field>
+        <field name="name">droggol_theme_common.tp_animation_block_1</field>
+    </record>
+    <record id="tp_animation_block_2" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.tp_animation_block_2</field>
+        <field name="name">droggol_theme_common.tp_animation_block_2</field>
+    </record>
+    <record id="tp_animation_block_3" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.tp_animation_block_3</field>
+        <field name="name">droggol_theme_common.tp_animation_block_3</field>
+    </record>
+
+    <record id="tp_animation_block_1_1" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.tp_animation_block_1_1</field>
+        <field name="name">droggol_theme_common.tp_animation_block_1_1</field>
+    </record>
+    <record id="tp_animation_block_2_2" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.tp_animation_block_2_2</field>
+        <field name="name">droggol_theme_common.tp_animation_block_2_2</field>
+    </record>
+    <record id="tp_animation_block_3_3" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.tp_animation_block_3_3</field>
+        <field name="name">droggol_theme_common.tp_animation_block_3_3</field>
+    </record>
+
+    <!-- Mega Menu Offer -->
+    <record id="s_mega_menu_offer" model="theme.ir.attachment">
+        <field name="key">droggol_theme_common.s_mega_menu_offer</field>
+        <field name="name">droggol_theme_common.s_mega_menu_offer</field>
+    </record>
+</odoo>

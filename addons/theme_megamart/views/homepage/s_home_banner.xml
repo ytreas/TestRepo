@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="s_home_banner" name="Banner">
+        <section class="s_home_banner s_banner o_colored_level pb104 pt120 oe_img_bg o_bg_img_center o_bg_img_origin_border_box" data-snippet="s_banner" data-name="Banner" style="position: relative; background-image: url(/theme_megamart/static/src/img/Bg.png) !important;" data-oe-shape-data="{&quot;shape&quot;:&quot;web_editor/Floats/01&quot;,&quot;flip&quot;:[],&quot;showOnMobile&quot;:false,&quot;shapeAnimationSpeed&quot;:&quot;0&quot;,&quot;animated&quot;:&quot;true&quot;}" data-mimetype="image/webp" data-original-id="1238" data-original-src="/theme_megamart/static/src/img/Bg.png" data-mimetype-before-conversion="image/jpeg" data-resize-width="1920">
+            <div class="o_we_shape o_web_editor_Floats_01 o_we_animated"/>
+            <div class="container">
+                <div class="row o_grid_mode" data-row-count="12">
+                    <div class="o_grid_item o_grid_item_image d-lg-block d-none o_snippet_mobile_invisible o_colored_level g-col-lg-7 g-height-12 col-lg-7" style="z-index: 2; grid-area: 1 / 6 / 13 / 13;" data-invisible="1">
+                        <img src="/theme_megamart/static/src/img/Group1.png" alt="" class="img img-fluid mx-auto rounded o_we_custom_image" data-mimetype="image/webp" data-original-id="1236" data-original-src="/theme_megamart/static/src/img/Group1.png" data-mimetype-before-conversion="image/png" data-resize-width="NaN" loading="lazy"/>
+                    </div>                  
+                    <div class="o_grid_item o_colored_level g-height-8 g-col-lg-5 col-lg-5" data-name="Box" style="z-index: 1; grid-area: 3 / 1 / 11 / 6;">
+                        <h1><strong>Healthy Groceries, Happy Life.</strong></h1>
+                        <p class="lead" style="margin-bottom: 0px;"><br/>Skip the store lines and enjoy farm-fresh groceries at your doorstep. Natural, local, and always on time.</p>
+                        <p class="lead"><br/></p>
+                        <p>
+                            <a class="btn btn-primary flat btn-lg" href="/">Shop&amp;nbsp;Now <span class="fa fa-angle-right ms-2"/></a>​​​​​​
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+</odoo>

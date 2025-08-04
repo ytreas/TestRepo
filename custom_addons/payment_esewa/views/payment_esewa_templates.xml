@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="redirect_form">
+        <form t-att-action="payment_form_action" method="post" id="esewa-auto-form">
+            <t t-foreach="payload.items()" t-as="item">
+                <input type="hidden" t-att-name="item[0]" t-att-value="item[1]"/>
+            </t>
+        </form>
+        <script>
+            document.getElementById('esewa-auto-form').submit();
+        </script>
+    </template>
+
+
+</odoo>

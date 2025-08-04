@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_pricing_6" name="Pricing - 6">
+        <section class="s_pricing_6 pb16 pt16">
+            <div class="container">
+                <div class="row s_col_no_bgcolor">
+                    <div class="col-md-4 py-3">
+                        <div class="card dr-animation-lift h-100">
+                            <div class="bg-warning px-3 pt-5 text-center">
+                                <h1 class="font-weight-bold text-white">BASIC</h1>
+                                <p class="text-white">LOREM IPSUM TEXT</p>
+                                <div class="mx-4 py-3 d-star-header">
+                                    <span class="fa fa-star fa-2x"></span>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <ul class="list-group list-group-flush mt-4">
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <h5 class="text-muted">
+                                            <span class="p-1 fa fa-check-circle text-warning"></span> <strong class="text-700">Unlimited</strong> Email Addresses
+                                        </h5>
+                                    </li>
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <h5 class="text-muted">
+                                            <span class="p-1 fa fa-check-circle text-warning"></span> <strong class="text-700">50 GB</strong> Disk Space
+                                        </h5>
+                                    </li>
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <h5 class="text-muted">
+                                            <span class="p-1 fa fa-check-circle text-warning"></span> <strong class="text-700">Unlimited</strong> SQL Database
+                                        </h5>
+                                    </li>
+                                    <li class="list-group-item p-1 text-muted border-0 bg-transparent">
+                                        <h5 class="text-muted">
+                                            <span class="p-1 fa fa-times-circle"></span> <strong>24 x Support</strong>
+                                        </h5>
+                                    </li>
+                                    <li class="list-group-item p-1 text-muted border-0 bg-transparent">
+                                        <h5 class="text-muted">
+                                            <span class="p-1 fa fa-times-circle"></span> <strong>Email Support</strong>
+                                        </h5>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="p-3 border-top text-center">
+                                <h1 class="font-weight-bold"><font style="font-size: 48px;">$3</font></h1>
+                                <p class="font-weight-bold mb-0">Per Month</p>
+                            </div>
+                            <div class="s_btn p-3 text-center" data-name="Buttons">
+                                <a href="#" class="btn btn-warning text-white text-center d-block">VIEW MORE</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 py-3">
+                        <div class="card dr-animation-lift h-100">
+                            <div class="bg-success px-3 pt-5 text-center">
+                                <h1 class="font-weight-bold text-white">PERMIUM</h1>
+                                <p class="text-white">LOREM IPSUM TEXT</p>
+                                <div class="mx-4 py-3 d-star-header">
+                                    <span class="fa fa-star fa-2x"></span>
+                                    <span class="fa fa-star fa-2x ml-2"></span>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <ul class="list-group list-group-flush mt-4">
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <h5 class="text-muted">
+                                            <span class="p-1 fa fa-check-circle text-success"></span> <strong class="text-700">Unlimited</strong> Email Addresses
+                                        </h5>
+                                    </li>
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <h5 class="text-muted">
+                                            <span class="p-1 fa fa-check-circle text-success"></span> <strong class="text-700">50 GB</strong> Disk Space
+                                        </h5>
+                                    </li>
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <h5 class="text-muted">
+                                            <span class="p-1 fa fa-check-circle text-success"></span> <strong class="text-700">Unlimited</strong> SQL Database
+                                        </h5>
+                                    </li>
+                                    <li class="list-group-item p-1 text-muted border-0 bg-transparent">
+                                        <h5 class="text-muted">
+                                            <span class="p-1 fa fa-check-circle text-success"></span> <strong class="text-700">24 x Support</strong>
+                                        </h5>
+                                    </li>
+                                    <li class="list-group-item p-1 text-muted border-0 bg-transparent">
+                                        <h5 class="text-muted">
+                                            <span class="p-1 fa fa-times-circle"></span> <strong>Email Support</strong>
+                                        </h5>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="p-3 border-top text-center">
+                                <h1 class="font-weight-bold"><font style="font-size: 48px;">$8</font></h1>
+                                <p class="font-weight-bold mb-0">Per Month</p>
+                            </div>
+                            <div class="s_btn p-3 text-center" data-name="Buttons">
+                                <a href="#" class="btn btn-success text-center d-block">VIEW MORE</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 py-3">
+                        <div class="card dr-animation-lift h-100">
+                            <div class="bg-primary px-3 pt-5 text-center">
+                                <h1 class="font-weight-bold text-white">BUSINESS</h1>
+                                <p class="text-white">LOREM IPSUM TEXT</p>
+                                <div class="mx-4 py-3 d-star-header">
+                                    <span class="fa fa-star fa-2x"></span>
+                                    <span class="fa fa-star ml-2 fa-2x"></span>
+                                    <span class="fa fa-star ml-2 fa-2x"></span>
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <ul class="list-group list-group-flush mt-4">
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <h5 class="text-muted">
+                                            <span class="p-1 fa fa-check-circle text-primary"></span> <strong class="text-700">Unlimited</strong> Email Addresses
+                                        </h5>
+                                    </li>
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <h5 class="text-muted">
+                                            <span class="p-1 fa fa-check-circle text-primary"></span> <strong class="text-700">50 GB</strong> Disk Space
+                                        </h5>
+                                    </li>
+                                    <li class="list-group-item p-1 border-0 bg-transparent">
+                                        <h5 class="text-muted">
+                                            <span class="p-1 fa fa-check-circle text-primary"></span> <strong class="text-700">Unlimited</strong> SQL Database
+                                        </h5>
+                                    </li>
+                                    <li class="list-group-item p-1 text-muted border-0 bg-transparent">
+                                        <h5 class="text-muted">
+                                            <span class="p-1 fa fa-check-circle text-primary"></span> <strong class="text-700">24 x Support</strong>
+                                        </h5>
+                                    </li>
+                                    <li class="list-group-item p-1 text-muted border-0 bg-transparent">
+                                        <h5 class="text-muted">
+                                            <span class="p-1 fa fa-check-circle text-primary"></span> <strong class="text-700">Email Support</strong>
+                                        </h5>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="p-3 border-top text-center">
+                                <h1 class="font-weight-bold"><font style="font-size: 48px;">$12</font></h1>
+                                <p class="font-weight-bold mb-0">Per Month</p>
+                            </div>
+                            <div class="s_btn p-3 text-center" data-name="Buttons">
+                                <a href="#" class="btn btn-primary text-center d-block">VIEW MORE</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="s_pricing_1_options" inherit_id="website.snippet_options">
+        <xpath expr="." position="inside">
+            <div data-js="colorpicker" data-selector=".s_pricing_1 .card">
+                <we-collapse-area>
+                    <we-toggler><i class="fa fa-fw fa-eyedropper"/> Background Color</we-toggler>
+                    <we-collapse/>
+                </we-collapse-area>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

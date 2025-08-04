@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_banner_5" name="Banner - 5">
+        <section class="s_banner_5 pt56 pb56 parallax" data-scroll-background-ratio="0">
+            <span class="s_parallax_bg oe_img_bg oe_custom_bg" style="background-image: url('/web/image/droggol_theme_common.s_banner_5_1'); background-position: 50% 0;"/>
+            <div class="container">
+                <div class="row s_nb_column_fixed s_col_no_bgcolor">
+                    <div class="col-12 text-center">
+                        <div class="s_title" data-name="Title">
+                            <h2 class="s_title_default"><font style="font-size: 24px;">Hurry up!</font></h2>
+                        </div>
+                        <div class="s_title mt-4" data-name="Title">
+                            <h2 class="s_title_default"><b><font style="font-size: 62px;">HUGE SALE!</font></b></h2>
+                        </div>
+                        <div class="s_title mt-4" data-name="Title">
+                            <h4 class="s_title_default">Up to 20% off on all products.</h4>
+                        </div>
+                        <div class="s_btn pt32" data-name="Buttons">
+                            <a href="/shop" class="btn btn-alpha">Discover More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+</odoo>

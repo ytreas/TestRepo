@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+
+    <div t-name="droggol_theme_common.s_google_map">
+        <div class="form-group">
+            <label for="embed_html"><h6 class="mb-0">Map embed HTML</h6></label>
+            <input type="text" class="form-control" id="embed_html" placeholder="Enter embed HTML"/>
+        </div>
+        <div class="container-fluid px-0 mt-4 p-3 bg-200">
+            <div class="row no-gutters">
+                <div class="col-12">
+                    <h6 class="mb-0">How to find Map Embed HTML?</h6>
+                    <div class="mb-2">Open <a href="https://www.google.com/maps" target="new">Google Map</a>.</div>
+                </div>
+                <div class="col-12">
+                    <img src="/droggol_theme_common/static/src/img/s_google_map_hint.png" class="img img-fluid" alt="Google Map Hint"></img>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</templates>

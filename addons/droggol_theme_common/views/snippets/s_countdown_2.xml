@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_countdown_2" name="Countdown - 2">
+        <div class="s_countdown_2 s_countdown">
+            <div class="o_not_editable d-flex flex-wrap countdown justify-content-center" t-ignore="True">
+                <div class="mr-3 mb-1">
+                    <h3 class="countdown_days d-inline-block">00</h3>
+                    <span>d</span>
+                </div>
+                <div class="mr-3 mb-1">
+                    <h3 class="countdown_hours d-inline-block">00</h3>
+                    <span>h</span>
+                </div>
+                <div class="mr-3 mb-1">
+                    <h3 class="countdown_minutes d-inline-block">00</h3>
+                    <span>m</span>
+                </div>
+                <div class="mr-3 mb-1">
+                    <h3 class="countdown_seconds d-inline-block">00</h3>
+                    <span>s</span>
+                </div>
+            </div>
+            <div class="row pt16 end_msg_container css_non_editable_mode_hidden">
+                <div class="col-12">
+                    <div class="text-center alert alert-info css_non_editable_mode_hidden o_not_editable" t-ignore="True" role="status">
+                        The following message will become visible <strong>only</strong> once the countdown ends.
+                    </div>
+                    <div class="oe_structure">
+                        <section class="s_picture">
+                            <div class="container">
+                                <div class="row s_nb_column_fixed">
+                                    <div class="col-12">
+                                        <h2>Happy Shopping!</h2>
+                                        <p>As promised, we will offer surprise coupon for our next sale.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="s_countdown_2_options" inherit_id="website.snippet_options">
+        <xpath expr="//*[@id='so_content_addition']" position="attributes">
+            <attribute name="data-selector" add=".s_countdown_2" separator=","/>
+            <attribute name="data-drop-near" add=".s_countdown_2" separator=","/>
+        </xpath>
+        <xpath expr="//div[@data-js='layout_column']" position="before">
+            <div data-selector=".s_countdown_2" data-exclude=".dr_coming_soon_countdown" data-target=".countdown">
+                <we-collapse-area>
+                    <we-toggler><i class="fa fa-fw fa-align-left"/> Alignment</we-toggler>
+                    <we-collapse>
+                        <we-button data-select-class="justify-content-start">Left</we-button>
+                        <we-button data-select-class="justify-content-center">Center</we-button>
+                        <we-button data-select-class="justify-content-end">Right</we-button>
+                    </we-collapse>
+                </we-collapse-area>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_animation_block_2" name="Animation Block - 2">
+        <section class="s_animation_block_2 pt16 pb16">
+            <div class="container">
+                <div class="row s_nb_column_fixed s_col_no_bgcolor">
+                    <div class="col-12 col-lg-4 py-3 d_snippet_grid_col position-relative">
+                        <div class="d_bg_img_block_wrapper">
+                            <div class="d_enable_bg_img d_bg_img_block position-relative" style="background-image: url('/web/image/droggol_theme_common.tp_animation_block_1')">
+                                <div class="d_text_container h-100 w-100">
+                                    <h2 class="s_d_title text-center w-100">New Arrival</h2>
+                                    <div class="s_d_subtitle text-center w-100">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.</p>
+                                        <a href="/shop" class="btn btn-primary">Shop Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 py-3 d_snippet_grid_col position-relative">
+                        <div class="d_bg_img_block_wrapper">
+                            <div class="d_enable_bg_img d_bg_img_block position-relative" style="background-image: url('/web/image/droggol_theme_common.tp_animation_block_2')">
+                                <div class="d_text_container h-100 w-100">
+                                    <h2 class="s_d_title text-center w-100">Trending Products</h2>
+                                    <div class="s_d_subtitle text-center w-100">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.</p>
+                                        <a href="/shop" class="btn btn-primary">Shop Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 py-3 d_snippet_grid_col position-relative">
+                        <div class="d_bg_img_block_wrapper">
+                            <div class="d_enable_bg_img d_bg_img_block position-relative" style="background-image: url('/web/image/droggol_theme_common.tp_animation_block_3')">
+                                <div class="d_text_container h-100 w-100">
+                                    <h2 class="s_d_title text-center w-100">New Collection</h2>
+                                    <div class="s_d_subtitle text-center w-100">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.</p>
+                                        <a href="/shop" class="btn btn-primary">Shop Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+</odoo>

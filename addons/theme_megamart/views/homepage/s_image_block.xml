@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="s_image_block" name="Image Block">
+        <section class="s_image_block s_image_frame o_colored_level o_cc o_cc2 pt32 pb16" data-snippet="s_image_frame" data-name="Image Frame" style="background-color: rgb(255, 255, 255);">
+            <div class="container">
+                <div class="row o_grid_mode" data-row-count="13">
+                    <div class="o_grid_item o_grid_item_image g-col-lg-12 order-lg-0 rounded overflow-hidden o_colored_level g-height-13 col-lg-12" style="grid-area: 1 / 1 / 14 / 13; --grid-item-padding-x: 0px; --grid-item-padding-y: 0px; order: 0; border-radius: 6.4px !important;">
+                        <img src="/theme_megamart/static/src/img/Banner.jpg" alt="" class="img img-fluid mx-auto o_we_custom_image rounded" style="padding: 16px;" data-mimetype="image/jpeg" data-original-id="1283" data-original-src="/theme_megamart/static/src/img/Banner.jpg" data-mimetype-before-conversion="image/jpeg" data-resize-width="1600" data-quality="100" loading="lazy"/>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+</odoo>

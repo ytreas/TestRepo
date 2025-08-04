@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_subscribe_3" name="Subscribe - 3">
+        <section class="s_subscribe_3 pt32 pb32">
+            <div class="container">
+                <div class="row text-center s_nb_column_fixed s_col_no_bgcolor">
+                    <div class="col-12">
+                        <p class="text-muted font-weight-bold">SIGN UP FOR THE PROMOTION</p>
+                        <h3>Join Our Newsletter Now</h3>
+                        <p>Sign up for all the news about our latest arrivals and get an exclusive early access shopping.</p>
+                        <div class="input-group js_subscribe my-3 mx-auto" style="max-width:400px;" data-list-id="0">
+                            <input type="email" name="email" class="js_subscribe_email form-control" placeholder="Your Email..."/>
+                            <span class="input-group-append">
+                                <a role="button" href="#" class="btn btn-primary js_subscribe_btn" aria-label="Send"><i class="fa fa-send-o"/></a>
+                                <a role="button" href="#" class="btn btn-success js_subscribed_btn d-none" disabled="disabled">Thanks</a>
+                            </span>
+                        </div>
+                        <h3 class="dr_strike_line my-3">Or Follow Us</h3>
+                        <p>Be the first to find out all the latest news, products and trends.</p>
+                        <div class="text-center my-3">
+                            <ul class="list-inline my-3">
+                                <li class="list-inline-item">
+                                    <a href="#">
+                                        <span class="d_social_link_icon fa fa-facebook"/>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="#">
+                                        <span class="d_social_link_icon fa fa-twitter"/>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="#">
+                                        <span class="d_social_link_icon fa fa-envelope"/>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="#">
+                                        <span class="d_social_link_icon fa fa-youtube"/>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a href="#">
+                                        <span class="d_social_link_icon fa fa-pinterest"/>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+</odoo>

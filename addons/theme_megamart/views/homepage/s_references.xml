@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="s_references" name="References">
+        <section class="s_references o_cc o_cc1 pb80 o_colored_level pt24" data-snippet="s_references" data-name="References">
+            <div class="container">
+                <div class="row s_nb_column_fixed">
+                    <div class="col-12 col-lg-12 pb24 o_colored_level">
+                        <h2 style="text-align: center;" class="o_default_snippet_text">Partners and references</h2>
+                        <p class="lead" style="text-align: center;">Use this section to boost your company's credibility.</p></div>
+                    <div class="col-6 col-lg-2 pt16 pb16 o_colored_level">
+                        <img src="/web/image/website.s_reference_demo_image_1" class="img img-fluid mx-auto" alt="" loading="lazy" data-mimetype="image/png" data-original-id="892" data-original-src="/website/static/src/img/snippets_demo/s_references_1.png" data-mimetype-before-conversion="image/png"/>
+                    </div>
+                    <div class="col-6 col-lg-2 pt16 pb16 o_colored_level">
+                        <img src="/web/image/website.s_reference_demo_image_2" class="img img-fluid mx-auto" alt="" loading="lazy" data-mimetype="image/png" data-original-id="893" data-original-src="/website/static/src/img/snippets_demo/s_references_2.png" data-mimetype-before-conversion="image/png"/>
+                    </div>
+                    <div class="col-6 col-lg-2 pt16 pb16 o_colored_level">
+                        <img src="/web/image/website.s_reference_demo_image_3" class="img img-fluid mx-auto" alt="" loading="lazy" data-mimetype="image/png" data-original-id="894" data-original-src="/website/static/src/img/snippets_demo/s_references_3.png" data-mimetype-before-conversion="image/png"/>
+                    </div>
+                    <div class="col-6 col-lg-2 pt16 pb16 o_colored_level">
+                        <img src="/web/image/website.s_reference_demo_image_4" class="img img-fluid mx-auto" alt="" loading="lazy" data-mimetype="image/png" data-original-id="895" data-original-src="/website/static/src/img/snippets_demo/s_references_4.png" data-mimetype-before-conversion="image/png"/>
+                    </div>
+                    <div class="col-6 col-lg-2 pt16 pb16 o_colored_level">
+                        <img src="/web/image/website.s_reference_demo_image_5" class="img img-fluid mx-auto" alt="" loading="lazy" data-mimetype="image/png" data-original-id="896" data-original-src="/website/static/src/img/snippets_demo/s_references_5.png" data-mimetype-before-conversion="image/png"/>
+                    </div>
+                    <div class="col-6 col-lg-2 pt16 pb16 o_colored_level">
+                        <img src="/web/image/website.s_reference_default_image_6" class="img img-fluid mx-auto" alt="" loading="lazy" data-mimetype="image/png" data-original-id="897" data-original-src="/website/static/src/img/snippets_demo/s_references_6.png" data-mimetype-before-conversion="image/png"/>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+</odoo>

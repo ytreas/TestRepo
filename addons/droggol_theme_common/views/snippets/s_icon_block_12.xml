@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_icon_block_12" name="Icon Block - 12">
+        <section class="s_icon_block_12 pt32 pb32">
+            <div class="container">
+                <div class="row justify-content-center p-3 s_nb_column_fixed s_col_no_bgcolor">
+                    <div class="col-12 col-sm-6 col-lg-3 icon-block text-center">
+                        <span class="lnr fa-2x lnr-rocket rounded-circle d_primary_light_bg text-primary m-3"></span>
+                        <h5>FREE DELIVERY</h5>
+                        <p>All oders over $100</p>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3 icon-block text-center">
+                        <span class="lnr fa-2x lnr-shirt rounded-circle d_primary_light_bg text-primary m-3"></span>
+                        <h5>QUALITY PRODUCTS</h5>
+                        <p>100% Genuine product</p>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3 icon-block text-center">
+                        <span class="lnr fa-2x lnr-phone rounded-circle d_primary_light_bg text-primary m-3"></span>
+                        <h5>CUSTOMER SUPPORT</h5>
+                        <p>Friendly 24/7 customer support</p>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3 icon-block text-center">
+                        <span class="lnr fa-2x lnr-undo rounded-circle d_primary_light_bg text-primary m-3"></span>
+                        <h5>EASY RETURNS</h5>
+                        <p>No Questions Asked</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+</odoo>

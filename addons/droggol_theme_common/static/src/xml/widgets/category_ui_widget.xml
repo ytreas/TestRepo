@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+<templates>
+
+    <t t-name="droggol_theme_common.category_ui_widget">
+        <div class="category_ui_widget">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 col-lg-4">
+                        <div class="form-group">
+                            <label for="d_filter_style_select" class="h6">Tab Style</label>
+                            <select id="d_filter_style_select" class="d-inline-block form-control">
+                                <t t-foreach="widget.allFliters" t-as="category">
+                                    <option t-att-value="category" t-att-selected="category === widget.categoryFilterStyle ? 'selected' : undefined">
+                                        Style <t t-esc="category_index + 1"/>
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-8 border-left">
+                        <h6 class="text-center">Tab Preview</h6>
+                        <small class="d-block text-center mb-3">(Hover tabs to see effects)</small>
+                        <div class="d_category_filter_preview p-4 bg-100"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="d_category_filter_preview">
+        <div class="d-category-filter-preview p-3 bg-white shadow-sm">
+            <t t-call="#{widget.categoryFilterStyle}">
+                <t t-set="categories" t-value="widget.demoData"/>
+            </t>
+        </div>
+    </t>
+
+</templates>

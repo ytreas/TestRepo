@@ -1,0 +1,74 @@
+<?xml version="1.0" ?>
+<templates>
+
+    <t t-name="s_d_category_mega_menu_1">
+        <div class="container-fluid">
+            <div class="row">
+                <t t-foreach="data" t-as="category">
+                    <div class="col-md-3 mt-2" t-if="category.parentCategory">
+                        <ul class="list-group">
+                            <li class="list-group-item px-2 mb-1 py-1 font-weight-bold text-dark border-0">
+                                <span class="mb-1 pb-2 tp_underline_title w-75 text-uppercase d-product-name">
+                                    <a t-attf-href="/shop/category/#{category.parentCategory.id}"><t t-esc="category.parentCategory.name"/></a>
+                                </span>
+                            </li>
+                            <t t-foreach="category.childCategories" t-as="child">
+                                <li class="list-group-item px-2 py-1 border-0">
+                                    <span class="d-product-name">
+                                        <a class="text-600" t-attf-href="/shop/category/#{child.id}"><t t-esc="child.name"/></a>
+                                    </span>
+                                </li>
+                            </t>
+                        </ul>
+                    </div>
+                </t>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="s_d_category_mega_menu_2">
+        <div class="container-fluid">
+            <div class="row">
+                <t t-foreach="data" t-as="category">
+                    <div class="col-md-3 mt-2" t-if="category.parentCategory">
+                        <div class="dr-animation-scale">
+                            <img class="mx-auto img my-2 o_image_128_max img-fluid" t-attf-src="/web/image?model=product.public.category&amp;id=#{category.parentCategory.id}&amp;field=image_128" />
+                        </div>
+                        <ul class="list-group text-center mt-2">
+                            <li class="list-group-item px-2 mb-1 py-1 font-weight-bold text-dark border-0">
+                                <span class="mb-1 w-75 text-uppercase d-product-name">
+                                    <a t-attf-href="/shop/category/#{category.parentCategory.id}"><t t-esc="category.parentCategory.name"/></a>
+                                </span>
+                            </li>
+                            <t t-foreach="category.childCategories" t-as="child">
+                                <li class="list-group-item px-2 py-1 border-0">
+                                    <span class="d-product-name">
+                                        <a class="text-600" t-attf-href="/shop/category/#{child.id}"><t t-esc="child.name"/></a>
+                                    </span>
+                                </li>
+                            </t>
+                        </ul>
+                    </div>
+                </t>
+            </div>
+        </div>
+    </t>
+    <t t-name="s_d_category_mega_menu_3">
+        <div class="container-fluid">
+            <div class="row dr-category-list">
+                <t t-foreach="data" t-as="category">
+                    <div class="col-6 col-sm-4 col-md-3 col-lg-2 dr-category">
+                        <div class="px-4 pb-1 text-center pt-4">
+                            <a t-attf-href="/shop/category/#{category.id}">
+                                <img class="img img-fluid dr-category-image" t-attf-src="/web/image?model=product.public.category&amp;id=#{category.id}&amp;field=image_128"/>
+                            </a>
+                        </div>
+                        <div class="text-center text-uppercase font-weight-bold d-product-name mb-2">
+                            <a t-attf-href="/shop/category/#{category.id}"><t t-esc="category.name"/></a>
+                        </div>
+                    </div>
+                </t>
+            </div>
+        </div>
+    </t>
+</templates>

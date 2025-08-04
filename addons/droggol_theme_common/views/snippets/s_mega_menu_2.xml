@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_mega_menu_2" name="Mega Menu - 2">
+        <section class="s_mega_menu_2 p-3 p-lg-4">
+            <div class="container">
+                <div class="row s_nb_column_fixed s_col_no_bgcolor">
+                    <div class="col-12 mb-1">
+                        <h6>Services</h6>
+                    </div>
+                </div>
+                <div class="row s_nb_column_fixed s_col_no_bgcolor">
+                    <div class="col-12 col-md-4 py-3">
+                        <div class="media">
+                            <span class="fa fa-envelope-o rounded-circle bg-alpha"/>
+                            <div class="media-body ml-3">
+                                <a href="#" class="d-block h6 mb-0">
+                                    Phasellus ex arcu
+                                </a>
+                                <p class="mb-0">
+                                    Lorem ipsum dolor sit amet.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4 py-3">
+                        <div class="media">
+                            <span class="fa fa-eye rounded-circle bg-gamma"/>
+                            <div class="media-body ml-3">
+                                <a href="#" class="d-block h6 mb-0">
+                                    Mauris dignissim
+                                </a>
+                                <p class="mb-0">
+                                    Lorem ipsum dolor sit amet.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4 py-3">
+                        <div class="media">
+                            <span class="fa fa-heart-o rounded-circle bg-delta"/>
+                            <div class="media-body ml-3">
+                                <a href="#" class="d-block h6 mb-0">
+                                    Curabitur aliquet
+                                </a>
+                                <p class="mb-0">
+                                    Lorem ipsum dolor sit amet.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4 py-3">
+                        <div class="media">
+                            <span class="fa fa-code rounded-circle bg-epsilon"/>
+                            <div class="media-body ml-3">
+                                <a href="#" class="d-block h6 mb-0">
+                                    Nunc lobortis
+                                </a>
+                                <p class="mb-0">
+                                    Lorem ipsum dolor sit amet.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4 py-3">
+                        <div class="media">
+                            <span class="fa fa-smile-o rounded-circle bg-dark"/>
+                            <div class="media-body ml-3">
+                                <a href="#" class="d-block h6 mb-0">
+                                    Lobortis dictum
+                                </a>
+                                <p class="mb-0">
+                                    Lorem ipsum dolor sit amet.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4 py-3">
+                        <div class="media">
+                            <span class="fa fa-hdd-o rounded-circle bg-beta"/>
+                            <div class="media-body ml-3">
+                                <a href="#" class="d-block h6 mb-0">
+                                    Nullam fermentum
+                                </a>
+                                <p class="mb-0">
+                                    Lorem ipsum dolor sit amet.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4 py-3">
+                        <div class="media">
+                            <span class="fa fa-comments-o rounded-circle bg-delta"/>
+                            <div class="media-body ml-3">
+                                <a href="#" class="d-block h6 mb-0">
+                                    Curabitur aliquet
+                                </a>
+                                <p class="mb-0">
+                                    Lorem ipsum dolor sit amet.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4 py-3">
+                        <div class="media">
+                            <span class="fa fa-moon-o rounded-circle bg-alpha"/>
+                            <div class="media-body ml-3">
+                                <a href="#" class="d-block h6 mb-0">
+                                    Mauris dignissim
+                                </a>
+                                <p class="mb-0">
+                                    Lorem ipsum dolor sit amet.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4 py-3">
+                        <div class="media">
+                            <span class="fa fa-credit-card rounded-circle bg-gamma"/>
+                            <div class="media-body ml-3">
+                                <a href="#" class="d-block h6 mb-0">
+                                    Phasellus ex arcu
+                                </a>
+                                <p class="mb-0">
+                                    Lorem ipsum dolor sit amet.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+</odoo>

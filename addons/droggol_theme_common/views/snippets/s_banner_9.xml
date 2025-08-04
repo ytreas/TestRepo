@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_banner_9" name="Banner - 9">
+        <section class="s_banner_9 pt16 pb16">
+            <div class="container">
+                <div class="row s_col_no_bgcolor">
+                    <div class="col-12 col-lg-4 py-3">
+                        <div class="dr-animation-layla">
+                            <a href="#">
+                                <img src="/web/image/droggol_theme_common.s_banner_9_1" class="w-100" alt="Banner Image 01"/>
+                            </a>
+                            <div class="banner-text bg-white-75 rounded">
+                                <h5 class="text-center mb-0">Mens</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 py-3">
+                        <div class="dr-animation-layla">
+                            <a href="#">
+                                <img src="/web/image/droggol_theme_common.s_banner_9_2" class="w-100" alt="Banner Image 02"/>
+                            </a>
+                            <div class="banner-text bg-white-75 rounded">
+                                <h5 class="text-center mb-0">Womens</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 py-3">
+                        <div class="dr-animation-layla">
+                            <a href="#">
+                                <img src="/web/image/droggol_theme_common.s_banner_9_3" class="w-100" alt="Banner Image 03"/>
+                            </a>
+                            <div class="banner-text bg-white-75 rounded">
+                                <h5 class="text-center mb-0">Kids</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+</odoo>

@@ -1,0 +1,16 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_gem_logs_public,gem.logs,model_gem_logs,base.group_public,1,0,0,0
+access_gem_logs_portal,gem.logs,model_gem_logs,base.group_portal,1,0,0,0
+access_gem_logs_user,gem.logs,model_gem_logs,base.group_user,1,1,1,1
+access_gem_logs_admin,gem.logs,model_gem_logs,base.group_system,1,1,1,1
+
+access_gem_payment_public,gem.payment,model_gem_payment,base.group_public,1,0,0,0
+access_gem_payment_portal,gem.payment,model_gem_payment,base.group_portal,1,1,1,0
+access_gem_payment_user,gem.payment,model_gem_payment,base.group_user,1,1,1,1
+access_gem_payment_admin,gem.payment,model_gem_payment,base.group_system,1,1,1,1
+
+access_advertisement_ad_public,advertisement.ad,model_advertisement_ad,base.group_public,1,0,0,0
+access_advertisement_ad_portal,advertisement.ad,model_advertisement_ad,base.group_portal,1,1,0,0
+access_advertisement_ad_user,advertisement.ad,model_advertisement_ad,base.group_user,1,1,1,1
+access_advertisement_ad_admin,advertisement.ad,model_advertisement_ad,base.group_system,1,1,1,1
