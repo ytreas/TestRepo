@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="ecommerce_admin.list">
+      <field name="name">ecommerce_admin list</field>
+      <field name="model">ecommerce_admin.ecommerce_admin</field>
+      <field name="arch" type="xml">
+        <list>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </list>
+      </field>
+    </record>
+-->
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="ecommerce_admin.action_window">
+      <field name="name">ecommerce_admin window</field>
+      <field name="res_model">ecommerce_admin.ecommerce_admin</field>
+      <field name="view_mode">list,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="ecommerce_admin.action_server">
+      <field name="name">ecommerce_admin server</field>
+      <field name="model_id" ref="model_ecommerce_admin_ecommerce_admin"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "list,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="ecommerce_admin" id="ecommerce_admin.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="ecommerce_admin.menu_1" parent="ecommerce_admin.menu_root"/>
+    <menuitem name="Menu 2" id="ecommerce_admin.menu_2" parent="ecommerce_admin.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="ecommerce_admin.menu_1_list" parent="ecommerce_admin.menu_1"
+              action="ecommerce_admin.action_window"/>
+    <menuitem name="Server to list" id="ecommerce_admin" parent="ecommerce_admin.menu_2"
+              action="ecommerce_admin.action_server"/>
+-->
+  </data>
+</odoo>

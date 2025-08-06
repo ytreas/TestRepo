@@ -1,0 +1,10 @@
+<odoo>
+    <data noupdate="0">
+
+        <record id="group_ecommerce_admin" model="res.groups">
+            <field name="name">eCommerce Admin</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+
+    </data>
+</odoo>

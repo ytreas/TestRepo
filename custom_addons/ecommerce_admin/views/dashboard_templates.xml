@@ -1,0 +1,626 @@
+<odoo>
+    <template id="dashboard_template" name="Admin Dashboard">
+        <t t-call="website.layout">
+            <div class="container mt-5">
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h2 class="text-primary mb-4">
+                            <i class="fa fa-tachometer-alt mr-2"></i>Admin Dashboard
+                        </h2>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Products Card -->
+                    <div class="col-md-4 mb-4">
+                        <a href="/ecommerce_admin/products" class="card dashboard-card h-100 text-decoration-none">
+                            <div class="card-body text-center">
+                                <div class="dashboard-icon bg-primary-light">
+                                    <i class="fa fa-boxes text-primary"></i>
+                                </div>
+                                <h4 class="card-title mt-3">Products</h4>
+                                <p class="text-muted">Manage your product catalog</p>
+                            </div>
+                            <div class="card-footer bg-transparent border-top-0">
+                                <span class="text-primary">View Products <i class="fa fa-arrow-right ml-1"></i></span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Orders Card -->
+                    <div class="col-md-4 mb-4">
+                        <a href="#" class="card dashboard-card h-100 text-decoration-none">
+                            <div class="card-body text-center">
+                                <div class="dashboard-icon bg-success-light">
+                                    <i class="fa fa-shopping-cart text-success"></i>
+                                </div>
+                                <h4 class="card-title mt-3">Orders</h4>
+                                <p class="text-muted">View and process orders</p>
+                            </div>
+                            <div class="card-footer bg-transparent border-top-0">
+                                <span class="text-success">View Orders <i class="fa fa-arrow-right ml-1"></i></span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Customers Card -->
+                    <div class="col-md-4 mb-4">
+                        <a href="#" class="card dashboard-card h-100 text-decoration-none">
+                            <div class="card-body text-center">
+                                <div class="dashboard-icon bg-info-light">
+                                    <i class="fa fa-users text-info"></i>
+                                </div>
+                                <h4 class="card-title mt-3">Customers</h4>
+                                <p class="text-muted">Manage customer accounts</p>
+                            </div>
+                            <div class="card-footer bg-transparent border-top-0">
+                                <span class="text-info">View Customers <i class="fa fa-arrow-right ml-1"></i></span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Stats Row -->
+                <div class="row mt-4">
+                    <div class="col-md-3 mb-4">
+                        <div class="card stat-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h6 class="text-muted mb-2">Total Products</h6>
+                                        <h3 class="mb-0">1,248</h3>
+                                    </div>
+                                    <div class="stat-icon bg-primary-light">
+                                        <i class="fa fa-box text-primary"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <div class="card stat-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h6 class="text-muted mb-2">New Orders</h6>
+                                        <h3 class="mb-0">56</h3>
+                                    </div>
+                                    <div class="stat-icon bg-success-light">
+                                        <i class="fa fa-shopping-bag text-success"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <div class="card stat-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h6 class="text-muted mb-2">Customers</h6>
+                                        <h3 class="mb-0">892</h3>
+                                    </div>
+                                    <div class="stat-icon bg-info-light">
+                                        <i class="fa fa-user-friends text-info"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <div class="card stat-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <h6 class="text-muted mb-2">Revenue</h6>
+                                        <h3 class="mb-0">$24,560</h3>
+                                    </div>
+                                    <div class="stat-icon bg-warning-light">
+                                        <i class="fa fa-dollar-sign text-warning"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <style>
+                    .dashboard-card {
+                        border: none;
+                        border-radius: 10px;
+                        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                        transition: all 0.3s ease;
+                    }
+                    .dashboard-card:hover {
+                        transform: translateY(-5px);
+                        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+                    }
+                    .dashboard-icon {
+                        width: 60px;
+                        height: 60px;
+                        margin: 0 auto;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 24px;
+                    }
+                    .stat-card {
+                        border-radius: 10px;
+                        border: none;
+                        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+                    }
+                    .stat-icon {
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                    .bg-primary-light {
+                        background-color: rgba(13, 110, 253, 0.1);
+                    }
+                    .bg-success-light {
+                        background-color: rgba(25, 135, 84, 0.1);
+                    }
+                    .bg-info-light {
+                        background-color: rgba(13, 202, 240, 0.1);
+                    }
+                    .bg-warning-light {
+                        background-color: rgba(255, 193, 7, 0.1);
+                    }
+                </style>
+            </div>
+        </t>
+    </template>
+
+<template id="product_list" name="Product List">
+    <t t-call="website.layout">
+        <div class="container my-5">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="mb-0">Products</h2>
+                <div class="d-flex gap-2">
+                    <a href="/ecommerce_admin/dashboard" class="btn btn-outline-primary">
+                        <i class="fa fa-tachometer-alt me-2"></i>Dashboard
+                    </a>
+                    <a href="/ecommerce_admin/products/create" class="btn btn-success">
+                        <i class="fa fa-plus me-2"></i>Create Product
+                    </a>
+                </div>
+            </div>
+
+            <!-- Search and Filter Section -->
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <form method="get" action="/ecommerce_admin/products" class="row g-3">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text bg-light">
+                                    <i class="fa fa-search"></i>
+                                </span>
+                                <input type="text" name="search" class="form-control" 
+                                    placeholder="Search products..." t-att-value="search_query or ''"/>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <select name="category" class="form-select">
+                                <option value="">All Categories</option>
+                                <t t-foreach="categories" t-as="cat">
+                                    <option t-att-value="cat.id" 
+                                            t-att-selected="selected_category and selected_category == cat.id and 'selected' or None">
+                                        <t t-esc="cat.name"/>
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="fa fa-filter mr-2"></i> Filter
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <style>
+                .product-card {
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    transition: transform 0.3s ease, box-shadow 0.3s ease;
+                }
+                .product-card:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                }
+                .product-image-wrapper {
+                    height: 200px;
+                    overflow: hidden;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background-color: #f8f9fa;
+                }
+                .product-thumb {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: contain;
+                    object-position: center;
+                    transition: transform 0.3s ease;
+                }
+                .product-card:hover .product-thumb {
+                    transform: scale(1.05);
+                }
+                .card-body {
+                    flex-grow: 1;
+                }
+                .badge-category {
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    background-color: rgba(0,0,0,0.7);
+                }
+                .page-item.active .page-link {
+                    background-color: #0d6efd;
+                    border-color: #0d6efd;
+                }
+            </style>
+
+            <div class="row">
+                <t t-if="products">
+                    <t t-foreach="products" t-as="product">
+                        <div class="col-sm-6 col-md-4 col-lg-3 mb-4 d-flex">
+                            <a t-att-href="'/ecommerce_admin/products/%s' % product.id" class="text-decoration-none text-dark w-100">
+                                <div class="card h-100 shadow-sm product-card">
+                                    <div class="product-image-wrapper position-relative">
+                                        <img t-attf-src="/web/image/product.template/{{ product.id }}/image_1920"
+                                            class="product-thumb"
+                                            t-att-data-fallback="'/web/static/src/img/placeholder.png'"
+                                            alt="Product Image"/>
+                                    </div>
+                                    <div class="card-body d-flex flex-column">
+                                        <h5 class="card-title text-truncate"><t t-esc="product.name"/></h5>
+                                        <div class="mt-auto">
+                                            <p class="card-text font-weight-bold mb-1">Rs. <t t-esc="product.list_price"/></p>
+                                            <small class="text-muted">
+                                                <t t-if="product.create_date">
+                                                    Added: <t t-esc="format_date(product.create_date)"/>
+                                                </t>
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </t>
+                </t>
+                <t t-else="">
+                    <div class="col-12 text-center py-5">
+                        <i class="fa fa-box-open fa-3x text-muted mb-3"></i>
+                        <p class="text-muted">No products found.</p>
+                        <a href="/ecommerce_admin/products" class="btn btn-outline-primary">
+                            <i class="fa fa-sync-alt mr-2"></i> Reset Filters
+                        </a>
+                    </div>
+                </t>
+            </div>
+
+            <!-- Pagination -->
+            <t t-if="page_count > 1">
+                <nav aria-label="Product pagination">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item" t-att-class="'disabled' if current_page == 1 else ''">
+                            <a class="page-link" t-att-href="'/ecommerce_admin/products?page=%s&amp;search=%s&amp;category=%s' % (current_page-1, search_query or '', selected_category or '')">
+                                Previous
+                            </a>
+                        </li>
+                        <t t-foreach="range(1, page_count+1)" t-as="page">
+                            <li class="page-item" t-att-class="'active' if page == current_page else ''">
+                                <a class="page-link" t-att-href="'/ecommerce_admin/products?page=%s&amp;search=%s&amp;category=%s' % (page, search_query or '', selected_category or '')">
+                                    <t t-esc="page"/>
+                                </a>
+                            </li>
+                        </t>
+                        <li class="page-item" t-att-class="'disabled' if current_page == page_count else ''">
+                            <a class="page-link" t-att-href="'/ecommerce_admin/products?page=%s&amp;search=%s&amp;category=%s' % (current_page+1, search_query or '', selected_category or '')">
+                                Next
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </t>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Handle image fallback
+                document.querySelectorAll('img[data-fallback]').forEach(function(img) {
+                    img.onerror = function() {
+                        this.src = this.dataset.fallback;
+                    };
+                });
+            });
+        </script>
+    </t>
+</template>
+
+<template id="product_detail" name="Product Detail">
+    <t t-call="website.layout">
+        <div class="container py-5">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h2 class="h5 mb-0">
+                        <i class="fa fa-cube me-2"></i>Product Details
+                    </h2>
+                    <div class="d-flex gap-2">
+                        <!-- <a t-att-href="'/ecommerce_admin/products/%s/edit' % product.id" class="btn btn-warning btn-sm">
+                            <i class="fa fa-edit me-1"></i>Edit
+                        </a> -->
+                        <a href="/ecommerce_admin/products" class="btn btn-outline-light btn-sm">
+                            <i class="fa fa-arrow-left me-1"></i>Back
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="row g-4">
+                        <!-- Product Image -->
+                        <div class="col-md-6">
+                            <div class="border rounded d-flex align-items-center justify-content-center bg-light" style="height: 400px;">
+                                <img t-if="product.image_1920" 
+                                     t-att-src="'/web/image/product.template/%s/image_1920' % product.id" 
+                                     alt="Product Image"
+                                     class="img-fluid object-fit-contain" style="max-height: 100%; max-width: 100%;"
+                                     t-att-data-fallback="'/web/static/src/img/placeholder.png'"/>
+                                <img t-if="not product.image_1920" 
+                                     t-att-src="'/web/static/src/img/placeholder.png'" 
+                                     alt="No Image"
+                                     class="img-fluid object-fit-contain" style="max-height: 100%; max-width: 100%;"/>
+                            </div>
+                        </div>
+
+                        <!-- Product Info -->
+                        <div class="col-md-6">
+                            <h3 class="fw-semibold mb-3 text-dark"><t t-esc="product.name"/></h3>
+
+                            <div class="mb-3">
+                                <h4 class="text-success">Rs. <t t-esc="product.list_price"/></h4>
+                                <p class="text-muted mb-0">Cost Price: Rs. <t t-esc="product.standard_price or '0.00'"/></p>
+                            </div>
+
+                            <hr class="my-4"/>
+
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <p class="mb-1"><strong>Product ID:</strong></p>
+                                    <p class="text-muted"><t t-esc="product.id"/></p>
+                                </div>
+                                <div class="col-6">
+                                    <p class="mb-1"><strong>Created On:</strong></p>
+                                    <p class="text-muted"><t t-esc="format_date(product.create_date)"/></p>
+                                </div>
+                            </div>
+
+                            <t t-if="product.public_categ_ids">
+                                <div class="mb-4">
+                                    <p class="mb-1 fw-bold text-primary">Categories</p>
+                                    <div class="d-flex flex-wrap gap-2">
+                                        <t t-foreach="product.public_categ_ids" t-as="category">
+                                            <span class="badge rounded-pill bg-info text-white px-3 py-2" t-esc="category.name"/>
+                                        </t>
+                                    </div>
+                                </div>
+                            </t>
+
+                            <div class="mt-4">
+                                <a t-att-href="'/ecommerce_admin/products/%s/edit' % product.id" class="btn btn-primary">
+                                    <i class="fa fa-edit me-2"></i>Edit Product
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            .object-fit-contain {
+                object-fit: contain;
+                object-position: center;
+            }
+            .card-body p {
+                margin-bottom: 0.25rem;
+            }
+        </style>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                document.querySelectorAll('img[data-fallback]').forEach(function (img) {
+                    img.onerror = function () {
+                        this.src = this.dataset.fallback;
+                    };
+                });
+            });
+        </script>
+    </t>
+</template>
+
+
+<template id="product_edit" name="Edit Product">
+    <t t-call="website.layout">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 col-xl-8">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h2 class="h4 text-primary mb-0"><i class="fa fa-edit me-2"></i>Edit Product</h2>
+                        <a href="/ecommerce_admin/products" class="btn btn-outline-secondary">
+                            <i class="fa fa-arrow-left me-1"></i>Back to Products
+                        </a>
+                    </div>
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <form method="POST" enctype="multipart/form-data" t-att-action="'/ecommerce_admin/products/%s/update' % product.id">
+                                <!-- Product Name -->
+                                <div class="mb-4">
+                                    <label for="name" class="form-label fw-bold">Product Name <span class="text-danger">*</span></label>
+                                    <input type="text" name="name" id="name" class="form-control"
+                                           placeholder="Enter product name" t-att-value="product.name"
+                                           t-att-required="'required'"/>
+                                </div>
+
+                                <!-- Price Row -->
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <label for="list_price" class="form-label fw-bold">Sell Price <span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">Rs.</span>
+                                            <input type="number" step="0.01" name="list_price" id="list_price"
+                                                   class="form-control" placeholder="0.00"
+                                                   t-att-value="product.list_price" t-att-required="'required'"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <label for="standard_price" class="form-label fw-bold">Cost Price</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">Rs.</span>
+                                            <input type="number" step="0.01" name="standard_price" id="standard_price"
+                                                   class="form-control" placeholder="0.00"
+                                                   t-att-value="product.standard_price"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Categories -->
+                                <div class="mb-4">
+                                    <label for="public_categ_ids" class="form-label fw-bold">Categories</label>
+                                    <select name="public_categ_ids" id="public_categ_ids" class="form-select">
+                                        <t t-foreach="categories" t-as="cat">
+                                            <option t-att-value="cat.id"
+                                                    t-att-selected="product.public_categ_ids and cat.id in product.public_categ_ids.ids and 'selected'">
+                                                <t t-esc="cat.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+
+                                <!-- Image Upload -->
+                                <div class="mb-4">
+                                    <label for="image_1920" class="form-label fw-bold">Product Image</label>
+                                    <div class="border rounded p-3 text-center bg-light">
+                                        <img t-att-src="product.image_1920 and '/web/image/product.template/%s/image_1920' % product.id or '/web/static/src/img/placeholder.png'" 
+                                             alt="Preview" class="img-fluid mb-3 rounded" style="max-height: 200px;" id="previewImage"/>
+                                        <input type="file" name="image_1920" id="image_1920" class="form-control"/>
+                                    </div>
+                                </div>
+
+                                <!-- Buttons -->
+                                <div class="d-flex justify-content-between mt-4">
+                                    <a t-att-href="'/ecommerce_admin/products/%s' % product.id" class="btn btn-outline-secondary">
+                                        <i class="fa fa-times me-1"></i>Cancel
+                                    </a>
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="fa fa-save me-2"></i>Update Product
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</template>
+
+
+
+<template id="product_create" name="Create Product">
+    <t t-call="website.layout">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 col-xl-8">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h2 class="h4 text-primary mb-0"><i class="fa fa-plus-circle me-2"></i>Create New Product</h2>
+                        <a href="/ecommerce_admin/products" class="btn btn-outline-secondary">
+                            <i class="fa fa-arrow-left me-1"></i>Back to Products
+                        </a>
+                    </div>
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <form method="POST" enctype="multipart/form-data" t-attf-class="needs-validation #{error and 'was-validated' or ''}">
+                                <!-- Product Name -->
+                                <div class="mb-4">
+                                    <label for="name" class="form-label fw-bold">Product Name <span class="text-danger">*</span></label>
+                                    <input type="text" name="name" id="name" class="form-control"
+                                           placeholder="Enter product name" t-att-required="'required'"/>
+                                    <t t-if="error and error.get('name')">
+                                        <div class="invalid-feedback d-block" t-esc="error.get('name')"/>
+                                    </t>
+                                </div>
+
+                                <!-- Price Row -->
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <label for="list_price" class="form-label fw-bold">Sell Price <span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">Rs.</span>
+                                            <input type="number" step="0.01" name="list_price" id="list_price"
+                                                   class="form-control" placeholder="0.00" t-att-required="'required'"/>
+                                            <t t-if="error and error.get('list_price')">
+                                                <div class="invalid-feedback d-block" t-esc="error.get('list_price')"/>
+                                            </t>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <label for="standard_price" class="form-label fw-bold">Cost Price</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">Rs.</span>
+                                            <input type="number" step="0.01" name="standard_price" id="standard_price"
+                                                   class="form-control" placeholder="0.00"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Single Category -->
+                                <div class="mb-4">
+                                    <label for="public_categ_id" class="form-label fw-bold">Category</label>
+                                    <select name="public_categ_id" id="public_categ_id" class="form-select">
+                                        <option value="">-- Select Category --</option>
+                                        <t t-foreach="categories" t-as="cat">
+                                            <option t-att-value="cat.id" t-esc="cat.name"/>
+                                        </t>
+                                    </select>
+                                </div>
+
+                                <!-- Image Upload -->
+                                <div class="mb-4">
+                                    <label for="image_1920" class="form-label fw-bold">Product Image</label>
+                                    <div class="border rounded p-3 text-center bg-light">
+                                        <img t-att-src="existing_image or '/web/static/src/img/placeholder.png'" 
+                                             alt="Preview" class="img-fluid mb-3 rounded"
+                                             t-att-class="not existing_image and 'd-none' or ''" 
+                                             id="previewImage" style="max-height: 200px;"/>
+                                        <input type="file" name="image_1920" id="image_1920" class="form-control"/>
+                                    </div>
+                                </div>
+
+                                <!-- Buttons -->
+                                <div class="d-flex justify-content-between mt-4">
+                                    <a href="/ecommerce_admin/products" class="btn btn-outline-secondary">
+                                        <i class="fa fa-times me-1"></i>Cancel
+                                    </a>
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="fa fa-save me-2"></i>Create Product
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</template>
+
+
+</odoo>
