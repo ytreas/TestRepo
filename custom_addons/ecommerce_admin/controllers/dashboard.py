@@ -5,7 +5,40 @@ from datetime import datetime
 from math import ceil
 
 class EcommerceAdminDashboard(http.Controller):
+    @http.route('/ecommerce_admin/order', type='http', auth='user', website=True)
+    def ecommerce_order_list(self, customer_id=None, **kwargs):
+        if not self._is_admin():
+            return request.redirect('/web/login')
 
+        domain = []
+        if customer_id:
+            domain.append(('partner_id', '=', int(customer_id)))
+
+        orders = request.env['sale.order'].sudo().search(domain, order="date_order desc", limit=50)
+        return request.render('ecommerce_admin.order_list_template', {
+            'orders': orders,
+            'filter_customer_id': int(customer_id) if customer_id else None,
+        })
+
+    @http.route('/ecommerce_admin/order/<int:order_id>', type='http', auth='user', website=True)
+    def ecommerce_order_detail(self, order_id, **kwargs):
+        if not self._is_admin():
+            return request.redirect('/web/login')
+        order = request.env['sale.order'].sudo().browse(order_id)
+        return request.render('ecommerce_admin.order_detail_template', {
+            'order': order,
+        })
+    @http.route('/ecommerce_admin/customers', type='http', auth='user', website=True)
+    def ecommerce_customers(self, **kwargs):
+        if not self._is_admin():
+            return request.redirect('/web/login')
+        portal_group = request.env.ref('base.group_portal')
+        customers = request.env['res.users'].sudo().search([
+            ('groups_id', 'in', [portal_group.id])
+        ], order='name asc')
+        return request.render('ecommerce_admin.customer_list_template', {
+            'customers': customers,
+        })
     def _is_admin(self):
         return request.env.user.has_group('ecommerce_admin.group_ecommerce_admin')
 
