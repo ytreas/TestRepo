@@ -58,7 +58,40 @@
                             </div>
                         </a>
                     </div>
+
+                    <!-- Categories Card -->
+                    <div class="col-md-4 mb-4">
+                        <a href="/ecommerce_admin/categories" class="card dashboard-card h-100 text-decoration-none">
+                            <div class="card-body text-center">
+                                <div class="dashboard-icon bg-warning-light">
+                                    <i class="fa fa-tags text-warning"></i>
+                                </div>
+                                <h4 class="card-title mt-3">Categories</h4>
+                                <p class="text-muted">Organize your products</p>
+                            </div>
+                            <div class="card-footer bg-transparent border-top-0">
+                                <span class="text-warning">View Categories <i class="fa fa-arrow-right ml-1"></i></span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Discounts Card -->
+                    <div class="col-md-4 mb-4">
+                        <a href="/ecommerce_admin/discounts" class="card dashboard-card h-100 text-decoration-none">
+                            <div class="card-body text-center">
+                                <div class="dashboard-icon bg-danger-light">
+                                    <i class="fa fa-percentage text-danger"></i>
+                                </div>
+                                <h4 class="card-title mt-3">Discounts</h4>
+                                <p class="text-muted">Create and manage discounts</p>
+                            </div>
+                            <div class="card-footer bg-transparent border-top-0">
+                                <span class="text-danger">View Discounts <i class="fa fa-arrow-right ml-1"></i></span>
+                            </div>
+                        </a>
+                    </div>
                 </div>
+
 
                 <!-- Quick Stats Row -->
                 <div class="row mt-4">
@@ -170,6 +203,15 @@
                     .bg-warning-light {
                         background-color: rgba(255, 193, 7, 0.1);
                     }
+                    .bg-danger-light {
+                        background-color: rgba(220, 53, 69, 0.1);
+                    }
+                    .text-danger {
+                        color: #dc3545 !important;
+                    }
+                    .text-warning {
+                        color: #ffc107 !important;
+                    }
                 </style>
             </div>
         </t>
@@ -183,6 +225,33 @@
           <i class="fa fa-tachometer-alt me-2"></i> Dashboard
         </a>
       </div>
+        <!-- 🔍 Search and Filter Form -->
+    <form method="get" class="row g-3 mb-4">
+        <div class="col-md-4">
+        <input type="text" name="search" class="form-control" placeholder="Search by Order ID" t-att-value="search_term or ''"/>
+        </div>
+        <div class="col-md-3">
+        <select class="form-select" name="status">
+            <option value="">All</option>
+            <option value="draft" t-att-selected="filter_status == 'draft'">Quotation</option>
+            <option value="sale" t-att-selected="filter_status == 'sale'">Confirmed</option>
+            <option value="cancel" t-att-selected="filter_status == 'cancel'">Cancelled</option>
+        </select>
+        </div>
+        <t t-if="filter_customer_id">
+        <input type="hidden" name="customer_id" t-att-value="filter_customer_id"/>
+        </t>
+        <div class="col-md-2">
+        <button type="submit" class="btn btn-outline-primary w-100">
+            <i class="fa fa-filter me-2"></i> Apply
+        </button>
+        </div>
+        <div class="col-md-2">
+        <a href="/ecommerce_admin/order" class="btn btn-outline-secondary w-100">
+            <i class="fa fa-times me-2"></i> Clear
+        </a>
+        </div>
+    </form>
     <t t-if="filter_customer_id">
     <div class="alert alert-info mb-3">
         Showing orders for: <strong><t t-esc="orders and orders[0].partner_id.name or 'Customer'"/></strong>
@@ -366,7 +435,7 @@
                                 <t t-foreach="categories" t-as="cat">
                                     <option t-att-value="cat.id" 
                                             t-att-selected="selected_category and selected_category == cat.id and 'selected' or None">
-                                        <t t-esc="cat.name"/>
+                                        <t t-esc="cat.display_name"/>
                                     </option>
                                 </t>
                             </select>
@@ -692,16 +761,31 @@
 
                                 <!-- Categories -->
                                 <div class="mb-4">
-                                    <label for="public_categ_ids" class="form-label fw-bold">Categories</label>
-                                    <select name="public_categ_ids" id="public_categ_ids" class="form-select">
+                                    <label for="categ_id" class="form-label fw-bold">Internal Category</label>
+                                    <select name="categ_id" id="categ_id" class="form-select" t-att-required="True">
+                                        <option value="">-- Select Internal Category --</option>
                                         <t t-foreach="categories" t-as="cat">
                                             <option t-att-value="cat.id"
-                                                    t-att-selected="product.public_categ_ids and cat.id in product.public_categ_ids.ids and 'selected'">
-                                                <t t-esc="cat.name"/>
+                                                    t-att-selected="'selected' if product.categ_id and product.categ_id.id == cat.id else None">
+                                                <t t-esc="cat.display_name or cat.name"/>
                                             </option>
                                         </t>
                                     </select>
                                 </div>
+
+                                <div class="mb-4">
+                                    <label for="public_categ_ids" class="form-label fw-bold">Public Categories</label>
+                                    <select name="public_categ_ids" id="public_categ_ids" class="form-select" t-att-required="True">
+                                        <t t-foreach="public_categories" t-as="cat">
+                                            <option t-att-value="cat.id"
+                                                    t-att-selected="'selected' if cat.id in product.public_categ_ids.ids else None">
+                                                <t t-esc="cat.display_name or cat.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+
+
 
                                 <!-- Image Upload -->
                                 <div class="mb-4">
@@ -781,15 +865,32 @@
                                 </div>
 
                                 <!-- Single Category -->
-                                <div class="mb-4">
-                                    <label for="public_categ_id" class="form-label fw-bold">Category</label>
-                                    <select name="public_categ_id" id="public_categ_id" class="form-select">
-                                        <option value="">-- Select Category --</option>
-                                        <t t-foreach="categories" t-as="cat">
-                                            <option t-att-value="cat.id" t-esc="cat.name"/>
-                                        </t>
-                                    </select>
-                                </div>
+                        <!-- Internal Category -->
+                    <div class="col-md-6">
+                        <label for="internal_categ_id" class="form-label">Internal Category</label>
+                        <select name="internal_categ_id" id="internal_categ_id" class="form-select" t-att-required="True">
+                            <option value="">-- Select Internal Category --</option>
+                            <t t-foreach="categories" t-as="cat">
+                                <option t-att-value="cat.id">
+                                    <t t-esc="cat.complete_name or cat.name"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+
+                    <!-- Public Category -->
+                    <div class="col-md-6">
+                        <label for="public_categ_id" class="form-label">Public Category</label>
+                        <select name="public_categ_id" id="public_categ_id" class="form-select" t-att-required="True">
+                            <option value="">-- Select Public Category --</option>
+                            <t t-foreach="public_categories" t-as="cat">
+                                <option t-att-value="cat.id">
+                                    <t t-esc="cat.display_name or cat.name"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+
 
                                 <!-- Image Upload -->
                                 <div class="mb-4">
@@ -862,5 +963,647 @@
       </div>
     </t>
   </template>
+<template id="category_list" name="Category List">
+    <t t-call="website.layout">
+        <div class="container mt-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="mb-0">Categories Management</h2>
+                <a href="/ecommerce_admin/categories/create" class="btn btn-primary">
+                    <i class="fa fa-plus me-2"></i>Create New
+                </a>
+            </div>
 
+            <!-- Search Box -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <form method="get" class="row g-3">
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <input type="text" name="search" class="form-control" 
+                                       t-att-value="search_term" placeholder="Search categories..."/>
+                                <button type="submit" class="btn btn-outline-primary">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <a href="/ecommerce_admin/categories" class="btn btn-outline-secondary">
+                                <i class="fa fa-refresh me-1"></i>Reset
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Categories List -->
+            <div class="card">
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush">
+                        <t t-if="categories">
+                            <t t-foreach="categories" t-as="cat">
+                                <t t-call="ecommerce_admin.category_item">
+                                    <t t-set="category" t-value="cat"/>
+                                    <t t-set="level" t-value="0"/>
+                                </t>
+
+                            </t>
+                        </t>
+                        <t t-if="not categories">
+                            <!-- Empty State -->
+                            <div class="text-center py-5">
+                                <i class="fa fa-folder-open fa-4x text-muted mb-3"></i>
+                                <h4>No categories found</h4>
+                                <p class="text-muted" t-if="search_term">
+                                    No results for "<t t-esc="search_term"/>". Try a different search.
+                                </p>
+                                <p class="text-muted" t-if="not search_term">
+                                    You haven't created any categories yet.
+                                </p>
+                                <a href="/ecommerce_admin/categories/create" class="btn btn-primary mt-3">
+                                    <i class="fa fa-plus me-2"></i>Create Your First Category
+                                </a>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</template>
+
+
+<template id="category_item">
+    <t t-set="safe_level" t-value="level or 0"/>
+    <div t-attf-class="list-group-item mb-2 border-start border-3 border-primary ms-{{ safe_level * 4 }}">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <i t-attf-class="fa me-3 {{ 'fa-folder-open text-warning' if safe_level == 0 else 'fa-folder text-muted' }}"/>
+                <h5 t-if="safe_level == 0" class="mb-0">
+                    <t t-esc="category['name']"/>
+                </h5>
+                <span t-if="safe_level != 0">
+                    <t t-esc="category['name']"/>
+                </span>
+            </div>
+            <div>
+                <a t-att-href="'/ecommerce_admin/categories/%s' % category['id']" 
+                   class="btn btn-sm btn-outline-secondary me-2">
+                    <i class="fa fa-edit"></i> Edit
+                </a>
+                <a t-att-href="'/ecommerce_admin/categories/%s/delete' % category['id']" 
+                   class="btn btn-sm btn-outline-danger">
+                    <i class="fa fa-trash"></i> Delete
+                </a>
+            </div>
+        </div>
+
+        <!-- Recursive Children -->
+        <t t-if="category['children']">
+            <t t-foreach="category['children']" t-as="child">
+                <t t-call="ecommerce_admin.category_item">
+                    <t t-set="category" t-value="child"/>
+                    <t t-set="level" t-value="safe_level + 1"/>
+                </t>
+            </t>
+        </t>
+    </div>
+</template>
+
+
+
+
+<template id="category_detail" name="Edit Category">
+    <t t-call="website.layout">
+        <div class="container mt-4">
+            <!-- Breadcrumb Navigation -->
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a t-att-href="'/ecommerce_admin/categories'">Categories</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        Edit <t t-esc="category.name"/>
+                    </li>
+                </ol>
+            </nav>
+
+            <div class="card">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">
+                        <i class="fa fa-pencil-alt text-primary me-2"></i>
+                        Edit Category: <span class="text-primary"><t t-esc="category.name"/></span>
+                    </h4>
+                    <div>
+                        <a t-att-href="'/ecommerce_admin/categories'" class="btn btn-outline-secondary">
+                            <i class="fa fa-arrow-left me-1"></i> Back to List
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <!-- Parent Category Info (if exists) -->
+                    <t t-if="parent_category">
+                        <div class="alert alert-info mb-4">
+                            <div class="d-flex align-items-center">
+                                <i class="fa fa-info-circle me-3 fs-4"></i>
+                                <div>
+                                    <h5 class="alert-heading mb-1">Parent Category</h5>
+                                    <p class="mb-0">
+                                        This category belongs to: 
+                                        <a t-att-href="'/ecommerce_admin/categories/%s' % parent_category.id" 
+                                           class="fw-bold text-decoration-none">
+                                            <t t-esc="parent_category.name"/>
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+
+                    <!-- Child Categories Info (if exists) -->
+                    <t t-if="child_categories">
+                        <div class="alert alert-warning mb-4">
+                            <div class="d-flex align-items-center">
+                                <i class="fa fa-exclamation-triangle me-3 fs-4"></i>
+                                <div>
+                                    <h5 class="alert-heading mb-1">Child Categories</h5>
+                                    <p class="mb-2">Changes to this category will affect its child categories:</p>
+                                    <div class="d-flex flex-wrap gap-2">
+                                        <t t-foreach="child_categories" t-as="child">
+                                            <a t-att-href="'/ecommerce_admin/categories/%s' % child.id" 
+                                               class="badge bg-light text-dark text-decoration-none">
+                                                <i class="fa fa-folder me-1"></i>
+                                                <t t-esc="child.name"/>
+                                            </a>
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+
+                    <!-- Edit Form -->
+                    <form t-att-method="'POST'" class="mt-4">
+                        <input t-att-type="'hidden'" t-att-name="'csrf_token'" t-att-value="request.csrf_token()"/>
+                        
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="mb-4">
+                                    <label t-att-class="'form-label fw-bold'">Category Name</label>
+                                    <input t-att-type="'text'"
+                                           t-att-class="'form-control form-control-lg'"
+                                           t-att-name="'name'"
+                                           t-att-value="category.name"
+                                           t-att-required="'required'"/>
+                                    <div t-att-class="'form-text'">The name that will appear in your store</div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label t-att-class="'form-label fw-bold'">Parent Category</label>
+                                    <select t-att-class="'form-select'" t-att-name="'parent_id'">
+                                        <option t-att-value="''">-- No Parent Category --</option>
+                                        <t t-foreach="request.env['product.public.category'].sudo().search([('id', '!=', category.id)])" t-as="cat">
+                                            <option t-att-value="cat.id" 
+                                                    t-att-selected="category.parent_id and category.parent_id.id == cat.id">
+                                                <t t-esc="cat.sisplay_name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                    <div t-att-class="'form-text'">Changing parent will reorganize your category hierarchy</div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <div t-att-class="'card bg-light'">
+                                    <div t-att-class="'card-body'">
+                                        <h5 t-att-class="'card-title'">
+                                            <i t-att-class="'fa fa-cog me-2'"></i>Settings
+                                        </h5>
+                                        
+                                        <div t-att-class="'mb-3'">
+                                            <label t-att-class="'form-label fw-bold'">Sequence</label>
+                                            <input t-att-type="'number'"
+                                                   t-att-class="'form-control'"
+                                                   t-att-name="'sequence'"
+                                                   t-att-value="category.sequence or 10"/>
+                                            <div t-att-class="'form-text'">Lower numbers appear first</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div t-att-class="'d-flex justify-content-between mt-4'">
+                            <div>
+                                <a t-att-href="'/ecommerce_admin/categories/%s/delete' % category.id" 
+                                   t-att-class="'btn btn-outline-danger me-2'">
+                                    <i t-att-class="'fa fa-trash me-1'"></i> Delete Category
+                                </a>
+                            </div>
+                            <div>
+                                <a t-att-href="'/ecommerce_admin/categories'" t-att-class="'btn btn-outline-secondary me-2'">
+                                    Cancel
+                                </a>
+                                <button t-att-type="'submit'" t-att-class="'btn btn-primary'">
+                                    <i t-att-class="'fa fa-save me-1'"></i> Save Changes
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </t>
+</template>
+<template id="category_create" name="Create Category">
+    <t t-call="website.layout">
+        <div class="container mt-4">
+            <div class="card">
+                <div class="card-header bg-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="mb-0">
+                            <i class="fa fa-plus-circle text-primary me-2"></i>
+                            Create New Category
+                        </h2>
+                        <a t-att-href="'/ecommerce_admin/categories'" class="btn btn-outline-secondary">
+                            <i class="fa fa-arrow-left me-1"></i> Back to Categories
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <form t-att-method="'POST'" class="mt-3">
+                        <input t-att-type="'hidden'" t-att-name="'csrf_token'" t-att-value="request.csrf_token()"/>
+                        
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="mb-4">
+                                    <label t-att-class="'form-label fw-bold'">Category Name</label>
+                                    <input t-att-type="'text'"
+                                           t-att-class="'form-control form-control-lg'"
+                                           t-att-name="'name'"
+                                           t-att-required="'required'"
+                                           t-att-placeholder="'e.g., Electronics, Clothing, etc.'"/>
+                                    <div t-att-class="'form-text text-muted'">Enter a descriptive name for your new category</div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label t-att-class="'form-label fw-bold'">Parent Category</label>
+                                    <select t-att-class="'form-select'" t-att-name="'parent_id'">
+                                        <option t-att-value="''">-- No Parent Category --</option>
+                                        <t t-foreach="parent_categories" t-as="pc">
+                                            <option t-att-value="pc.id">
+                                                <t t-esc="pc.display_name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                    <div t-att-class="'form-text text-muted'">Select if this should be a sub-category</div>
+                                </div>
+
+                                <div class="d-flex justify-content-end mt-4">
+                                    <button t-att-type="'submit'" t-att-class="'btn btn-primary px-4 py-2'">
+                                        <i class="fa fa-save me-2"></i>Create Category
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <div t-att-class="'card bg-light'">
+                                    <div t-att-class="'card-body'">
+                                        <h5 t-att-class="'card-title'">
+                                            <i class="fa fa-info-circle me-2"></i>Tips
+                                        </h5>
+                                        <ul class="list-unstyled">
+                                            <li class="mb-2">
+                                                <small class="text-muted">
+                                                    <i class="fa fa-check-circle text-success me-1"></i>
+                                                    Keep category names clear and descriptive
+                                                </small>
+                                            </li>
+                                            <li class="mb-2">
+                                                <small class="text-muted">
+                                                    <i class="fa fa-check-circle text-success me-1"></i>
+                                                    Use sub-categories to organize related products
+                                                </small>
+                                            </li>
+                                            <li>
+                                                <small class="text-muted">
+                                                    <i class="fa fa-check-circle text-success me-1"></i>
+                                                    You can edit categories later
+                                                </small>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </t>
+</template>
+<template id="discount_list" name="Discount List">
+    <t t-call="website.layout">
+        <div class="container py-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="mb-0">Discounts</h2>
+            <div>
+                <a href="/ecommerce_admin/dashboard" class="btn btn-secondary me-2">
+                    <i class="fa fa-arrow-left me-1"></i> Back to Dashboard
+                </a>
+                <a href="/ecommerce_admin/discounts/create" class="btn btn-success">
+                    <i class="fa fa-plus me-1"></i> Create Discount
+                </a>
+            </div>
+        </div>
+
+            <div class="row">
+                <t t-foreach="items" t-as="item">
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <i class="fa fa-percentage me-2 text-danger"></i>
+                                    <t t-esc="item.pricelist_id.name"/>
+                                </h5>
+                                <p>Currency: <t t-esc="item.pricelist_id.currency_id.name"/></p>
+                                <hr/>
+                                <p><strong>Discount:</strong> <t t-esc="item.percent_price"/>%</p>
+                                <p><strong>Applied To:</strong>
+                                    <t t-if="item.applied_on == '1_product'">
+                                        Product: <t t-esc="item.product_tmpl_id.name"/>
+                                    </t>
+                                    <t t-if="item.applied_on == '2_product_category'">
+                                        Category: <t t-esc="item.categ_id.name"/>
+                                    </t>
+                                </p>
+                                <p><strong>Valid:</strong>
+                                    <t t-esc="item.date_start"/> to <t t-esc="item.date_end"/>
+                                </p>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between bg-transparent">
+                                <a t-attf-href="/ecommerce_admin/discounts/edit/{{item.id}}" class="btn btn-sm btn-outline-primary">
+                                    <i class="fa fa-edit"></i> Edit
+                                </a>
+                                <a t-attf-href="/ecommerce_admin/discounts/delete/{{item.id}}" class="btn btn-sm btn-outline-danger">
+                                    <i class="fa fa-trash"></i> Delete
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </div>
+        </div>
+    </t>
+</template>
+<template id="discount_create" name="Create Discount">
+    <t t-set="head">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"/>
+    </t>
+
+    <t t-call="website.layout">
+        <div class="container py-5">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="h4 mb-0"><i class="fa fa-tag me-2"></i>Create Discount</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post" class="row g-3 needs-validation">
+                        <input t-att-type="'hidden'" t-att-name="'csrf_token'" t-att-value="request.csrf_token()"/>
+                        <!-- Apply Discount To -->
+                        <div class="col-md-6">
+                            <label for="display_applied_to" class="form-label">Apply Discount To</label>
+                            <select id="display_applied_to" name="display_applied_to" class="form-select" required="required">
+                                <option value="">-- Select Target --</option>
+                                <option value="1_product">Product</option>
+                                <option value="2_product_category">Category</option>
+                            </select>
+                            <div class="invalid-feedback">Please select where to apply the discount.</div>
+                        </div>
+
+                        <!-- Product Field -->
+                        <div class="col-md-6" id="product_field" style="display:none;">
+                            <label for="product_tmpl_id" class="form-label">Product</label>
+                            <select id="product_tmpl_id" name="product_tmpl_id" class="form-select select2-product">
+                                <option value="">-- Select Product --</option>
+                                <t t-foreach="products" t-as="p">
+                                    <option t-att-value="p.id"><t t-esc="p.name"/></option>
+                                </t>
+                            </select>
+                        </div>
+
+                        <!-- Category Field -->
+                        <div class="col-md-6" id="category_field" style="display:none;">
+                            <label for="categ_id" class="form-label">Category</label>
+                            <select id="categ_id" name="categ_id" class="form-select select2-category">
+                                <option value="">-- Select Category --</option>
+                                <t t-foreach="categories" t-as="cat">
+                                    <option t-att-value="cat.id"><t t-esc="cat.complete_name"/></option>
+                                </t>
+                            </select>
+                        </div>
+
+                        <!-- Discount Percent -->
+                        <div class="col-md-6">
+                            <label for="percent_price" class="form-label">Discount Percentage</label>
+                            <div class="input-group">
+                                <input type="number" id="percent_price" name="percent_price" class="form-control" step="0.01" min="0" max="100" required="required"/>
+                                <span class="input-group-text">%</span>
+                                <div class="invalid-feedback">Please enter a valid percentage (0–100).</div>
+                            </div>
+                        </div>
+
+                        <!-- Dates -->
+                        <div class="col-md-6">
+                            <label for="date_start" class="form-label">Start Date</label>
+                            <input type="date" id="date_start" name="date_start" class="form-control" required="required"/>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="date_end" class="form-label">End Date</label>
+                            <input type="date" id="date_end" name="date_end" class="form-control" required="required"/>
+                        </div>
+                        <!-- Back Button -->
+                        <div class="col-12 text-start">
+                            <a href="/ecommerce_admin/discounts" class="btn btn-secondary">
+                                <i class="fa fa-arrow-left me-2"></i>Back to Discount List
+                            </a>
+                        </div>
+
+
+
+                        <!-- Submit -->
+                        <div class="col-12 text-end">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fa fa-save me-2"></i>Save Discount
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+        <script>
+            $(document).ready(function() {
+                $('.select2-product').select2({
+                    placeholder: 'Search for a product...',
+                    width: '100%',
+                    allowClear: true
+                });
+
+                $('.select2-category').select2({
+                    placeholder: 'Search for a category...',
+                    width: '100%',
+                    allowClear: true
+                });
+
+                function toggleFields() {
+                    const value = $('#display_applied_to').val();
+                    if (value === '1_product') {
+                        $('#product_field').show();
+                        $('#category_field').hide();
+                    } else if (value === '2_product_category') {
+                        $('#product_field').hide();
+                        $('#category_field').show();
+                    } else {
+                        $('#product_field').hide();
+                        $('#category_field').hide();
+                    }
+                }
+
+                toggleFields();
+                $('#display_applied_to').on('change', toggleFields);
+            });
+        </script>
+    </t>
+</template>
+<template id="discount_edit" name="Edit Discount">
+    <t t-set="head">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"/>
+    </t>
+
+    <t t-call="website.layout">
+        <div class="container py-5">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="h4 mb-0"><i class="fa fa-tag me-2"></i>Edit Discount</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post" class="row g-3 needs-validation">
+                        <!-- Apply Discount To -->
+                        <div class="col-md-6">
+                            <label for="display_applied_to" class="form-label">Apply Discount To</label>
+                            <select id="display_applied_to" name="display_applied_to" class="form-select" required="required">
+                                <option value="">-- Select Target --</option>
+                                <option value="1_product" t-att-selected="item.applied_on == '1_product'">Product</option>
+                                <option value="2_product_category" t-att-selected="item.applied_on == '2_product_category'">Category</option>
+                            </select>
+                        </div>
+
+                        <!-- Product Field -->
+                        <div class="col-md-6" id="product_field" style="display:none;">
+                            <label for="product_tmpl_id" class="form-label">Product</label>
+                            <select id="product_tmpl_id" name="product_tmpl_id" class="form-select select2-product">
+                                <option value="">-- Select Product --</option>
+                                <t t-foreach="products" t-as="p">
+                                    <option t-att-value="p.id" t-att-selected="item.product_tmpl_id and item.product_tmpl_id.id == p.id">
+                                        <t t-esc="p.name"/>
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+
+                        <!-- Category Field -->
+                        <div class="col-md-6" id="category_field" style="display:none;">
+                            <label for="categ_id" class="form-label">Category</label>
+                            <select id="categ_id" name="categ_id" class="form-select select2-category">
+                                <option value="">-- Select Category --</option>
+                                <t t-foreach="categories" t-as="cat">
+                                    <option t-att-value="cat.id" t-att-selected="item.categ_id and item.categ_id.id == cat.id">
+                                        <t t-esc="cat.complete_name"/>
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+
+                        <!-- Discount Percent -->
+                        <div class="col-md-6">
+                            <label for="percent_price" class="form-label">Discount Percentage</label>
+                            <div class="input-group">
+                                <input type="number" id="percent_price" name="percent_price" class="form-control" 
+                                       step="0.01" min="0" max="100" required="required"
+                                       t-att-value="item.percent_price"/>
+                                <span class="input-group-text">%</span>
+                            </div>
+                        </div>
+
+                        <!-- Dates -->
+                        <div class="col-md-6">
+                            <label for="date_start" class="form-label">Start Date</label>
+                            <input type="date" id="date_start" name="date_start" class="form-control" required="required"
+                                   t-att-value="item.date_start and item.date_start.strftime('%Y-%m-%d') or ''"/>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="date_end" class="form-label">End Date</label>
+                            <input type="date" id="date_end" name="date_end" class="form-control" required="required"
+                                   t-att-value="item.date_end and item.date_end.strftime('%Y-%m-%d') or ''"/>
+                        </div>
+                        <!-- Back Button -->
+                        <div class="col-12 text-start">
+                            <a href="/ecommerce_admin/discounts" class="btn btn-secondary">
+                                <i class="fa fa-arrow-left me-2"></i>Back to Discount List
+                            </a>
+                        </div>
+
+
+                        <!-- Submit -->
+                        <div class="col-12 text-end">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fa fa-save me-2"></i>Update Discount
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+        <script>
+            $(document).ready(function() {
+                $('.select2-product').select2({
+                    placeholder: 'Search for a product...',
+                    width: '100%',
+                    allowClear: true
+                });
+
+                $('.select2-category').select2({
+                    placeholder: 'Search for a category...',
+                    width: '100%',
+                    allowClear: true
+                });
+
+                function toggleFields() {
+                    const value = $('#display_applied_to').val();
+                    if (value === '1_product') {
+                        $('#product_field').show();
+                        $('#category_field').hide();
+                    } else if (value === '2_product_category') {
+                        $('#product_field').hide();
+                        $('#category_field').show();
+                    } else {
+                        $('#product_field').hide();
+                        $('#category_field').hide();
+                    }
+                }
+
+                toggleFields();
+                $('#display_applied_to').on('change', toggleFields);
+            });
+        </script>
+    </t>
+</template>
 </odoo>

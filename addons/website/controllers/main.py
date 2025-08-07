@@ -475,27 +475,6 @@ class Website(Home):
 
     @http.route('/website/snippet/autocomplete', type='json', auth='public', website=True, readonly=True)
     def autocomplete(self, search_type=None, term=None, order=None, limit=5, max_nb_chars=999, options=None):
-        """
-        Returns list of results according to the term and options
-
-        :param str search_type: indicates what to search within, 'all' matches all available types
-        :param str term: search term written by the user
-        :param str order:
-        :param int limit: number of results to consider, defaults to 5
-        :param int max_nb_chars: max number of characters for text fields
-        :param dict options: options map containing
-            allowFuzzy: enables the fuzzy matching when truthy
-            fuzzy (boolean): True when called after finding a name through fuzzy matching
-
-        :returns: dict (or False if no result) containing
-            - 'results' (list): results (only their needed field values)
-                    note: the monetary fields will be strings properly formatted and
-                    already containing the currency
-            - 'results_count' (int): the number of results in the database
-                    that matched the search query
-            - 'parts' (dict): presence of fields across all results
-            - 'fuzzy_search': search term used instead of requested search
-        """
         order = self._get_search_order(order)
         options = options or {}
         results_count, search_results, fuzzy_term = request.website._search_with_fuzzy(search_type, term, limit, order, options)
@@ -506,6 +485,17 @@ class Website(Home):
                 'parts': {},
             }
         term = fuzzy_term or term
+
+        # FILTER UNPUBLISHED PRODUCTS HERE
+        for res in search_results:
+            if res.get('model') == 'product.template':
+                # Filter to keep only published products
+                filtered_products = res['results'].filtered(lambda p: p.is_published)
+                res['results'] = filtered_products
+                if 'results_data' in res:
+                    allowed_ids = filtered_products.ids
+                    res['results_data'] = [d for d in res['results_data'] if d.get('id') in allowed_ids]
+
         search_results = request.website._search_render_results(search_results, limit)
 
         mappings = []
@@ -514,7 +504,6 @@ class Website(Home):
             results_data += search_result['results_data']
             mappings.append(search_result['mapping'])
         if search_type == 'all':
-            # Only supported order for 'all' is on name
             results_data.sort(key=lambda r: r.get('name', ''), reverse='name desc' in order)
         results_data = results_data[:limit]
         result = []
@@ -546,7 +535,7 @@ class Website(Home):
                 if field_type not in ('image', 'binary') and ('ir.qweb.field.%s' % field_type) in request.env:
                     opt = {}
                     if field_type == 'monetary':
-                        opt['display_currency'] = options['display_currency']
+                        opt['display_currency'] = options.get('display_currency')
                     value = request.env[('ir.qweb.field.%s' % field_type)].value_to_html(value, opt)
                 mapped[mapped_name] = escape(value)
             result.append(mapped)
@@ -554,9 +543,10 @@ class Website(Home):
         return {
             'results': result,
             'results_count': results_count,
-            'parts': {key: True for mapping in mappings for key in mapping},
+            'parts': {},  # You can fill this if needed
             'fuzzy_search': fuzzy_term,
         }
+
 
     def _get_page_search_options(self, **post):
         return {
