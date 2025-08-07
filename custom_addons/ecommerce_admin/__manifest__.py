@@ -18,7 +18,7 @@ Long description of module's purpose
     'version': '18.0',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'product', 'website'],
+    'depends': ['base', 'product', 'website','website_sale'],
 
 
     # always loaded

@@ -245,70 +245,93 @@
     </div>
   </t>
 </template>
-  <template id="order_detail_template" name="Order Detail Page">
-    <t t-call="website.layout">
-      <div class="container mt-5">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-          <h2 class="mb-0">Order: <t t-esc="order.name"/></h2>
-          <a href="/ecommerce_admin/order" class="btn btn-outline-success">
-            <i class="fa fa-arrow-left me-2"></i> Back to Orders
-          </a>
-        </div>
+<template id="order_detail_template" name="Order Detail Page">
+  <t t-call="website.layout">
+    <div class="container mt-5">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">Order: <t t-esc="order.name"/></h2>
+        <a href="/ecommerce_admin/order" class="btn btn-outline-success">
+          <i class="fa fa-arrow-left me-2"></i> Back to Orders
+        </a>
+      </div>
 
-        <div class="card shadow-sm mb-4">
-          <div class="card-body">
-            <h5 class="mb-3 text-success">Customer Information</h5>
-            <p><strong>Name:</strong> <t t-esc="order.partner_id.name"/></p>
-            <p><strong>Email:</strong> <t t-esc="order.partner_id.email or 'N/A'"/></p>
-            <p><strong>Phone:</strong> <t t-esc="order.partner_id.phone or 'N/A'"/></p>
-          </div>
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h5 class="mb-3 text-success">Customer Information</h5>
+          <p><strong>Name:</strong> <t t-esc="order.partner_id.name"/></p>
+          <p><strong>Email:</strong> <t t-esc="order.partner_id.email or 'N/A'"/></p>
+          <p><strong>Phone:</strong> <t t-esc="order.partner_id.phone or 'N/A'"/></p>
         </div>
+      </div>
 
-        <div class="card shadow-sm mb-4">
-          <div class="card-body">
-            <h5 class="mb-3 text-success">Order Summary</h5>
-            <p><strong>Order Date:</strong> <t t-esc="order.date_order.strftime('%Y-%m-%d %H:%M')"/></p>
-            <p><strong>Total Amount:</strong> Rs. <t t-esc="order.amount_total"/></p>
-            <p><strong>Status:</strong>
-              <span t-if="order.state == 'sale'" class="badge bg-success">Confirmed</span>
-              <span t-if="order.state == 'draft'" class="badge bg-warning text-dark">Quotation</span>
-              <span t-if="order.state == 'cancel'" class="badge bg-danger">Cancelled</span>
-            </p>
-          </div>
+    <div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <h5 class="mb-3 text-success">Order Summary</h5>
+        <p><strong>Order Date:</strong> <t t-esc="order.date_order.strftime('%Y-%m-%d %H:%M')"/></p>
+        <p><strong>Total Amount:</strong> Rs. <t t-esc="order.amount_total"/></p>
+        <p><strong>Status:</strong>
+        <span t-if="order.state == 'sale'" class="badge bg-success">Confirmed</span>
+        <span t-if="order.state == 'draft'" class="badge bg-warning text-dark">Quotation</span>
+        <span t-if="order.state == 'cancel'" class="badge bg-danger">Cancelled</span>
+        </p>
+
+        <div class="d-flex justify-content-end mt-4 gap-3">
+        <!-- Pay Button -->
+        <form method="POST" t-att-action="'/ecommerce_admin/order/%s/pay' % order.id">
+            <button type="submit"
+                    class="btn btn-primary"
+                    t-att-disabled="order.state != 'draft'">
+            <i class="fa fa-credit-card me-2"></i> Pay
+            </button>
+        </form>
+
+        <!-- Deliver Button -->
+    <form method="POST" t-att-action="'/ecommerce_admin/order/%s/deliver' % order.id">
+        <button type="submit"
+                class="btn btn-success"
+                t-att-disabled="not (order.state == 'sale' and can_deliver)">
+            <i class="fa fa-truck me-2"></i> Deliver
+        </button>
+    </form>
+
+
         </div>
+    </div>
+    </div>
 
-        <div class="card shadow-sm">
-          <div class="card-body">
-            <h5 class="mb-3 text-success">Order Lines</h5>
-            <div class="table-responsive">
-              <table class="table table-bordered table-hover align-middle">
-                <thead class="table-light">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="mb-3 text-success">Order Lines</h5>
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th>Product</th>
+                  <th>Description</th>
+                  <th>Quantity</th>
+                  <th>Unit Price</th>
+                  <th>Subtotal</th>
+                </tr>
+              </thead>
+              <tbody>
+                <t t-foreach="order.order_line" t-as="line">
                   <tr>
-                    <th>Product</th>
-                    <th>Description</th>
-                    <th>Quantity</th>
-                    <th>Unit Price</th>
-                    <th>Subtotal</th>
+                    <td><t t-esc="line.product_id.name"/></td>
+                    <td><t t-esc="line.name"/></td>
+                    <td><t t-esc="line.product_uom_qty"/></td>
+                    <td>Rs. <t t-esc="line.price_unit"/></td>
+                    <td>Rs. <t t-esc="line.price_subtotal"/></td>
                   </tr>
-                </thead>
-                <tbody>
-                  <t t-foreach="order.order_line" t-as="line">
-                    <tr>
-                      <td><t t-esc="line.product_id.name"/></td>
-                      <td><t t-esc="line.name"/></td>
-                      <td><t t-esc="line.product_uom_qty"/></td>
-                      <td>Rs. <t t-esc="line.price_unit"/></td>
-                      <td>Rs. <t t-esc="line.price_subtotal"/></td>
-                    </tr>
-                  </t>
-                </tbody>
-              </table>
-            </div>
+                </t>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-    </t>
-  </template>
+    </div>
+  </t>
+</template>
+
 <template id="product_list" name="Product List">
     <t t-call="website.layout">
         <div class="container my-5">
@@ -478,7 +501,6 @@
         </script>
     </t>
 </template>
-
 <template id="product_detail" name="Product Detail">
     <t t-call="website.layout">
         <div class="container py-5">
@@ -488,9 +510,9 @@
                         <i class="fa fa-cube me-2"></i>Product Details
                     </h2>
                     <div class="d-flex gap-2">
-                        <!-- <a t-att-href="'/ecommerce_admin/products/%s/edit' % product.id" class="btn btn-warning btn-sm">
+                        <a t-att-href="'/ecommerce_admin/products/%s/edit' % product.id" class="btn btn-warning btn-sm">
                             <i class="fa fa-edit me-1"></i>Edit
-                        </a> -->
+                        </a>
                         <a href="/ecommerce_admin/products" class="btn btn-outline-light btn-sm">
                             <i class="fa fa-arrow-left me-1"></i>Back
                         </a>
@@ -547,11 +569,24 @@
                                 </div>
                             </t>
 
-                            <div class="mt-4">
+                            <!-- <div class="mt-4">
                                 <a t-att-href="'/ecommerce_admin/products/%s/edit' % product.id" class="btn btn-primary">
                                     <i class="fa fa-edit me-2"></i>Edit Product
                                 </a>
-                            </div>
+                            </div> -->
+
+                            <!-- Publish/Unpublish Form Button -->
+                            <form method="POST" t-att-action="'/ecommerce_admin/products/%s/toggle_publish' % product.id" class="mt-3">
+                                <button type="submit" class="btn" t-att-class="'btn-success' if not product.is_published else 'btn-warning'">
+                                    <t t-if="not product.is_published">
+                                        <i class="fa fa-eye me-2"></i> Publish
+                                    </t>
+                                    <t t-else="">
+                                        <i class="fa fa-eye-slash me-2"></i> Unpublish
+                                    </t>
+                                </button>
+                            </form>
+
                         </div>
                     </div>
                 </div>
@@ -565,6 +600,36 @@
             }
             .card-body p {
                 margin-bottom: 0.25rem;
+            }
+            /* Publish/Unpublish Button Styling */
+            form button.btn {
+                min-width: 140px;
+                font-weight: 600;
+                border-radius: 0.25rem;
+                padding: 0.5rem 1rem;
+                transition: background-color 0.3s ease;
+            }
+            form button.btn-success {
+                background-color: #198754;
+                color: white;
+                border: 1px solid #198754;
+            }
+            form button.btn-success:hover,
+            form button.btn-success:focus {
+                background-color: #157347;
+                border-color: #146c43;
+                color: white;
+            }
+            form button.btn-warning {
+                background-color: #ffc107;
+                color: #212529;
+                border: 1px solid #ffc107;
+            }
+            form button.btn-warning:hover,
+            form button.btn-warning:focus {
+                background-color: #ffca2c;
+                border-color: #ffcd39;
+                color: #212529;
             }
         </style>
 

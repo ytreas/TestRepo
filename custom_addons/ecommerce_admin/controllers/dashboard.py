@@ -25,9 +25,65 @@ class EcommerceAdminDashboard(http.Controller):
         if not self._is_admin():
             return request.redirect('/web/login')
         order = request.env['sale.order'].sudo().browse(order_id)
+
+        # Check if there is at least one picking NOT done or canceled (delivery possible)
+        can_deliver = any(p.state not in ['done', 'cancel'] for p in order.picking_ids)
+
         return request.render('ecommerce_admin.order_detail_template', {
             'order': order,
+            'can_deliver': can_deliver,
         })
+
+    @http.route('/ecommerce_admin/order/<int:order_id>/pay', type='http', auth='user', methods=['POST'], csrf=False)
+    def ecommerce_order_pay(self, order_id, **kwargs):
+        if not self._is_admin():
+            return request.redirect('/web/login')
+        order = request.env['sale.order'].sudo().browse(order_id)
+        if order.state == 'draft':
+            order.action_confirm()
+        return request.redirect(f'/ecommerce_admin/order/{order_id}')
+    @http.route('/ecommerce_admin/order/<int:order_id>/deliver', type='http', auth='user', methods=['POST'], csrf=False)
+    def ecommerce_order_deliver(self, order_id, **kwargs):
+        if not self._is_admin():
+            return request.redirect('/web/login')
+
+        order = request.env['sale.order'].sudo().browse(order_id)
+        
+        # First confirm the sale order if it's in draft state
+        if order.state == 'draft':
+            order.action_confirm()
+        
+        # Process all pickings that aren't done or canceled
+        for picking in order.picking_ids.filtered(lambda p: p.state not in ['done', 'cancel']):
+            # Check availability
+            picking.action_assign()
+            
+            # Set quantities done for each move line
+            for move in picking.move_ids.filtered(lambda m: m.state not in ['done', 'cancel']):
+                if not move.move_line_ids:
+                    # If no move lines exist, create one
+                    move._generate_serial_move_line_commands()
+                for move_line in move.move_line_ids:
+                    qty = move.product_uom_qty
+                    if 'qty_done' in move_line._fields:
+                        move_line.qty_done = qty
+                    elif 'quantity_done' in move_line._fields:
+                        move_line.quantity_done = qty
+            
+            # Validate the picking
+            if picking.state != 'done':
+                try:
+                    picking.button_validate()
+                except Exception as e:
+                    # If there's an error (like backorder needed), force validate
+                    picking.with_context(skip_backorder=True, skip_overprocessed_check=True)._action_done()
+        
+        return request.redirect(f'/ecommerce_admin/order/{order_id}')
+
+
+
+
+
     @http.route('/ecommerce_admin/customers', type='http', auth='user', website=True)
     def ecommerce_customers(self, **kwargs):
         if not self._is_admin():
@@ -139,6 +195,17 @@ class EcommerceAdminDashboard(http.Controller):
             'product': product,
             'format_date': lambda dt: dt.strftime('%b %d, %Y') if dt else ''
         })
+
+    @http.route('/ecommerce_admin/products/<int:product_id>/toggle_publish', type='http', auth='user', methods=['POST'], website=True, csrf=False)
+    def toggle_product_publish(self, product_id, **kw):
+        if not self._is_admin():
+            return request.redirect('/web/login')
+        
+        product = request.env['product.template'].sudo().browse(product_id)
+        if product.exists():
+            # Toggle the boolean field
+            product.is_published = not product.is_published
+        return request.redirect(f'/ecommerce_admin/products/{product_id}')
 
     @http.route('/ecommerce_admin/products/<int:product_id>/edit', auth='user', website=True)
     def product_edit(self, product_id, **kw):
