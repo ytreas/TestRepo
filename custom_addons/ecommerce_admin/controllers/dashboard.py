@@ -270,6 +270,10 @@ class EcommerceAdminDashboard(http.Controller):
         list_price = request.params.get('list_price')
         standard_price = request.params.get('standard_price')
         internal_categ_id = request.params.get('categ_id')
+        try:
+            internal_categ_id = int(internal_categ_id) if internal_categ_id and internal_categ_id.isdigit() else False
+        except ValueError:
+            internal_categ_id = False
         category_ids = request.httprequest.form.getlist('public_categ_ids')
 
         # Safely convert price fields to float
@@ -298,7 +302,7 @@ class EcommerceAdminDashboard(http.Controller):
             update_vals['image_1920'] = b64encode(image_file.read())
 
         # Update the product
-        product.write(update_vals)
+        product.sudo().write(update_vals)
 
         return request.redirect('/ecommerce_admin/products/%s' % product_id)
     
