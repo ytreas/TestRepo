@@ -269,7 +269,7 @@ class EcommerceAdminDashboard(http.Controller):
         name = request.params.get('name')
         list_price = request.params.get('list_price')
         standard_price = request.params.get('standard_price')
-        internal_categ_id = request.params.get('internal_categ_id')
+        internal_categ_id = request.params.get('categ_id')
         category_ids = request.httprequest.form.getlist('public_categ_ids')
 
         # Safely convert price fields to float
