@@ -289,7 +289,7 @@ class EcommerceAdminDashboard(http.Controller):
             'list_price': list_price,
             'standard_price': standard_price,
             'public_categ_ids': [(6, 0, [int(cid) for cid in category_ids if cid.isdigit()])],
-            'internal_categ_id': internal_categ_id,
+            'categ_id': internal_categ_id,
         }
 
         # Handle image upload

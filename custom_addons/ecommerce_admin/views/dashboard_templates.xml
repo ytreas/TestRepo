@@ -966,12 +966,17 @@
 <template id="category_list" name="Category List">
     <t t-call="website.layout">
         <div class="container mt-4">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="mb-0">Categories Management</h2>
-                <a href="/ecommerce_admin/categories/create" class="btn btn-primary">
-                    <i class="fa fa-plus me-2"></i>Create New
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="mb-0">Categories Management</h2>
+            <div>
+                <a href="/ecommerce_admin/dashboard" class="btn btn-secondary me-2">
+                    <i class="fa fa-arrow-left me-1"></i> Back to Dashboard
+                </a>
+                <a href="/ecommerce_admin/categories/create" class="btn btn-success">
+                    <i class="fa fa-plus me-1"></i> Create Category
                 </a>
             </div>
+        </div>
 
             <!-- Search Box -->
             <div class="card mb-4">
@@ -1165,7 +1170,7 @@
                                         <t t-foreach="request.env['product.public.category'].sudo().search([('id', '!=', category.id)])" t-as="cat">
                                             <option t-att-value="cat.id" 
                                                     t-att-selected="category.parent_id and category.parent_id.id == cat.id">
-                                                <t t-esc="cat.sisplay_name"/>
+                                                <t t-esc="cat.display_name"/>
                                             </option>
                                         </t>
                                     </select>
