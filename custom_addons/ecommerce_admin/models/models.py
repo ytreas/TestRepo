@@ -1,19 +1,17 @@
-# -*- coding: utf-8 -*-
-
-# from odoo import models, fields, api
+from odoo import models, fields, api
 
 
-# class ecommerce_admin(models.Model):
-#     _name = 'ecommerce_admin.ecommerce_admin'
-#     _description = 'ecommerce_admin.ecommerce_admin'
+class SaleOrder(models.Model):
+    _inherit = 'sale.order'
 
-#     name = fields.Char()
-#     value = fields.Integer()
-#     value2 = fields.Float(compute="_value_pc", store=True)
-#     description = fields.Text()
-#
-#     @api.depends('value')
-#     def _value_pc(self):
-#         for record in self:
-#             record.value2 = float(record.value) / 100
+    is_delivered = fields.Boolean(
+        string="Delivered",
+        compute="_compute_is_delivered",
+        store=True,
+    )
 
+    @api.depends('picking_ids.state')
+    def _compute_is_delivered(self):
+        for order in self:
+            # Check if any related picking is done
+            order.is_delivered = any(p.state == 'done' for p in order.picking_ids)

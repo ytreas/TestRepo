@@ -14,7 +14,7 @@ class EsewaProvider(models.Model):
     _api_endpoint = '/epayment/initiate/'
     _lookup_endpoint = '/epayment/lookup/'
 
-    domain_name = fields.Char(_("Server Domain"),default="http://localhost")
+    domain_name = fields.Char(_("Server Domain"),default="http://localhost:8069/")
     port=fields.Char(_("Port Number"),default="8069")
     
     code = fields.Selection(

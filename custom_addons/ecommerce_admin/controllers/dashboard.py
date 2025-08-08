@@ -60,7 +60,7 @@ class EcommerceAdminDashboard(http.Controller):
         if not self._is_admin():
             return request.redirect('/web/login')
         order = request.env['sale.order'].sudo().browse(order_id)
-        if order.state == 'draft':
+        if order.state in ['draft', 'sent']:
             order.action_confirm()
         return request.redirect(f'/ecommerce_admin/order/{order_id}')
     @http.route('/ecommerce_admin/order/<int:order_id>/deliver', type='http', auth='user', methods=['POST'], csrf=False)

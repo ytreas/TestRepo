@@ -302,8 +302,9 @@
 
                 <td><t t-esc="order.date_order.strftime('%Y-%m-%d')"/></td>
                 <td>
-                  <span t-if="order.state == 'sale'" class="badge bg-success">Confirmed</span>
-                  <span t-if="order.state == 'draft'" class="badge bg-warning text-dark">Quotation</span>
+                  <span t-if="order.state == 'sale'" class="badge bg-success">Paid</span>
+                  <span t-if="order.state == 'draft'" class="badge bg-warning text-dark">Unpaid</span>
+                  <span t-if="order.state == 'sent'" class="badge bg-warning text-dark">Unpaid</span>
                   <span t-if="order.state == 'cancel'" class="badge bg-danger">Cancelled</span>
                 </td>
               </tr>
@@ -339,17 +340,22 @@
         <p><strong>Order Date:</strong> <t t-esc="order.date_order.strftime('%Y-%m-%d %H:%M')"/></p>
         <p><strong>Total Amount:</strong> Rs. <t t-esc="order.amount_total"/></p>
         <p><strong>Status:</strong>
-        <span t-if="order.state == 'sale'" class="badge bg-success">Confirmed</span>
-        <span t-if="order.state == 'draft'" class="badge bg-warning text-dark">Quotation</span>
+        <span t-if="order.state == 'sale'" class="badge bg-success">Paid</span>
+        <span t-if="order.state == 'draft'" class="badge bg-warning text-dark">Unpaid</span>
+        <span t-if="order.state == 'sent'" class="badge bg-warning text-dark">Unpaid</span>
         <span t-if="order.state == 'cancel'" class="badge bg-danger">Cancelled</span>
         </p>
-
+        <p><strong>Delivery Status:</strong>
+            <span t-if="order.is_delivered" class="badge bg-success">Delivered</span>
+            <span t-else="" class="badge bg-secondary">Not Delivered</span>
+        </p>
         <div class="d-flex justify-content-end mt-4 gap-3">
         <!-- Pay Button -->
         <form method="POST" t-att-action="'/ecommerce_admin/order/%s/pay' % order.id">
-            <button type="submit"
-                    class="btn btn-primary"
-                    t-att-disabled="order.state != 'draft'">
+        <button type="submit"
+                class="btn btn-primary"
+                t-att-disabled="order.state not in ['draft', 'sent']">
+
             <i class="fa fa-credit-card me-2"></i> Pay
             </button>
         </form>

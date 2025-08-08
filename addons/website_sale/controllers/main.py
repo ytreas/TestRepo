@@ -1022,6 +1022,8 @@ class WebsiteSale(payment_portal.PaymentPortal):
         :return: The rendered checkout page.
         :rtype: str
         """
+        if request.env.user._is_public():
+            return request.redirect('/web/login?redirect=%s' % request.httprequest.full_path)
         try_skip_step = str2bool(try_skip_step or 'false')
         order_sudo = request.website.sale_get_order()
         request.session['sale_last_order_id'] = order_sudo.id
