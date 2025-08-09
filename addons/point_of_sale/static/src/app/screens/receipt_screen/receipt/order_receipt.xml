@@ -135,11 +135,6 @@
             </t>
 
             <br/>
-            <div class="pos-receipt-order-data">
-                <p>Powered by Odoo</p>
-                <div t-esc="props.data.name" />
-                <div id="order-date" t-esc="props.data.date" />
-            </div>
 
         </div>
     </t>

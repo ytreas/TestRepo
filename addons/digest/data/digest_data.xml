@@ -432,10 +432,6 @@
                         <tr>
                             <div id="footer">
                                 <p style="font-weight: bold;" t-esc="company.name" />
-                                <p class="by_odoo" id="powered">
-                                    Powered by <a href="https://www.odoo.com" target="_blank" class="odoo_link">
-                                        <span class="odoo_link_text">Odoo</span></a>
-                                </p>
                             </div>
                         </tr>
                     </tbody>

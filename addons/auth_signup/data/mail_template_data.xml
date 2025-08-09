@@ -5,7 +5,7 @@
         <record id="set_password_email" model="mail.template">
             <field name="name">Settings: New User Invite</field>
             <field name="model_id" ref="base.model_res_users"/>
-            <field name="subject">{{ object.create_uid.name }} from {{ object.company_id.name }} invites you to connect to Odoo</field>
+            <field name="subject">{{ object.create_uid.name }} from {{ object.company_id.name }} invites you to connect</field>
             <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
             <field name="email_to">{{ object.email_formatted }}</field>
             <field name="description">Sent to new user after you invited them</field>
@@ -18,7 +18,7 @@
         <td align="center" style="min-width: 590px;">
             <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
                 <tr><td valign="middle">
-                    <span style="font-size: 10px;">Welcome to Odoo</span><br/>
+                    <span style="font-size: 10px;">Welcome</span><br/>
                     <span style="font-size: 20px; font-weight: bold;">
                         <t t-out="object.name or ''">Marc Demo</t>
                     </span>
@@ -38,7 +38,7 @@
                 <tr><td valign="top" style="font-size: 13px;">
                     <div>
                         Dear <t t-out="object.name or ''">Marc Demo</t>,<br /><br />
-                        You have been invited by <t t-out="object.create_uid.name or ''">OdooBot</t> of <t t-out="object.company_id.name or ''">YourCompany</t> to connect on Odoo.
+                        You have been invited by <t t-out="object.create_uid.name or ''">Admin</t> of <t t-out="object.company_id.name or ''">YourCompany</t> to connect.
                         <div style="margin: 16px 0px 16px 0px;">
                             <a t-att-href="object.partner_id._get_signup_url()"
                                 t-attf-style="background-color: {{object.company_id.email_secondary_color or '#875A7B'}}; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
@@ -47,13 +47,13 @@
                         </div>
                         <b>  This link will remain valid during <t t-out="int(int(object.env['ir.config_parameter'].sudo().get_param('auth_signup.signup.validity.hours',144))/24)"></t> days </b> <br/>
                         <t t-set="website_url" t-value="object.get_base_url()"></t>
-                        Your Odoo domain is: <b><a t-att-href='website_url' t-out="website_url or ''">http://yourcompany.odoo.com</a></b><br />
+                        Your domain is: <b><a t-att-href='website_url' t-out="website_url or ''">http://yourcompany.com</a></b><br />
                         Your sign in email is: <b><a t-attf-href="/web/login?login={{ object.email }}" target="_blank" t-out="object.email or ''">mark.brown23@example.com</a></b><br /><br />
-                        Never heard of Odoo? It’s an all-in-one business software loved by 7+ million users. It will considerably improve your experience at work and increase your productivity.
+                        Never heard of this platform? It will considerably improve your experience at work and increase your productivity.
                         <br /><br />
-                        Have a look at the <a href="https://www.odoo.com/page/tour?utm_source=db&amp;utm_medium=auth" style="color: #875A7B;">Odoo Tour</a> to discover the tool.
+                        Have a look at the <a href="https://www.example.com/tour" style="color: #875A7B;">Platform Tour</a> to discover the tool.
                         <br /><br />
-                        Enjoy Odoo!<br />
+                        Enjoy!<br />
                         --<br/>The <t t-out="object.company_id.name or ''">YourCompany</t> Team
                     </div>
                 </td></tr>
@@ -85,15 +85,8 @@
 </tbody>
 </table>
 </td></tr>
-<!-- POWERED BY -->
-<tr><td align="center" style="min-width: 590px;">
-    <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
-      <tr><td style="text-align: center; font-size: 13px;">
-        Powered by <a target="_blank" href="https://www.odoo.com?utm_source=db&amp;utm_medium=auth" style="color: #875A7B;">Odoo</a>
-      </td></tr>
-    </table>
-</td></tr>
-</table></field>
+</table>
+            </field>
             <field name="lang">{{ object.lang }}</field>
             <field name="auto_delete" eval="True"/>
         </record>
@@ -122,7 +115,7 @@
                 </td>
                 <tr><td valign="top" style="font-size: 13px;">
                     <div>
-                        Dear <t t-out="object.name or ''">Mitchell Admin</t>,<br/> <br/>
+                        Dear <t t-out="object.name or ''">Admin</t>,<br/> <br/>
                         You added the following user(s) to your database but they haven't registered yet:
                         <ul>
                             <t t-foreach="invited_users" t-as="invited_user">
@@ -196,11 +189,6 @@
                                 Go to My Account
                             </a>
                         </div>
-                        Thanks,<br/>
-                        <t t-if="user.signature">
-                            <br/>
-                            <t t-out="user.signature or ''">--<br/>Mitchell Admin</t>
-                        </t>
                     </div>
                 </td></tr>
                 <tr><td style="text-align:center;">
@@ -210,7 +198,7 @@
         </td>
     </tr>
     <!-- FOOTER -->
-    <tr>
+    <!-- <tr>
         <td align="center" style="min-width: 590px;">
             <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;">
                 <tr><td valign="middle" align="left">
@@ -219,29 +207,22 @@
                 <tr><td valign="middle" align="left" style="opacity: 0.7;">
                     <t t-out="object.company_id.phone or ''">+1 650-123-4567</t>
                     <t t-if="object.company_id.email">
-                        | <a t-attf-href="'mailto:%s' % {{ object.company_id.email }}" style="text-decoration:none; color: #454748;"><t t-out="object.company_id.email or ''">info@yourcompany.com</t></a>
+                        | <a t-attf-href="'mailto:%s' % object.company_id.email" style="text-decoration:none; color: #454748;"><t t-out="object.company_id.email or ''">info@yourcompany.com</t></a>
                     </t>
                     <t t-if="object.company_id.website">
-                        | <a t-attf-href="'%s' % {{ object.company_id.website }}" style="text-decoration:none; color: #454748;">
+                        | <a t-attf-href="'%s' % object.company_id.website" style="text-decoration:none; color: #454748;">
                             <t t-out="object.company_id.website or ''">http://www.example.com</t>
                         </a>
                     </t>
                 </td></tr>
             </table>
         </td>
-    </tr>
+    </tr> -->
 </tbody>
 </table>
 </td></tr>
-<!-- POWERED BY -->
-<tr><td align="center" style="min-width: 590px;">
-    <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;">
-      <tr><td style="text-align: center; font-size: 13px;">
-        Powered by <a target="_blank" href="https://www.odoo.com?utm_source=db&amp;utm_medium=auth" style="color: #875A7B;">Odoo</a>
-      </td></tr>
-    </table>
-</td></tr>
-</table></field>
+</table>
+            </field>
             <field name="lang">{{ object.lang }}</field>
             <field name="auto_delete" eval="True"/>
         </record>

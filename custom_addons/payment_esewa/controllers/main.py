@@ -17,14 +17,12 @@ class EsewaController(http.Controller):
         _logger.info("Entered eSewa verification route")
         _logger.info(f"eSewa POST data: {post}")
 
-        # Step 1: Get the encoded data from post
         encoded_data = post.get('data')
         if not encoded_data:
             _logger.warning("No 'data' field in POST request")
             return request.redirect('/shop/payment/validate')
 
         try:
-            # Step 2: Decode the base64 data
             decoded_bytes = base64.b64decode(encoded_data)
             decoded_str = decoded_bytes.decode('utf-8')
             esewa_data = json.loads(decoded_str)
@@ -33,29 +31,24 @@ class EsewaController(http.Controller):
             _logger.error(f"Failed to decode eSewa data: {e}")
             return request.redirect('/shop/payment/validate')
 
-        # Step 3: Extract fields
         product_code = esewa_data.get('product_code')
         transaction_uuid = esewa_data.get('transaction_uuid')
         total_amount = esewa_data.get('total_amount')
         status = esewa_data.get('status')
-        ref_id = esewa_data.get('transaction_code')  # Assuming transaction_code is the reference ID
+        ref_id = esewa_data.get('transaction_code')
 
-        # if not (product_code and transaction_uuid and total_amount and status):
-        #     _logger.warning("Missing required decoded data from eSewa")
-        #     return request.redirect('/shop/cart')
-
-        # Step 4: Search for matching transaction
         transaction = request.env['payment.transaction'].sudo().search([
             ('pidx', '=', transaction_uuid)
         ], limit=1)
 
-        # Step 5: Process result
+        partner = transaction.partner_id
+        email = partner.email or ""
+
         if status == 'COMPLETE':
             transaction._set_done()
             transaction.provider_reference = ref_id
             _logger.info(f"Payment completed. Transaction: {transaction.reference}, Ref ID: {ref_id}")
 
-            # Process the order...
             order = request.env['sale.order'].sudo().search([('name', '=', transaction.reference)], limit=1)
             if order:
                 website = request.env['website'].sudo().get_current_website()
@@ -87,21 +80,51 @@ class EsewaController(http.Controller):
                 payment.action_post()
                 transaction.payment_id = payment.id
 
-                return request.redirect('/shop/payment/validate')
-            else:
-                return request.redirect('/shop/payment/validate')
+                # Send confirmation email
+                if email:
+                    mail_values = {
+                        'subject': f'Order Confirmation - {order.name}',
+                        'body_html': f"""
+                            <p>Hello {partner.name},</p>
+                            <p>We have successfully received your payment for order <strong>{order.name}</strong>.</p>
+                            <p>Your order has been confirmed and will be delivered within the next few days.</p>
+                            <p>Thank you for shopping with us!</p>
+                            <p>Best regards,<br/>{request.env['ir.config_parameter'].sudo().get_param('website.name') or 'Our Store'} Team</p>
+                        """,
+                        'email_from': 'info.flowgenic@gmail.com',
+                        'email_to': email,
+                    }
+                    request.env['mail.mail'].sudo().create(mail_values).send()
+
+            return request.redirect('/shop/payment/validate')
 
         elif status in ['CANCELLED', 'FAILED']:
             _logger.info(f"Payment cancelled or failed. Status: {status}")
-            transaction._set_cancel()
+            transaction._set_canceled()
+
+            # Send failure email
+            if email:
+                mail_values = {
+                    'subject': f'Payment Issue - {transaction.reference}',
+                    'body_html': f"""
+                        <p>Hello {partner.name},</p>
+                        <p>Your payment for order <strong>{transaction.reference}</strong> was not successful (Status: {status}).</p>
+                        <p>Our team will contact you shortly to assist you.</p>
+                        <p>If you believe this is an error, please reach out to us.</p>
+                        <p>Best regards,<br/>{request.env['ir.config_parameter'].sudo().get_param('website.name') or 'Our Store'} Team</p>
+                    """,
+                    'email_from': 'info.flowgenic@gmail.com',
+                    'email_to': email,
+                }
+                request.env['mail.mail'].sudo().create(mail_values).send()
+
             return request.redirect('/shop/payment/validate')
 
         elif status == 'PENDING':
             _logger.info(f"Payment still pending. Status: {status}")
             transaction._set_pending()
             return request.redirect('/shop/payment/validate')
+
         else:
             _logger.warning(f"Unrecognized payment status from eSewa: {status}")
             return request.redirect('/shop/payment/validate')
-
-            

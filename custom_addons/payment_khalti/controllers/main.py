@@ -14,30 +14,26 @@ class KhaltiController(http.Controller):
         _redirect_url_2, type='http', auth='public', methods=['GET'], csrf=False, save_session=False
     )
     def verify_khalti_payment(self, **data):
-        _logger.info("Entered verify_khalti_payment route")
 
         pidx = request.params.get('pidx')
         if not pidx:
-            _logger.warning("Missing pidx in query params")
             return request.redirect('/shop/payment/validate')
 
         transaction_orm = request.env['payment.transaction'].sudo()
         transaction = transaction_orm.search([('pidx', '=', pidx)], limit=1)
 
         if not transaction:
-            _logger.error(f"No transaction found with pidx {pidx}")
             return request.redirect('/shop/payment/validate')
 
         payload = {"pidx": pidx}
         try:
             response = transaction.provider_id._make_khalti_request(payload, mode="lookup")
-            _logger.info(f"Khalti lookup response: {response}")
+
         except Exception:
-            _logger.exception("❗ Error while making Khalti lookup request")
             return request.redirect('/shop/payment/validate')
 
         status = response.get('status')
-        ref_id = response.get('transaction_id') or response.get('ref_id')  # Adjust if your response format differs
+        ref_id = response.get('transaction_id') or response.get('ref_id')
         order = request.env['sale.order'].sudo().search([
             ('name', '=', transaction.reference)
         ], limit=1)
@@ -71,26 +67,54 @@ class KhaltiController(http.Controller):
             }
             payment = request.env['account.payment'].sudo().create(payment_vals)
             transaction.payment_id = payment.id
-        if status == 'Completed':
-            transaction._set_done()
-            transaction.provider_reference = ref_id
-            _logger.info(f"Payment marked DONE for transaction {transaction.reference}")
-            payment.action_post()
-            return request.redirect('/shop/payment/validate')
 
-        elif status in ['Pending']:
-            transaction._set_pending()
-            _logger.info(f"⏳ Payment still pending for transaction {transaction.reference}")
-            return request.redirect('/shop/payment/validate')
+        partner = transaction.partner_id
+        email = partner.email or ""
+        if email:
+            if status == 'Completed':
+                # Mark as done
+                transaction._set_done()
+                transaction.provider_reference = ref_id
+                _logger.info(f"Payment marked DONE for transaction {transaction.reference}")
+                payment.action_post()
 
-        elif status in ['Refunded', 'Expired', 'Cancelled', 'Failed']:
-            transaction._set_canceled()
-            _logger.info(f"❌ Payment CANCELED or FAILED for transaction {transaction.reference}")
-            return request.redirect('/shop/payment/validate')
+                # Send confirmation email
+                mail_values = {
+                    'subject': f'Order Confirmation - {order.name}',
+                    'body_html': f"""
+                        <p>Hello {partner.name},</p>
+                        <p>We have successfully received your payment for order <strong>{order.name}</strong>.</p>
+                        <p>Your order has been confirmed and will be delivered within the next few days.</p>
+                        <p>Thank you for shopping with us!</p>
+                        <p>Best regards,<br/>{request.env['ir.config_parameter'].sudo().get_param('website.name') or 'Our Store'} Team</p>
+                    """,
+                    'email_from': 'info.flowgenic@gmail.com',
+                    'email_to': email,
+                }
+                request.env['mail.mail'].sudo().create(mail_values).send()
+                return request.redirect('/shop/payment/validate')
+
+            elif status in ['Pending', 'Refunded', 'Expired', 'Cancelled', 'Failed']:
+                transaction._set_canceled()
+
+                # Send cancellation email
+                mail_values = {
+                    'subject': f'Payment Issue - {order.name}',
+                    'body_html': f"""
+                        <p>Hello {partner.name},</p>
+                        <p>We noticed that your payment for order <strong>{order.name}</strong> was not successful (Status: {status}).</p>
+                        <p>Our team will contact you shortly to resolve this issue.</p>
+                        <p>If you believe this is an error, please get in touch with us.</p>
+                        <p>Best regards,<br/>{request.env['ir.config_parameter'].sudo().get_param('website.name') or 'Our Store'} Team</p>
+                    """,
+                    'email_from': 'info.flowgenic@gmail.com',
+                    'email_to': email,
+                }
+                request.env['mail.mail'].sudo().create(mail_values).send()
+                return request.redirect('/shop/payment/validate')
 
         else:
-            _logger.warning(f"Unrecognized payment status from Khalti: {status}")
-            return request.redirect('/shop/payment/validate')
+            _logger.warning(f"No email found for partner {partner.name}")
 
-
-        
+        _logger.warning(f"Unrecognized payment status from Khalti: {status}")
+        return request.redirect('/shop/payment/validate')

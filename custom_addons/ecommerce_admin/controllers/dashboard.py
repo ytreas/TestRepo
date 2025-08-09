@@ -59,9 +59,35 @@ class EcommerceAdminDashboard(http.Controller):
     def ecommerce_order_pay(self, order_id, **kwargs):
         if not self._is_admin():
             return request.redirect('/web/login')
+
         order = request.env['sale.order'].sudo().browse(order_id)
+        if not order.exists():
+            return request.not_found()
+
+        # Confirm the order if it's still draft or sent
         if order.state in ['draft', 'sent']:
             order.action_confirm()
+
+        # Send Cash on Delivery confirmation email
+        partner = order.partner_id
+        email = partner.email or order.email_from
+        if email:
+            mail_values = {
+                'subject': f'Cash on Delivery Payment Confirmation - {order.name}',
+                'body_html': f"""
+                    <p>Hello {partner.name},</p>
+                    <p>We have received your payment for order <strong>{order.name}</strong> placed with Cash on Delivery.</p>
+                    <p>Your order is confirmed, and you will receive your products soon.</p>
+                    <p>Please be ready to pay <strong>{order.amount_total} {order.currency_id.symbol}</strong> upon delivery if not already settled.</p>
+                    <p>Thank you for shopping with us!</p>
+                    <p>Best regards,<br/>{request.env['ir.config_parameter'].sudo().get_param('website.name') or 'Our Store'} Team</p>
+                """,
+                'email_from': 'info.flowgenic@gmail.com',
+                'email_to': email,
+            }
+
+            request.env['mail.mail'].sudo().create(mail_values).send()
+
         return request.redirect(f'/ecommerce_admin/order/{order_id}')
     @http.route('/ecommerce_admin/order/<int:order_id>/deliver', type='http', auth='user', methods=['POST'], csrf=False)
     def ecommerce_order_deliver(self, order_id, **kwargs):
@@ -69,20 +95,22 @@ class EcommerceAdminDashboard(http.Controller):
             return request.redirect('/web/login')
 
         order = request.env['sale.order'].sudo().browse(order_id)
-        
-        # First confirm the sale order if it's in draft state
+        if not order.exists():
+            return request.not_found()
+
+        # Confirm order if in draft state
         if order.state == 'draft':
             order.action_confirm()
-        
+
         # Process all pickings that aren't done or canceled
         for picking in order.picking_ids.filtered(lambda p: p.state not in ['done', 'cancel']):
-            # Check availability
+            # Check availability and assign
             picking.action_assign()
-            
+
             # Set quantities done for each move line
             for move in picking.move_ids.filtered(lambda m: m.state not in ['done', 'cancel']):
                 if not move.move_line_ids:
-                    # If no move lines exist, create one
+                    # Create move lines if missing (e.g. for serialized products)
                     move._generate_serial_move_line_commands()
                 for move_line in move.move_line_ids:
                     qty = move.product_uom_qty
@@ -90,17 +118,35 @@ class EcommerceAdminDashboard(http.Controller):
                         move_line.qty_done = qty
                     elif 'quantity_done' in move_line._fields:
                         move_line.quantity_done = qty
-            
+
             # Validate the picking
             if picking.state != 'done':
                 try:
                     picking.button_validate()
-                except Exception as e:
-                    # If there's an error (like backorder needed), force validate
+                except Exception:
+                    # Force validate in case of backorder or other exceptions
                     picking.with_context(skip_backorder=True, skip_overprocessed_check=True)._action_done()
-        
-        return request.redirect(f'/ecommerce_admin/order/{order_id}')
 
+        # Prepare and send delivery confirmation email
+        partner = order.partner_id
+        email = partner.email or order.email_from
+        if email:
+            website_name = request.env['ir.config_parameter'].sudo().get_param('website.name') or 'Our Store'
+            mail_values = {
+                'subject': f'Your Order {order.name} Has Been Successfully Delivered',
+                'body_html': f"""
+                    <p>Dear {partner.name},</p>
+                    <p>We are pleased to inform you that your order <strong>{order.name}</strong> has been successfully delivered.</p>
+                    <p>We hope you enjoy your purchase! If you have any questions or need assistance, feel free to contact us.</p>
+                    <p>Thank you for choosing {website_name}.</p>
+                    <p>Best regards,<br/>{website_name} Team</p>
+                """,
+                'email_from': 'info.flowgenic@gmail.com',
+                'email_to': email,
+            }
+            request.env['mail.mail'].sudo().create(mail_values).send()
+
+        return request.redirect(f'/ecommerce_admin/order/{order_id}')
 
 
 

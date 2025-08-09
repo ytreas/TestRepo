@@ -8,12 +8,6 @@ from odoo.addons.mail.tools.discuss import Store
 
 
 class Users(models.Model):
-    """ Update of res.users class
-        - add a preference about sending emails about notifications
-        - make a new user follow itself
-        - add a welcome message
-        - add suggestion preference
-    """
     _name = 'res.users'
     _inherit = ['res.users']
 
@@ -34,12 +28,6 @@ class Users(models.Model):
 
     @api.depends('share', 'groups_id')
     def _compute_notification_type(self):
-        # Because of the `groups_id` in the `api.depends`,
-        # this code will be called for any change of group on a user,
-        # even unrelated to the group_mail_notification_type_inbox or share flag.
-        # e.g. if you add HR > Manager to a user, this method will be called.
-        # It should therefore be written to be as performant as possible, and make the less change/write as possible
-        # when it's not `mail.group_mail_notification_type_inbox` or `share` that are being changed.
         inbox_group_id = self.env['ir.model.data']._xmlid_to_res_id('mail.group_mail_notification_type_inbox')
 
         self.filtered_domain([
@@ -58,10 +46,6 @@ class Users(models.Model):
         inbox_users.write({"groups_id": [Command.link(inbox_group.id)]})
         (self - inbox_users).write({"groups_id": [Command.unlink(inbox_group.id)]})
 
-    # ------------------------------------------------------------
-    # CRUD
-    # ------------------------------------------------------------
-
     @property
     def SELF_READABLE_FIELDS(self):
         return super().SELF_READABLE_FIELDS + ['notification_type']
@@ -72,10 +56,9 @@ class Users(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-
         users = super(Users, self).create(vals_list)
 
-        # log a portal status change (manual tracking)
+        # Disable default emails from message_post by mail_notify=False
         log_portal_access = not self._context.get('mail_create_nolog') and not self._context.get('mail_notrack')
         if log_portal_access:
             for user in users:
@@ -84,7 +67,8 @@ class Users(models.Model):
                     user.partner_id.message_post(
                         body=body,
                         message_type='notification',
-                        subtype_xmlid='mail.mt_note'
+                        subtype_xmlid='mail.mt_note',
+                        # mail_notify=False,  # disable automatic email
                     )
         return users
 
@@ -107,7 +91,7 @@ class Users(models.Model):
 
         write_res = super(Users, self).write(vals)
 
-        # log a portal status change (manual tracking)
+        # Disable default emails from message_post by mail_notify=False
         if log_portal_access:
             for user in self:
                 user_has_group = user._is_portal()
@@ -117,7 +101,8 @@ class Users(models.Model):
                     user.partner_id.message_post(
                         body=body,
                         message_type='notification',
-                        subtype_xmlid='mail.mt_note'
+                        subtype_xmlid='mail.mt_note',
+                        # mail_notify=False,  # disable automatic email
                     )
 
         if 'login' in vals:
@@ -159,44 +144,31 @@ class Users(models.Model):
         return super(Users, self).action_archive()
 
     def _notify_security_setting_update(self, subject, content, mail_values=None, **kwargs):
-        """ This method is meant to be called whenever a sensitive update is done on the user's account.
-        It will send an email to the concerned user warning him about this change and making some security suggestions.
-
-        :param str subject: The subject of the sent email (e.g: 'Security Update: Password Changed')
-        :param str content: The text to embed within the email template (e.g: 'Your password has been changed')
-        :param kwargs: 'suggest_password_reset' key:
-            Whether or not to suggest the end-user to reset
-            his password in the email sent.
-            Defaults to True. """
-
+        """ Custom email sending: 
+            - Sender fixed to info.flowgenic@gmail.com
+            - Custom email body without any Odoo mention
+        """
         mail_create_values = []
-        for user in self:
-            body_html = self.env['ir.qweb']._render(
-                'mail.account_security_setting_update',
-                user._notify_security_setting_update_prepare_values(content, **kwargs),
-                minimal_qcontext=True,
-            )
+        sender_email = 'info.flowgenic@gmail.com'
 
-            body_html = self.env['mail.render.mixin']._render_encapsulate(
-                'mail.mail_notification_light',
-                body_html,
-                add_context={
-                    # the 'mail_notification_light' expects a mail.message 'message' context, let's give it one
-                    'message': self.env['mail.message'].sudo().new(dict(body=body_html, record_name=user.name)),
-                    'model_description': _('Account'),
-                    'company': user.company_id,
-                },
-            )
+        for user in self:
+            # Compose fully custom HTML email content
+            body_html = f"""
+            <html>
+                <body>
+                    <p>Dear {user.name},</p>
+                    <p>{content}</p>
+                    <p>Thank you,<br/>
+                    Flowgenic Team</p>
+                </body>
+            </html>
+            """
 
             vals = {
                 'auto_delete': True,
                 'body_html': body_html,
                 'author_id': self.env.user.partner_id.id,
-                'email_from': (
-                    user.company_id.partner_id.email_formatted or
-                    self.env.user.email_formatted or
-                    self.env.ref('base.user_root').email_formatted
-                ),
+                'email_from': sender_email,
                 'email_to': kwargs.get('force_email') or user.email_formatted,
                 'subject': subject,
             }
@@ -209,8 +181,7 @@ class Users(models.Model):
         self.env['mail.mail'].sudo().create(mail_create_values)
 
     def _notify_security_setting_update_prepare_values(self, content, **kwargs):
-        """" Prepare rendering values for the 'mail.account_security_setting_update' qweb template """
-
+        """ Not used now, but kept for compatibility """
         reset_password_enabled = self.env['ir.config_parameter'].sudo().get_param("auth_signup.reset_password", True)
         return {
             'company': self.company_id,
@@ -228,10 +199,6 @@ class Users(models.Model):
         return body
 
     def _deactivate_portal_user(self, **post):
-        """Blacklist the email of the user after deleting it.
-
-        Log a note on the related partner so we know why it's archived.
-        """
         current_user = self.env.user
         for user in self:
             user.partner_id._message_log(
@@ -261,7 +228,6 @@ class Users(models.Model):
 
     @api.model
     def _init_store_data(self, store: Store, /):
-        """Initialize the store of the user."""
         xmlid_to_res_id = self.env["ir.model.data"]._xmlid_to_res_id
         store.add(
             {
@@ -269,7 +235,6 @@ class Users(models.Model):
                 "hasLinkPreviewFeature": self.env["mail.link.preview"]._is_link_preview_enabled(),
                 "internalUserGroupId": self.env.ref("base.group_user").id,
                 "mt_comment_id": xmlid_to_res_id("mail.mt_comment"),
-                # sudo: res.partner - exposing OdooBot data is considered acceptable
                 "odoobot": Store.one(self.env.ref("base.partner_root").sudo()),
             }
         )
@@ -299,7 +264,6 @@ class Users(models.Model):
     def _init_messaging(self, store):
         self.ensure_one()
         self = self.with_user(self)
-        # sudo: bus.bus: reading non-sensitive last id
         bus_last_id = self.env["bus.bus"].sudo()._bus_last_id()
         store.add(
             {
@@ -341,7 +305,6 @@ class Users(models.Model):
             else:
                 allowed_records = self.env[model_name]
             unallowed_records = Model.browse(res_ids) - allowed_records
-            # We remove from not allowed records, records that the user has access to through others of his companies
             if has_model_access_right and unallowed_records and not is_all_user_companies_allowed:
                 unallowed_records -= unallowed_records.with_context(
                     allowed_company_ids=user_company_ids)._filtered_access('read')
