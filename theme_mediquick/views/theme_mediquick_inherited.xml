@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="theme_mediquick_snippets" inherit_id="website.snippets">
+		<xpath expr="//snippets[@id='snippet_structure']" position="after">
+		 	<snippets class="o_panel_body" string="Homepage Snippets">
+				<t t-snippet="theme_mediquick.s_home_banner" t-thumbnail="/theme_mediquick/static/description/icon.png" />
+				<t t-snippet="theme_mediquick.s_three_columns" t-thumbnail="/theme_mediquick/static/description/icon.png" />
+				<t t-snippet="theme_mediquick.s_choose_us" t-thumbnail="/theme_mediquick/static/description/icon.png" />
+				<t t-snippet="theme_mediquick.s_image_text" t-thumbnail="/theme_mediquick/static/description/icon.png" />
+				<t t-snippet="theme_mediquick.s_text_image" t-thumbnail="/theme_mediquick/static/description/icon.png" />
+				<t t-snippet="theme_mediquick.s_teams" t-thumbnail="/theme_mediquick/static/description/icon.png" />
+				<t t-snippet="theme_mediquick.s_gallery" t-thumbnail="/theme_mediquick/static/description/icon.png" />
+				<t t-snippet="theme_mediquick.s_contact_us" t-thumbnail="/theme_mediquick/static/description/icon.png" />
+			</snippets>
+			<snippets class="o_panel_body" string="AboutUs Snippets">
+				<t t-snippet="theme_mediquick.s_aboutus_banner" t-thumbnail="/theme_mediquick/static/description/icon.png" />
+				<t t-snippet="theme_mediquick.s_text_with_bg" t-thumbnail="/theme_mediquick/static/description/icon.png" />
+				<t t-snippet="theme_mediquick.s_product_list" t-thumbnail="/theme_mediquick/static/description/icon.png" />
+				<t t-snippet="theme_mediquick.s_image_texts" t-thumbnail="/theme_mediquick/static/description/icon.png" />
+				<t t-snippet="theme_mediquick.s_text" t-thumbnail="/theme_mediquick/static/description/icon.png" />
+				<t t-snippet="theme_mediquick.s_contact" t-thumbnail="/theme_mediquick/static/description/icon.png" />
+				<t t-snippet="theme_mediquick.s_faq" t-thumbnail="/theme_mediquick/static/description/icon.png" />
+			</snippets>
+			<snippets class="o_panel_body" string="ContactUs Snippets">
+				<t t-snippet="theme_mediquick.s_contactus" t-thumbnail="/theme_mediquick/static/description/icon.png" />
+			</snippets>
+		</xpath>
+	</template>
+</odoo>
