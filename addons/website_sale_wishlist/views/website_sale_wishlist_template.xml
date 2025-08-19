@@ -86,10 +86,10 @@
             <t t-set="show_wishes" t-value="website.has_ecommerce_access()"/>
             <li t-attf-class="o_wsale_my_wish #{not show_wishes and 'd-none'} #{_item_class}">
                 <a href="/shop/wishlist" t-attf-class="#{_link_class}">
-                    <div t-attf-class="#{_icon_wrap_class}">
-                        <i t-if="_icon" class="fa fa-1x fa-heart fa-stack"/>
-                        <sup t-esc="wishcount" t-attf-class="my_wish_quantity o_animate_blink badge bg-primary #{_badge_class}"/>
-                    </div>
+                <div t-attf-class="#{_icon_wrap_class}">
+                    <i t-if="_icon" class="fa fa-1x fa-heart fa-stack"/>
+                    <sup t-esc="wishcount" t-attf-class="my_wish_quantity o_animate_blink badge bg-primary #{_badge_class}" style="color: white;"/>
+                </div>
                     <span t-if="_text" t-attf-class="#{_text_class}">Wishlist</span>
                 </a>
             </li>

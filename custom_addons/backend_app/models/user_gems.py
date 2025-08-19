@@ -114,8 +114,10 @@ class GemLogs(models.Model):
         ('spend', 'Spent'),
         ('reward', 'Rewarded'),
         ('ad_watch', 'Ad Watch'),
+        ('spin_win', 'Spin and Win'),
         ('admin', 'Admin Adjusted'),
         ('withdraw', 'Withdrawn'),
+        ('connect_dot', 'Connect the Dots'),
         ('withdraw_rejected', 'Withdraw Rejected'),
     ], string='Type', required=True)
     gems_changed = fields.Integer(string='Gems Changed', required=True)
