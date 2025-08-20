@@ -51,7 +51,7 @@ class SpinAPI(http.Controller):
                 ('date', '>=', nepali_start_of_day_utc)
             ])
 
-            if today_spins >= 100:
+            if today_spins >= 10:
                 return request.make_response(
                     json.dumps({
                         'status': 'fail',

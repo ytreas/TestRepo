@@ -83,7 +83,7 @@ class AdvertisementAPI(http.Controller):
 
             # ad.impressions += 1  # optional
             image_url = (
-                f"http://192.168.1.76:8069/web/image/advertisement.ad/{ad.id}/image"
+                f"http://147.93.154.233:8071/web/image/advertisement.ad/{ad.id}/image"
                 if ad.ad_type == 'image' else None
             )
 
