@@ -84,7 +84,7 @@ class AdvertisementAPI(http.Controller):
             })
 
             image_url = (
-                f"http://192.168.1.76:8069/web/image/advertisement.ad/{ad.id}/image"
+                f"https://kamau.flowgenictechnologies.com/web/image/advertisement.ad/{ad.id}/image"
                 if ad.ad_type == 'image' else None
             )
 
@@ -121,18 +121,20 @@ class AdvertisementAPI(http.Controller):
     def create_ad(self, **kwargs):
         try:
             # Authenticate user
+            print("---------------------------------------------------->safe1")
             auth_status, fail_resp = self.authenticate()
             if fail_resp:
                 return fail_resp
             user_id = auth_status['user_id']
             user = request.env['res.users'].sudo().browse(user_id)
+            print("---------------------------------------------------->safe2")
             # Extract request params
             name = request.params.get('name')
             views = request.params.get('views', 0)
             ad_type = request.params.get('ad_type')
             status = request.params.get('status', 'draft')
-            duration = request.params.get('duration')
-            reward = request.params.get('reward')
+            duration = request.params.get('duration', 30)
+            reward = request.params.get('reward', 10)
             cost = request.params.get('cost')
             target_url = request.params.get('target_url')
             video_url = request.params.get('video_url')
@@ -149,6 +151,7 @@ class AdvertisementAPI(http.Controller):
             cost = int(cost) if cost else 0
 
             # Create advertisement
+            print("---------------------------------------------------->safe")
             ad = request.env['advertisement.ad'].sudo().create({
                 'name': name,
                 'ad_type': ad_type,
@@ -188,6 +191,157 @@ class AdvertisementAPI(http.Controller):
         except Exception as e:
             return http.Response(json.dumps({'status': 'fail', 'message': str(e)}),
                                 content_type="application/json", status=500)
+
+    @http.route('/api/user_ads', type='http', auth='public', csrf=False, cors="*", methods=['GET'])
+    def get_user_ads(self, **kwargs):
+        try:
+            # Authenticate user
+            auth_status, fail_resp = self.authenticate()
+            if fail_resp:
+                return fail_resp
+            user_id = auth_status['user_id']
+            user = request.env['res.users'].sudo().browse(user_id)
+
+            # Fetch ads belonging to this user
+            ads = request.env['advertisement.ad'].sudo().search([
+                ('advertiser_id', '=', user.partner_id.id)
+            ])
+
+            ads_list = []
+            for ad in ads:
+                image_url = (
+                    f"https://kamau.flowgenictechnologies.com/web/image/advertisement.ad/{ad.id}/image"
+                    if ad.ad_type == 'image' and ad.image else None
+                )
+
+                ads_list.append({
+                    'id': ad.id if ad.id else None,
+                    'name': ad.name if ad.name else None,
+                    'ad_type': ad.ad_type if ad.ad_type else None,
+                    'status': ad.status if ad.status else None,
+                    'duration': ad.duration if ad.duration else None,
+                    'reward': ad.reward if ad.reward else None,
+                    'cost': ad.cost if ad.cost else None,
+                    'views': ad.views if ad.views else None,
+                    'target_url': ad.target_url if ad.target_url else None,
+                    'video_url': ad.video_url if ad.video_url else None,
+                    'image_url': image_url,
+                    'created_at': ad.create_date.strftime('%Y-%m-%d %H:%M:%S') if ad.create_date else None,
+                })
+
+            return request.make_response(
+                json.dumps({'status': 'success', 'ads': ads_list}),
+                headers=[('Content-Type', 'application/json')],
+                status=200
+            )
+
+        except Exception as e:
+            return http.Response(
+                json.dumps({'status': 'fail', 'message': str(e)}),
+                content_type="application/json", status=500
+            )
+
+
+    @http.route('/api/user_ads/<int:ad_id>', type='http', auth='public', csrf=False, cors="*", methods=['GET'])
+    def get_user_ad_detail(self, ad_id, **kwargs):
+        try:
+            # Authenticate user
+            auth_status, fail_resp = self.authenticate()
+            if fail_resp:
+                return fail_resp
+            user_id = auth_status['user_id']
+            user = request.env['res.users'].sudo().browse(user_id)
+
+            # Fetch single ad belonging to this user
+            ad = request.env['advertisement.ad'].sudo().search([
+                ('id', '=', ad_id),
+                ('advertiser_id', '=', user.partner_id.id)
+            ], limit=1)
+
+            if not ad:
+                return request.make_response(
+                    json.dumps({'status': 'fail', 'message': 'Ad not found or not authorized'}),
+                    headers=[('Content-Type', 'application/json')],
+                    status=404
+                )
+
+            ad_data = {
+                'id': ad.id if ad.id else None,
+                'name': ad.name if ad.name else None,
+                'ad_type': ad.ad_type if ad.ad_type else None,
+                'status': ad.status if ad.status else None,
+                'duration': ad.duration if ad.duration else None,
+                'reward': ad.reward if ad.reward else None,
+                'cost': ad.cost if ad.cost else None,
+                'views': ad.views if ad.views else None,
+                'target_url': ad.target_url if ad.target_url else None,
+                'video_url': ad.video_url if ad.video_url else None,
+                'image': ad.image.decode('utf-8') if ad.image else None,
+                'created_at': ad.create_date.strftime('%Y-%m-%d %H:%M:%S') if ad.create_date else None,
+            }
+
+            return request.make_response(
+                json.dumps({'status': 'success', 'ad': ad_data}),
+                headers=[('Content-Type', 'application/json')],
+                status=200
+            )
+
+        except Exception as e:
+            return http.Response(
+                json.dumps({'status': 'fail', 'message': str(e)}),
+                content_type="application/json", status=500
+            )
+
+    @http.route('/api/user_ads/approve/<int:ad_id>', type='http', auth='public', csrf=False, cors="*", methods=['POST'])
+    def approve_user_ad(self, ad_id, **kwargs):
+        try:
+            # Authenticate user
+            auth_status, fail_resp = self.authenticate()
+            if fail_resp:
+                return fail_resp
+            user_id = auth_status['user_id']
+            user = request.env['res.users'].sudo().browse(user_id)
+
+            # Fetch ad
+            ad = request.env['advertisement.ad'].sudo().search([('id', '=', ad_id)], limit=1)
+            if not ad:
+                return request.make_response(
+                    json.dumps({'status': 'fail', 'message': 'Ad not found'}),
+                    headers=[('Content-Type', 'application/json')],
+                    status=404
+                )
+
+            # Check if user is the owner or an admin
+            if ad.advertiser_id.id != user.partner_id.id and not user.has_group('base.group_system'):
+                return request.make_response(
+                    json.dumps({'status': 'fail', 'message': 'Not authorized to approve this ad'}),
+                    headers=[('Content-Type', 'application/json')],
+                    status=403
+                )
+
+            # Only allow approval from draft state
+            if ad.status != 'draft':
+                return request.make_response(
+                    json.dumps({'status': 'fail', 'message': f'Cannot approve ad in status {ad.status}'}),
+                    headers=[('Content-Type', 'application/json')],
+                    status=400
+                )
+
+            # Update status
+            ad.sudo().write({'status': 'active'})
+
+            return request.make_response(
+                json.dumps({'status': 'success', 'message': 'Ad approved successfully', 'ad_id': ad.id}),
+                headers=[('Content-Type', 'application/json')],
+                status=200
+            )
+
+        except Exception as e:
+            return http.Response(
+                json.dumps({'status': 'fail', 'message': str(e)}),
+                content_type="application/json", status=500
+            )
+
 
 
     # PUT update ad
