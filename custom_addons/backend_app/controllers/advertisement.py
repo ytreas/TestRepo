@@ -25,10 +25,8 @@ class AdvertisementAPI(http.Controller):
             auth_status, fail_resp = self.authenticate()
             if fail_resp:
                 return fail_resp
-
             user_id = auth_status['user_id']
             user = request.env['res.users'].sudo().browse(user_id)
-
             now_utc = datetime.now(timezone.utc)
             gmt_plus_545 = now_utc + timedelta(hours=5, minutes=45)
             today_nepal = gmt_plus_545.date()
@@ -47,6 +45,7 @@ class AdvertisementAPI(http.Controller):
             except json.JSONDecodeError:
                 watched_ids = []
 
+            # Cap check
             if user.ads_watched >= 10:
                 return request.make_response(json.dumps({
                     'status': 'fail',
@@ -55,11 +54,10 @@ class AdvertisementAPI(http.Controller):
                     'ads_cap': 10
                 }), headers=[('Content-Type', 'application/json')], status=429)
 
-            # Search for eligible ads
+            # Search for eligible ads (views > 0 and not already watched)
             domain = [
                 ('status', '=', 'active'),
-                ('start_date', '<=', now_utc),
-                '|', ('end_date', '>=', now_utc), ('end_date', '=', False),
+                ('views', '>', 0),
                 ('id', 'not in', watched_ids)
             ]
             ads = request.env['advertisement.ad'].sudo().search(domain)
@@ -72,43 +70,42 @@ class AdvertisementAPI(http.Controller):
                     'ads_cap': 10
                 }), headers=[('Content-Type', 'application/json')], status=404)
 
+            # Pick a random ad
             ad = random.choice(ads)
 
-            # Update counters and watched list
-            # watched_ids.append(ad.id)
-            # user.write({
-            #     'ads_watched': user.ads_watched + 1,
-            #     'watched_ad_ids_json': json.dumps(watched_ids)
-            # })
+            # Deduct 1 view from ad
+            ad.sudo().write({'views': ad.views - 1})
 
-            # ad.impressions += 1  # optional
+            # Update counters and watched list
+            watched_ids.append(ad.id)
+            user.sudo().write({
+                'ads_watched': user.ads_watched + 1,
+                'watched_ad_ids_json': json.dumps(watched_ids)
+            })
+
             image_url = (
-                f"http://147.93.154.233:8071/web/image/advertisement.ad/{ad.id}/image"
+                f"http://192.168.1.76:8069/web/image/advertisement.ad/{ad.id}/image"
                 if ad.ad_type == 'image' else None
             )
 
             ad_data = {
-                'id': ad.id if ad.id else None,
-                'name': ad.name if ad.name else None,
-                'ad_type': ad.ad_type if ad.ad_type else None,
-                'status': ad.status if ad.status else None,
-                'duration': ad.duration if ad.duration else None,
-                'reward': ad.reward if ad.reward else None,
-                'start_date': ad.start_date.strftime('%Y-%m-%d %H:%M:%S') if ad.start_date else None,
-                'end_date': ad.end_date.strftime('%Y-%m-%d %H:%M:%S') if ad.end_date else None,
-                'target_url': ad.target_url if ad.target_url else None,
-                'video_url': ad.video_url if ad.video_url else None,
-                'impressions': ad.impressions if ad.impressions else None,
+                'id': ad.id,
+                'name': ad.name,
+                'ad_type': ad.ad_type,
+                'status': ad.status,
+                'duration': ad.duration,
+                'reward': ad.reward,
+                'target_url': ad.target_url,
+                'video_url': ad.video_url,
+                'views_remaining': ad.views,  # new: remaining views
                 'image_url': image_url,
-                'clicks': ad.clicks if ad.clicks else None,
                 'advertiser': ad.advertiser_id.name if ad.advertiser_id else None
             }
-
 
             return request.make_response(json.dumps({
                 'status': 'success',
                 'data': ad_data,
-                # 'ads_watched_today': user.ads_watched,  # after increment
+                'ads_watched_today': user.ads_watched + 1,  # after increment
                 'ads_cap': 10
             }), headers=[('Content-Type', 'application/json')], status=200)
 
@@ -123,41 +120,66 @@ class AdvertisementAPI(http.Controller):
     @http.route('/api/ads', type='http', auth='public', csrf=False, cors="*", methods=['POST'])
     def create_ad(self, **kwargs):
         try:
+            # Authenticate user
             auth_status, fail_resp = self.authenticate()
             if fail_resp:
                 return fail_resp
-
-            # Use form data (multipart/form-data)
+            user_id = auth_status['user_id']
+            user = request.env['res.users'].sudo().browse(user_id)
+            # Extract request params
             name = request.params.get('name')
+            views = request.params.get('views', 0)
             ad_type = request.params.get('ad_type')
             status = request.params.get('status', 'draft')
             duration = request.params.get('duration')
             reward = request.params.get('reward')
-            start_date = request.params.get('start_date')
-            end_date = request.params.get('end_date')
+            cost = request.params.get('cost')
             target_url = request.params.get('target_url')
             video_url = request.params.get('video_url')
-            advertiser_id = request.params.get('advertiser_id')
 
             # Handle optional image
             image_file = request.httprequest.files.get('image')
             image_data = None
             if image_file:
                 image_data = base64.b64encode(image_file.read())
-            print(f"Image data: {image_data}")  # Debugging line
+
+            # Convert numbers properly
+            duration = int(duration) if duration else 0
+            reward = int(reward) if reward else 0
+            cost = int(cost) if cost else 0
+
+            # Create advertisement
             ad = request.env['advertisement.ad'].sudo().create({
                 'name': name,
                 'ad_type': ad_type,
                 'status': status,
                 'duration': duration,
                 'reward': reward,
-                'start_date': start_date,
-                'end_date': end_date,
+                'cost': cost,
+                'views': views,
                 'target_url': target_url,
                 'video_url': video_url,
-                'advertiser_id': advertiser_id,
+                'advertiser_id': user.partner_id.id,  # link to partner
                 'image': image_data,
             })
+            if ad:
+                # Deduct gems if user is NOT admin
+                if not user.has_group('base.group_system'):  # Superuser/Admin group
+                    if user.gems < cost:
+                        return request.make_response(
+                            json.dumps({'status': 'fail', 'message': 'Not enough gems to post ad'}),
+                            headers=[('Content-Type', 'application/json')],
+                            status=400
+                        )
+                    # Deduct gems
+                    user.sudo().write({'gems': user.gems - cost})
+                    request.env['gem.logs'].sudo().create({
+                        'user_id': user.id,
+                        'change_type': 'ad_post',
+                        'gems_changed': -cost,
+                        'date': fields.Datetime.now(),
+                    })
+
 
             return request.make_response(json.dumps({'status': 'success', 'id': ad.id}),
                                         headers=[('Content-Type', 'application/json')],
@@ -172,7 +194,7 @@ class AdvertisementAPI(http.Controller):
     @http.route('/api/ads/<int:ad_id>', type='http', auth='public', csrf=False, cors="*", methods=['PUT'])
     def update_ad(self, ad_id, **kwargs):
         try:
-            auth_status, fail_resp = self.authenticate()
+            auth_status, fail_resp, user = self.authenticate(return_user=True)
             if fail_resp:
                 return fail_resp
 
@@ -180,9 +202,19 @@ class AdvertisementAPI(http.Controller):
             ad = request.env['advertisement.ad'].sudo().browse(ad_id)
 
             if not ad.exists():
-                return request.make_response(json.dumps({'status': 'fail', 'message': 'Ad not found'}),
-                                             headers=[('Content-Type', 'application/json')],
-                                             status=404)
+                return request.make_response(
+                    json.dumps({'status': 'fail', 'message': 'Ad not found'}),
+                    headers=[('Content-Type', 'application/json')],
+                    status=404
+                )
+
+            # Only allow advertiser or admin to update
+            if ad.advertiser_id != user.partner_id and not user.has_group('base.group_system'):
+                return request.make_response(
+                    json.dumps({'status': 'fail', 'message': 'Unauthorized to update this ad'}),
+                    headers=[('Content-Type', 'application/json')],
+                    status=403
+                )
 
             ad.write({
                 'name': data.get('name', ad.name),
@@ -190,20 +222,25 @@ class AdvertisementAPI(http.Controller):
                 'status': data.get('status', ad.status),
                 'duration': data.get('duration', ad.duration),
                 'reward': data.get('reward', ad.reward),
-                'start_date': data.get('start_date', ad.start_date),
-                'end_date': data.get('end_date', ad.end_date),
+                'cost': data.get('cost', ad.cost),
                 'target_url': data.get('target_url', ad.target_url),
                 'video_url': data.get('video_url', ad.video_url),
+                'views': data.get('views', ad.views),  # NEW: update views instead of dates
                 'advertiser_id': data.get('advertiser_id', ad.advertiser_id.id),
             })
 
-            return request.make_response(json.dumps({'status': 'success', 'message': 'Ad updated'}),
-                                         headers=[('Content-Type', 'application/json')],
-                                         status=200)
+            return request.make_response(
+                json.dumps({'status': 'success', 'message': 'Ad updated'}),
+                headers=[('Content-Type', 'application/json')],
+                status=200
+            )
 
         except Exception as e:
-            return http.Response(json.dumps({'status': 'fail', 'message': str(e)}),
-                                 content_type="application/json", status=500)
+            return http.Response(
+                json.dumps({'status': 'fail', 'message': str(e)}),
+                content_type="application/json",
+                status=500
+            )
 
     # DELETE ad
     @http.route('/api/ads/<int:ad_id>', type='http', auth='public', csrf=False, cors="*", methods=['DELETE'])

@@ -117,6 +117,7 @@ class GemLogs(models.Model):
         ('spin_win', 'Spin and Win'),
         ('admin', 'Admin Adjusted'),
         ('withdraw', 'Withdrawn'),
+        ('ad_post', 'Ad Posted'),
         ('connect_dot', 'Connect the Dots'),
         ('withdraw_rejected', 'Withdraw Rejected'),
     ], string='Type', required=True)

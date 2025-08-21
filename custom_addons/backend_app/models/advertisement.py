@@ -24,17 +24,17 @@ class Advertisement(models.Model):
 
     duration = fields.Integer(string='Duration (seconds)', help="For video or popup ads")
     reward = fields.Integer(string='Reward', required=True)
-
-    start_date = fields.Datetime(string='Start Date')
-    end_date = fields.Datetime(string='End Date')
+    cost = fields.Integer(string='Cost', required=True)
+    # start_date = fields.Datetime(string='Start Date')
+    # end_date = fields.Datetime(string='End Date')
 
     target_url = fields.Char(string='Target URL', help='URL where the ad redirects users')
     
     image = fields.Binary(string='Ad Image', attachment=False)
     video_url = fields.Char(string='Video URL', help='YouTube or CDN link for video ads')
 
-    impressions = fields.Integer(string='Impressions', default=0, readonly=True)
-    clicks = fields.Integer(string='Clicks', default=0, readonly=True)
+    views = fields.Integer(string='Views', default=0, readonly=True)
+    # clicks = fields.Integer(string='Clicks', default=0, readonly=True)
 
     advertiser_id = fields.Many2one('res.partner', string='Advertiser', help='Linked to customer/company who owns the ad')
 
